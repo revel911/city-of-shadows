@@ -5,6 +5,17 @@ const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 4096;
 const EVENT_TAIL_LINES = 120;
 
+const COMPACT_AT = 30;
+const KEEP_RECENT = 8;
+const SUMMARY_MAX_TOKENS = 800;
+const SUMMARY_SYSTEM = [
+  'Summarize this Urban Shadows session segment for ongoing context.',
+  'Capture: scene shifts and locations, NPC names and how they spoke (voice notes),',
+  'rolls and outcomes, mechanical state changes (harm, XP, circles, debts),',
+  'promises and threats still open, mood.',
+  'Be terse, concrete, and chronological. No flavor prose.',
+].join(' ');
+
 const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
 let _systemCache = null;
@@ -99,12 +110,69 @@ export async function buildOpeningContext(player) {
   ].join('\n');
 }
 
+function withCacheBreakpoints(messages) {
+  // Cache the opening context (always at index 0 — opening user message that
+  // contains the handoff/sheet/state/events tail). Stable across the session,
+  // so every turn after the first pays ~10% of input cost on it.
+  return messages.map((m, i) => {
+    if (i !== 0) return m;
+    const text = typeof m.content === 'string' ? m.content : null;
+    if (text === null) return m;
+    return {
+      role: m.role,
+      content: [{ type: 'text', text, cache_control: { type: 'ephemeral' } }],
+    };
+  });
+}
+
+function messageToText(m) {
+  if (typeof m.content === 'string') return m.content;
+  if (Array.isArray(m.content)) {
+    return m.content.filter(b => b.type === 'text').map(b => b.text).join('\n');
+  }
+  return '';
+}
+
+async function maybeCompact(session) {
+  if (session.messages.length < COMPACT_AT) return;
+  const head = session.messages[0];
+  const middle = session.messages.slice(1, -KEEP_RECENT);
+  const recent = session.messages.slice(-KEEP_RECENT);
+  if (!middle.length) return;
+
+  const transcript = middle
+    .map(m => `${m.role.toUpperCase()}: ${messageToText(m)}`)
+    .join('\n\n');
+
+  try {
+    const resp = await anthropic.messages.create({
+      model: MODEL,
+      system: SUMMARY_SYSTEM,
+      messages: [{ role: 'user', content: `Transcript to summarize:\n\n${transcript}` }],
+      max_tokens: SUMMARY_MAX_TOKENS,
+    });
+    const text = resp.content.filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    if (!text) return;
+    // Summary goes in as an assistant message so alternation stays valid:
+    // [user head, assistant recap, user, assistant, ...]
+    session.messages = [
+      head,
+      { role: 'assistant', content: `[Earlier this session — compacted recap]\n${text}` },
+      ...recent,
+    ];
+    console.log(`[compact] session ${session.threadId}: compressed ${middle.length} turns, now ${session.messages.length} messages.`);
+  } catch (e) {
+    console.warn(`[compact] failed for session ${session.threadId}: ${e.message}`);
+  }
+}
+
 export async function generate(session) {
+  await maybeCompact(session);
   const system = await getSystemPrompt();
   const resp = await anthropic.messages.create({
     model: MODEL,
-    system,
-    messages: session.messages,
+    system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }],
+    messages: withCacheBreakpoints(session.messages),
     max_tokens: MAX_TOKENS,
   });
   return resp.content
