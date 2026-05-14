@@ -1,0 +1,173 @@
+{
+  "last_updated": "2026-04-29",
+  "arcs": [
+    {
+      "id": "arc-001",
+      "title": "The Collector",
+      "type": "threat",
+      "escalation": 3,
+      "status": "escalating",
+      "hub_ids": ["hub_shockoe_bottom", "hub_downtown", "hub_university"],
+      "npc_ids": ["npc_maren_voss"],
+      "player_ids": ["chris-caustes"],
+      "summary": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity.",
+      "mc_notes": "Players don't know The Collector and the compromised hunter network are potentially separate threats — or are they? The Collector noticed the warehouse. It may have noticed Chris. Petra Holt's principals may have a connection."
+    },
+    {
+      "id": "arc-002",
+      "title": "The Fae-Adjacent Specimen",
+      "type": "personal",
+      "escalation": 2,
+      "status": "active",
+      "hub_ids": ["hub_shockoe_bottom"],
+      "npc_ids": ["npc_petra_holt", "npc_maren_voss"],
+      "player_ids": ["chris-caustes"],
+      "summary": "A fae-adjacent creature — old, a things-that-remember entity — slipped into temporal displacement inside an Overwrite pocket in a Shockoe Bottom warehouse. It was sheltered there by Maren Voss's ritual circle because it asked for help; it was hiding from The Collector. Weakness: cannot tolerate unresolved questions. Five-day retrieval deadline active from 2026-04-24.",
+      "mc_notes": "Fae/court/monarch lore integration with WoD Supplement v2 still pending — do not proceed with fae contact establishment until lore is confirmed. +1 ongoing vs specimen active for Chris (unresolved-questions weakness). 5-day deadline is from 2026-04-24."
+    },
+    {
+      "id": "arc-003",
+      "title": "Maren Voss's Ritual Circle",
+      "type": "slow-burn",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_shockoe_bottom", "hub_university"],
+      "npc_ids": ["npc_maren_voss"],
+      "player_ids": ["chris-caustes"],
+      "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can.",
+      "mc_notes": "The other two circle members are unknown to players. One of Chris's four Hit the Streets searches was noticed — Vera Solis, Asha Tremblay, Maren Voss, or Petra Holt. Unknown which. Someone is now aware Chris is pulling these threads."
+    },
+    {
+      "id": "arc-004",
+      "title": "Petra Holt & Unnamed Principals",
+      "type": "slow-burn",
+      "escalation": 2,
+      "status": "active",
+      "hub_ids": ["hub_university", "hub_shockoe_bottom"],
+      "npc_ids": ["npc_petra_holt"],
+      "player_ids": ["chris-caustes"],
+      "summary": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem.",
+      "mc_notes": "Petra meeting at Gild 9am day after Session 1. She agreed without pushing. She did not ask what the name was. Principals unknown — board connection to a rival Power faction."
+    },
+    {
+      "id": "arc-005",
+      "title": "Consilium Politics & the Engineered Awakening Program",
+      "type": "slow-burn",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_university"],
+      "npc_ids": ["npc_dr_olave", "npc_marcus_voss", "npc_ingrid_voss", "npc_nadia_vasek"],
+      "player_ids": ["chris-caustes"],
+      "summary": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified.",
+      "mc_notes": "Chris knows Ingrid Voss's secret and kept quiet. She has never thanked him, never needed to. She owes Chris 1 Debt. Nadia Vasek (Chris's ward) Awakened 8 months ago — timing matches Maren Voss's death. Declan Morrow connection: gave Nadia a Scar on her left palm."
+    },
+    {
+      "id": "arc-006",
+      "title": "The Compromised Hunter Network",
+      "type": "threat",
+      "escalation": 3,
+      "status": "escalating",
+      "hub_ids": ["hub_downtown", "hub_shockoe_bottom"],
+      "npc_ids": ["npc_henrik_vael", "npc_roz_czerny", "npc_linh_pham"],
+      "player_ids": ["johan-van-axel"],
+      "summary": "Someone senior inside Johan van Axel's hunter network accessed his father's operational files and weaponized them to get Johan to kill a protected woman. Johan is running a parallel investigation from inside. His handler failed to produce the password on Session 1 — compromised or impostor. Voss's sealed field research case may contain the traitor's name.",
+      "mc_notes": "Johan has the sealed case (Voss's field research). Combination lock. Unopened. Handler couldn't produce password. Unknown text sender knows Johan's name and position. Network knows Johan was on-site at the warehouse the night of Session 1."
+    },
+    {
+      "id": "arc-007",
+      "title": "The Tobacco Warehouse Operation",
+      "type": "threat",
+      "escalation": 2,
+      "status": "active",
+      "hub_ids": ["hub_shockoe_bottom", "hub_downtown"],
+      "npc_ids": ["npc_linh_pham"],
+      "player_ids": ["johan-van-axel", "chris-caustes"],
+      "summary": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by Johan's network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when Johan left. It overlaps with the Overwrite activity and the fae specimen site.",
+      "mc_notes": "The warehouse flagged by the hunter network is likely the same Shockoe Bottom warehouse Chris investigated — confirm in play. Whoever sent Johan there wanted him to kill Pham. The network address may have been false bait."
+    },
+    {
+      "id": "arc-008",
+      "title": "The Unknown Text Sender",
+      "type": "slow-burn",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_downtown", "hub_shockoe_bottom"],
+      "npc_ids": [],
+      "player_ids": ["johan-van-axel"],
+      "summary": "An unknown third party texted Johan his own name and warned him he was watching the wrong door on the night of Session 1. They have not been responded to. Identity unknown. They know Johan's name and operational position.",
+      "mc_notes": "Pending response from Johan. Identity fully unknown — could be ally, enemy, or something else. They demonstrated surveillance capability and knowledge of the network."
+    },
+    {
+      "id": "arc-009",
+      "title": "The Ghost of a Dead Vampire",
+      "type": "personal",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_downtown"],
+      "npc_ids": [],
+      "player_ids": ["benjamin-grey", "john-smith"],
+      "summary": "Benjamin Grey's current mark — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money on the monster-poaching market. Not yet engaged. John Smith (PC ghost) has been mistaken for it once already.",
+      "mc_notes": "Ben is a wanted man in the mortal system. John Smith may be mistaken for this mark — he manifested wrong near Ben once. Market window closes if something else finds it first. The General's coup leverage situation creates a volatile backdrop."
+    },
+    {
+      "id": "arc-010",
+      "title": "The General's Coup",
+      "type": "slow-burn",
+      "escalation": 2,
+      "status": "active",
+      "hub_ids": ["hub_downtown"],
+      "npc_ids": ["npc_the_general"],
+      "player_ids": ["benjamin-grey"],
+      "summary": "Benjamin Grey holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, Ben is in serious danger.",
+      "mc_notes": "The General's name is TBD. Ben owes The General 1 Debt. Situation is a standoff — Ben needs to act before the General stops cooperating and starts retaliating."
+    },
+    {
+      "id": "arc-011",
+      "title": "The Breach in Serrano's Domain",
+      "type": "threat",
+      "escalation": 2,
+      "status": "active",
+      "hub_ids": ["hub_downtown"],
+      "npc_ids": ["npc_aldric_serrano"],
+      "player_ids": [],
+      "summary": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown.",
+      "mc_notes": "Serrano's location is known to Declan Morrow; access costs a Debt. Serrano's domain connects Shockoe Bottom to Downtown via the canal tunnels."
+    },
+    {
+      "id": "arc-012",
+      "title": "The Overwrite",
+      "type": "city",
+      "escalation": 3,
+      "status": "escalating",
+      "hub_ids": ["hub_shockoe_bottom", "hub_downtown", "hub_creighton_court", "hub_university", "hub_oregon_hill"],
+      "npc_ids": [],
+      "player_ids": ["chris-caustes", "john-smith"],
+      "summary": "A city-wide supernatural phenomenon rewriting physical and historical reality across all of Richmond's hubs. Shockoe Bottom: buildings appear/disappear, street signs shift. Downtown: legal records rewrite themselves. Creighton Court: temporal displacement, different eras coexist. The University: impossible research results, contradictory academic records. Oregon Hill: industrial echoes, phantom work shifts.",
+      "mc_notes": "The Revisionists (Mortalis faction in Shockoe Bottom) are cataloguing Overwrite discrepancies rather than correcting them. Chris has encountered the same Overwrite signature in Shockoe Bottom at least twice. Hollywood Cemetery shows new sections Emmett Daye does not remember, including a grave with a recent date for a living person."
+    },
+    {
+      "id": "arc-013",
+      "title": "Creighton Court Redevelopment & Temporal Displacement",
+      "type": "slow-burn",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_creighton_court"],
+      "npc_ids": ["npc_sister_catherine_burke"],
+      "player_ids": [],
+      "summary": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago.",
+      "mc_notes": "No PC direct involvement yet. Could connect to the broader Overwrite arc or develop independently."
+    },
+    {
+      "id": "arc-014",
+      "title": "John Smith — Identity & Anchor",
+      "type": "personal",
+      "escalation": 1,
+      "status": "active",
+      "hub_ids": ["hub_downtown"],
+      "npc_ids": ["npc_vera_medium"],
+      "player_ids": ["john-smith", "benjamin-grey"],
+      "summary": "John Smith is a ghost with no memory of his life or name. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has.",
+      "mc_notes": "John owes Ben Grey 1 Debt (wrong manifestation, scared Ben while tracking). Vera owes John 1 Debt. John may be mistaken for Ben's vampire-ghost mark. Finding his anchor/identity may allow him to move on — or may not."
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>City of Shadow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.cdnfonts.com" crossorigin />
+  <link href="https://fonts.cdnfonts.com/css/new-gothic-style" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <nav id="top-nav">
+    <a class="nav-logo" href="#/">
+      <span class="nav-logo-icon">⬡</span>
+      <span class="nav-logo-text">City of Shadow</span>
+    </a>
+
+    <div class="nav-divider"></div>
+
+    <!-- Desktop links -->
+    <ul class="nav-links">
+      <li><a href="#/" data-route="/">Summary</a></li>
+      <li><a href="#/characters" data-route="/characters">Characters</a></li>
+      <li><a href="#/city" data-route="/city">City</a></li>
+      <li><a href="#/events" data-route="/events">Events</a></li>
+    </ul>
+
+    <span class="nav-refresh" id="refresh-btn">↻ Refresh</span>
+
+    <button id="search-btn" aria-label="Search (press /)" title="Search (/)">
+      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">
+        <circle cx="6.5" cy="6.5" r="4.5"/>
+        <line x1="10" y1="10" x2="13.5" y2="13.5"/>
+      </svg>
+    </button>
+
+    <!-- Hamburger (mobile only) -->
+    <button id="nav-toggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile drawer -->
+  <div id="nav-drawer">
+    <a href="#/" data-route="/" data-drawer-link>Summary</a>
+    <a href="#/characters" data-route="/characters" data-drawer-link>Characters</a>
+    <a href="#/city" data-route="/city" data-drawer-link>City</a>
+    <a href="#/events" data-route="/events" data-drawer-link>Events</a>
+  </div>
+
+  <!-- Tap outside to close -->
+  <div id="nav-overlay"></div>
+
+  <!-- Search overlay -->
+  <div id="search-overlay" role="dialog" aria-label="Search">
+    <div id="search-box">
+      <div id="search-input-wrap">
+        <svg id="search-icon" width="15" height="15" viewBox="0 0 15 15" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+          <circle cx="6.5" cy="6.5" r="4.5"/>
+          <line x1="10" y1="10" x2="13.5" y2="13.5"/>
+        </svg>
+        <input id="search-input" type="search" placeholder="Search NPCs, arcs, hubs, characters…" autocomplete="off" spellcheck="false" />
+        <kbd id="search-esc-hint">Esc</kbd>
+      </div>
+      <div id="search-results" role="listbox"></div>
+    </div>
+  </div>
+
+  <div id="app">
+    <aside id="side-nav"></aside>
+    <main id="content"></main>
+  </div>
+
+  <!-- Dice Roller -->
+  <button id="dice-fab" aria-label="Roll dice" title="Roll 2d6">⚄</button>
+  <div id="dice-panel">
+    <div class="dice-panel-header">
+      <span>Roll 2d6</span>
+      <button id="dice-close" aria-label="Close">✕</button>
+    </div>
+    <div class="dice-display">
+      <div class="die-cell">
+        <div class="die-value instinct-die" id="die1">–</div>
+        <div class="die-label">instinct</div>
+      </div>
+      <div class="dice-op">+</div>
+      <div class="die-cell">
+        <div class="die-value" id="die2">–</div>
+        <div class="die-label">&nbsp;</div>
+      </div>
+      <div class="dice-op">=</div>
+      <div class="die-cell">
+        <div class="die-value die-total" id="die-total">–</div>
+        <div class="die-label">total</div>
+      </div>
+    </div>
+    <button id="dice-roll-btn">Roll</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

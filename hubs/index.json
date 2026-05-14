@@ -1,0 +1,8 @@
+[
+  { "id": "hub_shockoe_bottom",  "name": "Shockoe Bottom",  "file": "shockoe-bottom.md"  },
+  { "id": "hub_the_fan",         "name": "The Fan",          "file": "the-fan.md"         },
+  { "id": "hub_downtown",        "name": "Downtown",         "file": "downtown.md"         },
+  { "id": "hub_university",      "name": "University",       "file": "university.md"       },
+  { "id": "hub_creighton_court", "name": "Creighton Court",  "file": "creighton-court.md"  },
+  { "id": "hub_oregon_hill",     "name": "Oregon Hill",      "file": "oregon-hill.md"      }
+]

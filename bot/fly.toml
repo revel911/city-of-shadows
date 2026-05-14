@@ -1,0 +1,19 @@
+# Fly.io config for the City of Shadows Discord bot.
+# Deploy with: fly deploy
+# Set secrets with: fly secrets set DISCORD_TOKEN=... ANTHROPIC_API_KEY=... GITHUB_TOKEN=...
+
+app = "city-of-shadows-bot"
+primary_region = "iad"
+
+[build]
+
+[env]
+  NODE_ENV = "production"
+  GITHUB_REPO = "city-of-shadows"
+  GITHUB_BRANCH = "main"
+
+# Gateway bot — no inbound traffic, just a persistent worker.
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256

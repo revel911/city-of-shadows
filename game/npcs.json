@@ -1,0 +1,925 @@
+{
+  "last_updated": "2026-04-30",
+  "npcs": [
+    {
+      "id": "npc_det_okafor",
+      "name": "Det. Sgt. Paulette Okafor",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "RPD cold case detective; unofficial breach manager for supernatural incidents",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 5,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Speaks like every word is already on the record, because in her head it is."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 2. Quietly pulling contradictory cold cases from the 1970s."
+    },
+    {
+      "id": "npc_father_hruska",
+      "name": "Father Benedikt Hruska",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Priest of St. Peter's Catholic; community anchor for the Bottom",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 5,
+        "order": 4,
+        "manner": 5,
+        "violence": 5,
+        "voice_note": "Warmth that feels earned rather than performed — the most disarming thing about him in this city."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1. Church basement locked since 1943. He has never asked why."
+    },
+    {
+      "id": "npc_emmett_daye",
+      "name": "Emmett Daye",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Hollywood Cemetery groundskeeper, 40 years; has seen things he can't explain",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 2,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Talks around what he's seen rather than at it. Forty years of watching strange things taught him not to name them out loud."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 0. Cemetery has new sections he doesn't remember being built."
+    },
+    {
+      "id": "npc_celestine_morrow",
+      "name": "Celestine Morrow",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Owner of Morrow's Books; 3rd-generation Bottom resident; protective of family legacy",
+      "player_interaction": "Chris — Declan Morrow owes Chris 1 Debt",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Knows more than she says. Measures you by how you treat the neighborhood before she'll treat you well."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1. Shop has a copy of a book that was never published."
+    },
+    {
+      "id": "npc_declan_morrow",
+      "name": "Declan Morrow",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": ["arc-005"],
+      "status": "active",
+      "role": "Celestine's nephew; small-time supernatural fixer trying to stay useful",
+      "player_interaction": "Chris — owes Chris 1 Debt (tempted Nadia into danger; cost her a Scar)",
+      "personality": {
+        "moral": 2,
+        "order": 2,
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Charming in the way that makes you check your pockets. Thinks being useful excuses being reckless."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 0 / Night 0. Convinced Nadia to follow him; she got a Scar. Knows Serrano's tunnel entry location."
+    },
+    {
+      "id": "npc_aldric_serrano",
+      "name": "Aldric Serrano",
+      "faction": "Night",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": ["arc-011"],
+      "status": "active",
+      "role": "Nosferatu elder and canal tunnel patriarch; wants to be left alone",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 2,
+        "order": 3,
+        "manner": 2,
+        "violence": 2,
+        "voice_note": "Doesn't threaten. States facts about consequences in the same tone he'd use to describe the weather."
+      },
+      "last_seen": "",
+      "notes": "Status: Night 3. Entry location known to Declan Morrow; access costs a Debt. Something breached his domain recently."
+    },
+    {
+      "id": "npc_theo_marchand",
+      "name": "Theo Marchand",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Robert's inside man; ex-private security; handles physical problems",
+      "player_interaction": "Robert Lagrange — employed",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 3,
+        "violence": 2,
+        "voice_note": "Quiet professional. Does the job, doesn't editorialize. You'd walk past him twice."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 0."
+    },
+    {
+      "id": "npc_patrice_guidry",
+      "name": "Patrice Guidry",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Robert's second; handles problems before they become physical",
+      "player_interaction": "Robert Lagrange — employed",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Reads a room faster than most people breathe. Tells you what you need to hear just late enough that you can't argue."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 0."
+    },
+    {
+      "id": "npc_mireille_fontenot",
+      "name": "Mireille Fontenot",
+      "faction": "Night",
+      "hub": "The Fan",
+      "hub_id": "hub_the_fan",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Toreador vampire; Maison Rouge gallery/salon owner expanding supernatural influence through art",
+      "player_interaction": "None yet — split with Serrano 6 months ago",
+      "personality": {
+        "moral": 2,
+        "order": 4,
+        "manner": 5,
+        "violence": 4,
+        "voice_note": "Impeccably kind right up until she isn't, and the transition is invisible until it's too late."
+      },
+      "last_seen": "",
+      "notes": "Status: Night 2. Grooming Jonah Pryce for Blood Bond. Buying the Tobacco Exchange Building — basement levels not on official plans."
+    },
+    {
+      "id": "npc_asha_tremblay",
+      "name": "Asha Tremblay",
+      "faction": "Wild",
+      "hub": "The Fan",
+      "hub_id": "hub_the_fan",
+      "arc_ids": ["arc-002"],
+      "status": "active",
+      "role": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe",
+      "player_interaction": "Chris — meeting secured at Grisette (Nadia must be present); clocked Nadia's Scar",
+      "personality": {
+        "moral": 4,
+        "order": 2,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Curious and careful in equal measure. Asks questions like she's already decided not to be surprised by the answer."
+      },
+      "last_seen": "session_001",
+      "notes": "Status: Wild 2. Hedge Door unstable — opens onto unfamiliar ground for 3 weeks. Had a visitor from 'prior version of the city.' Meeting: Grisette on Ellwood, 7am 2026-04-25."
+    },
+    {
+      "id": "npc_vera_solis",
+      "name": "Vera Solis",
+      "faction": "Wild",
+      "hub": "The Fan",
+      "hub_id": "hub_the_fan",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Wizened Fae; VMFA restoration expert; restores paintings 'too well'",
+      "player_interaction": "Chris — searching for her; Julia texted re: Vera",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Still. Precise. The way she handles objects tells you she remembers every one that passed through her hands."
+      },
+      "last_seen": "",
+      "notes": "Status: Wild 1. No photo, no social media, no prior existence. Suspected Wizened. Contact pending intro from Asha."
+    },
+    {
+      "id": "npc_marcus_delacroix",
+      "name": "Marcus Delacroix",
+      "faction": "Wild",
+      "hub": "The Fan",
+      "hub_id": "hub_the_fan",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Mortal street artist; documents the Overwrite in the visual record",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 2,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Earnest in a city that punishes it. Says what he means because he hasn't learned yet that nobody wants to hear it."
+      },
+      "last_seen": "",
+      "notes": "Status: Wild 0. His pieces 'evolve' after installation — change to match whatever the current reality becomes."
+    },
+    {
+      "id": "npc_jonah_pryce",
+      "name": "Jonah Pryce",
+      "faction": "Night",
+      "hub": "The Fan",
+      "hub_id": "hub_the_fan",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Mortal collector being groomed by Mireille for Blood Bond; doesn't know it yet",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Enthusiastic about things with no idea what they cost. The kind of person Mireille collects."
+      },
+      "last_seen": "",
+      "notes": "Status: Night 0. At risk — actively being groomed."
+    },
+    {
+      "id": "npc_elspeth_crane",
+      "name": "Elspeth Crane",
+      "faction": "Night",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Ventrue lawyer; Serrano's surface liaison; handles supernatural legal issues",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 2,
+        "order": 5,
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Everything measured. Everything billed. Warmth is a service she charges extra for."
+      },
+      "last_seen": "",
+      "notes": "Status: Night 2. Private office in Riverfront Plaza with no official address — listed as 'storage.'"
+    },
+    {
+      "id": "npc_judge_kellom",
+      "name": "Judge Patricia Kellom",
+      "faction": "Power",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Federal judge; unaware Night asset managed through careful case selection",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 5,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Genuine conviction in every ruling. The tragedy is she means every word."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 3. Night faction asset — she doesn't know it. Consistently rules in favor of development projects that create underground access."
+    },
+    {
+      "id": "npc_marcus_voss",
+      "name": "Marcus Voss",
+      "faction": "Power",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": ["arc-005"],
+      "status": "active",
+      "role": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 4,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Smart enough to see the outline of the thing, not smart enough to stop looking."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 2. Runs secretive program to engineer Awakenings in promising VCU students."
+    },
+    {
+      "id": "npc_riley_hoffman",
+      "name": "Riley Hoffman",
+      "faction": "Mortalis",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Keeps the tour moving past the parts that would ruin it. Professional pretending — the good kind."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years."
+    },
+    {
+      "id": "npc_dr_olave",
+      "name": "Dr. Sebastian Olave",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": ["arc-005"],
+      "status": "active",
+      "role": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 3,
+        "order": 4,
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Collegial and measured. The warmth is real; so is the calculation underneath it."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 3. Convening closed faculty meetings with no agenda. Two junior Consilium members not invited."
+    },
+    {
+      "id": "npc_ingrid_voss",
+      "name": "Councilor Ingrid Voss",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": ["arc-005"],
+      "status": "active",
+      "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with Chris; holds 1 Debt to Chris",
+      "player_interaction": "Chris — placed Nadia (Chris's ward) with him; owes Chris 1 Debt (secret kept)",
+      "personality": {
+        "moral": 3,
+        "order": 5,
+        "manner": 5,
+        "violence": 5,
+        "voice_note": "Every sentence is load-bearing. She never says anything she hasn't already thought three moves past."
+      },
+      "last_seen": "session_001",
+      "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. Chris knows. Chris kept quiet."
+    },
+    {
+      "id": "npc_prof_tanaka",
+      "name": "Prof. Yuki Tanaka",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": [],
+      "status": "active",
+      "role": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 4,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Precise. Frustrated. The equations are right but the conclusions are impossible, and she knows it."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 1. Tracking mathematical patterns in Richmond's layout that shouldn't exist given when the streets were laid."
+    },
+    {
+      "id": "npc_fen_adeyemi",
+      "name": "Fen Adeyemi",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Young Consilium archivist with more clearance than experience",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Eager to use the access he has. Not quite sure what for. That combination is how things get loose."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 0. Has access to restricted knowledge he doesn't fully understand."
+    },
+    {
+      "id": "npc_dr_ashford",
+      "name": "Dr. Camille Ashford",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": [],
+      "status": "active",
+      "role": "VCU Art History professor; studies Overwrite anomalies in Richmond artwork",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Gets excited about things most people would find alarming. Writes grants for research she can't quite explain to committees."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 1. Has a painting donated in 1995 — canvas and pigments date to the 1850s."
+    },
+    {
+      "id": "npc_mama_dee_washington",
+      "name": "Denise \"Mama Dee\" Washington",
+      "faction": "Mortalis",
+      "hub": "Creighton Court",
+      "hub_id": "hub_creighton_court",
+      "arc_ids": [],
+      "status": "active",
+      "role": "30-year community organizer; leads resident council; can see through Overwrite effects",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 5,
+        "order": 4,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Treats the impossible as a practical problem. Has been solving impossible problems for thirty years."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 2. Holds community meetings where some attendees are families displaced months ago."
+    },
+    {
+      "id": "npc_marcus_ghost_williams",
+      "name": "Marcus \"Ghost\" Williams",
+      "faction": "Mortalis",
+      "hub": "Creighton Court",
+      "hub_id": "hub_creighton_court",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Young father and maintenance worker; quiet, notices temporal anomalies; knows how not to be seen",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 3,
+        "violence": 5,
+        "voice_note": "Never explains how he got there. Never explains how he left."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1. Works maintenance on buildings that appear on his work orders but not current site maps."
+    },
+    {
+      "id": "npc_sister_catherine_burke",
+      "name": "Sister Catherine Burke",
+      "faction": "Mortalis",
+      "hub": "Creighton Court",
+      "hub_id": "hub_creighton_court",
+      "arc_ids": ["arc-013"],
+      "status": "active",
+      "role": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 5,
+        "order": 4,
+        "manner": 5,
+        "violence": 5,
+        "voice_note": "Hears the impossible thing and asks what they need to eat."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 2. Food pantry serves families from multiple timeline layers simultaneously."
+    },
+    {
+      "id": "npc_jrock_thompson",
+      "name": "Jamal \"J-Rock\" Thompson",
+      "faction": "Wild",
+      "hub": "Creighton Court",
+      "hub_id": "hub_creighton_court",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Street artist and community historian; creates murals showing past/present simultaneously",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 2,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Talks about the neighborhood like it's a living person. Because for him, it is."
+      },
+      "last_seen": "",
+      "notes": "Status: Wild 1. Murals sometimes appear overnight depicting community events from decades past."
+    },
+    {
+      "id": "npc_dr_reeves",
+      "name": "Dr. Angela Reeves",
+      "faction": "Power",
+      "hub": "Creighton Court",
+      "hub_id": "hub_creighton_court",
+      "arc_ids": [],
+      "status": "active",
+      "role": "RRHA social worker; Richmond native; grew up in the East End; conflicted about redevelopment",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Keeps notes about which timeline she's operating in for each appointment. Does not explain this to supervisors."
+      },
+      "last_seen": "",
+      "notes": "Status: Power 1. Case files include families whose addresses change depending on what day she visits."
+    },
+    {
+      "id": "npc_eddie_mcallister",
+      "name": "Eddie \"Iron\" McAllister",
+      "faction": "Mortalis",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Third-generation resident; retired steelworker; grandfather worked Tredegar; sees through industrial echoes",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 3,
+        "violence": 3,
+        "voice_note": "Tells stories about his grandfather's work at Tredegar, sometimes speaking as if the old man is still showing up for shifts."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 3."
+    },
+    {
+      "id": "npc_lucia_santos",
+      "name": "Lucia Santos",
+      "faction": "Wild",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Artist and community organizer; runs gallery/venue; moved here 15 years ago, earned respect through advocacy",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 2,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Holds opening nights where attendees include longtime residents who moved away decades ago. She introduces them by name."
+      },
+      "last_seen": "",
+      "notes": "Status: Wild 2."
+    },
+    {
+      "id": "npc_tommy_barrett",
+      "name": "Tommy Barrett",
+      "faction": "Mortalis",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Bartender at Poe Museum; local historian; collects oral histories; notices Overwrite-related job references",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Interviews residents about companies that officially closed before the interview subjects were born. Takes it in stride."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1."
+    },
+    {
+      "id": "npc_becca_chen",
+      "name": "Rebecca \"Becca\" Chen",
+      "faction": "Wild",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "VCU art student and neighborhood liaison; organizes student volunteer projects",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Earnest connector. Finds tools and work clothes from previous generations of neighborhood maintenance during her clean-up days."
+      },
+      "last_seen": "",
+      "notes": "Status: Wild 1."
+    },
+    {
+      "id": "npc_pete_kowalski",
+      "name": "Pete Kowalski",
+      "faction": "Mortalis",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Retired city worker; de facto neighborhood watch; knows every family for blocks, suspicious of anomalies",
+      "player_interaction": "None yet",
+      "personality": {
+        "moral": 3,
+        "order": 4,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Patrols streets that sometimes show different house numbers. Adjusts his rounds based on which version of the neighborhood he's experiencing."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 2."
+    },
+    {
+      "id": "npc_petra_holt",
+      "name": "Petra Holt",
+      "faction": "Power",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": ["arc-002", "arc-004"],
+      "status": "active",
+      "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse",
+      "player_interaction": "Chris — meeting at Gild, 9am; agreed without pushing",
+      "personality": {
+        "moral": 2,
+        "order": 4,
+        "manner": 4,
+        "violence": 3,
+        "voice_note": "Controlled-still. Dressed like hospital administration. Says exactly what she means. Does not ask follow-up questions."
+      },
+      "last_seen": "session_001",
+      "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when Chris offered it."
+    },
+    {
+      "id": "npc_nadia_vasek",
+      "name": "Nadia Vasek",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": ["arc-005"],
+      "status": "active",
+      "role": "Chris's ward, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
+      "player_interaction": "Chris — ward; Asha Tremblay has taken interest in her",
+      "personality": {
+        "moral": 4,
+        "order": 1,
+        "manner": 2,
+        "violence": 2,
+        "voice_note": "Not rude — just nineteen and terrified and trying not to burn something down. The bluntness is a side effect of the fear."
+      },
+      "last_seen": "session_001",
+      "notes": "Status: Power 0 (ward). Awakened 8 months ago. Scar on left palm from Declan Morrow. Timing of Awakening matches Maren Voss's death."
+    },
+    {
+      "id": "npc_maren_voss",
+      "name": "Maren Voss",
+      "faction": "Mortalis",
+      "hub": "Shockoe Bottom",
+      "hub_id": "hub_shockoe_bottom",
+      "arc_ids": ["arc-001", "arc-002", "arc-003"],
+      "status": "deceased",
+      "role": "VCU Folklore & Mythology grad student; died 8 months ago; left a brick-encoded message for an Acanthus",
+      "player_interaction": "Chris — received her message via channeled brick",
+      "personality": {
+        "moral": 5,
+        "order": 2,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Pressed a memory into river clay knowing she was going to die. Whatever she was, she was not afraid of what came next."
+      },
+      "last_seen": "session_001",
+      "notes": "Deceased. Obituary: six lines, no cause of death. One of three ritual practitioners in the warehouse. The Collector killed her. Relation to Ingrid Voss unknown but surname matches."
+    },
+    {
+      "id": "npc_the_collector",
+      "name": "The Collector",
+      "faction": "Unknown",
+      "hub": "",
+      "hub_id": "",
+      "arc_ids": ["arc-001"],
+      "status": "active",
+      "role": "Unknown entity that catalogs things-that-remember; killed Maren Voss; still in the city",
+      "player_interaction": "Chris — active threat; may have noticed Chris",
+      "personality": {
+        "moral": 1,
+        "order": 4,
+        "manner": 1,
+        "violence": 2,
+        "voice_note": "Leave blank until nature is established. Entity, not person. It catalogs. It does not speak."
+      },
+      "last_seen": "",
+      "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed Chris."
+    },
+    {
+      "id": "npc_dad_grey",
+      "name": "Dad (Benjamin Grey's father)",
+      "faction": "Mortalis",
+      "hub": "",
+      "hub_id": "",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Ben's father; hid his supernatural existence; involved in Ben's missing kidney",
+      "player_interaction": "Benjamin — owes Ben 1 Debt",
+      "personality": {
+        "moral": 2,
+        "order": 3,
+        "manner": 3,
+        "violence": 3,
+        "voice_note": "TBD — establish in play."
+      },
+      "last_seen": "",
+      "notes": "Full name unknown. Location unknown. History with Ben's kidney unresolved."
+    },
+    {
+      "id": "npc_father_dominic",
+      "name": "Father Dominic",
+      "faction": "Mortalis",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Ben's parish superior at St. Angust Parish; genuinely devout; suspects Ben of something",
+      "player_interaction": "Benjamin — suspicious of him",
+      "personality": {
+        "moral": 5,
+        "order": 5,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "The calls always come at the worst possible moment. This is not entirely coincidental."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 1."
+    },
+    {
+      "id": "npc_hannibal",
+      "name": "Hannibal",
+      "faction": "Wild",
+      "hub": "",
+      "hub_id": "",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Werewolf with a history of kidnapping Ben; now tolerates Ben's questions about the supernatural",
+      "player_interaction": "Benjamin — Ben owes Hannibal 1 Debt",
+      "personality": {
+        "moral": 3,
+        "order": 1,
+        "manner": 2,
+        "violence": 2,
+        "voice_note": "Tolerates. That is the word. The gap between tolerate and welcome is wider than most people survive crossing."
+      },
+      "last_seen": "",
+      "notes": "Full name unknown. Location unknown."
+    },
+    {
+      "id": "npc_marcus_teen",
+      "name": "Marcus (teen)",
+      "faction": "Mortalis",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "16-year-old congregation member at St. Angust Parish; trusts Ben completely; danger magnet",
+      "player_interaction": "Benjamin — handle carefully; gravitating toward wrong people",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Trusts completely. That is his danger."
+      },
+      "last_seen": "",
+      "notes": "Last name unknown. No father. Gravitating toward wrong people."
+    },
+    {
+      "id": "npc_sandra_grey",
+      "name": "Sandra Grey",
+      "faction": "Mortalis",
+      "hub": "",
+      "hub_id": "",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Ben's ex-wife; believes he is simply a priest now; calls occasionally",
+      "player_interaction": "Benjamin — mortal relationship",
+      "personality": {
+        "moral": 4,
+        "order": 4,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "TBD — establish in play."
+      },
+      "last_seen": "",
+      "notes": "He always picks up."
+    },
+    {
+      "id": "npc_the_general",
+      "name": "The General",
+      "faction": "Night",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": ["arc-010"],
+      "status": "active",
+      "role": "Unnamed vampire faction leader; Ben holds dirt on them; coup manipulation is ongoing",
+      "player_interaction": "Benjamin — Ben owes The General 1 Debt; volatile",
+      "personality": {
+        "moral": 1,
+        "order": 3,
+        "manner": 3,
+        "violence": 1,
+        "voice_note": "TBD — name and full description to be established in play."
+      },
+      "last_seen": "",
+      "notes": "Name TBD. Ben holds damaging information; using it to dangle coup bait. Situation is a standoff."
+    },
+    {
+      "id": "npc_vera_medium",
+      "name": "Vera (medium)",
+      "faction": "Mortalis",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": ["arc-014"],
+      "status": "active",
+      "role": "Mortal medium who can see John Smith clearly; leaves offerings; waiting for something John doesn't know he has",
+      "player_interaction": "John Smith — owes John 1 Debt",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 5,
+        "voice_note": "Not afraid. She's been leaving candles and water for a ghost she can see clearly. She is waiting."
+      },
+      "last_seen": "",
+      "notes": "Last name unknown. She knows something she is not telling John yet."
+    },
+    {
+      "id": "npc_roz_czerny",
+      "name": "Rosamund \"Roz\" Czerny",
+      "faction": "Mortalis",
+      "hub": "",
+      "hub_id": "",
+      "arc_ids": ["arc-006"],
+      "status": "active",
+      "role": "Retired forensic pathologist turned fixer; provides information and cleanup",
+      "player_interaction": "Chris — Chris owes Roz 2 Debts; Johan — Johan owes Roz 1 Debt",
+      "personality": {
+        "moral": 3,
+        "order": 2,
+        "manner": 4,
+        "violence": 3,
+        "voice_note": "Professionally smooth. Personally done. Every favor she does is a small step closer to the retirement she knows isn't coming."
+      },
+      "last_seen": "",
+      "notes": "61 years old. Smokes cheap cigars. Drives a van with a broken heater. Knows what dies in this city and how."
+    },
+    {
+      "id": "npc_linh_pham",
+      "name": "Dr. Linh Pham",
+      "faction": "Power",
+      "hub": "The University",
+      "hub_id": "hub_university",
+      "arc_ids": ["arc-006", "arc-007"],
+      "status": "deceased",
+      "role": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse",
+      "player_interaction": "Johan van Axel — killed by Johan in Session 1",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Knew Johan's name without being told it. Said what she needed to say before the end."
+      },
+      "last_seen": "session_001",
+      "notes": "Deceased. Knew the people who sent Johan were 'cleaning house' and he was the mop. Carried Voss's sealed field research case."
+    },
+    {
+      "id": "npc_henrik_vael",
+      "name": "Henrik Vael",
+      "faction": "Mortalis",
+      "hub": "Downtown",
+      "hub_id": "hub_downtown",
+      "arc_ids": ["arc-006"],
+      "status": "active",
+      "role": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order",
+      "player_interaction": "Johan van Axel — owes Johan a Debt (Johan sheltering him from the network)",
+      "personality": {
+        "moral": 2,
+        "order": 3,
+        "manner": 3,
+        "violence": 2,
+        "voice_note": "Talks like a man choosing each word carefully because he's already said too much once and paid for it."
+      },
+      "last_seen": "",
+      "notes": "Status: Mortalis 0. Location known only to Johan. Surfaced in Richmond three weeks ago. Ran with Johan in Europe before the mission that went wrong."
+    }
+  ]
+}

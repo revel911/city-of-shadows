@@ -1,0 +1,9 @@
+node_modules/
+.env
+.env.local
+*.log
+.fly/
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

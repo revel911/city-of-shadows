@@ -1,0 +1,42 @@
+{
+  "player_id": "johan-van-axel",
+  "character_name": "Johan van Axel",
+  "playbook": "The Hunter",
+  "wod_extension": "Hunter: The Vigil (Night Stalker Creed) + Slasher (Avenger Undertaking)",
+  "stats": {
+    "Blood":  1,
+    "Heart":  -1,
+    "Mind":   2,
+    "Spirit": 0
+  },
+  "harm": 0,
+  "corrupt": 0,
+  "xp": 0,
+  "advances": 5,
+  "circle_ratings": {
+    "Mortalis": 0,
+    "Night":    0,
+    "Power":    0,
+    "Wild":     0
+  },
+  "circle_status": {
+    "Mortalis": 1,
+    "Night":    0,
+    "Power":    0,
+    "Wild":     -1
+  },
+  "gear": [
+    "Shitty apartment",
+    "Pick-up truck (black, no markings)",
+    "Cell phone (burner)",
+    "Suppressed Sig Sauer P226 (2-harm near, concealable, -loud, semi-auto)",
+    "Karambit (2-harm hand, concealed, silvered)",
+    "Collapsible carbon-fiber baton (1-harm close, concealed, thick)",
+    "Suppressed .308 bolt-action (2-harm far, -loud, scoped, breaks down into camera case)",
+    "Blessed silvered stiletto — father's (2-harm hand, holy, silvered)",
+    "Sealed aluminum case — Voss field research (combination lock, unopened)"
+  ],
+  "active_arc_ids": ["arc-006", "arc-007", "arc-008"],
+  "last_session": "session_001",
+  "notes": "Dr. Linh Pham is dead. Johan killed her (session 1). Possesses sealed case with Voss field research — combination lock, unopened. Handler failed to produce password — network compromised or impostor. Unknown text sender (name and position known to them) awaiting response."
+}
