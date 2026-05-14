@@ -16,11 +16,13 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 
 **Player flow**
 
-1. Player runs `/play` in Discord. The bot opens a private thread.
-2. Bot loads the player's handoff, sheet, state, recent events, and MC instructions, then asks Claude (`claude-sonnet-4-6`) for the opening scene.
+1. Player runs `/play` in Discord. The bot replies with a menu listing every character plus a `+ New character` entry.
+2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks Claude (`claude-sonnet-4-6`) for the opening scene.
 3. Player and Claude trade messages in the thread.
 4. When the session ends, Claude emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, arcs.
 5. The dashboard reflects the new world state on next refresh.
+
+Discord identity isn't bound to characters — anyone in the guild can pick any character. If a character is currently in an open session thread, `/play` blocks a second attempt until that thread is archived.
 
 ---
 
@@ -107,21 +109,7 @@ node deploy-commands.js
 
 You should see `Registered 2 commands (guild ...).`
 
-### 7 — Link your Discord account to a character
-
-Open [players/index.json](../players/index.json) and add a `discord_user_id` field to your character entry:
-
-```json
-[
-  { "id": "alex-chen", "name": "Alex Chen", "discord_user_id": "123456789012345678" }
-]
-```
-
-(Right-click your username in Discord → **Copy User ID**.)
-
-Commit and push. The bot reads `players/index.json` on every `/play` invocation, so changes take effect immediately.
-
-### 8 — First session
+### 7 — First session
 
 In your Discord server, run:
 
@@ -129,15 +117,11 @@ In your Discord server, run:
 /play
 ```
 
-If you have one character linked to your Discord ID, the bot creates a private thread and posts Claude's opening scene. Reply in the thread to play. When you're ready to stop, tell the MC you're ending the session — Claude will write its final beat and emit a close block. The bot writes the handoff, state, events log, and any NPC/arc updates back to GitHub as separate commits, then archives the thread.
+The bot replies (ephemerally) with a select menu listing every character in [players/index.json](../players/index.json) plus a `+ New character` entry. Pick one and the bot opens a private session thread. Reply in the thread to play. When you're ready to stop, tell the MC you're ending the session — Claude will write its final beat and emit a close block. The bot writes the handoff, state, events log, and any NPC/arc updates back to GitHub as separate commits, then archives the thread.
 
-To create a brand new character, run:
+To skip the menu, pass `character:<id>` directly (e.g. `/play character:alex-chen`). Use `character:new` to jump straight into onboarding — the MC walks through playbook → stats → moves → gear → debts/circles → first scene, and on close writes a new `players/<id>/` folder.
 
-```
-/play character:new
-```
-
-The MC walks through onboarding (playbook → stats → moves → gear → debts/circles → first scene), and on close writes a new `players/<id>/` folder.
+If someone is already in a session for the character you picked, `/play` blocks you with a link to the live thread. Wait for them to close (or the auto-archive at 24h of inactivity) and try again.
 
 ---
 
@@ -145,7 +129,7 @@ The MC walks through onboarding (playbook → stats → moves → gear → debts
 
 | Command | What It Does |
 |---------|--------------|
-| `/play` | Opens a private session thread with the MC. With one linked character, uses it; with several, prompts for an id. `character:new` starts onboarding. |
+| `/play` | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
 | `/roll` | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier in the next turn. |
 
 ---
@@ -188,7 +172,7 @@ city-of-shadows/
 │   └── *.md
 │
 ├── players/                       Per-character state, sheet, handoff
-│   ├── index.json                 ← add discord_user_id here
+│   ├── index.json                 Character roster (id + name)
 │   ├── _template/
 │   └── <player-id>/
 │       ├── state.json
@@ -235,8 +219,8 @@ Every session starts by feeding these into Claude's context. The MC reads them a
 
 ## Troubleshooting
 
-**`/play` returns "No character is linked to your Discord account"**
-→ Add `discord_user_id` to your entry in [players/index.json](../players/index.json), commit, push.
+**`/play` says a character is currently in a session**
+→ Another open thread already exists for that character. Open the linked thread and close that session (or wait for Discord's 24h auto-archive), then try again.
 
 **The bot never replies in the thread**
 → Check `fly logs` for errors. Most common: `ANTHROPIC_API_KEY` not set, or `MESSAGE CONTENT INTENT` not enabled on the Discord app.

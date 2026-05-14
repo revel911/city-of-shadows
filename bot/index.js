@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readdir } from 'node:fs/promises';
 import { handleMessage } from './handlers/session.js';
+import { handleSelect as handlePlaySelect, SELECT_CUSTOM_ID as PLAY_SELECT_ID } from './commands/play.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -30,13 +31,20 @@ client.once(Events.ClientReady, c => {
 });
 
 client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-  const cmd = client.commands.get(interaction.commandName);
-  if (!cmd) return;
   try {
-    await cmd.execute(interaction);
+    if (interaction.isChatInputCommand()) {
+      const cmd = client.commands.get(interaction.commandName);
+      if (!cmd) return;
+      await cmd.execute(interaction);
+      return;
+    }
+    if (interaction.isStringSelectMenu() && interaction.customId === PLAY_SELECT_ID) {
+      await handlePlaySelect(interaction);
+      return;
+    }
   } catch (err) {
-    console.error(`[${interaction.commandName}]`, err);
+    const label = interaction.isChatInputCommand() ? interaction.commandName : interaction.customId;
+    console.error(`[${label}]`, err);
     const reply = { content: `Error: ${err.message}`, ephemeral: true };
     if (interaction.replied || interaction.deferred) await interaction.followUp(reply).catch(() => {});
     else await interaction.reply(reply).catch(() => {});
