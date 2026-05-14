@@ -1,9 +1,8 @@
 import { generate, buildOpeningContext } from './mc.js';
 import { writeFile, readFile, readJSON } from './github.js';
+import { chunk } from './read-utils.js';
 
 const sessions = new Map();
-
-const DISCORD_LIMIT = 1900;
 
 export async function startSession(thread, player) {
   const opening = await buildOpeningContext(player);
@@ -50,23 +49,6 @@ async function postMCResponse(thread, response, session) {
       thread.setArchived(true).catch(() => {});
     }
   }
-}
-
-function chunk(text, limit = DISCORD_LIMIT) {
-  if (!text) return [];
-  if (text.length <= limit) return [text];
-  const parts = [];
-  let rest = text;
-  while (rest.length > limit) {
-    let cut = rest.lastIndexOf('\n\n', limit);
-    if (cut < limit / 2) cut = rest.lastIndexOf('\n', limit);
-    if (cut < limit / 2) cut = rest.lastIndexOf(' ', limit);
-    if (cut <= 0) cut = limit;
-    parts.push(rest.slice(0, cut));
-    rest = rest.slice(cut).trimStart();
-  }
-  if (rest.length) parts.push(rest);
-  return parts;
 }
 
 function grabTag(body, tag) {

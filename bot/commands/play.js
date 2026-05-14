@@ -6,6 +6,7 @@ import {
 } from 'discord.js';
 import { startSession } from '../handlers/session.js';
 import { listPlayers } from '../handlers/github.js';
+import { resolveCharacterFromList } from '../handlers/read-utils.js';
 
 const NEW_CHARACTER_VALUE = '__new__';
 export const SELECT_CUSTOM_ID = 'play:select';
@@ -87,7 +88,7 @@ function resolveCharacter(value, players, fallbackName) {
   if (value === 'new' || value === NEW_CHARACTER_VALUE) {
     return { id: NEW_CHARACTER_VALUE, name: fallbackName };
   }
-  return players.find(p => p.id === value || p.name.toLowerCase() === value.toLowerCase()) || null;
+  return resolveCharacterFromList(value, fallbackName, players);
 }
 
 async function openSession(interaction, channel, chosen) {
