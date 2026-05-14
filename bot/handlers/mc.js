@@ -5,8 +5,8 @@ const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 4096;
 const EVENT_TAIL_LINES = 120;
 
-const COMPACT_AT = 30;
-const KEEP_RECENT = 8;
+const COMPACT_AT = Number(process.env.COMPACT_AT) || 30;
+const KEEP_RECENT = Number(process.env.KEEP_RECENT) || 8;
 const SUMMARY_MAX_TOKENS = 800;
 const SUMMARY_SYSTEM = [
   'Summarize this Urban Shadows session segment for ongoing context.',
@@ -175,6 +175,13 @@ export async function generate(session) {
     messages: withCacheBreakpoints(session.messages),
     max_tokens: MAX_TOKENS,
   });
+  const u = resp.usage || {};
+  console.log(
+    `[mc] thread=${session.threadId} msgs=${session.messages.length} ` +
+    `in=${u.input_tokens || 0} out=${u.output_tokens || 0} ` +
+    `cache_create=${u.cache_creation_input_tokens || 0} ` +
+    `cache_read=${u.cache_read_input_tokens || 0}`
+  );
   return resp.content
     .filter(b => b.type === 'text')
     .map(b => b.text)
