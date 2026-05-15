@@ -5,19 +5,19 @@
 **Trigger:** When you turn to violence.
 **Roll:** Blood
 
-Roll with BLOOD. On a hit, you inflict harm as established and your opposition chooses one:
-
-**Opposition chooses:**
-- they inflict harm on you
-- they put you in a bad spot
-- they create an opening to flee
+Roll with BLOOD. On a hit, you inflict harm as established and your opposition chooses one of their options.
 
 - **10+:** You also choose one:
   - you inflict terrible harm
   - you take something from them
   - you create an opportunity for an ally
-- **7–9:** Your opposition chooses one from the list above.
+- **7–9:** Your opposition chooses one of their options.
 - **Miss:** Hard MC move.
+
+**Opposition chooses:**
+- they inflict harm on you
+- they put you in a bad spot
+- they create an opening to flee
 
 *Advanced (12+):* You inflict harm as established and take all 3 from the 10+ list.
 
@@ -138,8 +138,8 @@ Choose an ability from your playbook and roll with SPIRIT. On a hit, mark corrup
 
 Roll with their Circle.
 
-- **10+:** Give them a +1 or −2 to their roll.
-- **7–9:** Give them a +1 or −2 to their roll, but you expose yourself to danger, entanglement, or cost.
+- **10+:** Give them a +1 or -2 to their roll.
+- **7–9:** Give them a +1 or -2 to their roll, but you expose yourself to danger, entanglement, or cost.
 - **Miss:** Hard MC move.
 
 ---
@@ -231,4 +231,4 @@ Roll with the difference in Status between you and your creditor.
 
 - **10+:** You weasel out of the obligation for now, but you still owe the Debt.
 - **7–9:** You weasel out for now, but you owe them an additional Debt or mark corruption, your choice.
-- **Miss:** You can't avoid the noose: either honor the Debt in full or erase all the Debts owed to you by their Circle and take a −1 ongoing to Status with their Circle until after time passes.
+- **Miss:** You can't avoid the noose: either honor the Debt in full or erase all the Debts owed to you by their Circle and take a -1 ongoing to Status with their Circle until after time passes.
