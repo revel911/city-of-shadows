@@ -63,12 +63,6 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Exhausted** — You push yourself too hard — take -1 ongoing until you rest.
 - **Reckless Pursuit** — You rush into danger alone, setting yourself up for an ambush.
 
-#### The Sworn
-
-- **Oathbreaker** — You involuntarily betray your order's principles, drawing suspicion or punishment.
-- **Blind Loyalty** — You obey an order without question, even if it's clearly wrong.
-- **Marked for Judgment** — Your enemies take notice, and someone makes a move against you.
-
 ### Night — Hunger
 
 #### The Vamp
@@ -108,6 +102,12 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Demonic Compulsion** — Your patron forces you to act in their interest, regardless of personal goals.
 - **Infernal Aura** — Your true nature is revealed, terrifying mortals and alerting supernatural foes.
 - **Unholy Craving** — You must indulge in an extreme vice immediately (violence, suffering, indulgence, etc.).
+
+#### The Sword
+
+- **Oathbreaker** — You involuntarily betray your order's principles, drawing suspicion or punishment.
+- **Blind Loyalty** — You obey an order without question, even if it's clearly wrong.
+- **Marked for Judgment** — Your enemies take notice, and someone makes a move against you.
 
 ### Wild — Chaos
 
