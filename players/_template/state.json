@@ -1,5 +1,4 @@
 {
-  "_schema": "See mc-reference/state-schema.md for field definitions and sources.",
   "player_id": "kebab-case-folder-name",
   "character_name": "Full Character Name",
   "playbook": "The PlaybookName",
@@ -29,5 +28,9 @@
   "gear": [],
   "active_arc_ids": [],
   "last_session": "session_000",
+  "safety": {
+    "hard_limits": [],
+    "soft_limits": []
+  },
   "notes": ""
 }

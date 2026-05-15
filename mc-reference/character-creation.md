@@ -82,19 +82,25 @@ After the player picks, summarize the playbook's special mechanic in your own wo
 - *Kith* (Changeling) — the type of fae you are; determines your specific magical gifts.
 - *Compact* (Hunter) — the organization or covenant you hunt with. Defines your tactical advantages and Gospel moves.
 
-**Say:** "World of Darkness extensions overlay deeper lore on top of your playbook. Each one has a *natural* playbook that grants its prerequisite move for free — but any playbook can run any extension, you just spend a move pick on the prerequisite.
+**Say:** "World of Darkness extensions overlay deeper lore on top of your playbook. Each one has a *natural* playbook — the playbook the extension was built for. Any playbook can still run any extension; it just costs extra.
+
+How induction works:
+- **Natural pairing**: you trade your beginning archetype Move for induction into a Clan / Path / Auspice / Shade / Kith / Compact / Undertaking. You get the sub-type slot (Discipline, Rote, Gift, Manifestation, etc.) in exchange.
+- **Off-natural pairing**: you keep your archetype Move, but one of your move picks in Phase 7 must be the extension's prerequisite move — taken cross-archetype from the natural playbook.
 
 Natural pairings:
-- Vampire: The Masquerade → The Vamp (free prerequisite: The Embrace)
-- Mage: The Awakening → The Wizard (free prerequisite: Channeling)
-- Orpheus → The Spectre (free prerequisite: manifest abilities)
-- Werewolf: The Forsaken → The Wolf
-- Changeling: The Lost → The Fae
-- Demon: The Descent → The Tainted
-- Hunter: The Vigil → The Hunter
-- Slasher → any Mortalis playbook
+- Vampire: The Masquerade → The Vamp (induction trades beginning move for a Clan + first Discipline)
+- Mage: The Awakening → The Wizard (induction trades beginning move for an Awakening Path + first Rote)
+- Orpheus → The Spectre (induction trades beginning move for a Shade + first Manifestation Form)
+- Werewolf: The Forsaken → The Wolf (induction trades beginning move for an Auspice/Tribe + gift)
+- Changeling: The Lost → The Fae (induction trades beginning move for a Kith + Contract)
+- Demon: The Descent → The Tainted (induction trades beginning move per demon.md)
+- Hunter: The Vigil → The Hunter (induction trades beginning move per hunter.md)
+- Slasher → any Mortalis playbook (induction trades beginning move per slasher.md)
 
-Want to take an extension? If so, which?"
+You may also decline induction entirely on a natural pairing and keep your beginning archetype Move — but then you don't get the sub-type slot or its abilities.
+
+Want to take an extension? If so, which, and are you inducting?"
 
 If the player picks an extension off-natural (e.g., a Veteran wanting Mage: The Awakening), explicitly tell them: "Your character will need [prerequisite move]. That'll cost one of your move picks in the next step — taken cross-archetype from [natural playbook]."
 
@@ -133,7 +139,8 @@ Apply rules:
 - Playbook's `you_get_this_one` moves auto-marked.
 - Player picks the remaining count from `reference/playbooks.md` under the chosen playbook.
 - **If a WoD extension was taken in Phase 5:**
-  - *Natural pairing*: the prerequisite is already the playbook's free starting move — nothing extra.
+  - *Natural pairing with induction*: the player gives up their beginning archetype Move (the one normally auto-marked) in exchange for the extension's sub-type slot and its starting ability (first Discipline / Rote / Gift / Manifestation Form / Contract / etc.). They do **not** spend a move pick on the prerequisite — induction handles it.
+  - *Natural pairing without induction*: the player keeps their beginning archetype Move and gets no extension sub-type. Treat the extension as flavor only.
   - *Off-natural pairing*: one of the player's move picks **must** be the prerequisite move (taken cross-archetype from the natural playbook).
 - Sub-type moves (Clan Disciplines, Awakening rotes, Auspice gifts, Kith abilities) come from the relevant `reference/world-of-darkness/<extension>.md` file. Whether a sub-type move costs a pick or is granted free by extension induction follows that file's rules — enforce what the file says.
 
@@ -218,7 +225,7 @@ After the first scene plays out and the session closes, the close block must inc
 
 - `<player_id>` — kebab-case id from Phase 12
 - `<sheet>` — full new sheet built across phases 1–11
-- `<state_patch>` — initial state: stats, harm 0, corruption 0, xp 0, circle_ratings, circle_status, safety block, debts, advances
+- `<state_patch>` — initial state: `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `safety` block (from Phase 1), `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`. (Debts and Anchors go on the sheet, not in `state.json`.)
 - `<npc_patch>` — every NPC introduced in Phase 9 (or during the opener), with full personality-engine scores
 - `<handoff>` — full handoff doc for next session
 - `<events_append>` — if the character's arrival is publicly visible, log it

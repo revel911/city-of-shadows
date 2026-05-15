@@ -12,7 +12,9 @@ Keep messages under ~1900 characters where possible. Longer messages get split o
 
 ## Session Close
 
-When the session is ending — the player has said something equivalent to "let's stop here", or you have reached a natural pause point — emit your normal closing narrative, then append a single `<close_session>` block at the end. Everything inside the block is parsed by the bot and written to GitHub as separate commits. Everything outside the block is posted to the thread as your closing message.
+When the session is ending — the player has said something equivalent to "let's stop here", or you have reached a natural pause point — emit your normal closing narrative, then append a single `<close_session>` block **as the very last thing in your response**. The bot only treats the block as a real close when `</close_session>` is the trailing content of your message (only whitespace allowed after it). If you place it mid-response or quote the tag while explaining something, the bot will not close the session.
+
+Everything inside the block is parsed by the bot and written to GitHub as separate commits. Everything outside the block is posted to the thread as your closing message.
 
 ### Close block schema
 
@@ -38,8 +40,8 @@ When the session is ending — the player has said something equivalent to "let'
 
 <npc_patch>
 [
-  { "id": "marcus-velez", "status": "deceased" },
-  { "id": "ada-thorne", "player_interaction": "owes Alex a favor" }
+  { "id": "npc_marcus_velez", "status": "deceased" },
+  { "id": "npc_ada_thorne", "player_interaction": "owes Alex a favor" }
 ]
 </npc_patch>
 
@@ -50,7 +52,9 @@ When the session is ending — the player has said something equivalent to "let'
 </arc_patch>
 
 <interactions_patch>
-[{ "from": "alex-chen", "to": "robert-lagrange", "effect": "left a sealed letter at the bar" }]
+{ "interactions": [
+  { "from": "alex-chen", "to": "robert-lagrange", "effect": "left a sealed letter at the bar" }
+] }
 </interactions_patch>
 
 <world_event>
@@ -66,9 +70,9 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<sheet>`** — full replacement file. Only emit when the sheet actually changes (character creation, advancement, gear shift). Omit otherwise.
 - **`<state_patch>`** — partial JSON. Object fields are merged one level deep (so `{"stats":{"Mind":2}}` updates only Mind). Scalar fields replace.
 - **`<events_append>`** — text appended to the end of `events-log.md`. Use markdown. Include a date/session header.
-- **`<npc_patch>`** — array. Each entry must have `id` or `name`. Existing NPCs are merged; new ones are appended.
+- **`<npc_patch>`** — array. Each entry must have `id` (format: `npc_<firstname>_<lastname>`, snake_case). Existing NPCs are merged by `id`; entries with new ids are appended as new NPCs. Always use the canonical `npc_*` id format — kebab-case or unprefixed ids will create duplicates.
 - **`<arc_patch>`** — array. Each entry must have `id`. Existing arcs are merged; new ones are appended.
-- **`<interactions_patch>`** — full replacement of the interactions queue array. Omit to leave the queue unchanged.
+- **`<interactions_patch>`** — full replacement of the interactions document. Must be a JSON object with shape `{ "interactions": [...] }`. Omit to leave the queue unchanged.
 - **`<world_event>`** — single short line. Posted to the configured `#world-events` channel if one is set. Omit for purely private scenes.
 
 Any field you omit is skipped — the bot only writes fields that are present. If a field's content does not parse (bad JSON), the bot reports the error in-thread and continues with the rest.

@@ -103,12 +103,6 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Dark Whisperings** — A supernatural force tempts you toward corruption — acting on it earns you a Debt.
 - **Arcane Drain** — Your power is temporarily depleted, preventing you from using Let It Out or spells for a scene.
 
-#### The Tainted
-
-- **Demonic Compulsion** — Your patron forces you to act in their interest, regardless of personal goals.
-- **Infernal Aura** — Your true nature is revealed, terrifying mortals and alerting supernatural foes.
-- **Unholy Craving** — You must indulge in an extreme vice immediately (violence, suffering, indulgence, etc.).
-
 #### The Sword
 
 - **Oathbreaker** — You involuntarily betray your order's principles, drawing suspicion or punishment.
@@ -128,3 +122,9 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **The Con Falls Apart** — You are caught in a lie at the worst moment.
 - **Demonic Marker** — Someone realizes what you are and gains leverage over you.
 - **The House Always Wins** — A past scheme backfires, putting you in immediate danger.
+
+#### The Tainted
+
+- **Demonic Compulsion** — Your patron forces you to act in their interest, regardless of personal goals.
+- **Infernal Aura** — Your true nature is revealed, terrifying mortals and alerting supernatural foes.
+- **Unholy Craving** — You must indulge in an extreme vice immediately (violence, suffering, indulgence, etc.).

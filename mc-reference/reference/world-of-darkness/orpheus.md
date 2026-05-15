@@ -1,7 +1,7 @@
 # Orpheus — Orpheus
 
 **Base Playbook (natural pairing):** The Spectre
-**Prerequisite Move:** manifest abilities
+**Prerequisite Move:** Manifestation Transformation
 **Key Mechanics:** Shades grant Manifestation Forms and Horrors; joining a Shade grants gang benefit; expanded Advancement Chart.
 
 ---

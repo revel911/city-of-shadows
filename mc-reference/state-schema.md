@@ -40,7 +40,7 @@ Values are signed integers exactly as written on the sheet (e.g. `+2 → 2`, `-1
 
 | Field | Type | Range | Source |
 |---|---|---|---|
-| `harm` | int | 0–4 | Count of filled harm boxes. Faint = 1, each Serious = 1, each Critical = 1. Max 4. |
+| `harm` | int | 0–5 | Count of filled harm boxes. One Faint + two Serious + two Critical = 5 total. At 5 the character dies (triggers end move). |
 | `corrupt` | int | 0–5 | Count of filled corruption boxes. |
 | `xp` | int | 0–7 | Current XP marks remaining before next advance triggers. |
 | `advances` | int | 0+ | Total advances taken, including Session 0 character creation advances. |
@@ -96,6 +96,29 @@ Transcribe verbatim from the Gear / Resources section of the sheet. Each entry i
 |---|---|---|
 | `active_arc_ids` | string[] | Arc IDs from `game/arcs.json` where this character appears in `player_ids`. Update at session close when new arcs open or old ones resolve. |
 | `last_session` | string | `"session_NNN"` zero-padded (e.g. `"session_001"`). Update at session close. |
+
+---
+
+### Safety (set during onboarding, rarely changes)
+
+```json
+"safety": {
+  "hard_limits": ["..."],
+  "soft_limits": ["..."]
+}
+```
+
+Captured in Phase 1 of `character-creation.md`. **Hard limits** are content that should never appear in fiction at all. **Soft limits** are content the MC should fade to black on. Carry these forward across every session for this character.
+
+---
+
+### Playbook-specific tracks
+
+Some playbooks introduce their own track beyond `harm` / `corrupt`. Only include the field if the playbook uses it.
+
+| Field | Playbook | Range | Source |
+|---|---|---|---|
+| `trauma` | The Spectre | 0–5 | Trauma boxes per `reference/playbooks.md` Spectre Special Mechanic. Mark at session events; clear via trauma moves. |
 
 ---
 
