@@ -2,7 +2,7 @@
 # Deploy with: fly deploy
 # Set secrets with: fly secrets set DISCORD_TOKEN=... ANTHROPIC_API_KEY=... GITHUB_TOKEN=...
 
-app = "city-of-shadows-bot"
+app = "cos-bot-revel911"
 primary_region = "iad"
 
 [build]
