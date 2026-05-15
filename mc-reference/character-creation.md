@@ -34,7 +34,7 @@ Assume the player is new to both Urban Shadows and the World of Darkness. **Defi
 
 **Say:** "Three options for where your character starts on the experience ladder:
 - **Newcomer** — fresh, no advancement history.
-- **Established** — 6 advances. Some hard lessons learned. Probably has Debts both directions.
+- **Established** — 6 advances. Some hard-won lessons. Probably owes favors and is owed favors by others in the city.
 - **Seasoned** — 12 advances. A real operator with significant power and entanglement.
 Which fits the concept?"
 
@@ -57,7 +57,7 @@ Which fits the concept?"
 - The Imp (Wild) — demonic creature working the angles
 - The Oracle (Power) — seer with visions of what lies ahead
 - The Spectre (Night) — ghost bound to the mortal world
-- The Sworn (Power) — oath-bound servant of a supernatural order
+- The Sword (Power) — sworn servant of a Power faction (academy, abbey, or council)
 - The Tainted (Wild) — mortal touched by demonic corruption
 - The Vamp (Night) — vampire navigating blood politics
 - The Veteran (Mortalis) — hardened mortal who has seen it all
@@ -74,7 +74,13 @@ After the player picks, summarize the playbook's special mechanic in your own wo
 
 ## Phase 5 — WoD Extension Decision
 
-**First-mention definitions:** define each extension's sub-type slot the moment it's offered (Clan for Vampire, Awakening Path for Mage, Shade for Orpheus, Auspice/Tribe for Werewolf, Kith for Changeling, Compact for Hunter).
+**First-mention definitions** (use the one that matches the player's chosen extension):
+- *Clan* (Vampire) — your bloodline. Determines your Disciplines (vampiric powers) and your place in vampire society.
+- *Awakening Path* (Mage) — the metaphysical orientation that defines what magic you can do best (Acanthus, Mastigos, Moros, Obrimos, or Thyrsus).
+- *Shade* (Orpheus) — what kind of ghost you are. Defines your Manifestation Forms.
+- *Auspice* / *Tribe* (Werewolf) — auspice is the moon phase you were born under; tribe is the spiritual lineage you serve.
+- *Kith* (Changeling) — the type of fae you are; determines your specific magical gifts.
+- *Compact* (Hunter) — the organization or covenant you hunt with. Defines your tactical advantages and Gospel moves.
 
 **Say:** "World of Darkness extensions overlay deeper lore on top of your playbook. Each one has a *natural* playbook that grants its prerequisite move for free — but any playbook can run any extension, you just spend a move pick on the prerequisite.
 
@@ -86,7 +92,7 @@ Natural pairings:
 - Changeling: The Lost → The Fae
 - Demon: The Descent → The Tainted
 - Hunter: The Vigil → The Hunter
-- Slasher → any Mortalis playbook (Aware, Hunter, Sworn, Veteran)
+- Slasher → any Mortalis playbook
 
 Want to take an extension? If so, which?"
 
@@ -182,7 +188,7 @@ Walk advance list using `reference/rules.md` advancement rules. For each advance
 
 ## Phase 11 — Embed in Hubs
 
-**Say:** "Six neighborhoods anchor the city: [list from `hubs/index.json`]. Pick 1–2 your character is rooted in — where they sleep, where they work, where their stash is."
+**Say:** "The city has several anchored neighborhoods: [list from `hubs/index.json`]. Pick 1–2 your character is rooted in — where they sleep, where they work, where their stash is."
 
 **Capture:** Notes about each chosen hub.
 
