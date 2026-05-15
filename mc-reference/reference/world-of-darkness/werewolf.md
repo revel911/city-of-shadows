@@ -24,7 +24,7 @@ The Full Moon
 
 The Rahu auspice is technically a blessing, but few Werewolves look on it as wholly benign, for the gift of the full moon is mad fury. This auspice is filled with warriors of all kinds, from brawlers to seasoned commanders.
 
-Trait: There are few Werewolves as honest with one another as Rahu. Being able to read one another's strength tends to strip away some of the nonsense that other warrior fraternities can accumulate. Once per session, when you proclaim your intentions of violence toward a stronger individual, mark Experience. You are also responsible for the combat skills of the whole pack and should be encouraged to help train other pack members. Once per session, if you help in the training of your pack or allies, mark Experience.
+**Trait:** There are few Werewolves as honest with one another as Rahu. Being able to read one another's strength tends to strip away some of the nonsense that other warrior fraternities can accumulate. Once per session, when you proclaim your intentions of violence toward a stronger individual, mark Experience. You are also responsible for the combat skills of the whole pack and should be encouraged to help train other pack members. Once per session, if you help in the training of your pack or allies, mark Experience.
 
 Moves for Rahu
 
@@ -40,7 +40,7 @@ The Gibbous Moon
 
 Equal parts priest and historian, oracle and war-howler, the Cahalith is the voice of Luna.
 
-Trait: Cahaliths are meant to keep legends and old tales alive, whether to teach or inspire. When you witness an ally's death, you can compose a tale about it emphasizing the ally's deeds and skill. When used to inspire others, you and all allies you tell the tale to mark Experience. Cahaliths must find an outlet for the visions Luna sends them, lest they go mad. If you do not act upon your dreams by the next moon phase, you become increasingly more insane as your dreams grow more intense. When you are given a task from Luna through your dream state and complete that task, mark Experience.
+**Trait:** Cahaliths are meant to keep legends and old tales alive, whether to teach or inspire. When you witness an ally's death, you can compose a tale about it emphasizing the ally's deeds and skill. When used to inspire others, you and all allies you tell the tale to mark Experience. Cahaliths must find an outlet for the visions Luna sends them, lest they go mad. If you do not act upon your dreams by the next moon phase, you become increasingly more insane as your dreams grow more intense. When you are given a task from Luna through your dream state and complete that task, mark Experience.
 
 Moves for Cahalith
 
@@ -56,7 +56,7 @@ The Half Moon
 
 The half moon hangs in balance, and balance is Luna's gift to the Elodoth. The Elodoth are judges and executioners, able to weigh both sides of any argument and ideally suited to act as voice of the law.
 
-Trait: Elodoths have the greatest duty to make certain that all pack members are receiving their fair due — their fair share of the spoils, their fair allotment of Essence, their fair chance to serve the pack as suits their specialty. You rule your territory and pack with an iron fist. When you give orders that are just despite knowing the bad consequences to come, mark Experience. Elodoths may also have to serve as the one who passes sentence on a packmate who violates the Oath or otherwise does something to the detriment of the pack, balancing justice with necessity. Once per session, if you pass judgment on a packmate who has violated the oaths of the tribe, mark Experience.
+**Trait:** Elodoths have the greatest duty to make certain that all pack members are receiving their fair due — their fair share of the spoils, their fair allotment of Essence, their fair chance to serve the pack as suits their specialty. You rule your territory and pack with an iron fist. When you give orders that are just despite knowing the bad consequences to come, mark Experience. Elodoths may also have to serve as the one who passes sentence on a packmate who violates the Oath or otherwise does something to the detriment of the pack, balancing justice with necessity. Once per session, if you pass judgment on a packmate who has violated the oaths of the tribe, mark Experience.
 
 Moves for Elodoth
 
@@ -75,7 +75,7 @@ The Crescent Moon
 
 The crescent moon is the auspice of the shaman, the speaker with spirits and the spirit hunter. Yet, as the crescent moon is just enough light to count as moonlight, the Ithaeur possesses just enough knowledge to get into trouble.
 
-Trait: Just as all Werewolves are designed for combat, so too are they all able to interact with the spirit world. The Ithaeur has a greater understanding of the hierarchies and relationships of the various spirits within the pack's territories and at least some knowledge of where to start looking in the Shadow for solutions to spiritual problems. Once per session, when others are in trouble and you commune with the Spirits to solve your ally's issues, mark Experience. They also know best how to defend themselves and their packmates against the advances of hostile spirits, as well as how to take the fight to a spirit enemy. Whenever you build a totem or ward for an ally or packmate with the intent of protecting them against spirits, mark Experience.
+**Trait:** Just as all Werewolves are designed for combat, so too are they all able to interact with the spirit world. The Ithaeur has a greater understanding of the hierarchies and relationships of the various spirits within the pack's territories and at least some knowledge of where to start looking in the Shadow for solutions to spiritual problems. Once per session, when others are in trouble and you commune with the Spirits to solve your ally's issues, mark Experience. They also know best how to defend themselves and their packmates against the advances of hostile spirits, as well as how to take the fight to a spirit enemy. Whenever you build a totem or ward for an ally or packmate with the intent of protecting them against spirits, mark Experience.
 
 Moves for Ithaeur
 
@@ -91,7 +91,7 @@ The New Moon
 
 Those who change under the new moon are strange and unpredictable. Luna's blessing to the Irraka is the ability to walk unseen, the gift of deception. Irraka are scouts, spies, and trackers.
 
-Trait: An Irraka is the silent hunter of the pack, the one who leads when it is time to hunt quietly and kill swiftly. You are the one with the gifts to sneak into places where you are not welcome, to learn secrets and stir things up. Once per session, when you can complete a task using stealth, mark Experience. This sometimes means splitting away from the pack to accomplish your scouting or stalking. Once per session, if you abandon your allies to stalk prey or to scout further ahead to gain valuable information, mark Experience.
+**Trait:** An Irraka is the silent hunter of the pack, the one who leads when it is time to hunt quietly and kill swiftly. You are the one with the gifts to sneak into places where you are not welcome, to learn secrets and stir things up. Once per session, when you can complete a task using stealth, mark Experience. This sometimes means splitting away from the pack to accomplish your scouting or stalking. Once per session, if you abandon your allies to stalk prey or to scout further ahead to gain valuable information, mark Experience.
 
 Moves for Irraka
 

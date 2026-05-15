@@ -21,7 +21,7 @@ You have learned the source of your magic and how it empowers you — a Mage's p
 
 The Acanthus Path most commonly opens up to those who are young and inexperienced, or to those who cast off a former life in favor of a new beginning or strange horizons. It favors those who rely on illusion, glamour, luck, or benign trickery to make their way, and those who are completely lost in the world due to temperament or circumstance. The Mages of the Lunargent Thorn have a reputation as the most capricious of the awakened. To their friends, that makes them free spirits or a breath of fresh air. Their detractors are more likely to apply terms such as unstable, immature, or childish. Many Mages see something Fae or otherworldly about the Acanthus, and the Enchanters themselves are hardly in any position to deny it.
 
-Trait: Acanthus are weak when manipulating actual elemental forces of nature or having to deal with the unexpected problems of those forces outside, being too used to the forces of actual chance and the flows of time. Knowing this, you always try to lure your enemies inside. When you lure an enemy inside with the desire to confront them, mark Experience.
+**Trait:** Acanthus are weak when manipulating actual elemental forces of nature or having to deal with the unexpected problems of those forces outside, being too used to the forces of actual chance and the flows of time. Knowing this, you always try to lure your enemies inside. When you lure an enemy inside with the desire to confront them, mark Experience.
 
 Spells for Acanthus
 
@@ -38,7 +38,7 @@ Spells for Acanthus
 
 The Warlock awakening of Mastigos falls most commonly on those who are devout individualists. They make their own way regardless of what others may say about them. They are often rebels, innovators, egotists, and some seem inherently prone to deception, seduction, or manipulation to get what they want. Those awakening to the alluring nightmare of the Path of Scourging are fated to be among the least trusted Mages in existence. Their connection to the Kingdom of Nightmares bestows upon them a creeping, seductive urge toward manipulation and subversion. Despite the constant temptation they experience, they remain in full control of how they express that urge. While many Mastigos grow into their bad reputation over time, many take pains to use their extraordinary talents in ways that ultimately serve the common good.
 
-Trait: Mastigos tend to be very controlling due to their ability to manipulate Mind and space, becoming masters of manipulation and getting what they want. You are used to getting your way, but people are often turned off by your personality. Once per session, if you put yourself and your thoughts above that of others, mark Experience.
+**Trait:** Mastigos tend to be very controlling due to their ability to manipulate Mind and space, becoming masters of manipulation and getting what they want. You are used to getting your way, but people are often turned off by your personality. Once per session, if you put yourself and your thoughts above that of others, mark Experience.
 
 Spells for Mastigos
 
@@ -58,7 +58,7 @@ Spells for Mastigos
 
 In one way or another, Mages awakening to the Path of Doom or Moros have an uncommon connection to death or the dead. Many on the Path of Doom awaken after a near-death experience, with the violence of their close call and their brief trip to the lands of the dead opening their eyes to the existence of magic. These Mages often describe their awakening as hearing the noise of the world die away and being wrapped in a shroud of tranquility. It is this shroud that allows them to maintain their composure once they gain the capacity to hear the shrieks and pleas of the restless dead.
 
-Trait: Mages of this path are often hypersensitive to the brevity of life and understand just how little time they have to gain the transformative secrets they crave. They often become obsessive about their studies, so when you have an opportunity to follow your obsession, mark Experience.
+**Trait:** Mages of this path are often hypersensitive to the brevity of life and understand just how little time they have to gain the transformative secrets they crave. They often become obsessive about their studies, so when you have an opportunity to follow your obsession, mark Experience.
 
 Spells for Moros
 
@@ -75,7 +75,7 @@ Spells for Moros
 
 The only common denominator among Mages on the Obrimos Path is a deep familiarity with conflict. Those who become Obrimos are fighters and survivors, well acquainted with struggle. The presence or depth of their religious beliefs prior to awakening appears to have no bearing at all. Mages who awaken with a connection to the Kingdom of the Celestial Spheres often recall it as being struck by divine lightning and becoming the thunder. With no warning or clear understanding why, they are overcome with absolute certainty that they are champions of the divine, though how they define "the divine" varies drastically.
 
-Trait: Given purpose by their Awakening, they tend to be religious, but not always. The angelic manifestations of the prime and the forces often influence an Obrimos into believing they were chosen by a higher power. You are very trusting that what is guiding you is something divine or angelic. When you follow such commands or instincts given by the divine despite how insane they may sound or feel, mark Experience.
+**Trait:** Given purpose by their Awakening, they tend to be religious, but not always. The angelic manifestations of the prime and the forces often influence an Obrimos into believing they were chosen by a higher power. You are very trusting that what is guiding you is something divine or angelic. When you follow such commands or instincts given by the divine despite how insane they may sound or feel, mark Experience.
 
 Spells for Obrimos
 
@@ -97,7 +97,7 @@ Spells for Obrimos
 
 Few Mages awaken to the Thyrsus Path who do not already possess a strong connection to life and the spiritual world. They are often those who are intimately familiar with the pulse of nature's cycles. Mages who awaken with a link to the Realm of the Primal Wild tap directly into the primordial forces of vitality that drive creation. Their hearts beat with the pulse of the world, and they are moved by a passion and vigor that sets them apart from their awakened peers. Many Thyrsus are already in unusually good health when they awaken, while others are sick or injured and awaken in the course of their fevered dreams.
 
-Trait: With their focus in life and Spirit, they tend to like the outdoors and celebrate life in general, whether through intimate relationships, practicing medicine, environmental activism, or any number of other pursuits. Others do not necessarily share your celebration and views on life, often getting in your way. When you stop another from stifling your passions, mark Experience.
+**Trait:** With their focus in life and Spirit, they tend to like the outdoors and celebrate life in general, whether through intimate relationships, practicing medicine, environmental activism, or any number of other pursuits. Others do not necessarily share your celebration and views on life, often getting in your way. When you stop another from stifling your passions, mark Experience.
 
 Spells for Thyrsus
 
@@ -122,7 +122,7 @@ A Mage's chances of survival increase enormously when they put their solitary in
 
 The Adamantine Arrow defends sanctums and cabals with its combat magic. There are weapons that bring death, and weapons that grant life; the Adamantine Arrow embraces both. Every Order practices essential occult defense techniques, but the Arrow goes further, internalizing the metaphor of war. It is the Order's political stance and occult praxis. An Arrow is a warrior first, but this is not as narrow a calling as many suspect. For every frontline fighter who rends the horrors of the Abyss with bare hands and soul, there is a strategist who sees and manipulates the secret, struggling patterns of the world.
 
-Trait: An Arrow should never rely on magic alone or pure power of any kind. The Arrows are the soldiers and protectors of the Awakened community. Whenever you spend time training in the use of weapons created for the un-awakened, mark Experience.
+**Trait:** An Arrow should never rely on magic alone or pure power of any kind. The Arrows are the soldiers and protectors of the Awakened community. Whenever you spend time training in the use of weapons created for the un-awakened, mark Experience.
 
 Spells for Adamantine Arrow
 
@@ -137,7 +137,7 @@ Spells for Adamantine Arrow
 
 The Free Council seeks to escape the strictures of the past and modernize the craft of magic. This is an age of power and opportunity, and the awakened can see supernatural shadows overlaying it all if they look at it the right way. But it is an age of horror too, because power does not have an ethos. The tools of power are there for the taking, but the management is bad. The Free Council means to change that. This age of glorious chaos needs to be translated into awakened wisdom. In a new kind of alchemy, the Council will change the trappings of the sleepers' quiescence into its undoing.
 
-Trait: The Free Council believes that humanity never really forgot the secrets of magic. The Council are the rebels of the community, seeking to modernize the antiquated Awakened culture. Once per session, when you attempt to enhance a modern item through the use of magic in an attempt to bring your brethren into the current century, mark Experience.
+**Trait:** The Free Council believes that humanity never really forgot the secrets of magic. The Council are the rebels of the community, seeking to modernize the antiquated Awakened culture. Once per session, when you attempt to enhance a modern item through the use of magic in an attempt to bring your brethren into the current century, mark Experience.
 
 Spells for The Free Council
 
@@ -152,7 +152,7 @@ Spells for The Free Council
 
 The Guardians of the Veil protect the Mysteries from any who would despoil them or dare reveal them to the unenlightened. Magic is a secret art, and the Guardians of the Veil keep it that way for a reason. Rumors brag that the Order once manipulated nations and civilizations to these ends. Even now, Guardians plant memes and secret signs in the world's cultures. The Guardians of the Veil choose their members carefully, through a process of slow indoctrination that begins as soon as the Order senses a combination of Awakened potential and the necessary mindset.
 
-Trait: If a Guardian brags about something, they are trying to get the audience to act in their interests, so that they may refrain from any discipline by a superior. Once per session, if you Mislead a fellow Awakened in an attempt to cover up either your calamities or your showboating display of magical power, mark Experience.
+**Trait:** If a Guardian brags about something, they are trying to get the audience to act in their interests, so that they may refrain from any discipline by a superior. Once per session, if you Mislead a fellow Awakened in an attempt to cover up either your calamities or your showboating display of magical power, mark Experience.
 
 Spells for Guardians of the Veil
 
@@ -171,7 +171,7 @@ Spells for Guardians of the Veil
 
 Forget Fallen World governments and occult politics — knowledge is power. Over time, mystic lore trumps worldly ambition. The members of the Mysterium believe their Order to be the purest because it shuns mundane power. These Mages prefer to seek pure magical knowledge. Mysterium members are usually better educated than counterparts in other Orders. The society does not reject talented, uneducated sorcerers, but such novices quickly learn the academic skills they need to identify and analyze arcane treasures. The Mysterium searches for valuable lore hidden throughout the material and invisible worlds.
 
-Trait: The Mysterium's ethos revolves around its mission to locate and preserve Awakened knowledge. The Mysterium are the researchers and scholars, often going to great lengths to discover arcane secrets. Whenever you make such discoveries, mark Experience.
+**Trait:** The Mysterium's ethos revolves around its mission to locate and preserve Awakened knowledge. The Mysterium are the researchers and scholars, often going to great lengths to discover arcane secrets. Whenever you make such discoveries, mark Experience.
 
 Spells for The Mysterium
 
@@ -190,7 +190,7 @@ If you have Status 2+ in the Night Circle, when you touch an ancient object or e
 
 The Silver Ladder desires to establish a proper hierarchy of the awakened, with its members at the top. The Silver Ladder is used to ruling Mages. When the Silver Ladder's judges ruled fairly, they maintained a balance of power between Mages and an unenlightened humanity. As priests, they advocated a wise balance between material needs and spiritual desires. The Order has little patience for error or excessive humility. Mages should not let arrogance blind their ability to assess a situation, but they should never make a fawning display of themselves by taking the blame for events outside of their control or bowing to an unworthy master. While this manner causes friction with other Mages, it is not always a bad thing.
 
-Trait: The Silver Ladder are interested in power, although not always for its own sake. More specifically, the members are Mages who have an interest in controlling and directing others in both the mortal world and the society of Mages. The Ladder is the aristocracy of the Awakened, aiming to keep a proper hierarchy amidst so much hubris. When someone calls in a Debt on you, mark Experience.
+**Trait:** The Silver Ladder are interested in power, although not always for its own sake. More specifically, the members are Mages who have an interest in controlling and directing others in both the mortal world and the society of Mages. The Ladder is the aristocracy of the Awakened, aiming to keep a proper hierarchy amidst so much hubris. When someone calls in a Debt on you, mark Experience.
 
 Spells for The Silver Ladder
 

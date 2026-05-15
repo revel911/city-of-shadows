@@ -15,7 +15,7 @@ Angels are creatures of purpose, created by God as tools for a specific task. On
 
 Destroyers are the swords of heaven. Those who fell dealt nothing but death and destruction as angels and, as you come to understand your demonic heritage, the same is to be said of you. Your parents likely fell for many reasons, and since you share in their hell, you have also come to understand that your targets somehow stand out against the rest of humanity. Unlike many other demons, you find it difficult to balance your need to kill or destroy with the human side of you. Finding a compromise that works is often the lifelong goal of many Destroyers.
 
-Trait: When you Turn to Violence, on a hit, you can always choose "inflict terrible harm" in addition to any other choices.
+**Trait:** When you Turn to Violence, on a hit, you can always choose "inflict terrible harm" in addition to any other choices.
 
 [MOVE] Cause and Effect
 Sometimes all it takes to get a plan rolling is a simple act that causes a chain reaction. When you state what you want to happen and set events into motion, roll with Spirit. On a hit, the outcome comes to pass. On a 10+, it unfolds so smoothly that no one can tie it back to you. On a miss, the plan backfires spectacularly, causing unintended consequences.
@@ -37,7 +37,7 @@ Destruction is simple under normal circumstances. Any person with a big enough h
 
 Your parents were once a shield of heaven. They watched and protected, never questioning their orders. They guarded a person or a place, sometimes for centuries, never wavering. Then they fell, and you were born. While you don't usually have many friends — due to protective instincts that often drive people away — those you do have are extremely close. You can come off as overbearing, patronizing, unnerving, and overly parental, but these traits are just as hardwired into your being as they are into your parents'.
 
-Trait: When you Lend a Hand to defend someone, you gain +1 ongoing to protect them for the rest of the scene.
+**Trait:** When you Lend a Hand to defend someone, you gain +1 ongoing to protect them for the rest of the scene.
 
 [MOVE] Freeze Assets
 Almost everyone has something they can call an asset, whether favors owed or money owed. You can control when they can use them, to some extent. A person affected might find their wallet suddenly missing or empty, a contact who owes them can't be reached, the bank is closed, or even allies are found busy. When a person would take advantage of their wealth, power, or debts, roll with Heart. On a hit, the target finds that all of their assets have suddenly become unavailable for the task. On a 10+, the assets are completely unavailable for a day.
@@ -61,7 +61,7 @@ Ask anyone who has reacted in a high-speed or emergency situation: a few seconds
 
 Your parent was once a trumpet, a symbol of God's authority and bringer of revelation and truth. As a Messenger, you deal with humans socially far more often than any other variety of angel or demon. You possess charm, charisma, and whatever else you need in a social setting. But hell has altered your original purpose. Messengers can be cynical, seeing humans only as machines to be manipulated. You take in all information you read from other people, analyzing it critically — sometimes too critically. Unlike the angels, neither you nor your parents are connected to heaven's designs any longer, and words no longer flow through you like a conduit. The most effective Messengers learn not to view every interaction as purposeful manipulation, and work to use their skills on behalf of others.
 
-Trait: When you Persuade an NPC, on a 10+, they offer something extra in addition to what you asked.
+**Trait:** When you Persuade an NPC, on a 10+, they offer something extra in addition to what you asked.
 
 [MOVE] Heart's Desire
 Practically everyone has something they want within their heart. You are capable of looking at a person and seeing what those desires are. When you Figure Someone Out, you can also spend your hold 1-for-1 to learn one thing the person wants or wants to do (such as travel the world or become a millionaire).
@@ -85,7 +85,7 @@ If you have Status 2+ in the Power Circle: when you issue a command, roll with +
 
 Your parent's original purpose is likened to a wheel. Through them, disparate elements and heaven's designs were brought into being. The only things that mattered were how everything fit together to accomplish a task. But then they fell, and things changed. When you were born, you inherited their capacity to build. But the biggest part of being a builder isn't the ability to build — what makes you and your parents special is that you can see the ways the universe works. You know how to stay under the radar, unlike other demons, carving for yourself a piece of the world to call your own. The weakness of a Psychopomp lies in those same connections. You plan, arrange, build, and do whatever you must to get things to go according to your vision. And sometimes people take notice and realize this. The difficulty is keeping that tendency to a manageable level.
 
-Trait: When you Hit the Streets, on a hit, you find exactly what you're looking for, even if it's something rare or hidden. On a 10+, you arrive just in time to intervene or Escape from danger.
+**Trait:** When you Hit the Streets, on a hit, you find exactly what you're looking for, even if it's something rare or hidden. On a 10+, you arrive just in time to intervene or Escape from danger.
 
 [MOVE] Identity Theft
 When a person steals an identity, bad things happen. When a demon steals your identity, it gets much worse. By touching someone, you can later assume their appearance. When you take on their face, roll with Spirit. On a hit, you perfectly mimic their face and voice for a few hours, though your clothes remain your own. On a 10+, the person you are impersonating falls into a deep sleep and cannot be roused while you wear their face.
@@ -114,7 +114,7 @@ The thing about free will and being innately descended from a Fallen being is th
 
 God has eyes and ears everywhere, and while some may argue about the extent of His omnipotence, there's no arguing that He is more powerful than any could probably ever hope to become. As an Inquisitor, you are an intelligence agent for hell and for your patron. Knowledge is power, and you try to gather as much of it as you can while denying God the same. Many Inquisitors are simply prudent, but the Agenda itself is steeped in paranoia and conspiracy. Trust is rare and, when gained, is well earned. To an Inquisitor, angels are predictable — but humans are not.
 
-Trait: You rely on your demonic instincts to stay prepared through contacts and information. Whenever you make a contact from outside your kind who knows of your heritage, mark Experience. Whenever you divulge information you've found or offer advice to others and they don't heed your words, mark Experience.
+**Trait:** You rely on your demonic instincts to stay prepared through contacts and information. Whenever you make a contact from outside your kind who knows of your heritage, mark Experience. Whenever you divulge information you've found or offer advice to others and they don't heed your words, mark Experience.
 
 [MOVE] Open and Shut Case
 Being focused on gathering knowledge can sometimes lead one into spots where getting caught is imminent, unless you can find a way to Distract people. When you possess something linked to your target (a lock of hair, a personal possession, etc.), roll with Mind. On a hit, damning evidence emerges implicating the target in a serious crime. On a 10+, you take +1 forward to Escape or deceive others using this evidence. On a miss, the evidence unexpectedly links you to the crime instead.
@@ -135,7 +135,7 @@ This move allows you to entangle two locations with each other — any two rooms
 
 Not all demons wanted to Fall — for many it happened accidentally, or was planned for them from the beginning. An Integrator wants to join with heaven, being sympathetic to its cause, whether because they hate how other demons operate or because they see heaven as the ultimate good. While this agenda would be satisfied by surrendering to heaven's forces, most Integrators have grown attached to their free will and don't want to risk losing it. As a result, the actions of Integrators vary depending on how they want to aid heaven.
 
-Trait: You rebel against your demonic nature, feeling it more strongly than others, and focus instead on doing the right thing. When you're doing the right thing and assume your demonic form, mark Experience. However, others view you as having a conflict of interest. When another of your kind confronts you about such betrayals, mark Experience.
+**Trait:** You rebel against your demonic nature, feeling it more strongly than others, and focus instead on doing the right thing. When you're doing the right thing and assume your demonic form, mark Experience. However, others view you as having a conflict of interest. When another of your kind confronts you about such betrayals, mark Experience.
 
 [MOVE] Sermon
 God and heaven require teachers to deliver their laws, and you have answered the call even if this power is not truly a God-given gift. When you deliver a speech to a gathered group, roll with Heart. On a hit, they accept your words as truth and follow your guidance. On a 10+, they become fanatically devoted, acting as if your teachings were divine law. On a miss, a more charismatic speaker nearby sways them against you.
@@ -159,7 +159,7 @@ If you fail to deal harm with the weapon, you suffer the injuries instead.
 
 There is a war going on between the forces of heaven and hell, and a war needs people fighting it. A Saboteur is, unlike what the name implies, just that: a soldier on the side of hell. Because a demon's existence tends to require stealth, their lives look more like something out of a spy thriller. This doesn't stop some Saboteurs from being berserkers or thugs, but they draw far more attention and scrutiny than the already life-threatening amount they normally face. Whether a Saboteur chooses overt combat or subtle action, they all share one end goal — the fall of heaven and the death of God.
 
-Trait: Saboteurs are most likely to completely give themselves over to the descent, striving for destruction. Combined with their zealous desire, this makes the Saboteur the most dangerous Agenda in many ways. At the beginning of the session, state what your objective is toward destroying the gods humans have exalted. When you complete this task, mark Experience. You have an eye for causing instability and diversions. When you succeed in a task because of a diversion you created, mark Experience.
+**Trait:** Saboteurs are most likely to completely give themselves over to the descent, striving for destruction. Combined with their zealous desire, this makes the Saboteur the most dangerous Agenda in many ways. At the beginning of the session, state what your objective is toward destroying the gods humans have exalted. When you complete this task, mark Experience. You have an eye for causing instability and diversions. When you succeed in a task because of a diversion you created, mark Experience.
 
 [MOVE] Hellfire
 Some demons naturally have fire associated with their demonic forms, but you can take it one step further and call upon the fires of hell itself to throw or enhance your weapons. You may wreathe a weapon in unholy flames, giving it +1 harm and the burning tag. If you have no weapon, you may throw fire as a ranged attack (2-harm, close, burning).
@@ -180,7 +180,7 @@ Sabotage is all about chaos, and a skilled saboteur can cause other people to pr
 
 Human life is short and full of pain and sorrow. Tempters capitalize on that, offering a life of comfort for what may seem like a small price. They have many tricks — seduction, promises, deceit. They are the manipulative ones who have never done an honest day's work in their life. Nothing comes from the goodness of their hearts because everything has strings attached. Tempters open people up to them, revealing weaknesses, taking control of their lives, using them to get to other marks. Tempters may not always be trusted, but they always have a friend.
 
-Trait: You are very good at offering things to people, but always at a price. Once per session, when you can use your way with words to talk others into helping with your needs, mark Experience. As a person of persuasive qualities, you dislike getting your hands dirty. Whenever you fail to have someone do a task for you and confront them about it, mark Experience.
+**Trait:** You are very good at offering things to people, but always at a price. Once per session, when you can use your way with words to talk others into helping with your needs, mark Experience. As a person of persuasive qualities, you dislike getting your hands dirty. Whenever you fail to have someone do a task for you and confront them about it, mark Experience.
 
 [MOVE] Play On Words
 Language is confusing. Many words sound similar or carry multiple meanings, and a demon with this move can use speech to their advantage. When a player or NPC says something (in character), you may activate this power, twisting their words to alter reality in such a way that what they said is still accurate but different from what was intended. (e.g., using this move when someone is boasting about their right to "bear arms" lets you alter reality so that their shirt sleeves go missing ("bare" arms) or their arms grow thick fur and claws ("bear" arms).) Words twisted in this manner must sound the same, even if their meaning is far different.

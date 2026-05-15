@@ -21,7 +21,7 @@ Joining a Hunter Creed confers both your Creed's abilities and the group/gang be
 
 While wizards and Demons are a problem, you see the beings that feed and hunt in the Night as your mortal enemies.
 
-Trait: Many Night Stalker groups follow a standard procedure: observe, assess, report, move in and neutralize or capture. Task Force VALKYRIE tends to neutralize targets, while Cheiron prefers to harvest samples for medical research from either a live specimen or a corpse. Once per session, when you call in the cavalry to help with your actions, mark Experience. Even so, if plans go awry, it's your responsibility if you fail to follow orders — after all, this is your job, not your hobby. Once per session, if you stand firm on a plan even though it may put you in great danger, mark Experience.
+**Trait:** Many Night Stalker groups follow a standard procedure: observe, assess, report, move in and neutralize or capture. Task Force VALKYRIE tends to neutralize targets, while Cheiron prefers to harvest samples for medical research from either a live specimen or a corpse. Once per session, when you call in the cavalry to help with your actions, mark Experience. Even so, if plans go awry, it's your responsibility if you fail to follow orders — after all, this is your job, not your hobby. Once per session, if you stand firm on a plan even though it may put you in great danger, mark Experience.
 
 [MOVE] Banes
 You have studied the legends and modern data of the things you fight. When you go on a hunt, roll with Mind. On a 10+, hold 2. On a 7-9, hold 1. On a miss, take -1 ongoing for the hunt due to low morale. Spend hold 1-for-1 to:
@@ -165,7 +165,7 @@ Your treated sunglasses are now wired with a micro computer that helps you spot 
 
 There are others fighting the things in this world, letting you focus on the hunt for the truly unnatural: Demons and their spawn, the unknowable Fae.
 
-Trait: Spirit Slayers have a much more liberal approach to tracking down monsters than other organizations — after all, their targets are not of the mortal realm. The Spirit Slayers have fought their share of battles against the Wild, but unlike many other hunter groups, they don't automatically assume that an individual is irredeemably evil. Once per session, if you contact a new group of non-mortals with the desire of expanding your contact list, mark Experience. Though these new contacts want to help, they bring baggage of their own and your relationship with them is not understood by your peers. When you are judged badly for your unusual contacts, mark Experience.
+**Trait:** Spirit Slayers have a much more liberal approach to tracking down monsters than other organizations — after all, their targets are not of the mortal realm. The Spirit Slayers have fought their share of battles against the Wild, but unlike many other hunter groups, they don't automatically assume that an individual is irredeemably evil. Once per session, if you contact a new group of non-mortals with the desire of expanding your contact list, mark Experience. Though these new contacts want to help, they bring baggage of their own and your relationship with them is not understood by your peers. When you are judged badly for your unusual contacts, mark Experience.
 
 [MOVE] Blessed Item
 You have an item blessed by a priest or holy man. When you go on a hunt, roll with Mind. On a 10+, whoever blessed this item is in favor and their god favors you as well; take +1 forward and choose 1. On a 7-9, you can tell your item is losing its effectiveness and should be returned to the priest soon; choose 1.
@@ -233,7 +233,7 @@ Just as your father persuaded Eve to bite the apple, you are more persuasive —
 
 Absolute power corrupts absolutely. Those from the Power Circle cannot be trusted because they are easily corrupted by the powers they draw from outside sources.
 
-Trait: Beings of magic and fear exist because they are the iniquitous servitors of evil. Whenever you take harm when smiting Power in God's name, mark Experience. Witch Finders can certainly show mercy — the whole Creed comes, after all, from the love of a merciful God. If you take an aggressive action against a repentant witch or other member of Power — even if the repentance is feigned — or without giving the enemy a chance to repent, mark Experience.
+**Trait:** Beings of magic and fear exist because they are the iniquitous servitors of evil. Whenever you take harm when smiting Power in God's name, mark Experience. Witch Finders can certainly show mercy — the whole Creed comes, after all, from the love of a merciful God. If you take an aggressive action against a repentant witch or other member of Power — even if the repentance is feigned — or without giving the enemy a chance to repent, mark Experience.
 
 [MOVE] Disbelief
 It's all illusions and parlor tricks. You hold power in the fact that you simply don't believe in things like magic — which is ironic, given that you fight it. Roll with Spirit. On a 10+, hold 3. On a 7-9, hold 1. On a miss, you make yourself more vulnerable to the spells and powers of the Power Circle. Spend hold to counter and/or negate 1 spell or move used by a member of the Power Circle.
@@ -317,7 +317,7 @@ On a miss, choose 2:
 
 Humanity needs saving, sometimes from itself. You are there to guide humanity through the mud so that it comes out the other side as safe as possible.
 
-Trait: Investigation is absolutely everything. When you uncover a plot by a member of Mortalis to aid another Circle, mark Experience. Although they try to protect the masses from the darker sides of humanity, when innocent mortals are drawn into the fray, a vigilante will draw scrutiny from media and law enforcement. Whenever you do so and are able to Escape being caught, mark Experience.
+**Trait:** Investigation is absolutely everything. When you uncover a plot by a member of Mortalis to aid another Circle, mark Experience. Although they try to protect the masses from the darker sides of humanity, when innocent mortals are drawn into the fray, a vigilante will draw scrutiny from media and law enforcement. Whenever you do so and are able to Escape being caught, mark Experience.
 
 [MOVE] Flashing a Badge
 Whether it's real or fake, you have a badge allowing you to claim law enforcement status. When dealing with Mortalis, take +1 on attempts to Persuade, Mislead, or Hit the Streets.

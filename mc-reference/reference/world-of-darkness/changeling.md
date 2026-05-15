@@ -24,7 +24,7 @@ The fairy stories say that love's first kiss redeems everything. The Beast becom
 
 Yet the animal sees, hears, and feels more vividly than any human ever could. Colors are brighter, smells richer, sounds sharper — each moment is a raw, unfiltered experience. The Beasts consider themselves to have taken the hardest road back through the Hedge, for they had to claw back their minds as well as their souls.
 
-Trait: Your wild nature grants you an uncanny connection with animals. When you use an animal three times in a session to gain information, create an opening, or strike a target, mark a Circle.
+**Trait:** Your wild nature grants you an uncanny connection with animals. When you use an animal three times in a session to gain information, create an opening, or strike a target, mark a Circle.
 
 Drawback: You struggle with formal knowledge. Once per session, if you ignore learned knowledge and instead trust your instincts, mark a Circle.
 
@@ -69,7 +69,7 @@ No one understands the Elementals. Other changelings were shaped in the image of
 
 When you came back, you found yourself a stranger to flesh and blood. The world you left behind does not remember you. And the world you fled will never take you back.
 
-Trait: Your connection to raw forces lets you channel power. When you push your body beyond its limits to tap into your element, mark a Circle.
+**Trait:** Your connection to raw forces lets you channel power. When you push your body beyond its limits to tap into your element, mark a Circle.
 
 Drawback: Your alien nature makes human interaction harder. If you refuse a plea for help from a human, mark a Circle.
 
@@ -108,7 +108,7 @@ The Fairest are the radiant, the desired, the terrible ones. To them, beauty is 
 
 To escape the Fae, they had to remember what it was to be ordinary — to walk among those who did not kneel at their feet. Yet, they brought back the glamour of their captors, and with it, a shard of their cruelty. They have survived the beauty of Arcadia. But has it changed them too much to return?
 
-Trait: Your presence is intoxicating. When you use magic to increase beauty or elevate your social standing, mark a Circle.
+**Trait:** Your presence is intoxicating. When you use magic to increase beauty or elevate your social standing, mark a Circle.
 
 Drawback: You struggle to find peace with yourself. Once per session, if your vanity puts your allies in danger, mark a Circle.
 
@@ -138,7 +138,7 @@ The Wizened are the clever hands, the cunning minds, the unseen architects of th
 
 Now free, they remain distrustful, pragmatic, and sharp. They are the managers, enforcers, and creators among changelings. Their skills have earned them positions of power, yet their twisted past often makes them objects of fear and suspicion.
 
-Trait: You are extraordinarily nimble and skilled. When you use your craft or intellect to alter the course of a situation, mark a Circle.
+**Trait:** You are extraordinarily nimble and skilled. When you use your craft or intellect to alter the course of a situation, mark a Circle.
 
 Drawback: You are rarely trusted. If your unsettling presence leads someone to refuse your help or shun you, mark a Circle.
 
@@ -258,7 +258,7 @@ Your domain is as fluid as the burrow of an animal — effortlessly created, eff
 
 The Spring Court refuses to let despair consume them. They will not be passive victims of the Fae, nor will they let sorrow define their stolen lives. They take joy as an act of defiance, surrounding themselves with love, beauty, and desire — not as escapism, but as a deliberate weapon against their captors. To live well is to prove the Fae do not own them.
 
-Trait: When you use charm, beauty, or indulgence to influence someone, mark a Circle.
+**Trait:** When you use charm, beauty, or indulgence to influence someone, mark a Circle.
 
 Drawback: Your pursuit of pleasure can blind you. If your desires put you or your allies in danger, mark a Circle.
 
@@ -282,7 +282,7 @@ With a touch and a sacrifice, you cause a living thing to grow by an entire seas
 
 The Summer Court does not run. They do not hide. They stand and fight. For them, the struggle is everything — not just against the Fae, but against anyone who threatens changeling safety. They forge new families, standing together in a battle none of them could win alone. Strength is their weapon, their shield, and their ideal.
 
-Trait: When you demonstrate strength or intimidation to achieve your goals, mark a Circle.
+**Trait:** When you demonstrate strength or intimidation to achieve your goals, mark a Circle.
 
 Drawback: If your anger isolates you or turns allies against you, mark a Circle.
 
@@ -309,7 +309,7 @@ You channel the sun's relentless fury, burning all who stand in your path. When 
 
 The Autumn Court knows magic better than anyone. They are the scholars of the old ways, wielding Contracts as both weapons and wonders. They do not regret their time in Faerie — they learned from it, and now they wield that knowledge against the Gentry themselves.
 
-Trait: When you wield magic or hidden knowledge to gain advantage, mark a Circle.
+**Trait:** When you wield magic or hidden knowledge to gain advantage, mark a Circle.
 
 Drawback: If your pursuit of knowledge leads you to disregard morality or caution, mark a Circle.
 

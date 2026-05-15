@@ -21,7 +21,7 @@ Note: Slashers created with any of the Mortalis Circle Urban Shadows archetypes 
 
 Avengers are driven by the crimes and pains they have suffered. Usually an Avenger starts with something very specific to punish, such as the murder of a loved one or a death due to an incompetent surgeon. They find the person or people responsible and slaughter them, sometimes one by one, sometimes in an orgy of carnage. It might end there — but if they cannot move on, the call to murder becomes their passion. Avengers do not necessarily become indiscriminate killers, but the line blurs as they become more willing to commit murder for other reasons. They move further away from their original purpose, potentially taking more cruel and expedient paths to success. As this happens, stories of their exploits spread, and they grow closer to becoming a Legend.
 
-Trait: Your drive to kill is your defining purpose. While you can function in normal life, once you identify someone as a target, they dominate your focus.
+**Trait:** Your drive to kill is your defining purpose. While you can function in normal life, once you identify someone as a target, they dominate your focus.
 - Once per session, when you make progress toward eliminating a marked target, mark Experience.
 - You are the stuff of whispered legend. Every feared figure has a weakness. When you reveal your personal weakness to an enemy (not an ally), mark Experience.
 
@@ -50,7 +50,7 @@ If you have Status 3+ from the Mortalis Circle, when someone hears of your legen
 
 The Brute might seem simple, even stupid. Maybe they are. However, Brutes often retain enough intelligence to have a sense of deliberation about their hunts. They change clothes and tactics as necessary to avoid detection. To achieve their superlative skill at taking life, they have given up everything else — cognition, social skills, even personality. But that is the source of the Brute's horror. They cannot be reasoned with or intimidated. They drive the knife home, watch the light in their victim's eyes die, and then search, slowly and methodically, for the next one. Some Brutes lead double lives, remaining human most of the time but picking up their weapons when the full moon rises, when the sun sets, on the third Sunday of every month, or just when the mood strikes them. As they kill more people, they become more detached, less human, until only the Mask remains.
 
-Trait: Not exactly the brightest killer, you nevertheless cannot be swayed from your attempts to kill a target.
+**Trait:** Not exactly the brightest killer, you nevertheless cannot be swayed from your attempts to kill a target.
 - You cannot be persuaded or reasoned with once you have committed to an attack. When someone tries to persuade you to abandon a kill and you refuse, mark Experience.
 - When you knowingly walk into obvious danger with bloodlust in your heart, mark Experience.
 
@@ -82,7 +82,7 @@ Spend 1 hold to:
 
 The Charmer is deadly not because they are strong or even smart — they kill with trust. They are impeccably polite, sympathetic, well-spoken, and knowledgeable. They choose their victims, seduce them at least to the point of intimacy, and then the victim feels the knife slide home. A Charmer might troll for victims in any number of ways: finding an isolated community and murdering and replacing some important figure, bar-hopping every night while developing a reputation as a true gentleman who will give you a ride home if you are too drunk to drive and will never take advantage. Charmers are ready to pull up stakes at any moment, but they prefer to keep their charade going as long as possible. The goal for them is not necessarily the kill — that is something they do almost in spite of themselves. What a Charmer loves most is that their victims trust them.
 
-Trait: You can get into any social scene; velvet ropes and money are no obstacle to you.
+**Trait:** You can get into any social scene; velvet ropes and money are no obstacle to you.
 - You can gain access to any social setting.
 - When you mark multiple Debts to gain access to an exclusive place, mark Experience.
 - If someone turns you down and you kill them that session, mark Experience.
@@ -119,7 +119,7 @@ If you have Status 2+ in the Mortalis Circles, mortals rationalize their trust i
 
 The Freak is similar to the Brute, but rather than being defined by strength and tenacity, the Freak's characteristic trait is deformity. They shun humanity, sticking to dark places and covering themselves with heavy clothes or scarves. They hate other people for the way they have been treated, and this hatred ultimately serves as the impetus to kill. Of all of the Undertakings, Freaks are the most likely to engage in cannibalism, necrophilia, or other especially depraved activities with their victims. Their methods of murder vary but are often horribly bestial — Freaks attack with teeth, claws, and improvised weaponry. Freaks are also more likely to form attachments to others of their kind, and it is not uncommon for Freaks to gather in small clans such as a travelling circus.
 
-Trait: You are freakishly deformed in some aspects. This deformity, however, also has a beneficial aspect.
+**Trait:** You are freakishly deformed in some aspects. This deformity, however, also has a beneficial aspect.
 - Your monstrous form grants you advantages but draws scorn.
 - Once per session, when you are publicly humiliated for your appearance, mark Experience.
 
@@ -142,7 +142,7 @@ Trait: You are freakishly deformed in some aspects. This deformity, however, als
 
 Geniuses are Slashers that kill with their minds. They profile their targets and tailor their methods of abduction and murder to suit them. They think several steps ahead of their victims, predicting what a target will do based on their predispositions and presenting a set of options, then sit back and watch their victims kill themselves. It is not uncommon for Geniuses to kill using traps rather than doing the deed themselves. Some consider killing coarse and vulgar, feeling that by allowing victims the possibility of Escape it negates their moral responsibility in the victims' deaths. Geniuses tend to be technically skilled, with or without training — given a few hours and the proper tools, they can pull apart a car, figure out how it works, and put it back together, probably rigged with a trap. They still play cat and mouse games with their victims, making allusions to the victim's eventual fate while keeping a civil tongue.
 
-Trait: The Genius kills targets with their intellect, playing mind games and luring enemies into traps. They cannot relate to those they consider beneath them.
+**Trait:** The Genius kills targets with their intellect, playing mind games and luring enemies into traps. They cannot relate to those they consider beneath them.
 - When you Mislead someone to set up a later kill, mark Experience.
 - If your plan fails and you must share it with another, mark Experience.
 

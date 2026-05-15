@@ -1,7 +1,7 @@
 # Orpheus — Orpheus
 
 **Base Playbook (natural pairing):** The Spectre
-**Prerequisite Move:** manifest abilities (see extension induction rules below)
+**Prerequisite Move:** manifest abilities
 **Key Mechanics:** Shades grant Manifestation Forms and Horrors; joining a Shade grants gang benefit; expanded Advancement Chart.
 
 ---
@@ -23,7 +23,7 @@ Joining a Spectre Shade confers not only your Shade's abilities but also the gro
 
 Banshees voice insight, understanding the emotions of others and foreseeing what those emotions will cause. This insight drives them to help others work through their pain and resolve their problems, from the living who cannot endure their lives to the dead who are trapped in endless cycles of repetition. This Shade speaks from soul to soul, giving a voice to those who have no words for their grief. They can, however, be too slow to act, trapped by not wanting to inflict further pain or by being too willing to see every point of view and choose none.
 
-Trait: Banshees are considered to be the most empathetic of the Shades, the ones most driven by insight and emotions. Once per session, if you find another in dire need with no one else willing to help and you decide to swoop in to save the day, mark Experience. Though you are likely to help others, you may find many are unlikely to help you. If you help someone in dire need with no one else willing to help, clear 1 trauma.
+**Trait:** Banshees are considered to be the most empathetic of the Shades, the ones most driven by insight and emotions. Once per session, if you find another in dire need with no one else willing to help and you decide to swoop in to save the day, mark Experience. Though you are likely to help others, you may find many are unlikely to help you. If you help someone in dire need with no one else willing to help, clear 1 trauma.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: Can only be heard through whispers; no physical presence.
@@ -51,7 +51,7 @@ If you have Status 2+ within the Wild Circle, you may spend 1 Debt owed to you t
 
 Haunters can adapt to anything and make themselves at home wherever they may be; equally, they are constantly driven to new places and new adventures, never content with their current standing. They are the spirit of enterprise and the essence of adaptation. They can possess objects — from potted plants to cars to buildings — and control them to a limited degree. Haunters like belonging, at least for a while, and blend into their new surroundings as everyone's friend, discovering things about places that people who lived there all their lives had never noticed. The urge to move on constantly drives them; no place is ever enough, and nothing ever truly satisfies. While they can adopt local coloration like a chameleon, they can also be as inconstant as the wind.
 
-Trait: Haunters tend to be roamers and loners, always drifting into situations that suit them best. Many were betrayed or abandoned at some point in their life, making it more difficult for them to become close to others. Once per session, if you do not trust the judgment of others and decide to act on your own, mark Experience. Once per session, when you break through your loneliness to ask for help, clear 1 trauma.
+**Trait:** Haunters tend to be roamers and loners, always drifting into situations that suit them best. Many were betrayed or abandoned at some point in their life, making it more difficult for them to become close to others. Once per session, if you do not trust the judgment of others and decide to act on your own, mark Experience. Once per session, when you break through your loneliness to ask for help, clear 1 trauma.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: May only manifest in reflective surfaces, such as mirrors or windows.
@@ -81,7 +81,7 @@ If you have Status 3+ in the Night Circle, your presence leaves residual distort
 
 Most people have something about themselves they want to change; it is only a small but fortunate minority that can adapt and mingle comfortably in an array of social settings. Many Marrows come from the ranks of those fortunate few. They are social chameleons in life, adopting and dropping mannerisms and styles they find interesting. At one end of the Marrow spectrum are those who seek a personal identity by experimenting with whatever fad is popular. At the other end are those who simply revel in the seemingly infinite diversity of human nature and want to experience as much of it as possible. In death, Marrows find a fluidity in their form that they could only aspire to in the flesh. Many Marrows take an affinity for animals or animal forms, as animals roam the world more freely than humans.
 
-Trait: The key phrase for the Marrow is "I change." Change is the raison d'etre of most of those who become Marrows, just as boredom is the bane. You are unable to stay in one spot long, and being this way you have lots of contacts around town. Once per session, if you abandon a plan that is fully in action for something newer despite how good the first plan may have been, mark Experience. Your recklessness causes far more attention than you would desire, leaving you with a reputation that the authorities have taken notice of. If your actions are taken seriously and then looked upon by the authorities, mark Experience.
+**Trait:** The key phrase for the Marrow is "I change." Change is the raison d'etre of most of those who become Marrows, just as boredom is the bane. You are unable to stay in one spot long, and being this way you have lots of contacts around town. Once per session, if you abandon a plan that is fully in action for something newer despite how good the first plan may have been, mark Experience. Your recklessness causes far more attention than you would desire, leaving you with a reputation that the authorities have taken notice of. If your actions are taken seriously and then looked upon by the authorities, mark Experience.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: Manifests as a small animal.
@@ -126,7 +126,7 @@ Possible Faults:
 
 Many ghosts make themselves known through dreams, or nightmares. Such visions usually portray the presence of a Phantasm, an elusive Shade that can leave both the quick and the dead wondering if they have gone insane. In life, they cared more about their own thoughts than the world around them. In death, Phantasms gain the power to project their dreams and fantasies into the minds of others. They lived for imagination, and now the world of dreams becomes their playground, their refuge, and their weapon. A Phantasm cannot materialize objects like a Poltergeist, but can make others think they did. The exceptional subtlety of their powers makes Phantasms hard to notice unless they want to be seen.
 
-Trait: Phantasms are the most creative of the Shades, passionate about their ideas and fantasies. Once per session, if you invoke a basic move in a creative or outlandish way, mark Experience. Many times you will find other tasks mundane. Once per session, if you refuse a task due to its boring or bland nature, mark Experience.
+**Trait:** Phantasms are the most creative of the Shades, passionate about their ideas and fantasies. Once per session, if you invoke a basic move in a creative or outlandish way, mark Experience. Many times you will find other tasks mundane. Once per session, if you refuse a task due to its boring or bland nature, mark Experience.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: Appears as a flat shadow with no light source; can also whisper short phrases.
@@ -169,7 +169,7 @@ If you have Status 3+ in the Night Circle, using Dream-Walker lets you sense nea
 
 Poltergeists embody frustration and anger, using their pent-up rage as a blunt force. With experience comes control and precise manipulation of such small things as pens and scalpels. To them, life is nothing but frustration. This Shade is a manifestation of the sudden outbursts that anybody can experience when life becomes too much, and when an unendurable situation is suddenly resolved in white-hot, brilliant rage. They use their frustration to give them power and work through it to affect the world, but equally they cannot exist without it.
 
-Trait: Poltergeists become empowered or embittered by their experiences — oftentimes both — and they learn to harness the power of the sudden outburst they feel welling up within themselves. Such characters may often seem cold, calm, powerless, or meek one moment and explode into instant rage the next. Once per session, when you use anger to intimidate or frighten another, mark Experience. If you learn of unknown information that is life-threatening to either yourself or someone you know and remain silent, mark Experience.
+**Trait:** Poltergeists become empowered or embittered by their experiences — oftentimes both — and they learn to harness the power of the sudden outburst they feel welling up within themselves. Such characters may often seem cold, calm, powerless, or meek one moment and explode into instant rage the next. Once per session, when you use anger to intimidate or frighten another, mark Experience. If you learn of unknown information that is life-threatening to either yourself or someone you know and remain silent, mark Experience.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: Your eyes are visible balls of floating light with a faint outline of your body viewable in reflections.
@@ -201,7 +201,7 @@ Horrors
 
 Skinriders are the essence of control — control of others, control of themselves, control of the world around them. They have no faith that anybody other than themselves can do a job properly. As far as they are concerned, the world needs sorting out, and only they have the ability or willpower to do so. They may lead from the front, organizing matters up close and personal, or they may command from behind, manipulating others through direct control or force of will. Whether people like their methods or not, the Skinrider can create a smooth-running operation; some Skinriders count the cost of this, while others do not.
 
-Trait: Skinriders are dominating and manipulative by default. Once per session, when you manipulate another in an attempt to show superiority, mark Experience. Their use of control can be for good, such as a military leader spurring on their troops or a teacher pushing students to do better. Despite the prohibited nature of taking over another, some Spectres risk it anyway as they want to feel the sensations of life they can only get through embedding in another. Once per session, when you claim a moral, judgment, or lifestyle value you felt through the host you are embodying as a value of your own, mark Experience.
+**Trait:** Skinriders are dominating and manipulative by default. Once per session, when you manipulate another in an attempt to show superiority, mark Experience. Their use of control can be for good, such as a military leader spurring on their troops or a teacher pushing students to do better. Despite the prohibited nature of taking over another, some Spectres risk it anyway as they want to feel the sensations of life they can only get through embedding in another. Once per session, when you claim a moral, judgment, or lifestyle value you felt through the host you are embodying as a value of your own, mark Experience.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: Can speak briefly through other people and force their bodies into quick, jerky motions.
@@ -227,7 +227,7 @@ Horrors
 
 These Shades are distraction given form, tricksters whether or not there is a need for it, and confident artists with enough charisma to sell their claims. They lead others astray — sometimes to truth, sometimes not. Gifted with an ability to charm and mesmerize, they are the constant life of the party and an occasional thorn in the side of their friends. They may act as they do to cheer others and smooth situations, or they may not realize or care that their antics come at the expense of others. Embodiments of speed, wit, and guile, they fascinate wherever they go but can have difficulty understanding that their actions have consequences.
 
-Trait: Wisps are generally the most extroverted of the Shades, reveling in attention and adoration, and generally take things less seriously than others. They tend to be naturally charming, have an excellent sense of humor, a good sense of showmanship, or all of the above, which they use to great effect with their abilities. Once per session, when you use your abilities to brighten the mood of another, mark Experience. Looking at everything through rose-tinted glasses does make you a little more gullible when dealing with others. If you cheer someone up and it leads to unexpected chaos, clear 1 trauma. If you follow someone blindly and it causes harm, mark 1 hit.
+**Trait:** Wisps are generally the most extroverted of the Shades, reveling in attention and adoration, and generally take things less seriously than others. They tend to be naturally charming, have an excellent sense of humor, a good sense of showmanship, or all of the above, which they use to great effect with their abilities. Once per session, when you use your abilities to brighten the mood of another, mark Experience. Looking at everything through rose-tinted glasses does make you a little more gullible when dealing with others. If you cheer someone up and it leads to unexpected chaos, clear 1 trauma. If you follow someone blindly and it causes harm, mark 1 hit.
 
 Manifestation Forms: (Dictated by the Manifestation Transformation Move)
 - First Form: A soft glow, similar to the classic will-o'-the-wisp.
