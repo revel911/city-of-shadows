@@ -32,7 +32,7 @@
     "Focus ring (+1 Spirit when worn, max +3)",
     "9mm Glock (2-harm near loud concealable)"
   ],
-  "active_arc_ids": ["arc-001", "arc-002", "arc-003", "arc-004", "arc-005"],
+  "active_arc_ids": ["arc-001", "arc-002", "arc-003", "arc-004", "arc-005", "arc-007", "arc-012"],
   "last_session": "session_001",
   "notes": "Harm 1/4 (Faint — backlash nosebleed from channeling). +1 ongoing vs fae specimen (unresolved-questions weakness, Watch Them Closely). One of four Hit the Streets searches was noticed by unknown party. Five-day specimen retrieval deadline from 2026-04-24."
 }

@@ -181,8 +181,13 @@ city-of-shadows/
 │
 ├── mc-reference/                  System prompt — loaded on every session
 │   ├── mc-instructions.md
-│   ├── rules-reference.md
-│   ├── wod-supplement.md
+│   ├── character-creation.md      ← 13-phase new-player onboarding wizard
+│   ├── reference/
+│   │   ├── rules.md
+│   │   ├── basic-moves.md
+│   │   ├── mc-moves.md            ← MC moves, Instinct Die, Extreme Failures
+│   │   ├── playbooks.md           ← all 12 playbooks
+│   │   └── world-of-darkness/     ← 8 WoD extension files (vampire, mage, …)
 │   ├── npc-personality-engine.md
 │   ├── state-schema.md
 │   └── bot-output-format.md       ← teaches the MC the close-block format
@@ -210,7 +215,7 @@ Every session starts by feeding these into Claude's context. The MC reads them a
 
 ## Cost notes
 
-- **Anthropic**: Each turn round-trips the full conversation. A 1-hour session is roughly 30-60 turns. Sonnet 4.6 with a ~30k-token system prompt and growing message history will run somewhere around $1-3 per session at current pricing — verify on your dashboard.
+- **Anthropic**: Each turn round-trips the full conversation. A 1-hour session is roughly 30-60 turns. Sonnet 4.6 with a ~100k-token system prompt (full reference layer + WoD extensions + character-creation wizard) and growing message history will run somewhere around $3-8 per session at current pricing — verify on your dashboard. Prompt caching is applied to the system prompt to keep cost down across multi-turn sessions.
 - **Fly.io**: A 256MB shared-cpu instance is well within the free tier.
 - **GitHub**: Free for public repos.
 - **Discord**: Free.

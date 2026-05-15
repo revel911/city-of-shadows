@@ -132,13 +132,13 @@ Voice note: *"Warm and expansive until the deal turns. Then nothing. No raised v
 
 ## Adding New NPCs
 
-When you introduce a new named NPC, add them to `game/npcs.json` using `update_npc` before the session closes. Required fields:
+When you introduce a new named NPC, add them to `game/npcs.json` by emitting an entry in the session close block's `<npc_patch>` array. Required fields:
 
 ```json
 {
   "id": "npc_[firstname_lastname]",
   "name": "Full Name",
-  "faction": "The Mortality | The Night | The Power | The Wild",
+  "faction": "Mortalis | Night | Power | Wild",
   "hub": "Hub display name",
   "hub_id": "hub_[slug]",
   "arc_ids": [],

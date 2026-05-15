@@ -1,0 +1,13 @@
+# flyctl launch added from .gitignore
+**/node_modules
+**/.env
+**/*.log
+**/.fly
+fly.toml
+.git
+.gitignore
+.dockerignore
+.env.example
+test/
+**/.DS_Store
+**/Thumbs.db

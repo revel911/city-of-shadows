@@ -1,0 +1,375 @@
+# Urban Shadows — Fundamentals of Play
+
+## The Conversation
+
+Roleplaying is a conversation. You sit down at a table -- or start a video call online -- with dice and pencils and sheets of paper, and talk to each other. You might take turns talking, interrupt each other at times, or even all go silent for a moment, but the conversation keeps moving, each of you pushing it forward by adding your own contribution, your friends' words working alongside yours to knit together a fictional world.
+
+For the most part, your conversation revolves around your characters: you say what they do when they face a problem, how they react to the other characters, and what parts of the city excite and enthrall them. Since the other players don't live in your head, you also sometimes convey your character's thoughts, emotions, and feelings directly as a narrator -- like when you say, 'My character looks away, turning his face toward the window, and you can tell he feels guilty for what he said all those years ago.'
+
+There are also times in the conversation when you slip directly into your character's shoes, no longer narrating but actually taking on your character's persona. You make the gestures your character makes; you say things as your character without preface. You don't have to do funny voices or accents to embody your character -- most people do it without even thinking, simply saying things as their character, such as 'Are you freakin' kidding me? I came all the way here for this?'
+
+It's pretty natural to virtually become your character while you play -- to want what they want, to fear the outcome of the dice at crucial moments or to be elated when they catch a lucky break. Some of the best moments in any roleplaying game occur when the real world falls away and you experience the importance and meaning of the fictional world firsthand.
+
+The conversation in a roleplaying game evolves naturally over the course of the session as you go back and forth between narrating and embodying your character. But it's your job -- as a group -- to keep the conversation interesting. The rules, the playbooks, and everything else you bring to the table drives that conversation toward interesting places. Dark alleys. Dangerous places. Murderous moments. Wherever the fiction takes you.
+
+## Framing Scenes
+
+The best way to keep the conversation moving toward interesting places is to frame scenes -- situations that put the player characters in the middle of interesting conflicts and opportunities. Instead of sitting around the table talking about Machiavellian characters and the tense political history of the city, put your characters into concrete locations with concrete objectives. Don't just say, 'Vampires are evil, always trying to take out the opposition.' Instead, frame a scene in which a player character is chased through the city by a pack of ravenous bloodsucking vampires!
+
+The MC has the most responsibility for framing scenes -- as the facilitator of the game, they ultimately choose which scenes get played out -- but everyone in the group can help ensure scenes start in a compelling place and push them towards a meaningful or exciting resolution. In fact, everyone can contribute to the overall narrative by suggesting scenes to drive the story forward.
+
+As you play, remember that every single person at the table has a responsibility to make scenes interesting. Don't like the scene someone suggests? Push back and explore other options. Multiple points of view keep things much more interesting than one person hogging the spotlight.
+
+### Scene Variety
+
+One of the strengths of Urban Shadows is the diversity of scenes that make sense for your story. True, there are plenty of exciting and tense moments as characters tail a lead down foggy streets or get in bloody fights in dark alleys. But the game also makes room for political negotiations in private booths above hazy nightclubs or two characters with a long-standing feud realizing their romantic feelings while tending to each others' wounds. Just like your favorite urban fantasy tale, your Urban Shadows game has room for romance, politicking, and violence, all supported by the core moves and core elements of play.
+
+Action-packed violence and desperate chases have clear stakes and relevance, but interludes and intimate vignettes help set up the next big thing in the story: what are the repercussions of the alliance brokered in that club? What happens when those new lovers' romance is revealed or tested? No matter how they play out, these scenes work because they set up what comes next -- even if they're a slow-burning fuse you keep in the back of your mind, wondering when it'll go off and lead to a whole new conflict around the player characters' choices.
+
+### Match the Pacing
+
+All of this scene framing might seem complicated, but once you start playing, the rules (and the MC) help keep everything running smoothly. Think about the game like an episode of an urban fantasy show or novel and try to match the pacing. Jump straight to the good parts -- the tense dealings between rival factions, the confrontations on moonlit rooftops, the magical rituals that shape the fate of the city, or the quiet moments that show what's under the surface of each character. Skip the boring stuff and focus instead on the core of what's happening or what's going to happen.
+
+No matter what kind of scene is at stake, remember that scenes end when they aren't interesting anymore. The MC might call for a scene to be over, or the players in the scene might realize that the scene's played out. Either way, it's better to cut a scene short than let it run too long. Leave everyone -- including yourself -- always wanting more.
+
+### Hard Scene Framing
+
+Sometimes the MC wants to move things along quickly or jump right into a tense or difficult situation. Maybe the consequences of an earlier decision have come to bear, hard and fast -- your fae monarch commands that you perform a service you owe them at the worst possible time -- or maybe the tone of the story calls for a more aggressive scene: a pack of vengeful wraiths ambush your hunter society's meeting. Whatever it is, the MC tells you what's happening and what's at stake, and how you react in the moment drives the scene forward.
+
+Hard scene framing means there's less room for negotiation: the scene starts and the characters must react as best they can to the unfolding drama. Sometimes the tension or drama of a scene builds slowly as it plays out, but sometimes a character knows they're in too deep from the jump and everybody watches to see how they get out of this one.
+
+### What Do You Do?
+
+The question 'What do you do?' comes up again and again in Urban Shadows. The city demands that you take action, that you respond to creeping darkness and bloody plots; there's little time to plan or plot and often you have to decide what matters in a moment. The game isn't trying to rush you, but it demands you establish what your character is doing, each scene building up a fictional world in which your choices matter.
+
+Scene framing is all about getting the PCs to a 'What do you do?' moment as quickly as possible; hard scene framing means that moment is already upon you. In either case, the purpose of framing a scene is the same in Urban Shadows as in any work of fiction -- the audience wants to see the characters make choices and confront conflicts. Even if the obstacles are emotional, social, or political, the urgency of the situation gives you -- and the rest of your group -- a chance to discover what your character cares about and what they are willing to do to get what they want.
+
+Urban Shadows isn't about meandering conversations for their own sake: the rules push you to make decisions, act on your impulses, and deal with the consequences. The city moves forward, and you just have to try to keep up. Emotional moments that fill in the spaces between dramatic action are fleeting and precious -- make them count.
+
+## Fictional Positioning
+
+The setup of scenes is important because it establishes the fictional positioning of the characters -- the place they occupy in the story you create together. A streetwise character who has trained their whole life to battle demons starts off a fight in a different position than a college professor who only recently learned the supernatural world exists. Your group's collective understanding of who your characters are, what they're doing, and what they're feeling all matter as much as any other mechanic.
+
+The world you all create together during play is called the fiction -- the collection of everything happening, and that has already happened, in your story. The fiction includes the setting of the game -- from the history of your city to your current City Hub -- as well as everyone in it. It's things you've agreed on in the story: everything you say about your characters, every action and interaction, every bit of revealed history. You won't write all of this down, but your group has a collective understanding of what's true about the world you've created together.
+
+Sticking to the fiction -- and the fictional positioning you've established -- takes discipline, especially if new consequences come to bear that you didn't see coming. It takes practice to commit to what you've established, even if it makes things harder for your character. But part of what makes roleplaying games exciting is seeing how stories play out in ways you didn't imagine and how characters change in the face of adversity.
+
+Because the things your character does during the game have repercussions -- some immediate, some slow to surface -- you might want to try to make the 'best' decision in every scene. But there aren't perfect decisions. Try not to slow the game down by asking too many questions or trying to have perfect information all the time. Practice letting go of making the right choice and focus more on making a choice that feels authentic to your character.
+
+That said, you might want to clarify a situation or hone in on a detail before setting things in stone. Both the MC and the players can always ask each other questions to make sure everyone's on the same page and understands the fictional positioning of the moment. But clarifying is different from rewinding -- you can't get your character into trouble and then go back because you don't like the consequences. The fallout of these moments is a big part of what makes the game fun.
+
+Urban Shadows works best when the MC and the players share responsibility for sticking to the fiction and keeping the story moving forward, building on what's been established instead of rewriting the story to fit the current moment.
+
+## Moves and Dice
+
+Framing scenes is the first step in building an interesting conversation, but it's the moves that connect your characters to the fiction in exciting ways. Each move is a small set of rules that helps resolve conflicts, answer questions in the fiction, and push the story forward. Moves are like the programming language of the game -- 'When you do x, then do y' -- shaping and defining the fiction when your characters take meaningful actions.
+
+What's exciting about using moves to define the fiction is that nobody -- not even the MC -- knows what will happen next in the story. In these uncertain moments, the moves take center stage, helping you and your group decide what happens. You don't just decide what happens as a group or turn to the MC for an answer -- you make a move, then look to the move to see where the fiction goes from there.
+
+Every player character has access to the basic moves and can use those moves freely. Each player character also gets their own playbook moves -- specific moves that point the characters in distinct directions -- and can add more moves over the course of play as they develop, change, and grow.
+
+In general, basic moves cover situations that come up all the time in Urban Shadows, while other moves cover more character-specific or rare situations. Most scenes involve player characters making multiple basic moves in a fairly short span of time, but some moves only come up once every couple of scenes, and others only once a session.
+
+### Triggering Moves
+
+Moves don't fire off whenever you think it might be interesting; they are triggered by something you say in the conversation, usually an action your character takes in the fiction. If you want to trigger a move, you have to do the thing that triggers it. You can always avoid a move, but then you have to avoid taking that action in the fiction. Because every move ties directly into the fiction, all moves are governed by the same idea: to do it, you do it.
+
+It's not enough to say 'I want to turn to violence' -- you need to do something in the fiction to meet the move's trigger first, like breaking a beer bottle over the head of another character. And if you decide to drive a knife into someone's ribs to keep them from hurting you, you're turning to violence and the move triggers...whether you like it or not.
+
+### Rolling Dice
+
+When you commit to a course of action that triggers a move, you usually end up rolling dice. You don't roll dice at any other time. If a move calls for dice, roll them and consult the move to see what happens next. Always follow the fiction -- you need to trigger a move before you roll. Say what you do, then figure out which move follows.
+
+Not all moves use dice. Some moves tell you and the MC what should happen when they're triggered. Things just happen, no dice rolled.
+
+### Hits and Misses
+
+If a move asks you to roll dice, roll two six-sided dice (2d6), add the results together, and follow the outcomes listed in the move. Traditionally, moves ask you to roll with something -- like 'roll with Blood' or 'roll with Power' -- which means you add that stat or Circle rating to the roll. A character with Blood+2, for example, adds 2 to the dice total when rolling with Blood, while a character with Power-2 subtracts 2 from the total when rolling with Power. There are ways to get other bonuses -- or suffer penalties -- to your roll, but you never roll with more than +4 or less than -3, no matter what bonuses or penalties you have.
+
+> **Note:** The MC almost never rolls dice in Urban Shadows. Instead, they tell you what's happening and respond to your actions. They make their own moves when a player rolls a miss, when a move calls for them to do so, or when the conversation stalls. The MC does roll dice after or between sessions to conduct the faction turn, determining the outcome of actions taken by the city's political organizations.
+
+### Weak Hits and Strong Hits
+
+Move outcomes are straightforward: anything 7 or more is a hit, and anything 6 or less is a miss. Some moves give additional options on a 10+ or give more description for what happens on a 7-9 or a miss. Each move is unique, so read the move closely before you roll.
+
+In general, a hit means you get what you want. It's not always perfect, but you at least get the baseline of what you were trying to do. When you roll a 7-9 -- a weak hit -- there might be some serious costs or complications, but your roll is not a failure. Sometimes those costs are direct -- like marking harm or incurring a negative consequence -- but sometimes a 7-9 simply means you get fewer positive results from the move.
+
+A 10+ is a strong hit -- you get everything you want or even some sort of bonus, well beyond what you get on a 7-9. You might avoid a consequence, or you might get a greater result or choose additional options from a list.
+
+In rare circumstances, moves have even greater outcomes if you roll a 12+. These are primarily advanced moves, upgraded versions of the basic moves you can unlock through advancement. They offer bonuses beyond a 10+, like converting someone to a real ally when you persuade them or manifesting new abilities when you let it out.
+
+### Misses and Failures
+
+A miss isn't always a failure: it means something interesting occurs...and the MC is about to tell you what that interesting thing is. It's likely your character won't like what happens, since the MC's job is to push the story in interesting directions, but as a player you'll often find yourself enjoying the way the story twists and turns. There's no rule that says the results of a miss have to be awful or the worst result you can possibly imagine -- sometimes the most interesting miss means you get what you want but in the worst possible way.
+
+The MC isn't playing against you, but one of their main jobs is to push the story forward with dangerous twists and hard choices. The MC has to introduce down beats to make the stakes of the story real, to remind you that your misses have real consequences. They might not be failures, but they will be challenging outcomes that push you to rise above them. And even when failure occurs, something still happens that advances the narrative and changes the stakes or terms of the conflicts and challenges.
+
+### Moves and Uncertainty
+
+The moves are for when no one -- neither the players nor the MC -- knows what happens next.
+
+If you want to do some everyday task like driving across town or cooking a simple meal -- no urgency, no danger, no risk -- then there is no uncertainty. Everyone knows what happens. But when you try to drive across town to save an ally from certain doom or perform a magic trick to impress a faerie king, uncertainty mounts quickly. That's when a move triggers -- when you and your group need help from the mechanics to find a way forward.
+
+For a move to be triggered, both the player and the MC need to be uncertain about the outcome of the action. The MC calls for a move when it's not clear to them how things are going to turn out. And uncertainty is a constant theme when playing Urban Shadows: the MC, like the players, is playing to find out what happens while staying true to the fictional positioning of the situation.
+
+The moves aren't just natural points of conflict and drama; they are also prescriptive tools for discovering uncertainty in the story. The moves themselves tell you what's uncertain in your story, and when those moments arise -- when you try to escape a dangerous situation or mislead an old friend or let out the monster within -- allow that uncertainty to grow and flourish in the moment...and let the move drive the fiction.
+
+### The Instinct Die
+
+> **Optional:** This section is supplement-only.
+
+Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die -- a different color from the regular die. If a roll results in a failure (6 or lower) AND the Instinct Die shows a 1, it triggers an Extreme Failure unique to each playbook.
+
+The Instinct Die's theme depends on the character's playbook and Circle.
+
+| Circle | Theme | Description |
+|---|---|---|
+| Mortalis | Desperation | A moment of panic, rash action, or vulnerability. |
+| Night | Hunger | An uncontrollable supernatural urge. |
+| Power | Temptation | A lapse in control over magic or destiny. |
+| Wild | Chaos | Instinct or otherworldly nature taking over. |
+
+## Core Elements
+
+### Circle Status
+
+Clout. Respect. Social capital. Whatever you call it, all those who live in the city have some degree of status and reputation within their communities. The more influence you have, the more power you wield...but climbing the ladder is never an easy task.
+
+Circle Status represents your current reputation in the city, how members of each Circle view your character on a scale from Status-0 to Status-3. The Status you hold in your own Circle is the most important one -- when you say that someone is 'Status-3,' you mean they hold Status-3 in their Circle -- but all four of the Circles have an opinion about you and your power and prestige.
+
+All PCs start with Status-1 in their Circle, but can earn more in play, growing your reach and extending your influence as you rise up in the social hierarchy. For the most part, you can't hold greater than Status-1 in a Circle outside your own; other communities might respect you, but they'll never trust you like one of their own. There are some exceptions -- like Dual Loyalty -- but most characters are either mistrusted by other Circles (Status-0) or grudgingly respected (Status-1).
+
+Only those involved with the supernatural world have Circle Status at all, and only relatively major players have a Status higher than zero. Ordinary mortals don't have Status, and most of the minions that serve the powers-that-be are Status-0 across the board. Any Status, even Status-1, implies a significant amount of respect within the supernatural community.
+
+In addition to broad fictional positioning, Status also determines how good you are at refusing to honor your Debts and influencing the city through City Moves.
+
+| Status Level | Description |
+|---|---|
+| No Status | Ordinary mortals who don't have any regular interactions with the supernatural world. They can't hold or offer Debts; no one views them as part of the 'real' society of the city. |
+| Status-0 | Nobodies or goons. A Status-0 NPC can hold Debts and pass through most supernatural spaces freely, but their reach and influence are extremely limited. |
+| Status-1 | Established within the city; their name is known, their Debts are (mostly) honored, and they command some degree of attention. All PCs have Status-1 within their Circle at the start of the game. |
+| Status-2 | Movers and shakers within the city. They carry political power and can use it to manipulate factions, claim assets, or recruit outside allies to their cause. Status-2 characters are powerful enough to be feared, and often hold Status-1 in another Circle as well. |
+| Status-3 | The apex predators who wield true power and hold the utmost respect within their Circles -- whether that's out of fear, love, or political alliances -- controlling their own faction without significant internal rivalries. They might be an angel leading an order of devotees, an ancient vampire with a network of ghoulish spies, or a crime syndicate boss keyed into the supernatural. Most Status-3 characters are NPCs, but PCs can occasionally reach this level. |
+
+> **Note:** It's possible -- but rare -- to lose Status once you've earned it. Ironically, the most fragile status is Status-3; you must work to maintain your position on top. Status-1 and Status-2 are relatively easy to hold once acquired.
+
+### Circle Ratings
+
+While Circle Status reflects the degree of influence and respect you command within a Circle, Circle ratings measure how well you understand that Circle's politics and members. Most high-status members of a Circle likely also have a high Circle rating, but it's not guaranteed. It's one thing to earn the respect of your community, and a far different thing to keep up with that community's current politics.
+
+While Status is always zero or greater, Circle ratings can be negative, reflecting a misunderstanding or lack of competency in regards to a given Circle. A member of Mortalis might have a poor understanding of Power, not grasping the long-term political view held by a community of wizards and oracles. On the other hand, a member of Power may be so far removed from day-to-day mortal life that they have a negative Circle rating with Mortalis.
+
+Circle ratings range from -3 to +3. A character with a high Circle rating has contacts and connections within that Circle, easily interpreting political information about it; a character with a low Circle rating doesn't understand how that Circle works or who the power players are. The primary use of these Circle ratings is through Circle moves -- when you roll one of the moves that calls for a Circle rating, you use your current rating in that Circle as your bonus.
+
+Unlike Status, your ratings with each Circle shift constantly, reflecting the impact your character's experiences have on their understanding of these various communities.
+
+### Debt
+
+In the supernatural underworld of the city, there is no greater currency than Debt -- the obligations that bind the characters to each other amidst the chaos of the city. Everyone, from the most powerful wizards to the lowliest imps, collects and spends Debts.
+
+During character creation, your group assigns Debts between each of the player characters to link them together -- past alliances, struggles, and other messy connections. But Debts aren't just for player characters; every single other character in the city -- except No Status mortals -- relies on Debts.
+
+A Debt isn't something you can physically hold -- it's intangible, a connection between a debtor and their creditor known to all...and unlikely to be forgotten. Those whom you owe can quickly become an obstacle to your goals...or make you a pawn in their bids for real power and prestige. And those who owe you are the closest thing you have to real allies.
+
+#### Earning Debts
+
+Debts are not given lightly. But if you do someone a favor without asking for anything in return, they now owe you a Debt. Stick your nose into someone else's business without cause? You owe them a Debt if they let it go. Because your character's interests will often bump into or against those of other PCs and NPCs, you'll quickly start racking up Debts just by pursuing your goals.
+
+#### Cashing In Debts
+
+Debts are mainly used during the game when a character -- PC or NPC -- cashes in the Debt to compel another character to action. Cashing in a Debt with a player character is different than cashing in a Debt with an NPC.
+
+**Cashing in a Debt with a PC** compels them to choose one of:
+
+- answer a question honestly
+- do you a favor at moderate cost
+- lend a hand to your efforts
+- get in the way of someone else
+- erase a Debt they hold on someone
+- give you a Debt they hold on someone else
+
+**Cashing in a Debt with an NPC** compels them to choose one of:
+
+- answer a question honestly
+- arrange a meeting with an NPC in their Circle
+- grant you a worthy boon or useful gift
+- erase a Debt they hold on someone
+- give you a Debt they hold on someone else
+
+### Core Elements for NPCs
+
+NPCs take harm, acquire Debts, and hold Status just like PCs, but they are simplified versions. NPCs don't have playbooks or lists of moves -- the MC never rolls dice for them (outside of a faction turn), but instead tells the PCs how the NPCs react to the PCs' moves and actions in the fiction.
+
+All major NPCs have a name, Circle, and Circle Status. NPCs can gain and cash in a Debt just like PCs, but they don't have their own intimacy moves or mark corruption. The MC tracks these Debts, but it helps if players also track the Debts they owe to NPCs (and that NPCs owe them).
+
+When a mortal NPC takes harm, it hits them worse than it hits a PC. Inflicting 2-harm is serious damage and 3-harm is usually fatal for most mortals. Supernatural NPCs exist, of course, and a lot of how they handle harm comes down to fictional positioning. Vulnerabilities mean they take more harm, resistances act as armor, and some NPCs can simply take more punishment than a mortal NPC (or even a PC) and heal faster than average. It's common for a vampire or werewolf NPC to have six or more harm, and some demons or otherworldly creatures might take ten or more harm to kill.
+
+Neither mortal nor supernatural NPCs have scars, however, so marking their final harm box means they are always on death's door.
+
+### Intimacy
+
+Intimacy moves are unique to each playbook, reflecting how your character connects with others during moments of closeness. Intimacy isn't a rare thing in the city -- characters have all sorts of connections with each other, including romantic, familial, or other intimate relationships -- but intimacy between characters in an Urban Shadows story is worth taking a moment to appreciate in the fiction. It's an opportunity for the group to learn more about the characters: what do they care about? What makes them tick? What are they willing to share when vulnerable?
+
+What defines a moment of intimacy is up to the parties involved, but the MC might ask 'Is this a moment of intimacy?' if no one brings it up. Regardless of who raises the idea, intimacy requires both (or all) parties to agree it occurred: it means they've shared a poignant and personal moment with one another based on real vulnerability and connection. It's not possible to force intimacy on anyone.
+
+There are obvious moments of intimacy -- sex, ritual magic, transcendental psychic experiences -- but urban fantasy is filled with a variety of emotional connections. Two characters might get drunk together or tell each other painful secrets or open up about their real desires in the face of the city's unending grind.
+
+When you trigger an intimacy move, read the text of your intimacy move out loud and follow the instructions given. The effects of any intimacy move activated in play are more or less permanent. If a move offers you hold, it's yours until it expires; if you mark corruption or claim a Debt because of a moment of intimacy, mark or claim those just as you would through any other method.
+
+> **Note:** Moments of intimacy can be tender and vulnerable but they don't have to be physical or sexual. Any moment of deep emotional connection can trigger an intimacy move. Whenever you have any of these moments -- especially if they involve physical intimacy -- it's important to make sure everyone at the table feels comfortable out-of-game as well. Use appropriate safety tools to ensure everyone enthusiastically consents.
+
+### Corruption
+
+The darkness of the city's streets isn't just about shadows and monsters; it lives in your heart, burrowing its way into your psyche each time you look for answers and solutions in the worst parts of your soul. Corruption eats at you when you're alone, promising power in exchange for a bit more control. And it's there when you desperately need an out, ready to trade everything you need for just a piece of your soul. Until one day, you wake up to find there's nothing left to give up.
+
+#### Gaining Corruption
+
+Corruption is an advancement system, albeit one that emphasizes personal power and self-driven motives. When you're told to mark corruption, check off a box in the corruption track; when you've checked off all five boxes, you unlock a corruption advance and clear your corruption track to start anew. Corruption advances, like standard advances, offer your character new abilities, but they usually come at a high price: more corruption.
+
+Ways to mark corruption:
+
+- Hitting your playbook's corruption trigger
+- A move tells you to mark corruption
+- The MC tells you to mark corruption
+
+> **Note:** The main way PCs gain corruption is through a corruption trigger -- a unique circumstance that represents your character stepping further away from a mortal life or giving in to their supernatural urges.
+
+#### Corruption Advances
+
+Corruption is more than just darkness or evil. It represents your character slipping toward the worst parts of their nature, becoming that which should be feared instead of respected, hated instead of loved. Yet, as your corruption mounts, your powers only grow.
+
+Corruption advances unlock additional corruption moves or add +1 to a stat (max+3). Corruption moves are powerful, but they generate corruption when you use them, a downward cycle that pushes your character further down a dark path.
+
+#### Retiring as a Threat
+
+Eventually, your character no longer has any more corruption advances left. Instead, you'll be left with only one, ugly option: retire as a threat. If you unlock this advance, your PC is no longer yours; they belong to the MC, who can use your character like a weapon against the other players' characters. You slipped over the edge, grew too close to the darkness, and your friends and allies now pay the price.
+
+There's no hard and fast rule about what it looks like for your character to fall to darkness. Your new moves will drive you toward marking more corruption, but that doesn't mean that you have to give in all at once. Some characters fight the darkness, hoping to save themselves and the city all at once. But some characters revel in the thrill -- marking corruption whenever they can as they rush toward the cliff.
+
+### Harm
+
+Characters in Urban Shadows are no strangers to violence. The supernatural world is like any community that focuses on illegal or illicit activity: violence is a substitute for all the other forms of communication that are excluded by the nature of the business. You can't sue another werewolf pack in municipal court for taking your territory or call the cops to tell them that an undead vampire lord murdered your brother. You've got to handle all that shit on your own.
+
+There are methods that help supernatural communities resolve conflicts without resorting to physical force -- ancient faeries who serve as neutral arbiters or demonic contracts that magically enforce nonviolence -- but they only delay the inevitable. The language of the streets is violence. Always has been, always will be.
+
+#### Tracking Harm
+
+When your character suffers injury or trauma, you take harm. If you take too much harm, you die. The harm track consists of five boxes moving through three tiers: one faint, two serious, and two critical. When your character suffers harm, check off a number of boxes on your harm track equal to the harm suffered.
+
+You always begin by marking harm in the faint tier and moving down the track into serious and then critical. When you mark a box of harm in a new tier, write a short description of the injury on your sheet to remind yourself what harm your character has suffered. If you ever need to mark harm and can't -- because all your other boxes are full -- you die, which usually triggers your end move.
+
+#### Healing Harm
+
+The different levels of harm reflect how badly your character is hurt, moving from minor injuries to wounds that require immediate medical attention. Faint harm is minor -- getting stabbed in a non-vital area or getting into a fist fight. Most characters can shrug off faint wounds by getting some rest. Serious harm is dangerous -- getting shot in the shoulder or hit by a car; you need medical attention to keep things from getting worse, but you'll be (more or less) back on your feet in a few days. Critical harm means you're on the verge of dying -- like getting shot in the stomach or beaten in the head with a metal bat; if you don't get to a hospital or find some magic to patch you up real quick, you're going to die.
+
+If your character suffers faint harm, they heal naturally without any special treatment. When your character suffers serious or critical harm, your injuries need special attention. How long before your serious or critical injuries worsen is entirely up to your MC -- they make the decision based on the injuries you've sustained, the conditions in which you find yourself, and the dramatic tension of the scene.
+
+Once you've gotten medical attention or magical assistance, healing happens slowly while you rest, removing one faint or serious harm every few days and one critical harm every week. When you erase harm, begin with the harm in the critical tier and move up the track, removing the critical conditions before the serious and faint conditions -- your worst injuries heal first.
+
+Harm examples by severity:
+
+- 1-harm: rough but blunt trauma -- fists and baseball bats, punches thrown at a rock concert, the kind of thing people sleep off after a bad night.
+- 2-harm: painful and obvious -- a gunshot wound, a bad car wreck, wounds impossible to hide without bandages and slings.
+- 3-harm: worse than all that -- a bullet at point-blank range, a sword cleaving tendon and bone, a beating that leaves you unrecognizable for a week.
+- 4-harm: instant death to a mortal human -- a grenade blast at close range, losing a limb or internal organ, falling off the top of a ten-story building.
+
+#### Armor
+
+Characters wearing armor receive a layer of protection from most physical attacks. If they suffer harm from which their armor would protect them, they reduce the harm suffered by the rating of the armor.
+
+Most armor is rated at 1-armor or 2-armor. Typically, 1-armor is lighter and less conspicuous -- bulletproof vests, heavy leather jackets, etc. -- whereas 2-armor is obvious to all -- riot gear, plate mail, etc. -- and bound to attract attention.
+
+Playbook moves can grant an armor bonus or rating without the need to wear actual armor. This armor is usually supernatural or situational.
+
+If a character's armor reduces the harm suffered to zero, the attack inflicts no harm at all; the armor has absorbed the damage, even if the attack succeeded. Attacks that inflict no harm can still have consequences.
+
+Armor is written out in one of two ways: x-armor or armor+x. X-armor is the base value of a source of armor; armor+x is the value added to a character's base armor by a supplementary source. X-armor won't stack with another x-armor. Only armor+x can combine with other armor effects to increase the amount of armor a character wears.
+
+Armor piercing (ap) weapons ignore armor. If your character is wearing 2-armor and suffers 3-harm from an armor piercing weapon, you suffer the entire three points of harm, even if the armor results from a supernatural source.
+
+#### Stun Harm
+
+Some weapons and situations inflict s-harm, a type of harm that incapacitates or disables characters. Tear gas, tasers, and concussive blasts may knock you off your feet and unconscious long before they kill you. When you suffer s-harm, your MC will tell you what effect it has. Sometimes you may lose your footing or drop something, or you may need to keep your cool to stay on your feet. Regardless, s-harm doesn't cause you to mark harm on your sheet, unless you fall down and hit your head while passing out.
+
+### Scars
+
+When you suffer harm, you may always ignore that harm by marking a Scar. Scars represent your character pushing through the immediate situation at some permanent cost, ignoring harm suffered by immediately reducing one of your main stats. In other words, you get to decide when your character dies from massive trauma by choosing (or not choosing) to negate lethal injuries before they happen -- at a steep price.
+
+Marking a scar does more than just soak the harm you almost took; it seizes the momentum for your character and puts you in a position to say what happens next. You may not emerge triumphant in the conflict at hand, but marking a scar is a notable moment in your character's story -- you've weathered something impossible at the cost of something precious.
+
+Some playbooks can heal scars through advancement, restoring the stat and erasing the scar, but many playbooks must live with the scars they've marked in play. That said, healed scars may be marked a second time.
+
+| Scar | Effect | Description |
+|---|---|---|
+| Shattered | -1 Blood | Frightened, weakened, and overly cautious. Shattered characters hesitate when they should act. |
+| Crushed | -1 Heart | Traumatized, timid, and uncertain. Crushed characters bear the full weight of the wounds they've suffered. |
+| Fractured | -1 Mind | Confused, adrift, and disjointed. Fractured characters are unstable and unsure or unfocused and imprecise. |
+| Broken | -1 Spirit | Hopeless, forlorn, and cowardly. Broken characters have little capacity to push through obstacles and dangers. |
+
+### End Move
+
+Death comes for all, eventually. The city may be eternal, but everything (and everyone) else inevitably ends. When your character reaches such a conclusion, read your end move aloud and follow its instructions.
+
+Each playbook has its own unique end move. Some pass on moves, resources, or responsibilities to other PCs or NPCs; others offer a chance for the character to shape the city in a lasting way. Work with your MC to decide exactly how your end move comes to pass in the fiction of your final moments.
+
+Character death in Urban Shadows is exceptionally rare -- between scars, armor, and other harm-reducing tools, it's uncommon for a player character to die unexpectedly or meaninglessly. Most PCs die when a player decides the end at hand is fitting. End moves are less a sudden consequence of an untimely death than a mechanical guidance for framing the end of your character's story.
+
+## Groups
+
+Much of the violence in Urban Shadows is personal and intimate, but some conflicts involve gangs of people all fighting for what they want. These gangs of people are called groups, and the rules around violence work a bit differently when groups engage in the conflict.
+
+### Group Size
+
+A group is treated as a single NPC when they fight as a unit; there's no need to take the time to resolve what each person does with a dozen or more people in the group. In general, larger groups can take more damage and inflict more damage; smaller groups tend to favor indirect confrontation or smaller opposition because they are weaker and prone to serious harm.
+
+| Size | Count |
+|---|---|
+| Small | 8 or fewer people |
+| Medium | 9-16 people |
+| Large | 16-30 people |
+| Huge | 30+ people |
+
+> **Note:** A small or medium group can operate without attracting too much attention, but large and huge groups almost always cause nearby civilians to notify the police, call the news, etc.
+
+Group harm track:
+
+| Harm Suffered | Effect |
+|---|---|
+| 1-2 harm | Some injuries, a few minor to moderate, no fatalities. |
+| 3-4 harm | Many injuries, several serious, possibly a couple of fatalities. |
+| 5-6 harm | Widespread serious injuries, many fatalities. |
+
+Groups can suffer up to 6-harm, regardless of their size. Any group that suffers six (or more) harm is broken and unable to fight. At that point, the group dissolves; there are too many injured and dead to fight on. Characters leading groups that suffer six or more harm can't rely on the group any longer, even if the characters can keep fighting alone.
+
+### Group Harm and Armor
+
+The harm a group inflicts is based on the average weapons they wield. Untrained groups or groups with inconsistent weaponry inflict one less harm than a trained group with consistent weaponry.
+
+Groups can be armored just like a character: if most of the group wears armor, the group gains the armor value of that armor.
+
+When a group inflicts harm on a person or another group, compare the size of the attacking group to the target. For every size category greater the attacking group is than the defending group, increase the harm inflicted by one. Conversely, reduce all harm inflicted by the smaller group on the larger group by one for each size category (minimum 0-harm). As always, armor soaks up harm one for one, but can be penetrated by armor piercing weaponry.
+
+## Fictional Tags
+
+For the most part, gear and equipment provide fictional positioning. In some cases, it's useful to have more description about the items you use beyond a fictional position. These additional features are called tags; they cover everything from weapon ranges to special abilities to features of groups. Don't think of the lists as definitive -- if your group thinks an extreme range tag or precious item tag is useful, add it.
+
+### Range Tags
+
+Every weapon has at least one range tag that describes the distance at which it can be used with reasonable accuracy. Outside of the tagged range, the weapon does less damage (-1 harm) or can't work at all.
+
+| Tag | Description |
+|---|---|
+| Hand | Useful within an intimate range, such as touching or striking someone with your bare hands. |
+| Close | Useful within a meter or two, probably about the length of the weapon you're holding. |
+| Near | Useful in relative proximity, somewhere between two to six meters. |
+| Far | Useful more than six meters away (or farther in good conditions). |
+
+> **Note:** Some weapons work at multiple ranges. A near/far handgun likely has some sort of sight, while a hand/close chain can be used to effectively choke someone or strike them from a meter or two away.
+
+### Item Tags
+
+Some items have tags that offer special rules or clarifications. For example, +area means an item can affect an area, like a magical amulet that can compel a group or a gun that deals harm to groups as easily as it deals harm to individuals. Some tags are effectively negative, reminding you of an item's weaknesses or limitations. For example, +fragile items likely break or fail after they are first used.
+
+### Group Tags
+
+Groups can also have tags, usually as a reminder to the MC of the group's nature, abilities, and limits -- like +demonic or +trained. These tags are often custom, created by the MC for the NPC group at hand, but a few show up repeatedly to describe groups that can be led by the PCs.

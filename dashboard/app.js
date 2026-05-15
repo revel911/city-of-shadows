@@ -13,12 +13,18 @@ async function cached(key, fn) {
   return result;
 }
 
-function clearCache() { _cache.clear(); }
+function clearCache() { _cache.clear(); _fetchToken = Date.now(); }
 
 // ── GitHub raw file fetchers ──────────────────────────────────────────
 
+// raw.githubusercontent.com is served through Fastly with ~5-minute edge
+// caching. _fetchToken changes whenever the user clicks Refresh so a fresh
+// page session and an explicit Refresh both pull the latest content; within
+// a single session the same token is reused so the browser caches normally.
+let _fetchToken = Date.now();
+
 async function ghText(path) {
-  const res = await fetch(`${CONFIG.GITHUB_RAW}/${path}`);
+  const res = await fetch(`${CONFIG.GITHUB_RAW}/${path}?v=${_fetchToken}`, { cache: 'no-cache' });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Could not load ${path} (${res.status})`);
   return res.text();
@@ -245,7 +251,11 @@ function esc(str) {
 
 function md(text) {
   if (!text || !text.trim()) return '<p class="empty-note">No content available.</p>';
-  return typeof marked !== 'undefined' ? marked.parse(text) : `<pre>${esc(text)}</pre>`;
+  if (typeof marked === 'undefined') return `<pre>${esc(text)}</pre>`;
+  const html = marked.parse(text);
+  // Files are written by the MC but embed player-supplied text (handoff intent,
+  // NPC player_interaction, sheet bio). Sanitize before injecting via innerHTML.
+  return typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(html) : html;
 }
 
 function statPills(stats) {

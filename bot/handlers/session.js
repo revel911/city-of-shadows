@@ -1,9 +1,19 @@
 import { generate, buildOpeningContext } from './mc.js';
-import { writeFile, readFile, readJSON } from './github.js';
+import { writeFile, updateFile, updateJSON } from './github.js';
 
 const sessions = new Map();
 
 const DISCORD_LIMIT = 1900;
+
+// Serializes async work on a single session so concurrent player messages
+// don't interleave generate() calls and produce two consecutive user turns
+// (which Anthropic rejects with a 400 alternation error).
+function lock(session, fn) {
+  const prev = session._chain || Promise.resolve();
+  const next = prev.then(() => fn(), () => fn());
+  session._chain = next.catch(() => {});
+  return next;
+}
 
 export async function startSession(thread, player) {
   const opening = await buildOpeningContext(player);
@@ -15,23 +25,34 @@ export async function startSession(thread, player) {
   };
   sessions.set(thread.id, session);
 
-  await thread.sendTyping();
-  const response = await generate(session);
-  session.messages.push({ role: 'assistant', content: response });
-  await postMCResponse(thread, response, session);
+  await lock(session, async () => {
+    await thread.sendTyping();
+    const response = await generate(session);
+    session.messages.push({ role: 'assistant', content: response });
+    await postMCResponse(thread, response, session);
+  });
 }
 
 export async function handleMessage(message) {
   const session = sessions.get(message.channel.id);
-  if (!session) return;
+  if (!session) {
+    // Session thread we no longer have state for — most likely a bot restart.
+    // Tell the player so they don't sit there typing into a void.
+    const ch = message.channel;
+    if (ch?.isThread?.() && typeof ch.name === 'string' && ch.name.endsWith(' — session')) {
+      try { await ch.send('Session state was lost (the bot likely restarted). Use `/play` to start a new session.'); } catch {}
+    }
+    return;
+  }
   if (!message.content?.trim()) return;
 
-  session.messages.push({ role: 'user', content: message.content });
-
-  await message.channel.sendTyping();
-  const response = await generate(session);
-  session.messages.push({ role: 'assistant', content: response });
-  await postMCResponse(message.channel, response, session);
+  await lock(session, async () => {
+    session.messages.push({ role: 'user', content: message.content });
+    await message.channel.sendTyping();
+    const response = await generate(session);
+    session.messages.push({ role: 'assistant', content: response });
+    await postMCResponse(message.channel, response, session);
+  });
 }
 
 async function postMCResponse(thread, response, session) {
@@ -75,8 +96,13 @@ function grabTag(body, tag) {
   return m ? m[1].trim() : null;
 }
 
+// The close block must be the trailing content of the response (only whitespace
+// allowed after </close_session>). This prevents the MC from accidentally
+// ending a session by quoting the schema or echoing the tag mid-narrative.
+const CLOSE_BLOCK_RE = /<close_session>([\s\S]*?)<\/close_session>\s*$/;
+
 function parseCloseBlock(text) {
-  const m = text.match(/<close_session>([\s\S]*?)<\/close_session>/);
+  const m = text.match(CLOSE_BLOCK_RE);
   if (!m) return null;
   const body = m[1];
   return {
@@ -93,7 +119,7 @@ function parseCloseBlock(text) {
 }
 
 function stripCloseBlock(text) {
-  return text.replace(/<close_session>[\s\S]*?<\/close_session>/, '').trim();
+  return text.replace(CLOSE_BLOCK_RE, '').trim();
 }
 
 function applyPatch(current, patch) {
@@ -136,14 +162,15 @@ async function processSessionClose(thread, session, close) {
     )]);
   }
 
+  let parsedStatePatch = null;
   if (close.state_patch) {
     try {
-      const patch = JSON.parse(close.state_patch);
-      const current = (await readJSON(`players/${id}/state.json`)) || {};
-      const merged = applyPatch(current, patch);
-      writes.push(['state', writeFile(
+      parsedStatePatch = JSON.parse(close.state_patch);
+      // RMW so a concurrent edit to state.json (rare for per-player files,
+      // but cheap insurance) merges against the latest state.
+      writes.push(['state', updateJSON(
         `players/${id}/state.json`,
-        JSON.stringify(merged, null, 2) + '\n',
+        (current) => applyPatch(current || {}, parsedStatePatch),
         `[session] state for ${session.player.name} (${stamp})`
       )]);
     } catch (e) {
@@ -152,11 +179,10 @@ async function processSessionClose(thread, session, close) {
   }
 
   if (close.events_append) {
-    const existing = (await readFile('game/events-log.md')) || '';
-    const next = existing.replace(/\s*$/, '\n\n') + close.events_append.trim() + '\n';
-    writes.push(['events-log', writeFile(
+    const append = close.events_append.trim();
+    writes.push(['events-log', updateFile(
       'game/events-log.md',
-      next,
+      (current) => (current || '').replace(/\s*$/, '\n\n') + append + '\n',
       `[session] events log (${stamp})`
     )]);
   }
@@ -164,19 +190,17 @@ async function processSessionClose(thread, session, close) {
   if (close.npc_patch) {
     try {
       const patches = JSON.parse(close.npc_patch);
-      const doc = (await readJSON('game/npcs.json')) || { npcs: [] };
-      const list = doc.npcs || [];
-      for (const p of patches) {
-        const idx = list.findIndex(n => (p.id && n.id === p.id) || (p.name && n.name === p.name));
-        if (idx >= 0) list[idx] = { ...list[idx], ...p };
-        else list.push(p);
-      }
-      doc.npcs = list;
-      writes.push(['npcs', writeFile(
-        'game/npcs.json',
-        JSON.stringify(doc, null, 2) + '\n',
-        `[session] npcs (${stamp})`
-      )]);
+      writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
+        const d = doc || { npcs: [] };
+        const list = d.npcs || [];
+        for (const p of patches) {
+          const idx = list.findIndex(n => (p.id && n.id === p.id) || (p.name && n.name === p.name));
+          if (idx >= 0) list[idx] = { ...list[idx], ...p };
+          else list.push(p);
+        }
+        d.npcs = list;
+        return d;
+      }, `[session] npcs (${stamp})`)]);
     } catch (e) {
       warnings.push(`npc_patch: ${e.message}`);
     }
@@ -185,19 +209,17 @@ async function processSessionClose(thread, session, close) {
   if (close.arc_patch) {
     try {
       const patches = JSON.parse(close.arc_patch);
-      const doc = (await readJSON('game/arcs.json')) || { arcs: [] };
-      const list = doc.arcs || [];
-      for (const p of patches) {
-        const idx = list.findIndex(a => a.id === p.id);
-        if (idx >= 0) list[idx] = { ...list[idx], ...p };
-        else list.push(p);
-      }
-      doc.arcs = list;
-      writes.push(['arcs', writeFile(
-        'game/arcs.json',
-        JSON.stringify(doc, null, 2) + '\n',
-        `[session] arcs (${stamp})`
-      )]);
+      writes.push(['arcs', updateJSON('game/arcs.json', (doc) => {
+        const d = doc || { arcs: [] };
+        const list = d.arcs || [];
+        for (const p of patches) {
+          const idx = list.findIndex(a => a.id === p.id);
+          if (idx >= 0) list[idx] = { ...list[idx], ...p };
+          else list.push(p);
+        }
+        d.arcs = list;
+        return d;
+      }, `[session] arcs (${stamp})`)]);
     } catch (e) {
       warnings.push(`arc_patch: ${e.message}`);
     }
@@ -206,14 +228,28 @@ async function processSessionClose(thread, session, close) {
   if (close.interactions_patch) {
     try {
       const next = JSON.parse(close.interactions_patch);
-      writes.push(['interactions', writeFile(
+      writes.push(['interactions', updateJSON(
         'game/interactions.json',
-        JSON.stringify(next, null, 2) + '\n',
+        () => next,
         `[session] interactions (${stamp})`
       )]);
     } catch (e) {
       warnings.push(`interactions_patch: ${e.message}`);
     }
+  }
+
+  // Register a brand-new character in players/index.json so /play can find
+  // them in future sessions. Only triggered when the opening flow was a new
+  // character (id was '__new__') and the close block named a concrete id.
+  if (session.player.id === '__new__' && id && id !== '__new__') {
+    const displayName = (parsedStatePatch && parsedStatePatch.character_name)
+      || session.player.name
+      || id;
+    writes.push(['players-index', updateJSON('players/index.json', (current) => {
+      const list = Array.isArray(current) ? current : [];
+      if (!list.some(p => p.id === id)) list.push({ id, name: displayName });
+      return list;
+    }, `[session] register new character ${id} (${stamp})`)]);
   }
 
   const results = await Promise.allSettled(writes.map(([, p]) => p));
@@ -234,7 +270,11 @@ async function processSessionClose(thread, session, close) {
   if (close.world_event && process.env.WORLD_EVENTS_CHANNEL_ID) {
     try {
       const ch = await thread.client.channels.fetch(process.env.WORLD_EVENTS_CHANNEL_ID);
-      if (ch?.isTextBased()) await ch.send(close.world_event);
+      if (ch?.isTextBased()) {
+        for (const part of chunk(close.world_event)) {
+          if (part.trim()) await ch.send(part);
+        }
+      }
     } catch (e) {
       console.warn('world event post failed:', e.message);
     }
