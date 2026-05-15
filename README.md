@@ -11,17 +11,35 @@ The city is shared. Other people are playing other characters in the same world.
 You only need a Discord account.
 
 1. Join the server → **https://discord.gg/f8VCHxVAqj**
-2. Ask Tommy to link your Discord ID to a character (or to onboard a new one).
-3. Run `/play` in any channel. The bot opens a private thread with you and the MC. Play happens there.
+2. Run `/play` in any channel. The bot replies with a menu — pick an existing character, or `+ New character` to onboard a new one (about 15 minutes; the MC walks you through playbook → stats → moves → gear → first scene).
+3. The bot opens a private thread with you and the MC. Play happens there.
 
 Sessions are async — start, stop, come back tomorrow. When you close a session, the MC writes a handoff so the next session can pick up exactly where you left off.
 
 ### Commands
 
+**Play**
+
 | Command | What It Does |
 |---------|--------------|
-| `/play` | Opens a private session thread with the MC. With one character linked, uses it; with several, prompts for an id. `character:new` starts onboarding. |
+| `/play [character]` | Opens a private session thread with the MC. With no arg, replies with a character-picker menu. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding. |
 | `/roll` | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier. |
+
+**Look at your character** (replies are private to you)
+
+| Command | What It Does |
+|---------|--------------|
+| `/sheet [character]` | Shows a character sheet. Defaults to yours if your Discord username matches a character name. |
+| `/state [character]` | Shows the raw mechanical state for a character (stats, harm, XP, circles) as JSON. |
+
+**Look at the world** (replies are visible to the channel)
+
+| Command | What It Does |
+|---------|--------------|
+| `/events [n]` | Shows the N most recent entries from the public events log. Default 3, max 10. |
+| `/npc <name>` | Looks up an NPC by id, name, or substring. |
+| `/hub <name>` | Shows the doc for a neighborhood hub (Shockoe Bottom, The Fan, Downtown, University, Creighton Court, Oregon Hill). |
+| `/arcs [status]` | Lists arcs filtered by status (default `active`; also `escalating`, `resolved`, `all`). |
 
 ---
 

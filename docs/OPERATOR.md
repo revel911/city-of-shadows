@@ -107,7 +107,7 @@ Register the slash commands once (this can be run locally with `bot/.env` popula
 node deploy-commands.js
 ```
 
-You should see `Registered 2 commands (guild ...).`
+You should see `Registered 8 commands (guild ...).` (2 session commands + 6 read commands.) If you only see 2, your local checkout is stale — pull and re-run.
 
 ### 7 — First session
 
@@ -127,10 +127,25 @@ If someone is already in a session for the character you picked, `/play` blocks 
 
 ## Discord commands
 
-| Command | What It Does |
-|---------|--------------|
-| `/play` | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
-| `/roll` | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier in the next turn. |
+**Session commands**
+
+| Command | Reply visibility | Behavior |
+|---------|------------------|----------|
+| `/play [character]` | ephemeral | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
+| `/roll` | public | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier on the next session turn. |
+
+**Read commands** (added in `feat(bot): add six read commands`)
+
+| Command | Reply visibility | Reads from | Behavior |
+|---------|------------------|------------|----------|
+| `/sheet [character]` | ephemeral | `players/<id>/sheet.md` | Resolves character by arg or Discord-username → `players/index.json`, sends the sheet markdown chunked. |
+| `/state [character]` | ephemeral | `players/<id>/state.json` | Same resolution as `/sheet`; pretty-prints the state JSON in a fenced code block. |
+| `/events [n]` | public | `game/events-log.md` | Sends the N newest H2 sections (default 3, min 1, max 10). |
+| `/npc <name>` | public | `game/npcs.json` | Matches by id → name (case-insensitive) → name substring. Renders a 3-line block (name, faction · location, role). Multiple substring matches prompt for a more specific query. |
+| `/hub <name>` | public | `hubs/<file>.md` via `hubs/index.json` | Matches by id → name (case-insensitive) → slug. Sends the markdown chunked. |
+| `/arcs [status]` | public | `game/arcs.json` (+ NPC/hub/player indexes for name resolution) | Filters by status (default `active`; choices: `active`, `escalating`, `resolved`, `all`). One block per arc: title, hubs, NPCs, PCs, summary. |
+
+All read commands share `bot/handlers/read-utils.js` (chunk-send, character resolution, NPC/arc formatters, events-log parser). Pure helpers are tested with Node's built-in test runner: `cd bot && npm test`.
 
 ---
 
@@ -146,23 +161,37 @@ city-of-shadows/
 │
 ├── bot/                           Node.js Discord bot → Fly.io
 │   ├── package.json
+│   ├── package-lock.json          Required by Dockerfile (npm ci)
 │   ├── Dockerfile
+│   ├── .dockerignore
 │   ├── fly.toml
 │   ├── .env.example
 │   ├── index.js                   Discord client bootstrap
 │   ├── deploy-commands.js         One-time slash command registration
 │   ├── commands/
 │   │   ├── play.js                /play
-│   │   └── roll.js                /roll
-│   └── handlers/
-│       ├── github.js              GitHub Contents API wrapper
-│       ├── mc.js                  Anthropic API + context builder
-│       └── session.js             Session state, close-block parser, write fan-out
+│   │   ├── roll.js                /roll
+│   │   ├── sheet.js               /sheet  (read)
+│   │   ├── state.js               /state  (read)
+│   │   ├── events.js              /events (read)
+│   │   ├── npc.js                 /npc    (read)
+│   │   ├── hub.js                 /hub    (read)
+│   │   └── arcs.js                /arcs   (read)
+│   ├── handlers/
+│   │   ├── github.js              GitHub Contents API wrapper (retries 409/422; updateFile/updateJSON for read-modify-write)
+│   │   ├── mc.js                  Anthropic API + context builder
+│   │   ├── read-utils.js          Shared helpers: chunk, sendChunked, resolveCharacter, formatNpc, formatArc, parseRecentEvents
+│   │   └── session.js             Session state, per-session async lock, close-block parser, write fan-out
+│   └── test/                      node --test unit tests for pure helpers
+│       ├── format-arc.test.js
+│       ├── format-npc.test.js
+│       ├── mc-system-prompt.test.js
+│       ├── parse-events.test.js
+│       └── resolve-character.test.js
 │
 ├── game/                          World state (machine-readable + log)
 │   ├── npcs.json
 │   ├── arcs.json
-│   ├── events.json
 │   ├── interactions.json
 │   ├── events-log.md
 │   └── world-bible.md
@@ -210,6 +239,15 @@ Continuity comes from documents, not chat history:
 - `game/interactions.json` — pending player-to-player effects
 
 Every session starts by feeding these into Claude's context. The MC reads them and drops the player back into the scene where they left off.
+
+---
+
+## Concurrency & retries
+
+- `bot/handlers/session.js` runs a per-session `lock()` so two messages typed quickly into the same thread can't interleave Claude calls (Anthropic 400 alternation error). New characters are auto-registered in `players/index.json` via `updateJSON` on close.
+- `bot/handlers/github.js` `writeFile` retries 409/422 conflicts up to 5 times with jittered backoff. `updateFile` and `updateJSON` do read-modify-write with the same retry loop, so two close blocks that touch the same shared file (`game/npcs.json`, `arcs.json`, `events-log.md`) merge against fresh content instead of one silently overwriting the other.
+- The close-block parser is anchored to end-of-response (`\s*$`), so an MC that quotes the `<close_session>` tag mid-narrative won't accidentally end the session.
+- The dashboard sanitizes markdown through DOMPurify before `innerHTML`, and bumps a `?v=` token on Refresh to defeat Fastly's 5-minute raw-content CDN cache.
 
 ---
 
