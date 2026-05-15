@@ -23,20 +23,45 @@ let _systemCache = null;
 async function loadSystemPrompt() {
   const parts = await Promise.all([
     readFile('mc-reference/mc-instructions.md'),
-    readFile('mc-reference/rules-reference.md'),
-    readFile('mc-reference/wod-supplement.md'),
+    readFile('mc-reference/reference/rules.md'),
+    readFile('mc-reference/reference/basic-moves.md'),
+    readFile('mc-reference/reference/mc-moves.md'),
+    readFile('mc-reference/reference/playbooks.md'),
+    readFile('mc-reference/reference/world-of-darkness/changeling.md'),
+    readFile('mc-reference/reference/world-of-darkness/demon.md'),
+    readFile('mc-reference/reference/world-of-darkness/hunter.md'),
+    readFile('mc-reference/reference/world-of-darkness/mage.md'),
+    readFile('mc-reference/reference/world-of-darkness/orpheus.md'),
+    readFile('mc-reference/reference/world-of-darkness/slasher.md'),
+    readFile('mc-reference/reference/world-of-darkness/vampire.md'),
+    readFile('mc-reference/reference/world-of-darkness/werewolf.md'),
+    readFile('mc-reference/character-creation.md'),
     readFile('mc-reference/npc-personality-engine.md'),
     readFile('mc-reference/state-schema.md'),
     readFile('mc-reference/bot-output-format.md'),
   ]);
-  const sections = [
-    parts[0] && `# MC Instructions\n\n${parts[0]}`,
-    parts[1] && `# Rules Reference\n\n${parts[1]}`,
-    parts[2] && `# WoD Supplement\n\n${parts[2]}`,
-    parts[3] && `# NPC Personality Engine\n\n${parts[3]}`,
-    parts[4] && `# state.json Schema\n\n${parts[4]}`,
-    parts[5] && `# Bot Output Format\n\n${parts[5]}`,
-  ].filter(Boolean);
+  const labels = [
+    'MC Instructions',
+    'Rules — Fundamentals of Play',
+    'Basic Moves',
+    'MC Moves',
+    'Playbooks',
+    'WoD — Changeling: The Lost',
+    'WoD — Demon: The Descent',
+    'WoD — Hunter: The Vigil',
+    'WoD — Mage: The Awakening',
+    'WoD — Orpheus',
+    'WoD — Slasher',
+    'WoD — Vampire: The Masquerade',
+    'WoD — Werewolf: The Forsaken',
+    'Character Creation Wizard',
+    'NPC Personality Engine',
+    'state.json Schema',
+    'Bot Output Format',
+  ];
+  const sections = parts
+    .map((content, i) => content && `# ${labels[i]}\n\n${content}`)
+    .filter(Boolean);
   return sections.join('\n\n---\n\n');
 }
 
@@ -65,9 +90,11 @@ export async function buildOpeningContext(player) {
     ]);
     return [
       `New player: Discord display name "${player.name}".`,
-      'This is a new character. Walk them through onboarding per the MC instructions:',
-      'playbook selection → stats → moves → gear → debts/circles → opening scene.',
-      'At session close, emit the bot output close block with handoff, state_patch, and any world-visible events.',
+      'This is a new character. Walk them through onboarding by following',
+      '`mc-reference/character-creation.md` phase-by-phase (already in your',
+      'context). At session close, emit the close block with the full sheet,',
+      'initial state_patch, npc_patch for any NPCs introduced, and the first',
+      'handoff.',
       '',
       '--- RECENT WORLD EVENTS (tail) ---',
       tail(events, EVENT_TAIL_LINES) || '(empty)',
