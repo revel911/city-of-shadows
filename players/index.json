@@ -16,11 +16,15 @@
     "name": "John Smith"
   },
   {
-    "id": "robert-lagrange",
-    "name": "Robert Lagrange"
+    "id": "jacob-brooks",
+    "name": "Jacob Brooks"
   },
   {
-    "id": "jacob-brooks",
-    "name": "revel911"
+    "id": "joe-nakama",
+    "name": "Joe Nakama"
+  },
+  {
+    "id": "robert-lagrange",
+    "name": "Robert Lagrange"
   }
 ]

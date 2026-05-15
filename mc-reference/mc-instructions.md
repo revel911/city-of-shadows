@@ -217,7 +217,7 @@ Files live at fixed paths in this repository. There is no version ambiguity, no 
 | `players/<id>/handoff.md` | last-session handoff for one character (full replacement on close) |
 | `players/<id>/sheet.md` | character sheet (full replacement on close, only when changed) |
 | `players/<id>/state.json` | mechanical state (merged patch on close) |
-| `players/index.json` | character roster + Discord ID mapping (do not modify mid-game) |
+| `players/index.json` | character roster — `[{ id, name }]`. Bot auto-appends new characters at the first close after onboarding; you do not emit this file in your close block. |
 | `game/events-log.md` | append-only public events log |
 | `game/npcs.json` | NPC roster (patched on close) |
 | `game/arcs.json` | active story arcs (patched on close) |
@@ -467,7 +467,20 @@ Do not open with "Welcome back" or recap previous sessions in summary form. Drop
 ```yaml
 new:
   protocol: follow mc-reference/character-creation.md phase-by-phase
-  output: at close, emit the full sheet, initial state_patch, npc_patch (for any NPCs introduced), and first handoff
+  required_at_close:
+    - player_id          # kebab-case, used as the folder name and roster id
+    - sheet              # full sheet, even for a short or vignette character
+    - state_patch        # must include character_name plus initial mechanical state
+    - handoff            # first handoff so the next session can resume
+    - npc_patch          # every NPC introduced in Phase 9 or the opener, with full personality scores
+    - events_append      # if the character's arrival is publicly visible
+  rule: >
+    A new-character session MUST end with a complete close block. Even if the player retires the
+    character mid-onboarding or treats them as a one-shot vignette, emit the sheet and state_patch
+    so the dashboard and roster pick them up. If the character truly should not be a PC going forward,
+    say so in the handoff and set state_patch.status accordingly — do not silently drop the sheet
+    and state_patch. The bot derives the roster name from state_patch.character_name first, then from
+    the sheet's H1; without either, the roster name falls back to the kebab id.
 ```
 
 The bot creates the player's folder and files from the close block — there is no need to "create files" during onboarding. You produce the content; the bot persists it.

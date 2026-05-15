@@ -49,7 +49,6 @@ export async function execute(interaction) {
     },
     ...players.slice(0, 24).map(p => ({
       label: p.name,
-      description: p.id,
       value: p.id,
     })),
   ];

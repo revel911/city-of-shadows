@@ -54,10 +54,42 @@ export async function handleMessage(message) {
   });
 }
 
+const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
+
 async function postMCResponse(thread, response, session) {
   const close = parseCloseBlock(response);
-  const visible = close ? stripCloseBlock(response) : response;
 
+  // First-session-for-a-new-character closes MUST land a sheet and a state_patch
+  // with stats — without those the dashboard shows an empty mechanics section
+  // and the data the player gave during onboarding is lost. If the MC's close
+  // block is incomplete, ask it to re-emit before we post the narrative, write
+  // to GitHub, or archive the thread.
+  if (close && session.player.id === '__new__') {
+    const missing = missingNewCharCloseFields(close);
+    if (missing.length) {
+      const retries = session._closeRetries || 0;
+      if (retries < NEW_CHAR_CLOSE_MAX_RETRIES) {
+        session._closeRetries = retries + 1;
+        await thread.send(
+          `⚠ Onboarding close block is incomplete (missing: ${missing.join(', ')}). ` +
+          `Asking the MC to re-emit before saving — retry ${session._closeRetries}/${NEW_CHAR_CLOSE_MAX_RETRIES}.`
+        );
+        session.messages.push({ role: 'user', content: buildCloseRetryPrompt(missing) });
+        await thread.sendTyping();
+        const retryResp = await generate(session);
+        session.messages.push({ role: 'assistant', content: retryResp });
+        await postMCResponse(thread, retryResp, session);
+        return;
+      }
+      await thread.send(
+        `⚠ Close block still incomplete after ${NEW_CHAR_CLOSE_MAX_RETRIES} retries ` +
+        `(still missing: ${missing.join(', ')}). Saving what was emitted; another session will be needed to fill the rest.`
+      );
+      console.error(`[session-close] new-char close exhausted retries for ${session.player.name}: missing ${missing.join(', ')}`);
+    }
+  }
+
+  const visible = close ? stripCloseBlock(response) : response;
   for (const part of chunk(visible)) {
     if (part.trim()) await thread.send(part);
   }
@@ -70,6 +102,21 @@ async function postMCResponse(thread, response, session) {
       thread.setArchived(true).catch(() => {});
     }
   }
+}
+
+function buildCloseRetryPrompt(missing) {
+  return [
+    `Your <close_session> block is missing required fields: ${missing.join(', ')}.`,
+    'This is a new-character session — character creation must persist a full sheet and full initial state.',
+    'Re-emit your closing message now with a COMPLETE <close_session> block, including:',
+    '- <player_id>: kebab-case id (firstname-lastname)',
+    '- <sheet>: the full sheet you built across onboarding (Identity, Playbook, Stats, Moves, Circle Ratings & Status, Debts, Anchors, Gear, Experience Tier)',
+    '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, active_arc_ids: [], last_session, notes',
+    '- <handoff>: full first handoff',
+    '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
+    '',
+    'You may repeat your closing narrative if you want, but the priority is a complete close block. Do not skip the sheet because the character is short-lived — the data you collected during onboarding has to land in the repo.',
+  ].join('\n');
 }
 
 function grabTag(body, tag) {
@@ -224,9 +271,7 @@ async function processSessionClose(thread, session, close) {
   // them in future sessions. Only triggered when the opening flow was a new
   // character (id was '__new__') and the close block named a concrete id.
   if (session.player.id === '__new__' && id && id !== '__new__') {
-    const displayName = (parsedStatePatch && parsedStatePatch.character_name)
-      || session.player.name
-      || id;
+    const displayName = resolveNewCharacterName(parsedStatePatch, close.sheet, id);
     writes.push(['players-index', updateJSON('players/index.json', (current) => {
       const list = Array.isArray(current) ? current : [];
       if (!list.some(p => p.id === id)) list.push({ id, name: displayName });
@@ -239,7 +284,14 @@ async function processSessionClose(thread, session, close) {
   results.forEach((r, i) => {
     const name = writes[i][0];
     if (r.status === 'fulfilled') okNames.push(name);
-    else failNames.push(`${name}: ${r.reason?.message || r.reason}`);
+    else {
+      const reason = r.reason?.message || r.reason;
+      failNames.push(`${name}: ${reason}`);
+      // Surface to Fly logs too — in-thread message is easy to miss and the
+      // most common silent failure (player created but never indexed) leaves
+      // no trace otherwise.
+      console.error(`[session-close] write '${name}' failed for ${id} (${stamp}):`, reason);
+    }
   });
 
   const lines = [];
@@ -261,4 +313,50 @@ async function processSessionClose(thread, session, close) {
       console.warn('world event post failed:', e.message);
     }
   }
+}
+
+// Display name for a freshly-onboarded character. Preference order:
+//   1. character_name from the state_patch (canonical when the MC sets it)
+//   2. first H1 in the emitted sheet, with any trailing "— Character Sheet" stripped
+//   3. title-cased kebab id (joe-nakama → "Joe Nakama")
+// Falling back to session.player.name was wrong: for new characters that field
+// is the Discord username, which leaks into the roster and the dashboard.
+// Returns the list of REQUIRED close-block fields that are missing/invalid for
+// a new-character (onboarding) session. Used to decide whether to commit the
+// close or ask the MC to re-emit. Returning-character closes are not validated
+// here — partial updates are fine for those.
+export function missingNewCharCloseFields(close) {
+  const missing = [];
+  const pid = typeof close.player_id === 'string' ? close.player_id.trim() : '';
+  if (!pid || pid === '__new__') missing.push('player_id');
+  if (!close.sheet || !close.sheet.trim()) missing.push('sheet');
+
+  let stateOk = false;
+  if (close.state_patch && close.state_patch.trim()) {
+    try {
+      const parsed = JSON.parse(close.state_patch);
+      stateOk = parsed
+        && typeof parsed === 'object'
+        && parsed.stats
+        && typeof parsed.stats === 'object'
+        && Object.keys(parsed.stats).length > 0;
+    } catch {}
+  }
+  if (!stateOk) missing.push('state_patch (with stats)');
+  return missing;
+}
+
+export function resolveNewCharacterName(parsedStatePatch, sheetText, id) {
+  if (parsedStatePatch && typeof parsedStatePatch.character_name === 'string') {
+    const v = parsedStatePatch.character_name.trim();
+    if (v) return v;
+  }
+  if (sheetText) {
+    const m = sheetText.match(/^#\s+(.+)$/m);
+    if (m) {
+      const name = m[1].replace(/\s+[—–-]\s+Character Sheet\s*$/i, '').trim();
+      if (name) return name;
+    }
+  }
+  return id.split('-').map(s => s ? s[0].toUpperCase() + s.slice(1) : s).join(' ');
 }
