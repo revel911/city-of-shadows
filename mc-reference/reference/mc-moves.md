@@ -63,6 +63,12 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Exhausted** — You push yourself too hard — take -1 ongoing until you rest.
 - **Reckless Pursuit** — You rush into danger alone, setting yourself up for an ambush.
 
+#### The Veteran
+
+- **Old Wounds Resurface** — A past trauma distracts you, giving your enemies an advantage.
+- **Debts Come Due** — Someone from your past makes a move, forcing you to owe them or suffer consequences.
+- **No Easy Out** — You try to walk away, but the supernatural drags you back in violently.
+
 ### Night — Hunger
 
 #### The Vamp
@@ -122,9 +128,3 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **The Con Falls Apart** — You are caught in a lie at the worst moment.
 - **Demonic Marker** — Someone realizes what you are and gains leverage over you.
 - **The House Always Wins** — A past scheme backfires, putting you in immediate danger.
-
-#### The Veteran
-
-- **Old Wounds Resurface** — A past trauma distracts you, giving your enemies an advantage.
-- **Debts Come Due** — Someone from your past makes a move, forcing you to owe them or suffer consequences.
-- **No Easy Out** — You try to walk away, but the supernatural drags you back in violently.
