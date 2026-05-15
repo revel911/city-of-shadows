@@ -1,0 +1,364 @@
+# Changeling — Changeling: The Lost
+
+**Base Playbook (natural pairing):** The Fae
+**Prerequisite Move:** Faerie Magic
+**Key Mechanics:** Seemings define Fae archetype with Kiths; Contracts are bargains with world forces; Courts grant seasonal moves and gang benefits; expanded Advancement Chart.
+
+---
+
+CHANGELING: THE LOST — ADD-ON RULES (Urban Shadows / Fae Archetype)
+
+This document contains the Changeling: The Lost add-on rules for the Fae archetype associated with Urban Shadows. Contents include:
+- New Advancement Chart increasing advancements of your character
+- 4 Seemings, each with 6 Kiths (powers)
+- 4 Contracts and 4 Seasonal Courts
+
+Note: Changelings created with the Urban Shadows Fae archetype do not automatically start with a Seeming. It is up to the group and MC to decide if you want to start within a Seeming; if so, give up your beginning archetype Move at the start of the game.
+
+## Seemings
+(Choose one only)
+
+Choose a Seeming, representing the general Faerie archetype that your character has become, either by proximity or by the purpose of their durance.
+
+### Beasts
+
+The fairy stories say that love's first kiss redeems everything. The Beast becomes a man. The Frog becomes a prince. It's a lie. The changelings who call themselves Beasts know this all too well. To kiss the Beast is to surrender yourself to instinct, hunger, and survival — to abandon self-control, memory, and humanity itself. The animal does not think; the animal does not regret.
+
+Yet the animal sees, hears, and feels more vividly than any human ever could. Colors are brighter, smells richer, sounds sharper — each moment is a raw, unfiltered experience. The Beasts consider themselves to have taken the hardest road back through the Hedge, for they had to claw back their minds as well as their souls.
+
+Trait: Your wild nature grants you an uncanny connection with animals. When you use an animal three times in a session to gain information, create an opening, or strike a target, mark a Circle.
+
+Drawback: You struggle with formal knowledge. Once per session, if you ignore learned knowledge and instead trust your instincts, mark a Circle.
+
+Available Kiths:
+
+[KITH] Cloak of the Bear's Massive Form
+As the sun rises, you gain 3 hold. Spend 1 hold to adopt an animal feature (claws, fur, wings, etc.), gaining an advantage in a relevant situation. On a miss, your transformation becomes unstable, leading to complications.
+
+[KITH] Broadback
+The spirits of the unyielding beasts flow through you — elephants, oxen, creatures who bear the world's weight. When your endurance is tested (extreme pain, deprivation, or exhaustion), roll with Spirit. On a 10+, you endure effortlessly. On a 7-9, you succeed, but the effort takes a toll (gain 1 corruption or lose a Debt). On a miss, the strain is too much, and you collapse or suffer harm.
+
+[KITH] Hunterheart
+When you set your mind to the hunt, nothing else matters — at a cost. When you declare a hunt, choose two basic moves you will automatically fail until you eliminate your target.
+
+When you Turn to Violence against your target, roll with +1 and choose an extra option if you hit. On a miss, your obsession backfires, exposing you to danger or forcing you to lose sight of your target at the worst moment.
+
+If you have Status 2+ in the Wild Circle, when you use Hunterheart to track or hunt a target, you may spend 1 Debt owed to you to ignore supernatural protections that would normally conceal their location (such as illusions, disguises, or memory alterations).
+
+[KITH] Runnerswift
+The wind is in your blood. Your muscles remember the rhythm of chase and escape, the primal beat of flight. When you move at reckless speed to a location, choose 2:
+- You arrive in time.
+- You arrive safely.
+- You arrive unnoticed.
+- No one innocent gets hurt.
+(If escaping danger, choose only 1.)
+
+[KITH] Skitterskulk
+You were shaped by creatures who move unseen — spiders, centipedes, beetles in the dark. Whenever you succeed on a Hit the Streets roll, mark Wild. If you have already marked Wild this session, choose one:
+- Your senses extend beyond the physical — for the rest of the scene, you can see through the eyes of nearby insects or small creatures.
+- The Wild recognizes you — a Fae Trickster, imp, or spider spirit subtly aids you, but they will expect a favor in return.
+- Your body twists to match the shadows — you gain +1 forward on any sneaking, escaping, or deception-related rolls, but the effect leaves faint, inhuman traces on you (MC describes how).
+
+[KITH] Steepscrambler
+High places call to you. You know the grip of stone beneath clawed fingers, the rush of wind around precarious perches. You can climb nearly any surface. When you attempt dangerous feats while climbing, roll with Spirit. On a 10+, you succeed effortlessly. On a 7-9, you succeed but attract attention or put yourself in danger. On a miss, you slip, fall, or are caught.
+
+[KITH] Truefriend
+You are not a beast of savagery, but of loyalty. The hound that defends its master, the horse that carries a weary rider home — you are a companion, and you do not forget your debts. When you cash in a Debt with an ally, they cannot refuse.
+
+### Elementals
+
+No one understands the Elementals. Other changelings were shaped in the image of dreams — knights, tricksters, beasts. But you were made of things that were never meant to be human. You are the whisper of leaves in the wind, the heat of a burning ember, the relentless flow of a river. You were the raw stuff of the world itself.
+
+When you came back, you found yourself a stranger to flesh and blood. The world you left behind does not remember you. And the world you fled will never take you back.
+
+Trait: Your connection to raw forces lets you channel power. When you push your body beyond its limits to tap into your element, mark a Circle.
+
+Drawback: Your alien nature makes human interaction harder. If you refuse a plea for help from a human, mark a Circle.
+
+Available Kiths:
+
+[KITH] Airtouched
+You are the whisper of the wind, the force of the storm. When you attempt a sudden movement-based action (dodging, escaping, repositioning), roll with Blood. On a 10+, you move freely and avoid danger. On a 7-9, you succeed but leave something important behind or expose yourself. On a miss, your movement backfires spectacularly.
+
+(You may also become intangible like air, but your physical form vanishes until the scene ends.)
+
+[KITH] Earthbones
+Stone does not break. You have learned this lesson well. When you exert your body to lift, break, or endure something beyond normal human limits, roll with Spirit. On a hit, you do it. On a 7-9, you succeed but at great cost (exhaustion, a lost opportunity, or a forced Debt). On a miss, your power backfires dramatically.
+
+(Your body may temporarily turn to stone, making movement difficult.)
+
+[KITH] Fireheart
+Your emotions burn, bright and terrible. They are not yours to control. When you Let It Out during an emotionally charged moment, roll with Spirit. On a 10+, you unleash destructive energy (2-harm, close area). On a 7-9, the energy surges but is unpredictable or affects unintended targets. On a miss, your power burns you instead, or you mark corruption.
+
+[KITH] Snowskin
+Your voice carries the breath of the storm. When you cash in a Debt and it's refused, your voice chills those who owe you.
+All characters in the area who owe you a Debt take 1 faint harm (ap).
+
+[KITH] Waterborne
+The waters welcome you home, but they do not let go easily.
+- You can breathe underwater and swim effortlessly.
+- If you spend extended time in water (several hours or more), you become bound to it.
+
+When you attempt to leave the water, roll with Spirit. On a 10+, you adjust fine. On a 7-9, you feel drained or weakened (take 1 faint harm). On a miss, you begin drowning on land until you are submerged again or stabilized by another.
+
+[KITH] Woodblood
+When you mark Wild, you may become one with the natural world entirely, allowing you to communicate with plants and animals in the area for the rest of the scene. However, in doing so, you leave behind a lingering Wild scent, marking you as an intruder or a potential ally to powerful beings from the Wild Circle.
+
+### Fairest
+
+The Fairest are the radiant, the desired, the terrible ones. To them, beauty is power, a weapon as sharp as any blade, and just as cruel. It is their prerogative to be loved and admired, and their right to take what they will from that adoration. They live in a world of pleasure and peril, of bitter ecstasy and gentle suffering.
+
+To escape the Fae, they had to remember what it was to be ordinary — to walk among those who did not kneel at their feet. Yet, they brought back the glamour of their captors, and with it, a shard of their cruelty. They have survived the beauty of Arcadia. But has it changed them too much to return?
+
+Trait: Your presence is intoxicating. When you use magic to increase beauty or elevate your social standing, mark a Circle.
+
+Drawback: You struggle to find peace with yourself. Once per session, if your vanity puts your allies in danger, mark a Circle.
+
+Available Kiths:
+
+[KITH] Bright One
+Some Fairest bring the radiance of Faerie with them — the glow of will-o'-the-wisps, the shimmer of White Ladies, the burning brilliance of celestial beings. You may illuminate an area the size of a small room for the rest of a scene. This light does not have an obvious source and cannot be extinguished by ordinary means.
+
+[KITH] Dancer
+Your body moves to its own rhythm, a grace that cannot be learned, only gifted. When you describe how the artistry of your movement helps you Escape a Situation or Distract, roll as if the move were one step higher (7-9 becomes a 10+, 6- becomes a 7-9).
+
+[KITH] Draconic
+There is dragon's blood in your veins — or something older, something that speaks in whispers of dominion and fear. When you mark Wild, your presence is imposing and undeniable. The next time you enter a Wild faction's domain, they acknowledge you as kin — offering you hospitality, but also watching you closely. If the target refuses to acknowledge the Debt, they suffer 1-harm (ap, fae curse) as their name whispers itself into the winds of Faerie, alerting a powerful being from the Wild who may take interest in their fate.
+
+[KITH] Flowering
+Your very presence entices, lingers, and intoxicates. Your skin, hair, and breath carry the scent of Faerie blooms, something impossible to forget.
+When you cash in a Debt while using your intoxicating presence, the other party still assists you, but you do not erase the Debt you held over them.
+
+[KITH] Muse
+The Fairest inspires devotion, obsession, and ruin. The Muse does not simply create — they demand the world shape itself around them.
+While at full health, you empower those around you:
+- Allies gain double the usual bonus or penalty when you lend a hand or get in the way.
+
+### Wizened
+
+The Wizened are the clever hands, the cunning minds, the unseen architects of the Fae realm. Their escape from Arcadia was a calculated act of defiance, an endless struggle against the malicious genius of their captors. Some were bound by chains and contracts, others by trickery, torment, or twisted obligations.
+
+Now free, they remain distrustful, pragmatic, and sharp. They are the managers, enforcers, and creators among changelings. Their skills have earned them positions of power, yet their twisted past often makes them objects of fear and suspicion.
+
+Trait: You are extraordinarily nimble and skilled. When you use your craft or intellect to alter the course of a situation, mark a Circle.
+
+Drawback: You are rarely trusted. If your unsettling presence leads someone to refuse your help or shun you, mark a Circle.
+
+Available Kiths:
+
+[KITH] Artist
+The Wizened are creators — seamsters, sculptors, builders. Their hands craft wonders and nightmares alike. When you create an object, it automatically has the valuable tag, plus one additional tag of your choice.
+
+[KITH] Brewer
+You have mastered the alchemies of Faerie, learning to twist mundane ingredients into miraculous concoctions. You can touch any liquid and ferment it into a brew that causes intoxication.
+Overindulgence in your brews can be dangerous or hallucinogenic (MC's discretion).
+
+[KITH] Chatelaine
+You are a master of etiquette and negotiation, despite your unsettling presence. Your mere presence commands order and structure. If you have a Debt with someone, you may cash in that Debt with someone else in the same Circle instead.
+
+[KITH] Chirurgeon
+Some Wizened learned the healing arts — or the art of cutting things apart. You can perform miraculous medical feats, restoring wounds as if they were one category lower.
+- Faint wounds are healed instantly in your presence.
+- This effect stacks with other healing bonuses.
+
+[KITH] Oracle
+You see beyond the present, glimpsing what should not be known. Choose one from the following abilities:
+- Foretellings: Gain brief flashes of the future, useful but not always clear.
+- Psychometry: Read the history of objects or places through touch.
+- Skim the Surface: Sense the immediate thoughts or emotions of someone nearby.
+
+[KITH] Smith
+Forged in the workshops of the Fae, your skill in metallurgy is beyond mortal craftsmen.
+- You can improve or alter metal objects, even in ways that should be impossible.
+- You may spend corruption or lose an experience point to add additional tags or properties to a weapon or tool.
+- If you alter an object more than three times, it becomes unstable and eventually breaks forever.
+
+[KITH] Soldier
+Some Wizened were built for war — not as glorious knights, but as goblin foot soldiers, endlessly fighting for pointless causes. They are masters of the blade, their hands eternally shaped for combat.
+- Gain a custom weapon (following Hunter rules, but your second option is free).
+- When wielding this weapon, take +1 to all actions.
+
+## Contracts
+(Choose one only)
+
+Changelings do not wield innate magic as wizards or sorcerers do. Their supernatural abilities — Contracts — are bargains struck with the forces of the world itself. A changeling does not fly of their own accord; they have a pact with the wind. A changeling does not simply disappear; they have a Contract with the shadows to conceal them. These bargains are ancient, living agreements, and should they be broken or twisted, the consequences can be dire.
+
+Each Contract is a promise upheld, but promises go both ways. If a changeling angers the forces they have bound themselves to, the effects of their magic may turn against them.
+
+### Contracts of Hearth
+
+The Contracts of Hearth are blessings of fortune and fate, a way for the changeling to shift the world in subtle but powerful ways. These Contracts allow the Fae-touched to tilt luck in their favor — but the forces that grant such boons can also withdraw them, turning blessings into curses.
+
+[CONTRACT] Favored Fate
+Songs sound sweeter, weapons strike true, and the critic finds the perfect cutting remark. When the Fae wills it, fortune bends. When you aid an ally, roll with Heart. On a 10+, they gain an additional +1 forward on their next roll. On a 7-9, they still benefit, but you take -1 forward as fate shifts away from you. On a miss, the luck twists — both of you suffer -1 ongoing for the rest of the scene.
+
+[CONTRACT] Fortuna's Cornucopia
+The favor of luck is fickle, but when properly harnessed, it can defy even fate itself. When you cash in a Debt, roll with Spirit. On a 10+, take 1 hold, which you may spend to negate a hard move against you or an ally. On a 7-9, you still gain hold, but your fortune attracts attention from unknown forces. On a miss, your fortune is noticed by the Fae, and they will demand something in return later.
+
+[CONTRACT] Triumphal Fate
+Fate itself recognizes your will. When you reach for victory, the world conspires to ensure it. Once per session, if you fail a roll (a miss, i.e. a total of 6 or lower), you may ask the MC: "What must I do to turn this failure into a success?" The MC will list up to three actions you must take, in order. If you complete them, your failure retroactively becomes a success.
+
+### Contracts of Separation
+
+Changelings exist between worlds, neither truly human nor wholly fae. These Contracts enhance that separation, allowing the changeling to slip through cracks in reality itself.
+
+[CONTRACT] Tread Lightly
+The world barely notices your touch. You move as though you weigh no more than a feather. You can leap great distances, walk across fragile surfaces without breaking them, and take almost no damage from falling.
+
+[CONTRACT] Evasion of Shackles
+You cannot be bound. You cannot be held. The world itself steps aside for you. You can slip free from any mundane restraint, passing through doors or windows as if they were open. When you avoid an attack, roll with Spirit. On a 10+, you effortlessly dodge, suffering no harm. On a 7-9, you avoid harm but leave yourself vulnerable — your escape creates an opportunity for your enemy. On a miss, you escape, but something precious is left behind.
+
+[CONTRACT] Phantom Glory
+You step beyond the veil, becoming a thing of mist and shadow. When you stab your shadow with a cutting tool, roll with Spirit. On a 10+, you fully cross into Twilight, becoming invisible and immune to physical harm. On a 7-9, you phase into Twilight, but something crosses with you or you become temporarily lost. On a miss, you are trapped between realms, vulnerable to both physical and spiritual threats.
+
+If you have Status 2+ in the Night Circle, when you use Phantom Glory, you may mark Night to ensure that no magical or technological means can detect your transition.
+
+### Contracts of Hours
+
+The flow of time in Arcadia is strange and fluid, bound more by story and will than any natural law. These Contracts allow the changeling to bend time, though never without consequence.
+
+[CONTRACT] Restoration of Dawn's Beauty
+Time forgets its cruelty, and a thing returns to the moment it was new. By touching an object, you revert it to a younger state:
+- Wilted flowers bloom fresh again.
+- Yellowed pages turn crisp and white.
+- Rusted metal gleams as if newly forged.
+
+If you have Status 2+ in the Mortalis Circle, when you use Restoration of Dawn's Beauty on an object, you may mark Mortalis to restore a broken or deteriorated object to full function, rather than just making it appear new.
+
+[CONTRACT] Frozen Moment
+You seize the flow of time in your grasp and halt it. Upon touching an object, you can freeze it in time and space for several hours.
+- The frozen object cannot be moved or altered, and remains exactly as it was — a glass of water will hover in mid-air, a crumbling ceiling will never fall.
+- This Contract may only be used once between sunset and sunrise.
+
+[CONTRACT] Flickering Hours
+Time bends, reshaped by your will. What should take days happens in hours. What should take moments lasts a lifetime. By shattering a timekeeping device, you create a time bubble where time flows faster inside than outside.
+- Define the size, shape, and speed of the bubble when you create it.
+- Example: A hotel room where eight hours pass inside for every one hour outside.
+- The bubble lasts two hours in real-world time before collapsing.
+
+If you have Status 2+ in the Night Circle, when you use Flickering Hours, you may mark Night to extend the time bubble's effect over an entire building or large outdoor space instead of just a room.
+
+### Contracts of Den
+
+A Beast's den is sacred, a place of safety and secrets. These Contracts allow the changeling to fortify their home — or steal another's.
+
+[CONTRACT] Cuckoo's Ruse
+By marking an entrance with your name, you claim it as your own. Write your name in blood and chalk on a doorway. For as long as the mark remains, those who pass through assume you belong. If the true owner of the space has openly invited you in within the last 24 hours, you may go further:
+- Security systems ignore you.
+- Household residents unconsciously accept you as a permanent fixture.
+
+[CONTRACT] Trapdoor Spider's Trick
+You weave a deception so complete that no one even knows your lair exists. While holding a live spider in your mouth, you can conceal an entrance or hiding place completely. For those searching, the entrance does not exist — they will look directly at it and see nothing.
+
+[CONTRACT] Blessing of the Burrow
+Your domain is as fluid as the burrow of an animal — effortlessly created, effortlessly destroyed. You may carve a hiding place into stone or soil, forming a secure den for yourself or others. Just as easily, you may destroy your own den, erasing all traces of its existence.
+
+## Courts
+(Choose one only)
+
+### Spring Court
+
+The Spring Court refuses to let despair consume them. They will not be passive victims of the Fae, nor will they let sorrow define their stolen lives. They take joy as an act of defiance, surrounding themselves with love, beauty, and desire — not as escapism, but as a deliberate weapon against their captors. To live well is to prove the Fae do not own them.
+
+Trait: When you use charm, beauty, or indulgence to influence someone, mark a Circle.
+
+Drawback: Your pursuit of pleasure can blind you. If your desires put you or your allies in danger, mark a Circle.
+
+[MOVE] Cupid's Eye
+Desire is laid bare before you. When you Figure Someone Out, add the question:
+"What is your innermost desire?"
+
+[MOVE] Pandora's Gift
+You create an object of desire from emotion, dreamstuff, and raw material. When you try to create such an item, roll with Spirit. On a 10+, the object is perfectly formed. On a 7-9, the object is imperfect or fleeting. On a miss, the object draws unwanted attention from forces beyond your control.
+
+[MOVE] Gift of Warm Breath
+Your presence restores life — but at a cost.
+- You may heal 2-harm from another. In exchange, you take 1-harm yourself.
+
+[MOVE] Yesterday's Birth
+With a touch and a sacrifice, you cause a living thing to grow by an entire season in an instant.
+- You may accelerate growth (plants bloom, wounds mend, animals mature).
+- To affect multiple targets or grow beyond one season, you must sacrifice your own Blood (take 1-harm per additional target or season).
+
+### Summer Court
+
+The Summer Court does not run. They do not hide. They stand and fight. For them, the struggle is everything — not just against the Fae, but against anyone who threatens changeling safety. They forge new families, standing together in a battle none of them could win alone. Strength is their weapon, their shield, and their ideal.
+
+Trait: When you demonstrate strength or intimidation to achieve your goals, mark a Circle.
+
+Drawback: If your anger isolates you or turns allies against you, mark a Circle.
+
+[MOVE] Friendless Tongue
+Your words ignite fury. When you speak to someone in anger, roll with Heart. On a 10+, they become helplessly enraged at their target. On a 7-9, they lash out, but you become a target as well. On a miss, their rage erupts in an unexpected direction.
+
+[MOVE] Son of the Hearth
+You are the living flame, untouched by heat or cold. Where others burn or freeze, you remain standing. You are immune to natural extremes of temperature — from desert heat to arctic cold. When you resist supernatural fire or ice, roll with Spirit. On a 10+, you withstand the extreme without harm. On a 7-9, you resist, but take 1 faint harm or suffer a temporary condition (e.g., frostbite, heat exhaustion). On a miss, your body falters, suffering 1-harm and leaving you vulnerable to environmental dangers.
+
+[MOVE] Solstice Revelation
+Nothing remains hidden under the blazing light of the Summer sun. When you call upon Solstice Revelation, roll with Spirit. On a 10+, ask 3 questions from the list. On a 7-9, ask 2 questions, but the light draws unwanted attention. On a miss, the light blinds you or reveals something you were never meant to see.
+
+Questions:
+- What or who is trying to hide nearby?
+- Is somebody here not what they seem?
+- Is there something hidden here? If so, where?
+- Is there a path to safety that was previously obscured?
+- Which way did someone flee?
+
+[MOVE] The Lord's Dread Gaze
+You channel the sun's relentless fury, burning all who stand in your path. When you unleash the searing power of summer's sun upon your enemies, roll with Blood. On a 10+, the burning light deals 3-harm (close/far) to all exposed. On a 7-9, the light burns enemies, but also scorches the environment or unintended targets. On a miss, the light turns against you, harming you instead or leaving you temporarily blinded.
+
+### Autumn Court
+
+The Autumn Court knows magic better than anyone. They are the scholars of the old ways, wielding Contracts as both weapons and wonders. They do not regret their time in Faerie — they learned from it, and now they wield that knowledge against the Gentry themselves.
+
+Trait: When you wield magic or hidden knowledge to gain advantage, mark a Circle.
+
+Drawback: If your pursuit of knowledge leads you to disregard morality or caution, mark a Circle.
+
+[MOVE] Witches' Intuition
+You pluck fears from the mind like ripe fruit. When you Figure Someone Out, add the question:
+"What is your greatest fear?"
+If you exploit this fear, mark a Circle.
+
+[MOVE] Scent of the Harvest
+You and your allies cannot be touched by fear.
+- If you Lend a Hand, gain +1 forward.
+- If you successfully Keep Your Cool, you and nearby allies become immune to fear effects for the scene.
+
+[MOVE] Withering Glare
+Your gaze alone brings decay and weakness.
+- Deal 1-harm (ap, close) to organic creatures and plants with a look.
+- You may mark corruption to either:
+  - Increase the damage by 1-harm.
+  - Kill the plants you target, rendering them permanently dead.
+
+[MOVE] Tears of Autumn
+You call a storm from the sky, unleashing a brutal hailstorm. When you reach to the sky to call such a storm, roll with Spirit. On a 10+, choose 3. On a 7-9, choose 2. On a miss, the storm is out of your control.
+
+Options:
+- The storm covers several city blocks.
+- The hail increases in size, dealing +1 harm.
+- The storm creates a perfect distraction, granting an advantage.
+- You control the storm precisely, preventing it from harming allies.
+
+### Winter Court
+
+The Winter Court knows that in the coldest season, all the glory of the year fades from sight and snow hides the ground. But there is life, waiting beneath the earth where it cannot be disturbed. The Silent Arrow knows this. When the Fae come, the Winter Court is gone. And when the cat is away, the mouse plays on. The Court itself takes up whatever unoccupied location is convenient and attractive, abandoning that place just as easily when danger or discovery threatens. Members all know the short list of those places, giving them somewhere to look — but even they are never sure where the Court will surface until someone finds it and passes the word. It is a security measure, ensuring that their enemies have a very hard time tracking them down and ambushing them.
+
+[MOVE] Slipknot Dreams
+The changeling forces a person to forget about their sorrows just long enough to deal with the matters at hand. Roll with Heart. On a 10+, they tell you about their deepest sorrows (take one Debt against this person). On a 7-9, they tell you one sorrow but you do not take a Debt.
+
+[MOVE] Empty Harvest
+You pull warmth from the soul, leaving only numbness behind. Roll with Spirit when you touch someone to suppress their ability to experience positive emotions. On a 10+, they lose all ability to feel joy, hope, or happiness for the rest of the scene. They are left vulnerable, gaining -1 ongoing to all social interactions as they struggle with their new emptiness. On a 7-9, the effect is unstable — it will fade unpredictably, and the numbness may turn to despair, paranoia, or rage. On a miss, the emotional void clings to you as well — you take -1 forward to social interactions for the rest of the scene as the emptiness seeps into your own heart.
+
+[MOVE] Touch of Winter
+With a touch, warmth flees. Frost claims all. You can freeze small amounts of liquid instantly with just your fingertips. To freeze larger bodies of liquid (e.g., a pond, a river, or even a living body), you must take harm.
+The amount of harm required is negotiated between you and the MC, based on the size and significance of the effect.
+
+[MOVE] Fallen from the Timbers
+A column of freezing wind and ice crashes down upon your foes. When you Turn to Violence using this power, roll with Blood. On a 10+, choose 2 options from the list. On a 7-9, choose 1 option, but the cold spreads unpredictably. On a miss, the ice spreads too far, affecting allies, the environment, or leaving you exposed.
+
+Options:
+- All others must Escape or be temporarily frozen in ice.
+- Your target suffers stun harm, slowing their actions for the scene.
+- Your target is so affected by the frost that they take -1 ongoing in cold climates for the rest of the scene.
