@@ -467,23 +467,37 @@ Do not open with "Welcome back" or recap previous sessions in summary form. Drop
 ```yaml
 new:
   protocol: follow mc-reference/character-creation.md phase-by-phase
+  save_before_play:
+    requirement: REQUIRED
+    block: <save_onboarding>
+    when: >
+      Emit AFTER Phase 12 (player_id confirmed) and BEFORE Phase 13 (first scene).
+      Also emit immediately on any of these triggers, even mid-onboarding:
+        1. Player confirms the character is done in response to your "anything else to lock in?" prompt
+        2. Player says "save" (or any equivalent: "save my character", "commit this", "lock it in")
+        3. Player wants to skip ahead to play ("let's just start", "I'm ready to play", "drop me in")
+    required_fields:
+      - player_id          # kebab-case folder name
+      - sheet              # full sheet — use TBD for fields unfilled at early-save time
+    encouraged_fields:
+      - state_patch        # character_name + stats + harm/xp/corrupt/circles/safety/gear
+      - npc_patch          # every NPC introduced (Phase 9 Debts & Anchors etc.)
+      - events_append      # only if arrival is publicly visible
   required_at_close:
-    - player_id          # kebab-case, used as the folder name and roster id
-    - sheet              # full sheet, even for a short or vignette character
-    - state_patch        # must include character_name plus initial mechanical state
-    - handoff            # first handoff so the next session can resume
-    - npc_patch          # every NPC introduced in Phase 9 or the opener, with full personality scores
-    - events_append      # if the character's arrival is publicly visible
+    - player_id
+    - handoff              # full handoff doc for the next session
+    # sheet / state_patch / npc_patch only if Phase 12.5 was skipped OR if something changed in the first scene
   rule: >
-    A new-character session MUST end with a complete close block. Even if the player retires the
-    character mid-onboarding or treats them as a one-shot vignette, emit the sheet and state_patch
-    so the dashboard and roster pick them up. If the character truly should not be a PC going forward,
-    say so in the handoff and set state_patch.status accordingly — do not silently drop the sheet
-    and state_patch. The bot derives the roster name from state_patch.character_name first, then from
-    the sheet's H1; without either, the roster name falls back to the kebab id.
+    Character creation MUST be persisted to GitHub before the first scene begins. The
+    <save_onboarding> block is the mechanism. A new-character session that ends without
+    a save_onboarding having fired is a failure mode — the close block must then carry
+    the full sheet and initial state_patch, and the bot will refuse the close (retrying)
+    if those are missing. Roster name is derived from state_patch.character_name first,
+    then from the sheet's H1, then from the kebab id. Never let the Discord username
+    leak through as the character name.
 ```
 
-The bot creates the player's folder and files from the close block — there is no need to "create files" during onboarding. You produce the content; the bot persists it.
+The bot creates the player's folder and files from the `<save_onboarding>` block (and from any close-block fields you also emit). You produce the content; the bot persists it.
 
 ---
 

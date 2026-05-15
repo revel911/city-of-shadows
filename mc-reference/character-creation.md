@@ -209,7 +209,34 @@ Walk advance list using `reference/rules.md` advancement rules. For each advance
 
 **Capture:** player_id.
 
-**Where it goes:** `<player_id>` tag in the close block; folder created automatically by the bot.
+**Where it goes:** `<player_id>` tag in the `<save_onboarding>` block (Phase 12.5); folder created automatically by the bot.
+
+---
+
+## Phase 12.5 — Save Character (mandatory, before any play)
+
+Character creation must be persisted **before** the first scene begins. After Phase 12, ask the player explicitly:
+
+> *"Anything else to lock in before we drop into your first scene? If you're ready, I'll save the character now."*
+
+When the player confirms — or at any earlier trigger below — emit a `<save_onboarding>` block in your response. See `bot-output-format.md` for the schema. The block contains:
+
+- `<player_id>` — required
+- `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
+- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `safety`, `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`
+- `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
+- `<events_append>` — only if the character's arrival is publicly visible
+
+### Early-save triggers (override phase order)
+
+You must emit `<save_onboarding>` immediately, even if onboarding isn't complete, when:
+
+1. **Player says "save"** (or equivalent: "save my character", "commit this", "lock it in"). Emit `<save_onboarding>` with whatever is filled in so far. Use "TBD" for unfilled sheet fields and a minimal `state_patch` (omit `stats` if not yet chosen — they can be filled in via a later `<state_patch>`). Acknowledge: *"Saved. We can keep going from where we left off."*
+2. **Player wants to start the story before onboarding is done** (e.g. "let's just start", "I'm ready to play", "skip the rest, drop me in"). Emit `<save_onboarding>` first, then open the scene in the same response. Do not begin Phase 13 narrative before the save block is in the message.
+
+In both cases, persist what exists. A partial sheet on disk is far better than data lost in chat history.
+
+The bot validates the block, writes everything to GitHub, registers the character in `players/index.json`, and updates the session in-place. After the save succeeds, the session continues as a normal returning-player loop — the close block at session end no longer needs `<sheet>` or `<state_patch>` unless something changed during play.
 
 ---
 
@@ -221,13 +248,12 @@ Wrap onboarding. Transition to a normal session: drop the player into their firs
 
 ## Close-Block at First Session End
 
-After the first scene plays out and the session closes, the close block must include:
+The save in Phase 12.5 already persisted the sheet, state, and NPCs. The closing `<close_session>` block at session end only needs:
 
-- `<player_id>` — kebab-case id from Phase 12
-- `<sheet>` — full new sheet built across phases 1–11
-- `<state_patch>` — initial state: `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `safety` block (from Phase 1), `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`. (Debts and Anchors go on the sheet, not in `state.json`.)
-- `<npc_patch>` — every NPC introduced in Phase 9 (or during the opener), with full personality-engine scores
-- `<handoff>` — full handoff doc for next session
-- `<events_append>` — if the character's arrival is publicly visible, log it
+- `<player_id>` — same kebab-case id
+- `<handoff>` — full handoff doc for the next session
+- `<state_patch>` — any mechanical state changes from the first scene (harm taken, xp marked, etc.). Omit if nothing changed.
+- `<events_append>` — if anything publicly visible happened during the first scene
+- `<world_event>` — single line for `#world-events`, if applicable
 
-Omit any field you don't need.
+If Phase 12.5 was skipped for any reason (legacy session, MC oversight), the close block must carry the full first-session payload: `<sheet>`, the full initial `<state_patch>`, and `<npc_patch>`. The bot will retry on incomplete onboarding closes, so do not let a new-character session end without persisting the sheet — re-emit the close block in full if asked.

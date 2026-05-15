@@ -55,15 +55,50 @@ export async function handleMessage(message) {
 }
 
 const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
+const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
 async function postMCResponse(thread, response, session) {
+  // 1. <save_onboarding> — mid-flow persistence for a new character. Fires when
+  //    onboarding completes (Phase 12 + player confirms done), when the player
+  //    asks the MC to save, or when the player wants to start the first scene
+  //    before character creation is fully done. Writes sheet/state/npcs to
+  //    GitHub immediately and mutates session.player out of '__new__'. After
+  //    this fires, a subsequent <close_session> only needs the handoff.
+  const save = parseSaveOnboardingBlock(response);
+  if (save) {
+    const missing = missingSaveOnboardingFields(save);
+    if (missing.length) {
+      const retries = session._saveRetries || 0;
+      if (retries < SAVE_ONBOARDING_MAX_RETRIES) {
+        session._saveRetries = retries + 1;
+        await thread.send(
+          `⚠ <save_onboarding> is missing: ${missing.join(', ')}. ` +
+          `Asking the MC to re-emit — retry ${session._saveRetries}/${SAVE_ONBOARDING_MAX_RETRIES}.`
+        );
+        session.messages.push({ role: 'user', content: buildSaveRetryPrompt(missing) });
+        await thread.sendTyping();
+        const retryResp = await generate(session);
+        session.messages.push({ role: 'assistant', content: retryResp });
+        await postMCResponse(thread, retryResp, session);
+        return;
+      }
+      await thread.send(
+        `⚠ <save_onboarding> still incomplete after ${SAVE_ONBOARDING_MAX_RETRIES} retries ` +
+        `(still missing: ${missing.join(', ')}). Skipping the save; the close block will need to carry the data.`
+      );
+      console.error(`[save-onboarding] exhausted retries for ${session.player.name}: missing ${missing.join(', ')}`);
+    } else {
+      await thread.send('— *saving character to GitHub…* —');
+      await processSaveOnboarding(thread, session, save);
+      response = stripSaveOnboardingBlock(response);
+    }
+  }
+
   const close = parseCloseBlock(response);
 
-  // First-session-for-a-new-character closes MUST land a sheet and a state_patch
-  // with stats — without those the dashboard shows an empty mechanics section
-  // and the data the player gave during onboarding is lost. If the MC's close
-  // block is incomplete, ask it to re-emit before we post the narrative, write
-  // to GitHub, or archive the thread.
+  // 2. <close_session> retry guard — only for sessions still in '__new__' state
+  //    (i.e., save_onboarding never fired). If save fired earlier, session.player
+  //    is now the real character and a normal close is enough.
   if (close && session.player.id === '__new__') {
     const missing = missingNewCharCloseFields(close);
     if (missing.length) {
@@ -119,6 +154,14 @@ function buildCloseRetryPrompt(missing) {
   ].join('\n');
 }
 
+function buildSaveRetryPrompt(missing) {
+  return [
+    `Your <save_onboarding> block is missing required fields: ${missing.join(', ')}.`,
+    'Re-emit the block now. At minimum it needs <player_id> (kebab-case, e.g. "joe-nakama").',
+    'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced. Partial is fine — better to persist what we have than lose it.',
+  ].join('\n');
+}
+
 function grabTag(body, tag) {
   const re = new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`);
   const m = body.match(re);
@@ -147,6 +190,42 @@ function parseCloseBlock(text) {
   };
 }
 
+// Unlike close_session, save_onboarding can appear mid-message — the MC will
+// typically emit it during the transition from Phase 12 (id confirmed) into
+// Phase 13 (first scene), and may follow it with narrative for the opener.
+const SAVE_ONBOARDING_BLOCK_RE = /<save_onboarding>([\s\S]*?)<\/save_onboarding>/;
+
+export function parseSaveOnboardingBlock(text) {
+  const m = text.match(SAVE_ONBOARDING_BLOCK_RE);
+  if (!m) return null;
+  const body = m[1];
+  return {
+    sheet:         grabTag(body, 'sheet'),
+    state_patch:   grabTag(body, 'state_patch'),
+    events_append: grabTag(body, 'events_append'),
+    npc_patch:     grabTag(body, 'npc_patch'),
+    player_id:     grabTag(body, 'player_id'),
+  };
+}
+
+function stripSaveOnboardingBlock(text) {
+  return text.replace(SAVE_ONBOARDING_BLOCK_RE, '').trim();
+}
+
+// Validation for <save_onboarding>. The save MUST land a sheet — that's the
+// whole point of the mid-flow persistence (all three triggers — onboarding
+// complete, player says "save", player wants to start the story — require a
+// sheet to be created). state_patch is optional at save time: the player may
+// be saving early with stats still TBD, and the MC can fill in stats later
+// via state_patch in the session-close block.
+export function missingSaveOnboardingFields(save) {
+  const missing = [];
+  const pid = typeof save.player_id === 'string' ? save.player_id.trim() : '';
+  if (!pid || pid === '__new__') missing.push('player_id');
+  if (!save.sheet || !save.sheet.trim()) missing.push('sheet');
+  return missing;
+}
+
 function stripCloseBlock(text) {
   return text.replace(CLOSE_BLOCK_RE, '').trim();
 }
@@ -163,6 +242,108 @@ function applyPatch(current, patch) {
     }
   }
   return out;
+}
+
+// Persists a new character mid-session, before the session ends. Writes sheet,
+// state, npcs, and the arrival event (if present) and adds the character to
+// players/index.json. After this fires, session.player.id moves from '__new__'
+// to the real id, so a later <close_session> only needs the handoff. Idempotent:
+// if save_onboarding fires a second time in the same session, the second call
+// is a no-op (we already saved).
+async function processSaveOnboarding(thread, session, save) {
+  if (session._onboardingSaved) {
+    await thread.send('ℹ️ Character is already saved — ignoring duplicate <save_onboarding>.');
+    return;
+  }
+  const id = (save.player_id || '').trim();
+  const stamp = new Date().toISOString().slice(0, 10);
+  const writes = [];
+  const warnings = [];
+
+  let parsedStatePatch = null;
+  if (save.state_patch) {
+    try { parsedStatePatch = JSON.parse(save.state_patch); }
+    catch (e) { warnings.push(`state_patch: ${e.message}`); }
+  }
+
+  if (save.sheet) {
+    writes.push(['sheet', writeFile(
+      `players/${id}/sheet.md`,
+      save.sheet.endsWith('\n') ? save.sheet : save.sheet + '\n',
+      `[onboarding] sheet for ${id} (${stamp})`
+    )]);
+  }
+
+  if (parsedStatePatch) {
+    writes.push(['state', updateJSON(
+      `players/${id}/state.json`,
+      (current) => applyPatch(current || {}, parsedStatePatch),
+      `[onboarding] state for ${id} (${stamp})`
+    )]);
+  }
+
+  if (save.npc_patch) {
+    try {
+      const patches = JSON.parse(save.npc_patch);
+      writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
+        const d = doc || { npcs: [] };
+        const list = d.npcs || [];
+        for (const p of patches) {
+          const idx = list.findIndex(n => (p.id && n.id === p.id) || (p.name && n.name === p.name));
+          if (idx >= 0) list[idx] = { ...list[idx], ...p };
+          else list.push(p);
+        }
+        d.npcs = list;
+        return d;
+      }, `[onboarding] npcs (${stamp})`)]);
+    } catch (e) {
+      warnings.push(`npc_patch: ${e.message}`);
+    }
+  }
+
+  if (save.events_append) {
+    const append = save.events_append.trim();
+    writes.push(['events-log', updateFile(
+      'game/events-log.md',
+      (current) => (current || '').replace(/\s*$/, '\n\n') + append + '\n',
+      `[onboarding] events log (${stamp})`
+    )]);
+  }
+
+  const displayName = resolveNewCharacterName(parsedStatePatch, save.sheet, id);
+  writes.push(['players-index', updateJSON('players/index.json', (current) => {
+    const list = Array.isArray(current) ? current : [];
+    if (!list.some(p => p.id === id)) list.push({ id, name: displayName });
+    return list;
+  }, `[onboarding] register new character ${id} (${stamp})`)]);
+
+  const results = await Promise.allSettled(writes.map(([, p]) => p));
+  const okNames = [], failNames = [];
+  results.forEach((r, i) => {
+    const name = writes[i][0];
+    if (r.status === 'fulfilled') okNames.push(name);
+    else {
+      const reason = r.reason?.message || r.reason;
+      failNames.push(`${name}: ${reason}`);
+      console.error(`[save-onboarding] write '${name}' failed for ${id} (${stamp}):`, reason);
+    }
+  });
+
+  // Only flip the session out of '__new__' if the roster write actually landed.
+  // Otherwise /play won't find this character next time, and we want the close
+  // block retry path to still see this as a new-character session.
+  const registered = !failNames.some(f => f.startsWith('players-index'));
+  if (registered) {
+    session.player = { id, name: displayName };
+    session._onboardingSaved = true;
+  }
+
+  const lines = [];
+  if (okNames.length) lines.push(`✓ character saved: ${okNames.join(', ')}`);
+  if (failNames.length) lines.push(`✗ failed:\n${failNames.join('\n')}`);
+  if (warnings.length) lines.push(`⚠ ${warnings.join('; ')}`);
+  if (!lines.length) lines.push('No onboarding fields detected — nothing written.');
+  await thread.send(lines.join('\n'));
 }
 
 async function processSessionClose(thread, session, close) {
