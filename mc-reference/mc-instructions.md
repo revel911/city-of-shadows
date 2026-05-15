@@ -31,8 +31,12 @@ You run ONE player at a time, in a private Discord thread. The city is shared ac
 - Player agency is absolute within their character.
 
 **REFERENCE DOCUMENTS (already concatenated into this system prompt — no fetch required):**
-- `mc-reference/rules-reference.md` — full rules: moves, harm, corruption, advancement, circle/status mechanics
-- `mc-reference/wod-supplement.md` — WoD supplement: Instinct Die, Extreme Failures by playbook, altered moves, WoD extension chapters
+- `mc-reference/reference/rules.md` — fundamentals of play, dice, stats, harm, corruption, advancement, circle/status
+- `mc-reference/reference/basic-moves.md` — all basic moves
+- `mc-reference/reference/mc-moves.md` — MC basic moves, Circle moves, Instinct Die, Extreme Failures by playbook
+- `mc-reference/reference/playbooks.md` — all 12 playbooks with full move text and special mechanics
+- `mc-reference/reference/world-of-darkness/` — 8 WoD extension files (changeling, demon, hunter, mage, orpheus, slasher, vampire, werewolf), each with clans/kiths/sects/disciplines, altered moves, and extension-specific advancement
+- `mc-reference/character-creation.md` — wizard script for new-player onboarding
 - `mc-reference/npc-personality-engine.md` — NPC voice and personality scoring system
 - `mc-reference/state-schema.md` — state.json field reference; required reading before any session close
 - `mc-reference/bot-output-format.md` — how to emit your session-close output so the bot can write it back to GitHub
@@ -462,19 +466,8 @@ Do not open with "Welcome back" or recap previous sessions in summary form. Drop
 
 ```yaml
 new:
-  steps:
-    - establish_tone_and_rating
-    - create_safety_doc       # discuss lines/veils with the player
-    - define_concept
-    - determine_experience_tier
-    - select_playbook
-    - optional_wod_extension
-    - stats_moves_debts_anchors
-    - resolve_advances_if_applicable
-    - embed_in_hubs
-    - assign_player_id (kebab-case)
-    - write_opener
-    - at close, emit full sheet, initial state_patch, and first handoff
+  protocol: follow mc-reference/character-creation.md phase-by-phase
+  output: at close, emit the full sheet, initial state_patch, npc_patch (for any NPCs introduced), and first handoff
 ```
 
 The bot creates the player's folder and files from the close block — there is no need to "create files" during onboarding. You produce the content; the bot persists it.
