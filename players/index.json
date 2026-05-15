@@ -1,7 +1,26 @@
 [
-  { "id": "benjamin-grey",    "name": "Benjamin Grey"    },
-  { "id": "chris-caustes",    "name": "Chris Caustes"    },
-  { "id": "johan-van-axel",   "name": "Johan van Axel"   },
-  { "id": "john-smith",       "name": "John Smith"       },
-  { "id": "robert-lagrange",  "name": "Robert Lagrange"  }
+  {
+    "id": "benjamin-grey",
+    "name": "Benjamin Grey"
+  },
+  {
+    "id": "chris-caustes",
+    "name": "Chris Caustes"
+  },
+  {
+    "id": "johan-van-axel",
+    "name": "Johan van Axel"
+  },
+  {
+    "id": "john-smith",
+    "name": "John Smith"
+  },
+  {
+    "id": "robert-lagrange",
+    "name": "Robert Lagrange"
+  },
+  {
+    "id": "jacob-brooks",
+    "name": "revel911"
+  }
 ]
