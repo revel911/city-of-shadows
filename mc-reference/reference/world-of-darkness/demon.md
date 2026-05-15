@@ -6,8 +6,6 @@
 
 ---
 
-DEMON: THE DESCENT — ADD-ON RULES (Urban Shadows / Demon Archetype)
-
 ## Incarnations
 (Choose one only)
 

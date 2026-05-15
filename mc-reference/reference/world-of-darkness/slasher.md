@@ -6,8 +6,6 @@
 
 ---
 
-SLASHER — ADD-ON RULES
-
 ## Information
 
 Here you will find the Slasher add-on rules and text for use with any of the Mortalis archetypes associated with Urban Shadows. You can expect to find a new Advancement Chart for your mortal characters (Corruption advancements are unaltered) and 5 Ripper Undertakings to start you down your path of murder and madness.

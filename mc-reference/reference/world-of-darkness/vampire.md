@@ -6,8 +6,6 @@
 
 ---
 
-VAMPIRE: THE MASQUERADE — ADD-ON RULES
-
 ## Information
 
 Here you will find the Vampire the Masquerade add-on rules and text for the Vamp archetype associated with Urban Shadows. You can expect to find a new Advancement Chart increasing advancements of your character (Corruption advancements are unaltered), 14 Clans from the 3 opposing Sects, and 17 Disciplines with a variety of powers each entails.

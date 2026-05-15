@@ -6,8 +6,6 @@
 
 ---
 
-CHANGELING: THE LOST — ADD-ON RULES (Urban Shadows / Fae Archetype)
-
 This document contains the Changeling: The Lost add-on rules for the Fae archetype associated with Urban Shadows. Contents include:
 - New Advancement Chart increasing advancements of your character
 - 4 Seemings, each with 6 Kiths (powers)

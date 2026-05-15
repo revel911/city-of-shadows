@@ -6,8 +6,6 @@
 
 ---
 
-MAGE: THE AWAKENING — ADD-ON RULES
-
 Here you will find the Mage the Awakening add-on rules and text for the Wizard archetype associated with Urban Shadows. You can expect to find a new Advancement Chart increasing advancements of your character (Corruption advancements are unaltered), 5 Paths (a traditional role in Mage society providing a source of power to the Mages), and 5 Mage Orders each possessing a variety of spells.
 
 Note: Mages created with the Urban Shadows Wizard archetype do not automatically start with a Path or with any Path spells. It is up to the group and MC to decide if you want to start with a Path; if so, you give up your beginning archetype Move to be part of a Path at the start of the game.

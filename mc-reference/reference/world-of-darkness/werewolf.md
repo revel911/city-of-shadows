@@ -6,8 +6,6 @@
 
 ---
 
-WEREWOLF: THE FORSAKEN — ADD-ON RULES
-
 ## Information
 
 Here you will find the Werewolf the Forsaken add-on rules and text for the Wolf archetype associated with Urban Shadows. You can expect to find a new Advancement Chart increasing advancements of your character (Corruption advancements are unaltered), 5 Auspices tied to one of five phases of the moon, and 5 Werewolf Tribes.

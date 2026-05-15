@@ -6,8 +6,6 @@
 
 ---
 
-HUNTER: THE VIGIL — ADD-ON RULES (Urban Shadows / Hunter Archetype)
-
 This document contains the Hunter: The Vigil add-on rules for the Hunter archetype associated with Urban Shadows. Contents include:
 - New Advancement Chart increasing advancements of your character (Corruption advancements are unaltered)
 - 4 Hunter Creeds to join, each with 2 Hunter Conspiracies

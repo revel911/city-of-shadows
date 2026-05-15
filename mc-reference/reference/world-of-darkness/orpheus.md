@@ -6,8 +6,6 @@
 
 ---
 
-ORPHEUS — ADD-ON RULES
-
 ## Information
 
 Here you will find the Orpheus add-on rules and text for the Spectre archetype associated with Urban Shadows. You can expect to find a new Advancement Chart increasing advancements of your character (Corruption advancements are unaltered) and 7 Shades, each with 3 Manifestation Forms.
