@@ -457,10 +457,17 @@ Steps:
    > "Before we start: are there any **hard limits** — things that should not happen in fiction at all — or **soft limits** — things we should fade to black on?"
 
    Define both terms inline (per the player-facing jargon rule). Capture the player's answer.
-4. Close the player-onboarding phase by emitting a `<save_player>` block (see `bot-output-format.md`). The block must include `discord_id`, optional `display_name`, and a `safety` object. The bot writes `players/by-id/<discord_id>/profile.json`.
-5. Then proceed into character creation Phase 1 (Frame) for this player's first character.
+4. Ask the mechanics-depth question. Frame it as a one-of-three choice, with **defer** as the default-friendly option for a player who hasn't played yet:
 
-**Do not ask `mechanics_depth` during player-onboarding.** The bot handles calibration automatically at the close of the player's first session. The player can also adjust at any time via the `/prefs mechanics N` slash command.
+   > "How visible do you want the game's mechanics to be in my narration? On a scale of **1** (I name moves, call out dice rolls, surface modifiers) to **5** (mechanics stay fully behind the curtain — pure story). Pick a number, or say *'decide later'* and I'll use a balanced middle (3) for your first session and check back in with you afterward."
+
+   Define **moves**, **rolls**, and **modifiers** inline (per the player-facing jargon rule) the first time you use them. Capture the player's choice:
+   - If they pick 1–5, include `<mechanics_depth>N</mechanics_depth>` in the `<save_player>` block.
+   - If they defer (or pick anything outside 1–5), **omit** `<mechanics_depth>` from the block. The bot will keep the default of 3 with `mechanics_depth_set: false`, and its automatic post-first-session calibration prompt will fire when this session closes.
+5. Close the player-onboarding phase by emitting a `<save_player>` block (see `bot-output-format.md`). The block must include `discord_id`, optional `display_name`, a `safety` object, and an optional `mechanics_depth` integer. The bot writes `players/by-id/<discord_id>/profile.json`.
+6. Then proceed into character creation Phase 1 (Frame) for this player's first character.
+
+The player can adjust mechanics depth at any time via the `/prefs mechanics N` slash command. The post-first-session calibration prompt only fires for players who deferred at onboarding.
 
 **Returning players** — anyone whose `profile.json` already exists — skip this section entirely. Go directly to character creation, starting with the carryover-confirm beat (below).
 

@@ -74,7 +74,7 @@ The repo separates two things that look alike but aren't:
 - A **player** is a Discord user. You have content-safety preferences and a mechanics-depth preference (how visible the rules engine is in MC narration). One person, one profile. Lives at `players/by-id/<your-discord-snowflake>/profile.json`.
 - A **character** is a fictional PC you run — stats, sheet, gear, advances. One person can own multiple characters. Lives at `players/<character-slug>/`.
 
-Player-scoped data (safety, mechanics depth) carries forward across every character you create. You set safety once during player-onboarding the first time the MC meets you; you tune mechanics depth once at the end of your first session (one-shot calibration prompt), and from there `/prefs mechanics N` is the way to change it.
+Player-scoped data (safety, mechanics depth) carries forward across every character you create. During player-onboarding the first time the MC meets you, you set safety and either pick a mechanics depth (1–5) or defer the choice. If you defer, the bot uses a balanced default (3) for the first session and asks you to calibrate once at session close. From there `/prefs mechanics N` is the way to change it at any time.
 
 The 5-level mechanics scale runs **1 (open table — named moves, visible dice and modifiers, stat math)** to **5 (pure narrative — no rolls visible, no move names, no stat references)**. The bot still rolls dice and applies rules at every level — only the surface of the narration changes.
 

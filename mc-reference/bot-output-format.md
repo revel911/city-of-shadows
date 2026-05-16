@@ -31,6 +31,7 @@ The first time the bot meets a Discord user, the MC runs a brief **player-onboar
   "soft_limits": ["..."]
 }
 </safety>
+<mechanics_depth>3</mechanics_depth>
 </save_player>
 ```
 
@@ -39,8 +40,7 @@ The first time the bot meets a Discord user, the MC runs a brief **player-onboar
 - **`<discord_id>`** — required. The player's numeric Discord snowflake. The bot provides this to the MC in the system-prompt context whenever it sees a thread owned by a snowflake with no `profile.json`. Always copy it verbatim.
 - **`<display_name>`** — optional. If omitted, the bot falls back to the Discord username it already has on hand.
 - **`<safety>`** — required. JSON object with `hard_limits` and `soft_limits` arrays. Both arrays may be empty (`[]`) — empty is a valid answer to the safety question.
-
-The MC does **not** emit `mechanics_depth` in this block. The bot sets that field to its default (3) and flag `mechanics_depth_set` to `false`, which lets the bot fire its one-shot calibration prompt automatically at the close of the player's first session. See `mc-instructions.md` for the 5-level rubric the MC uses to interpret the player's chosen value once it's been set.
+- **`<mechanics_depth>`** — optional. Integer 1–5 captured during the mechanics-depth question in player-onboarding (see `mc-instructions.md`). When present and valid, the bot writes the value and sets `mechanics_depth_set: true`, suppressing the post-first-session calibration prompt. When **omitted** (the player chose "decide later"), or when the value is non-numeric or outside 1–5, the bot writes the default of 3 with `mechanics_depth_set: false`, and the calibration prompt fires automatically at the close of the player's first session.
 
 After the bot writes `profile.json`, the same response (or the next turn) proceeds into character creation Phase 1 (Frame). Player-onboarding and character creation can both happen in a single thread session.
 
