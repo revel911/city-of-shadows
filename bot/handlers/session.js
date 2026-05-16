@@ -313,6 +313,10 @@ const ORPHAN_TAGS = [
 // used to strip truncated/malformed blocks from player-facing text.
 const UNTERMINATED_SAVE_ONBOARDING_RE = /<save_onboarding>(?![\s\S]*<\/save_onboarding>)[\s\S]*$/;
 
+// Step-2 mate of UNTERMINATED_SAVE_ONBOARDING_RE: a <close_session> opener
+// with no matching closer anywhere in the response.
+const UNTERMINATED_CLOSE_SESSION_RE = /<close_session>(?![\s\S]*<\/close_session>)[\s\S]*$/;
+
 // Defense-in-depth sanitizer for MC output that has already passed through
 // stripSaveOnboardingBlock/stripCloseBlock. By the time text reaches this
 // function, any *valid* container block has been extracted. Anything
@@ -335,6 +339,14 @@ export function sanitizePlayerFacingText(text) {
   // MC's response was truncated mid-block or otherwise malformed).
   if (UNTERMINATED_SAVE_ONBOARDING_RE.test(working)) {
     working = working.replace(UNTERMINATED_SAVE_ONBOARDING_RE, '');
+    leakDetected = true;
+  }
+
+  // Step 2: unterminated <close_session>. Same shape — opener with no closer
+  // — strip from open tag to end of string. Triggers when the MC tries to end
+  // the session but the response is cut off before </close_session>.
+  if (UNTERMINATED_CLOSE_SESSION_RE.test(working)) {
+    working = working.replace(UNTERMINATED_CLOSE_SESSION_RE, '');
     leakDetected = true;
   }
 
