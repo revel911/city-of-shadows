@@ -348,6 +348,13 @@ const ORPHAN_TAGS = [
   ...STRUCTURED_BARE_TAGS,
 ];
 
+// Tags that should always be stripped when found as a balanced bare pair,
+// regardless of body content. Unlike STRUCTURED_BARE_TAGS, these have NO
+// legitimate narrative use — they only ever belong inside save_onboarding
+// or close_session containers. Step 3's looksStructured check would miss
+// them (a kebab-case slug is neither JSON-shaped nor a schema-key marker).
+const ALWAYS_STRIP_BARE_TAGS = ['character_id'];
+
 // Schema-key markers used by sanitize step 3 to decide whether a <TAG>body</TAG>
 // payload is structured data. Looking only at first-char {/[ would miss
 // hand-written sheet bodies that aren't strictly JSON but still belong inside
@@ -431,11 +438,22 @@ export function sanitizePlayerFacingText(text) {
     });
   }
 
+  // Step 3.5: tags with no legitimate narrative use. Always strip balanced
+  // pairs regardless of body shape. Currently just <character_id>, whose
+  // body is a kebab slug that looksStructured would not catch.
+  for (const tag of ALWAYS_STRIP_BARE_TAGS) {
+    const re = new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, 'g');
+    if (re.test(working)) {
+      working = working.replace(new RegExp(`<${tag}>[\\s\\S]*?<\\/${tag}>`, 'g'), '');
+      leakDetected = true;
+    }
+  }
+
   // Step 4: orphan-tag cleanup. By this point, every valid <TAG>...</TAG>
   // pair from STRUCTURED_BARE_TAGS with a structured body has been removed,
   // and unterminated containers (save_onboarding, close_session) have been
   // stripped to end-of-string by steps 1-2. Any remaining standalone <TAG>
-  // or </TAG> for a tag in ORPHAN_TAGS is by definition orphaned. Three
+  // or </TAG> for a tag in ORPHAN_TAGS is by definition orphaned. Four
   // sub-cases handled per tag:
   //   a) Unterminated open with structured-data payload (<TAG> with no </TAG>)
   //      — applies only to STRUCTURED_BARE_TAGS. Strip from the open tag to
@@ -482,7 +500,11 @@ export function sanitizePlayerFacingText(text) {
         leakDetected = true;
       }
     }
-    // Sub-case (d): balanced pair — no action; step 3 already decided it.
+    // Sub-case (d): balanced pair — no action. For STRUCTURED_BARE_TAGS,
+    // step 3 already decided whether to strip; for the other ORPHAN_TAGS
+    // members, balanced pairs are either handled by step 3.5 (character_id)
+    // or are legitimate container blocks already removed upstream
+    // (save_onboarding, close_session).
   }
 
   return { cleaned: working.trim(), leakDetected };

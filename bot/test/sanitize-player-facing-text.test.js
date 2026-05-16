@@ -115,3 +115,13 @@ test('reproduces the failure pattern from the Jacob Brooks incident', () => {
   assert.equal(cleaned, '');
   assert.equal(leakDetected, true);
 });
+
+test('strips balanced <character_id>kebab-id</character_id> floating in prose', () => {
+  // <character_id> has no legitimate narrative use — it only belongs inside
+  // save/close containers. A balanced bare pair is always a leak even if
+  // the body (a kebab slug) doesn't look JSON-shaped.
+  const input = 'before <character_id>jacob-brooks</character_id> after';
+  const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  assert.equal(cleaned, 'before  after');
+  assert.equal(leakDetected, true);
+});
