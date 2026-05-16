@@ -1,5 +1,5 @@
 {
-  "player_id": "kebab-case-folder-name",
+  "character_id": "kebab-case-folder-name",
   "character_name": "Full Character Name",
   "playbook": "The PlaybookName",
   "wod_extension": "Supplement (Subtype / Order)",
@@ -28,9 +28,5 @@
   "gear": [],
   "active_arc_ids": [],
   "last_session": "session_000",
-  "safety": {
-    "hard_limits": [],
-    "soft_limits": []
-  },
   "notes": ""
 }
