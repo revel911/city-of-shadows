@@ -1,7 +1,7 @@
 import { generate, buildOpeningContext } from './mc.js';
 import { writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
-import { readProfile, writeProfile } from './profile.js';
+import { readProfile, updateProfile } from './profile.js';
 
 const sessions = new Map();
 
@@ -69,37 +69,65 @@ async function postMCResponse(thread, response, session) {
   if (savePlayer) {
     const missingPlayer = missingSavePlayerFields(savePlayer);
     if (missingPlayer.length) {
-      console.warn(
+      console.error(
         `<save_player> missing required fields: ${missingPlayer.join(', ')} — skipping write`
       );
     } else {
-      let safetyParsed;
+      // Parse and validate safety. Malformed safety is a CRITICAL data-loss
+      // path — writing empty limits silently is worse than refusing the write,
+      // because the player thinks their limits are recorded when they aren't.
+      let safetyParsed = null;
       try {
-        safetyParsed = JSON.parse(savePlayer.safety);
-        if (!safetyParsed || typeof safetyParsed !== 'object') {
-          throw new Error('safety did not parse to an object');
+        const candidate = JSON.parse(savePlayer.safety);
+        if (
+          candidate &&
+          typeof candidate === 'object' &&
+          !Array.isArray(candidate) &&
+          Array.isArray(candidate.hard_limits) &&
+          Array.isArray(candidate.soft_limits)
+        ) {
+          safetyParsed = {
+            hard_limits: candidate.hard_limits,
+            soft_limits: candidate.soft_limits,
+          };
         }
-      } catch (err) {
-        console.warn(
-          `<save_player> safety JSON did not parse: ${err.message} — writing empty limits`
-        );
-        safetyParsed = { hard_limits: [], soft_limits: [] };
+      } catch (_) {
+        safetyParsed = null;
       }
-      if (!Array.isArray(safetyParsed.hard_limits)) safetyParsed.hard_limits = [];
-      if (!Array.isArray(safetyParsed.soft_limits)) safetyParsed.soft_limits = [];
-
-      const profile = {
-        discord_id: savePlayer.discord_id,
-        display_name: savePlayer.display_name || '',
-        safety: safetyParsed,
-        mechanics_depth: 3,
-        mechanics_depth_set: false,
-        characters: [],
-      };
-      try {
-        await writeProfile(profile, `[player] onboarding for ${profile.discord_id}`);
-      } catch (err) {
-        console.error(`<save_player> writeProfile failed: ${err.message}`);
+      if (!safetyParsed) {
+        console.error(
+          `<save_player> safety did not parse to {hard_limits, soft_limits} arrays — refusing write for ${savePlayer.discord_id}`
+        );
+      } else {
+        // Idempotency: if a profile already exists, do NOT clobber the player's
+        // existing mechanics_depth, calibration flag, or character list. A
+        // confused MC re-emitting <save_player> for a returning player should
+        // be a no-op on those fields, only updating safety + display_name.
+        try {
+          await updateProfile(
+            savePlayer.discord_id,
+            (existing) => {
+              if (existing) {
+                return {
+                  ...existing,
+                  display_name: savePlayer.display_name || existing.display_name || '',
+                  safety: safetyParsed,
+                };
+              }
+              return {
+                discord_id: savePlayer.discord_id,
+                display_name: savePlayer.display_name || '',
+                safety: safetyParsed,
+                mechanics_depth: 3,
+                mechanics_depth_set: false,
+                characters: [],
+              };
+            },
+            `[player] onboarding for ${savePlayer.discord_id}`
+          );
+        } catch (err) {
+          console.error(`<save_player> updateProfile failed: ${err.message}`);
+        }
       }
     }
   }
@@ -412,16 +440,18 @@ async function processSaveOnboarding(thread, session, save) {
 
   if (ownerId) {
     try {
-      const profile = await readProfile(ownerId);
-      if (profile) {
-        if (!Array.isArray(profile.characters)) profile.characters = [];
-        if (!profile.characters.includes(id)) {
-          profile.characters.push(id);
-          await writeProfile(profile, `[onboarding] link character ${id} to player ${ownerId} (${stamp})`);
-        }
-      }
+      await updateProfile(
+        ownerId,
+        (current) => {
+          if (!current) return null;
+          const characters = Array.isArray(current.characters) ? current.characters : [];
+          if (characters.includes(id)) return null;
+          return { ...current, characters: [...characters, id] };
+        },
+        `[onboarding] link character ${id} to player ${ownerId} (${stamp})`
+      );
     } catch (err) {
-      console.warn(`[onboarding] failed to link character ${id} to profile ${ownerId}: ${err.message}`);
+      console.error(`[onboarding] failed to link character ${id} to profile ${ownerId}: ${err.message}`);
     }
   }
 
@@ -442,7 +472,11 @@ async function processSaveOnboarding(thread, session, save) {
   // block retry path to still see this as a new-character session.
   const registered = !failNames.some(f => f.startsWith('players-index'));
   if (registered) {
-    session.player = { id, name: displayName };
+    // Preserve discord_id — the close-session path reads it for profile_patch
+    // application, calibration firing, and character→profile linking. Dropping
+    // it here silently breaks all three for the very population they exist for
+    // (a brand-new player just finishing onboarding).
+    session.player = { ...session.player, id, name: displayName };
     session._onboardingSaved = true;
   }
 
@@ -481,9 +515,17 @@ async function processSessionClose(thread, session, close) {
   }
 
   let parsedStatePatch = null;
+  let profilePatch = null;
   if (close.state_patch) {
     try {
       parsedStatePatch = JSON.parse(close.state_patch);
+      // The MC may nest a `profile_patch` inside state_patch (carryover-confirm
+      // beat). Lift it out so it does not pollute the character's state.json.
+      if (parsedStatePatch && typeof parsedStatePatch === 'object' && parsedStatePatch.profile_patch) {
+        profilePatch = parsedStatePatch.profile_patch;
+        const { profile_patch, ...stateOnly } = parsedStatePatch;
+        parsedStatePatch = stateOnly;
+      }
       // RMW so a concurrent edit to state.json (rare for per-player files,
       // but cheap insurance) merges against the latest state.
       writes.push(['state', updateJSON(
@@ -577,16 +619,18 @@ async function processSessionClose(thread, session, close) {
 
     if (closeOwnerId) {
       try {
-        const profile = await readProfile(closeOwnerId);
-        if (profile) {
-          if (!Array.isArray(profile.characters)) profile.characters = [];
-          if (!profile.characters.includes(id)) {
-            profile.characters.push(id);
-            await writeProfile(profile, `[session] link character ${id} to player ${closeOwnerId} (${stamp})`);
-          }
-        }
+        await updateProfile(
+          closeOwnerId,
+          (current) => {
+            if (!current) return null;
+            const characters = Array.isArray(current.characters) ? current.characters : [];
+            if (characters.includes(id)) return null;
+            return { ...current, characters: [...characters, id] };
+          },
+          `[session] link character ${id} to player ${closeOwnerId} (${stamp})`
+        );
       } catch (err) {
-        console.warn(`[session] failed to link character ${id} to profile ${closeOwnerId}: ${err.message}`);
+        console.error(`[session] failed to link character ${id} to profile ${closeOwnerId}: ${err.message}`);
       }
     }
   }
@@ -614,47 +658,57 @@ async function processSessionClose(thread, session, close) {
   await thread.send(lines.join('\n'));
 
   // Player profile follow-ups: apply any `profile_patch` carried inside the
-  // close block's state_patch, then fire the one-shot mechanics-depth
-  // calibration prompt if the player still hasn't been calibrated. The
-  // profile_patch is OPTIONAL and permissive — both `safety` and
-  // `mechanics_depth` inside it are optional, unknown keys are ignored,
-  // and out-of-range mechanics_depth values are dropped silently.
+  // close block's state_patch (already lifted out of parsedStatePatch above),
+  // then fire the one-shot mechanics-depth calibration prompt if the player
+  // still hasn't been calibrated. The profile_patch is OPTIONAL and permissive
+  // — both `safety` and `mechanics_depth` inside it are optional, unknown keys
+  // are ignored, and out-of-range mechanics_depth values are dropped silently.
   const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
   if (discordId) {
-    let profile = await readProfile(discordId);
-
-    if (profile && parsedStatePatch && typeof parsedStatePatch === 'object') {
-      const patch = parsedStatePatch.profile_patch;
-      if (patch && typeof patch === 'object') {
-        let dirty = false;
-        if (patch.safety && typeof patch.safety === 'object') {
-          const next = { ...profile.safety };
-          if (Array.isArray(patch.safety.hard_limits)) next.hard_limits = patch.safety.hard_limits;
-          if (Array.isArray(patch.safety.soft_limits)) next.soft_limits = patch.safety.soft_limits;
-          profile.safety = next;
-          dirty = true;
-        }
-        if (
-          typeof patch.mechanics_depth === 'number' &&
-          patch.mechanics_depth >= 1 &&
-          patch.mechanics_depth <= 5
-        ) {
-          profile.mechanics_depth = patch.mechanics_depth;
-          profile.mechanics_depth_set = true;
-          dirty = true;
-        }
-        if (dirty) {
-          try {
-            await writeProfile(profile, `[session] profile_patch for ${discordId} (${stamp})`);
-          } catch (err) {
-            console.warn(`[session] failed to apply profile_patch for ${discordId}: ${err.message}`);
-          }
-        }
+    // Apply profile_patch via RMW so a /prefs invocation racing this close
+    // doesn't lose its update. The transform reads the latest profile from
+    // GitHub each retry attempt.
+    let postPatchProfile = null;
+    if (profilePatch && typeof profilePatch === 'object') {
+      try {
+        postPatchProfile = await updateProfile(
+          discordId,
+          (current) => {
+            if (!current) return null;
+            let dirty = false;
+            const next = { ...current };
+            if (profilePatch.safety && typeof profilePatch.safety === 'object') {
+              const nextSafety = { ...current.safety };
+              if (Array.isArray(profilePatch.safety.hard_limits)) nextSafety.hard_limits = profilePatch.safety.hard_limits;
+              if (Array.isArray(profilePatch.safety.soft_limits)) nextSafety.soft_limits = profilePatch.safety.soft_limits;
+              next.safety = nextSafety;
+              dirty = true;
+            }
+            if (
+              typeof profilePatch.mechanics_depth === 'number' &&
+              profilePatch.mechanics_depth >= 1 &&
+              profilePatch.mechanics_depth <= 5
+            ) {
+              next.mechanics_depth = profilePatch.mechanics_depth;
+              next.mechanics_depth_set = true;
+              dirty = true;
+            }
+            return dirty ? next : null;
+          },
+          `[session] profile_patch for ${discordId} (${stamp})`
+        );
+      } catch (err) {
+        console.error(`[session] failed to apply profile_patch for ${discordId}: ${err.message}`);
       }
     }
 
-    // Re-read (it may have just been patched) and fire calibration if still unset.
-    profile = await readProfile(discordId);
+    // Fire the one-shot calibration prompt at most once. Use the post-patch
+    // in-memory profile when we just wrote one (avoids the GitHub eventual-
+    // consistency window where a fresh read could still see the pre-write
+    // value). Then set `mechanics_depth_set: true` AFTER sending so we never
+    // re-prompt — the prompt itself is the calibration event, regardless of
+    // whether the player responds.
+    const profile = postPatchProfile || (await readProfile(discordId));
     if (profile && profile.mechanics_depth_set === false) {
       try {
         await thread.send({
@@ -664,8 +718,20 @@ async function processSessionClose(thread, session, close) {
             `to **5** (mechanics fully hidden, pure story). ` +
             `\n\nReply with \`/prefs mechanics N\` (where N is 1–5) and that will be your default going forward.`,
         });
+        try {
+          await updateProfile(
+            discordId,
+            (current) => {
+              if (!current || current.mechanics_depth_set) return null;
+              return { ...current, mechanics_depth_set: true };
+            },
+            `[session] mark mechanics_depth_set after calibration prompt for ${discordId} (${stamp})`
+          );
+        } catch (err) {
+          console.error(`[session] failed to mark mechanics_depth_set for ${discordId}: ${err.message}`);
+        }
       } catch (err) {
-        console.warn(`[session] failed to post calibration prompt: ${err.message}`);
+        console.error(`[session] failed to post calibration prompt: ${err.message}`);
       }
     }
   }
