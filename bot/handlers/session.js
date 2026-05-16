@@ -615,6 +615,63 @@ async function processSessionClose(thread, session, close) {
   if (!lines.length) lines.push('No close-block fields detected — nothing written.');
   await thread.send(lines.join('\n'));
 
+  // Player profile follow-ups: apply any `profile_patch` carried inside the
+  // close block's state_patch, then fire the one-shot mechanics-depth
+  // calibration prompt if the player still hasn't been calibrated. The
+  // profile_patch is OPTIONAL and permissive — both `safety` and
+  // `mechanics_depth` inside it are optional, unknown keys are ignored,
+  // and out-of-range mechanics_depth values are dropped silently.
+  const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
+  if (discordId) {
+    let profile = readProfile(REPO_ROOT, discordId);
+
+    if (profile && parsedStatePatch && typeof parsedStatePatch === 'object') {
+      const patch = parsedStatePatch.profile_patch;
+      if (patch && typeof patch === 'object') {
+        let dirty = false;
+        if (patch.safety && typeof patch.safety === 'object') {
+          const next = { ...profile.safety };
+          if (Array.isArray(patch.safety.hard_limits)) next.hard_limits = patch.safety.hard_limits;
+          if (Array.isArray(patch.safety.soft_limits)) next.soft_limits = patch.safety.soft_limits;
+          profile.safety = next;
+          dirty = true;
+        }
+        if (
+          typeof patch.mechanics_depth === 'number' &&
+          patch.mechanics_depth >= 1 &&
+          patch.mechanics_depth <= 5
+        ) {
+          profile.mechanics_depth = patch.mechanics_depth;
+          profile.mechanics_depth_set = true;
+          dirty = true;
+        }
+        if (dirty) {
+          try {
+            writeProfile(REPO_ROOT, profile);
+          } catch (err) {
+            console.warn(`[session] failed to apply profile_patch for ${discordId}: ${err.message}`);
+          }
+        }
+      }
+    }
+
+    // Re-read (it may have just been patched) and fire calibration if still unset.
+    profile = readProfile(REPO_ROOT, discordId);
+    if (profile && profile.mechanics_depth_set === false) {
+      try {
+        await thread.send({
+          content:
+            `Quick calibration — how did the amount of mechanics feel this session? ` +
+            `Pick a level from **1** (surface most mechanics — named moves, dice, modifiers) ` +
+            `to **5** (mechanics fully hidden, pure story). ` +
+            `\n\nReply with \`/prefs mechanics N\` (where N is 1–5) and that will be your default going forward.`,
+        });
+      } catch (err) {
+        console.warn(`[session] failed to post calibration prompt: ${err.message}`);
+      }
+    }
+  }
+
   if (close.world_event && process.env.WORLD_EVENTS_CHANNEL_ID) {
     try {
       const ch = await thread.client.channels.fetch(process.env.WORLD_EVENTS_CHANNEL_ID);
