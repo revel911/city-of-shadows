@@ -80,6 +80,10 @@ async function postMCResponse(thread, response, session) {
   //    save_player to break the rest of the response handling.
   const savePlayer = parseSavePlayerBlock(response);
   if (savePlayer) {
+    // Always strip the block from the visible response, even if validation
+    // fails below — the raw tags + safety JSON must never reach Discord
+    // regardless of whether the write itself succeeds.
+    response = stripSavePlayerBlock(response);
     const missingPlayer = missingSavePlayerFields(savePlayer);
     if (missingPlayer.length) {
       console.error(
@@ -116,23 +120,36 @@ async function postMCResponse(thread, response, session) {
         // existing mechanics_depth, calibration flag, or character list. A
         // confused MC re-emitting <save_player> for a returning player should
         // be a no-op on those fields, only updating safety + display_name.
+        // If the MC collected a mechanics_depth from the player, persist it
+        // and mark calibration done so the post-first-session prompt does
+        // not fire on top of an already-set value. If omitted (deferred),
+        // keep the default (3) and leave mechanics_depth_set=false so the
+        // automatic calibration still runs at first close.
+        const depthOverride = Number.isInteger(savePlayer.mechanics_depth)
+          ? savePlayer.mechanics_depth
+          : null;
         try {
           await updateProfile(
             savePlayer.discord_id,
             (existing) => {
               if (existing) {
-                return {
+                const next = {
                   ...existing,
                   display_name: savePlayer.display_name || existing.display_name || '',
                   safety: safetyParsed,
                 };
+                if (depthOverride !== null) {
+                  next.mechanics_depth = depthOverride;
+                  next.mechanics_depth_set = true;
+                }
+                return next;
               }
               return {
                 discord_id: savePlayer.discord_id,
                 display_name: savePlayer.display_name || '',
                 safety: safetyParsed,
-                mechanics_depth: 3,
-                mechanics_depth_set: false,
+                mechanics_depth: depthOverride !== null ? depthOverride : 3,
+                mechanics_depth_set: depthOverride !== null,
                 characters: [],
               };
             },
@@ -175,7 +192,7 @@ async function postMCResponse(thread, response, session) {
       );
       console.error(`[save-onboarding] exhausted retries for ${session.player.name}: missing ${missing.join(', ')}`);
     } else {
-      await thread.send('— *saving character to GitHub…* —');
+      await thread.send('— *saving character to GitHub (this usually takes 10–20 seconds)…* —');
       await processSaveOnboarding(thread, session, save);
       response = stripSaveOnboardingBlock(response);
       // Clean save fired — reset the leak retry counter so a future,
@@ -234,7 +251,7 @@ async function postMCResponse(thread, response, session) {
   }
 
   if (close) {
-    await thread.send('— *writing session close to GitHub…* —');
+    await thread.send('— *writing session close to GitHub (this usually takes 10–20 seconds)…* —');
     await processSessionClose(thread, session, close);
     sessions.delete(session.threadId);
     if (typeof thread.setArchived === 'function') {
@@ -368,10 +385,13 @@ const STRUCTURED_BARE_TAGS = [
 ];
 
 // Step-4 orphan cleanup considers container tags too — bare opens/closes of
-// save_onboarding or close_session (no matching pair) are also leaks.
+// save_onboarding, close_session, or save_player (no matching pair) are also
+// leaks. save_player is included here so a malformed/truncated player-onboarding
+// block never dumps discord_id + safety JSON into the player's thread.
 const ORPHAN_TAGS = [
   'save_onboarding',
   'close_session',
+  'save_player',
   'character_id',
   ...STRUCTURED_BARE_TAGS,
 ];
@@ -415,6 +435,11 @@ const UNTERMINATED_SAVE_ONBOARDING_RE = /<save_onboarding>(?![\s\S]*<\/save_onbo
 // with no matching closer anywhere in the response.
 const UNTERMINATED_CLOSE_SESSION_RE = /<close_session>(?![\s\S]*<\/close_session>)[\s\S]*$/;
 
+// Step-2.5 mate: a <save_player> opener with no matching closer. Whole-block
+// strip (not just the open tag) is required because the body carries
+// discord_id and a safety JSON payload that would otherwise be posted raw.
+const UNTERMINATED_SAVE_PLAYER_RE = /<save_player>(?![\s\S]*<\/save_player>)[\s\S]*$/;
+
 // Defense-in-depth sanitizer for MC output that has already passed through
 // stripSaveOnboardingBlock/stripCloseBlock. By the time text reaches this
 // function, any *valid* container block has been extracted. Anything
@@ -445,6 +470,14 @@ export function sanitizePlayerFacingText(text) {
   // the session but the response is cut off before </close_session>.
   if (UNTERMINATED_CLOSE_SESSION_RE.test(working)) {
     working = working.replace(UNTERMINATED_CLOSE_SESSION_RE, '');
+    leakDetected = true;
+  }
+
+  // Step 2.5: unterminated <save_player>. Same shape as steps 1/2. Reaches this
+  // path when the MC's player-onboarding response is truncated mid-block and
+  // the upstream stripSavePlayerBlock pass found no valid block to extract.
+  if (UNTERMINATED_SAVE_PLAYER_RE.test(working)) {
+    working = working.replace(UNTERMINATED_SAVE_PLAYER_RE, '');
     leakDetected = true;
   }
 
@@ -557,11 +590,39 @@ export function parseSavePlayerBlock(text) {
     const m = body.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
     return m ? m[1].trim() : null;
   };
+  // mechanics_depth is optional in the block. Player-onboarding can either
+  // collect a value 1-5 from the player or let them defer the choice — in
+  // both omitted and invalid cases the bot falls back to the default of 3
+  // with mechanics_depth_set=false so the post-first-session calibration
+  // still fires. Anything outside [1,5] or non-numeric collapses to null.
+  const rawDepth = get('mechanics_depth');
+  let mechanics_depth = null;
+  if (rawDepth !== null) {
+    const parsed = Number(rawDepth);
+    if (Number.isInteger(parsed) && parsed >= 1 && parsed <= 5) {
+      mechanics_depth = parsed;
+    }
+  }
   return {
     discord_id: get('discord_id'),
     display_name: get('display_name'),
     safety: get('safety'),
+    mechanics_depth,
   };
+}
+
+// Removes the first balanced <save_player>...</save_player> block from text.
+// Mirrors stripSaveOnboardingBlock / stripCloseBlock — the bot extracts the
+// block, processes it, and must not post the raw tags + safety JSON to the
+// player's Discord thread. No-op when no block is present.
+export function stripSavePlayerBlock(text) {
+  if (typeof text !== 'string') return text;
+  const openIdx = text.indexOf(SAVE_PLAYER_OPEN);
+  const closeIdx = text.indexOf(SAVE_PLAYER_CLOSE);
+  if (openIdx === -1 || closeIdx === -1 || closeIdx <= openIdx) return text;
+  const before = text.slice(0, openIdx);
+  const after = text.slice(closeIdx + SAVE_PLAYER_CLOSE.length);
+  return (before + after).trim();
 }
 
 // discord_id and safety are required; display_name is optional (the MC may

@@ -125,3 +125,27 @@ test('strips balanced <character_id>kebab-id</character_id> floating in prose', 
   assert.equal(cleaned, 'before  after');
   assert.equal(leakDetected, true);
 });
+
+test('strips unterminated <save_player> from open tag to end of string', () => {
+  // Parallel to the save_onboarding/close_session leak path: a malformed
+  // <save_player> that never closes would otherwise dump discord_id and
+  // safety JSON straight into the player's thread.
+  const input = [
+    'Welcome, Tommy.',
+    '',
+    '<save_player>',
+    '<discord_id>123</discord_id>',
+    '<safety>',
+    '{ "hard_limits": [] ',
+  ].join('\n');
+  const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  assert.equal(cleaned, 'Welcome, Tommy.');
+  assert.equal(leakDetected, true);
+});
+
+test('strips orphan </save_player> closer with no matching opener', () => {
+  const input = 'narrative continues</save_player>\nmore narrative';
+  const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  assert.equal(cleaned, 'narrative continues\nmore narrative');
+  assert.equal(leakDetected, true);
+});
