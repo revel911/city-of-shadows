@@ -535,6 +535,10 @@ new:
   save_before_play:
     requirement: REQUIRED
     block: <save_onboarding>
+    position: >
+      MUST be the first content in your response, before any narrative.
+      Truncation falls on the trailing narrative (recoverable next turn),
+      not on the structured save block (irrecoverable).
     when: >
       Emit AFTER Phase 12 (character_id confirmed) and BEFORE Phase 13 (first scene).
       Also emit immediately on any of these triggers, even mid-onboarding:

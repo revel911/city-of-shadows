@@ -54,7 +54,7 @@ Character creation must be persisted to GitHub **before** the first scene begins
 2. **Player says "save".** Any phrasing equivalent to "save", "save my character", "commit what we have" — emit `<save_onboarding>` with whatever data is filled in. The sheet may still have TBD fields; that's fine.
 3. **Player wants to start the story early.** Phrasings like "let's just start", "I'm ready to play", "skip the rest" — emit `<save_onboarding>` first with the current state, then open the first scene. Do not start play before the save is recorded.
 
-The block may appear **anywhere in your message**, not just at the end. The bot strips it and posts the remaining narrative to the thread.
+The `<save_onboarding>` block MUST be the **first content** in your response, before any narrative. The bot extracts it and posts the trailing narrative to the thread. Putting the save block first protects the structured save from being truncated when your response is long — only the narrative tail can be lost to a length cap, and the narrative can be recreated on the next turn while a partial save cannot.
 
 ### Save block schema
 
@@ -82,6 +82,7 @@ The block may appear **anywhere in your message**, not just at the end. The bot 
 
 ### Save field rules
 
+- **Position** — emit this block as the very first content of your response. Open with `<save_onboarding>`, close with `</save_onboarding>`, then write your scene narrative. Do not interleave.
 - **`<character_id>`** — required. Kebab-case folder name (e.g. `joe-nakama`). The bot uses this to create the player's folder, write the sheet, and register the character in `players/index.json`.
 - **`<sheet>`** — required. Full sheet content. If save is triggered early (case 2 or 3), include every section but use "TBD" for fields the player hasn't filled in yet.
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
@@ -89,6 +90,17 @@ The block may appear **anywhere in your message**, not just at the end. The bot 
 - **`<events_append>`** — optional. Use only if the character's arrival is publicly visible.
 
 The bot validates the save block before writing. If `character_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
+
+### Length & self-check
+
+A complete `<save_onboarding>` for a fresh character typically runs 800–1500 characters. If your sheet has grown longer (lots of gear, long notes), keep an eye on total response length: opening a scene with rich narrative *after* the save block can push your full reply past the model's output cap and truncate the trailing narrative — that's the safe failure. If the save block itself is truncated, the character does not persist.
+
+Before sending, verify three things:
+1. The response opens with `<save_onboarding>`.
+2. A matching `</save_onboarding>` appears before your scene narrative begins.
+3. Every nested tag inside the block (`<character_id>`, `<sheet>`, `<state_patch>`, `<npc_patch>`) has a matching closing tag.
+
+If you find yourself wanting to write a very long opening scene on the same turn as a save, prefer to keep the scene short — the next player turn will give you space to expand.
 
 ### When not to emit save_onboarding
 
