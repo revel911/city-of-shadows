@@ -762,7 +762,7 @@ function parseThreats(text) {
       status:      cap(arc.status || ''),
       description: arc.summary || arc.description || '',
       hubs:        Array.isArray(arc.hub_ids)  ? arc.hub_ids  : (Array.isArray(arc.hubs)    ? arc.hubs    : []),
-      players:     Array.isArray(arc.player_ids) ? arc.player_ids : (Array.isArray(arc.players) ? arc.players : []),
+      players:     Array.isArray(arc.character_ids) ? arc.character_ids : (Array.isArray(arc.players) ? arc.players : []),
       keyNpcs:     Array.isArray(arc.npc_ids)  ? arc.npc_ids  : (Array.isArray(arc.key_npcs) ? arc.key_npcs : []),
       mcNotes:     arc.mc_notes || '',
     }));
