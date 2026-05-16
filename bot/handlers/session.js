@@ -286,6 +286,55 @@ function stripSaveOnboardingBlock(text) {
   return text.replace(SAVE_ONBOARDING_BLOCK_RE, '').trim();
 }
 
+// List of structured-data tags that should never appear in player-facing text
+// outside their container blocks (save_onboarding / close_session). Defined at
+// module scope so callers and tests share the same source of truth.
+const STRUCTURED_BARE_TAGS = [
+  'state_patch',
+  'npc_patch',
+  'sheet',
+  'handoff',
+  'arc_patch',
+  'events_append',
+  'interactions_patch',
+  'world_event',
+];
+
+// Step-4 orphan cleanup considers container tags too — bare opens/closes of
+// save_onboarding or close_session (no matching pair) are also leaks.
+const ORPHAN_TAGS = [
+  'save_onboarding',
+  'close_session',
+  'character_id',
+  ...STRUCTURED_BARE_TAGS,
+];
+
+// Defense-in-depth sanitizer for MC output that has already passed through
+// stripSaveOnboardingBlock/stripCloseBlock. By the time text reaches this
+// function, any *valid* container block has been extracted. Anything
+// structured that survives is by definition a leak (truncated, malformed,
+// or orphaned), and posting it to a Discord thread is always wrong.
+//
+// Returns { cleaned, leakDetected }. The caller posts `cleaned` to the
+// thread and, if `leakDetected`, sets a session flag so the next MC turn
+// receives a re-emit nudge.
+export function sanitizePlayerFacingText(text) {
+  if (typeof text !== 'string') return { cleaned: '', leakDetected: false };
+  let working = text;
+  let leakDetected = false;
+
+  // Step 1: unterminated <save_onboarding>. Negative lookahead asserts there
+  // is no </save_onboarding> later in the string, meaning the opening tag is
+  // orphaned. Strip from the open tag to end of string.
+  const unterminatedSave = /<save_onboarding>(?![\s\S]*<\/save_onboarding>)[\s\S]*$/;
+  if (unterminatedSave.test(working)) {
+    working = working.replace(unterminatedSave, '');
+    leakDetected = true;
+  }
+
+  return { cleaned: working.trim(), leakDetected };
+}
+
 // Player-onboarding persistence block. Parallel to <save_onboarding> but for
 // the *player* entity (Discord user) rather than a character. Fires when the
 // MC finishes the player-onboarding phase (greeting, safety, display name) and
