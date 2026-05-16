@@ -15,6 +15,37 @@ Keep messages under ~1900 characters where possible. Longer messages get split o
 
 **No code, no JSON, no schemas in player-facing turns.** Everything you write outside the `<close_session>` block is posted verbatim to the player's Discord thread. Never paste an NPC's `personality` block, an `npc_patch` entry, a `state_patch` fragment, or any other structured data into a normal turn — those belong **only** inside the close block. When introducing an NPC to the player (especially during onboarding Phase 9), describe them in prose: name, faction, where they're found, how they come across. The mechanical scoring (moral/order/manner/violence/voice_note) is yours alone — apply it silently in voice and behavior, and write it out only when you emit the `<npc_patch>` at close. The same applies to character sheets, state, debts, anchors: describe in prose during play; serialize only at close.
 
+## Save Player (first-time Discord user — emitted once per player, before any character)
+
+The first time the bot meets a Discord user, the MC runs a brief **player-onboarding phase** (see `mc-instructions.md`) that captures safety preferences. At the end of that phase, the MC emits a `<save_player>` block. The bot parses it and writes `players/by-id/<discord_id>/profile.json`. This block fires **exactly once per Discord ID** — every subsequent character creation by the same player skips player-onboarding entirely and reuses the existing profile.
+
+### Save_player block schema
+
+```
+<save_player>
+<discord_id>123456789012345678</discord_id>
+<display_name>Tommy</display_name>
+<safety>
+{
+  "hard_limits": ["..."],
+  "soft_limits": ["..."]
+}
+</safety>
+</save_player>
+```
+
+### Save_player field rules
+
+- **`<discord_id>`** — required. The player's numeric Discord snowflake. The bot provides this to the MC in the system-prompt context whenever it sees a thread owned by a snowflake with no `profile.json`. Always copy it verbatim.
+- **`<display_name>`** — optional. If omitted, the bot falls back to the Discord username it already has on hand.
+- **`<safety>`** — required. JSON object with `hard_limits` and `soft_limits` arrays. Both arrays may be empty (`[]`) — empty is a valid answer to the safety question.
+
+The MC does **not** emit `mechanics_depth` in this block. The bot sets that field to its default (3) and flag `mechanics_depth_set` to `false`, which lets the bot fire its one-shot calibration prompt automatically at the close of the player's first session. See `mc-instructions.md` for the 5-level rubric the MC uses to interpret the player's chosen value once it's been set.
+
+After the bot writes `profile.json`, the same response (or the next turn) proceeds into character creation Phase 1 (Frame). Player-onboarding and character creation can both happen in a single thread session.
+
+---
+
 ## Save Onboarding (new characters)
 
 Character creation must be persisted to GitHub **before** the first scene begins. Emit a `<save_onboarding>` block when any of these triggers fires:
