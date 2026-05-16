@@ -1,0 +1,37 @@
+{
+  "character_id": "jacob-boone",
+  "character_name": "Jacob Boone",
+  "playbook": "The Veteran",
+  "wod_extension": "Werewolf: The Forsaken (Cahalith / Storm Lords)",
+  "stats": {
+    "Blood": 3,
+    "Heart": 1,
+    "Mind": 2,
+    "Spirit": 0
+  },
+  "harm": 0,
+  "corrupt": 0,
+  "xp": 0,
+  "advances": 8,
+  "circle_ratings": {
+    "Mortalis": 1,
+    "Night": 1,
+    "Power": 0,
+    "Wild": 0
+  },
+  "circle_status": {
+    "Mortalis": 1,
+    "Night": 2,
+    "Power": 0,
+    "Wild": 0
+  },
+  "gear": [
+    "Boxing wraps, worn",
+    "Beat-up Ford F-150",
+    "Keys to The Nail's back door (Priest's bar, Idlewood Ave)",
+    "Workshop tools"
+  ],
+  "active_arc_ids": [],
+  "last_session": "session_000",
+  "notes": "Six months post-First Change. Established in Night Circle via Dara Shin's voucher. Oregon Hill territory claimed, blessings and troubles to be established in play. Workshop: converted garage, address TBD."
+}
