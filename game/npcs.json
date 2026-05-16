@@ -87,7 +87,9 @@
       "faction": "Mortalis",
       "hub": "Shockoe Bottom",
       "hub_id": "hub_shockoe_bottom",
-      "arc_ids": ["arc-005"],
+      "arc_ids": [
+        "arc-005"
+      ],
       "status": "active",
       "role": "Celestine's nephew; small-time supernatural fixer trying to stay useful",
       "player_interaction": "None yet",
@@ -107,7 +109,9 @@
       "faction": "Night",
       "hub": "Shockoe Bottom",
       "hub_id": "hub_shockoe_bottom",
-      "arc_ids": ["arc-011"],
+      "arc_ids": [
+        "arc-011"
+      ],
       "status": "active",
       "role": "Nosferatu elder and canal tunnel patriarch; wants to be left alone",
       "player_interaction": "None yet",
@@ -187,7 +191,9 @@
       "faction": "Wild",
       "hub": "The Fan",
       "hub_id": "hub_the_fan",
-      "arc_ids": ["arc-002"],
+      "arc_ids": [
+        "arc-002"
+      ],
       "status": "active",
       "role": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe",
       "player_interaction": "None yet",
@@ -307,7 +313,9 @@
       "faction": "Power",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
-      "arc_ids": ["arc-005"],
+      "arc_ids": [
+        "arc-005"
+      ],
       "status": "active",
       "role": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand",
       "player_interaction": "None yet",
@@ -347,7 +355,9 @@
       "faction": "Power",
       "hub": "The University",
       "hub_id": "hub_university",
-      "arc_ids": ["arc-005"],
+      "arc_ids": [
+        "arc-005"
+      ],
       "status": "active",
       "role": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation",
       "player_interaction": "None yet",
@@ -367,7 +377,9 @@
       "faction": "Power",
       "hub": "The University",
       "hub_id": "hub_university",
-      "arc_ids": ["arc-005"],
+      "arc_ids": [
+        "arc-005"
+      ],
       "status": "active",
       "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner",
       "player_interaction": "None yet",
@@ -487,7 +499,9 @@
       "faction": "Mortalis",
       "hub": "Creighton Court",
       "hub_id": "hub_creighton_court",
-      "arc_ids": ["arc-013"],
+      "arc_ids": [
+        "arc-013"
+      ],
       "status": "active",
       "role": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway",
       "player_interaction": "None yet",
@@ -647,7 +661,10 @@
       "faction": "Power",
       "hub": "Shockoe Bottom",
       "hub_id": "hub_shockoe_bottom",
-      "arc_ids": ["arc-002", "arc-004"],
+      "arc_ids": [
+        "arc-002",
+        "arc-004"
+      ],
       "status": "active",
       "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse",
       "player_interaction": "None yet",
@@ -667,7 +684,9 @@
       "faction": "Power",
       "hub": "The University",
       "hub_id": "hub_university",
-      "arc_ids": ["arc-005"],
+      "arc_ids": [
+        "arc-005"
+      ],
       "status": "active",
       "role": "Ward of an Acanthus practitioner, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
       "player_interaction": "None yet",
@@ -687,7 +706,11 @@
       "faction": "Mortalis",
       "hub": "Shockoe Bottom",
       "hub_id": "hub_shockoe_bottom",
-      "arc_ids": ["arc-001", "arc-002", "arc-003"],
+      "arc_ids": [
+        "arc-001",
+        "arc-002",
+        "arc-003"
+      ],
       "status": "deceased",
       "role": "VCU Folklore & Mythology grad student; died 8 months ago; left a brick-encoded message for an Acanthus",
       "player_interaction": "None yet",
@@ -707,7 +730,9 @@
       "faction": "Unknown",
       "hub": "",
       "hub_id": "",
-      "arc_ids": ["arc-001"],
+      "arc_ids": [
+        "arc-001"
+      ],
       "status": "active",
       "role": "Unknown entity that catalogs things-that-remember; killed Maren Voss; still in the city",
       "player_interaction": "None yet",
@@ -827,7 +852,9 @@
       "faction": "Night",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
-      "arc_ids": ["arc-010"],
+      "arc_ids": [
+        "arc-010"
+      ],
       "status": "active",
       "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing",
       "player_interaction": "None yet",
@@ -847,7 +874,9 @@
       "faction": "Mortalis",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
-      "arc_ids": ["arc-014"],
+      "arc_ids": [
+        "arc-014"
+      ],
       "status": "active",
       "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has",
       "player_interaction": "None yet",
@@ -867,7 +896,9 @@
       "faction": "Mortalis",
       "hub": "",
       "hub_id": "",
-      "arc_ids": ["arc-006"],
+      "arc_ids": [
+        "arc-006"
+      ],
       "status": "active",
       "role": "Retired forensic pathologist turned fixer; provides information and cleanup",
       "player_interaction": "None yet",
@@ -887,7 +918,10 @@
       "faction": "Power",
       "hub": "The University",
       "hub_id": "hub_university",
-      "arc_ids": ["arc-006", "arc-007"],
+      "arc_ids": [
+        "arc-006",
+        "arc-007"
+      ],
       "status": "deceased",
       "role": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse",
       "player_interaction": "None yet",
@@ -907,7 +941,9 @@
       "faction": "Mortalis",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
-      "arc_ids": ["arc-006"],
+      "arc_ids": [
+        "arc-006"
+      ],
       "status": "active",
       "role": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order",
       "player_interaction": "None yet",
@@ -920,6 +956,106 @@
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong."
+    },
+    {
+      "id": "npc_dara_shin",
+      "name": "Dara Shin",
+      "faction": "Night",
+      "hub": "Church Hill",
+      "hub_id": "hub_church_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Forsaken Storm Lords / Irraka. Found Jacob after his First Change. Has been in Richmond twelve years, holds Church Hill territory. Trained Jacob and holds 1 Debt on him.",
+      "player_interaction": "Holds 1 Debt on Jacob Boone",
+      "personality": {
+        "moral": 4,
+        "order": 4,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Minimal words. Reads the room before speaking. Asks questions by waiting. Warmth is functional — she invests in what's worth investing in. No performance."
+      },
+      "last_seen": "session_000",
+      "notes": "Irraka auspice. Patient, territorial, reads people like exits. Vouched for Jacob with Night Circle."
+    },
+    {
+      "id": "npc_ray_cutler",
+      "name": "Ray Cutler",
+      "faction": "Mortalis",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Jacob's boxing trainer. Runs a gym on Decatur Street. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor.",
+      "player_interaction": "Anchor. No Debts currently.",
+      "personality": {
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 2,
+        "voice_note": "Talks like a man who has said hard things before and doesn't need to raise his voice. Uses your name. Notices when you're not okay and doesn't push."
+      },
+      "last_seen": "session_000",
+      "notes": "Anchor. Knows something is different about Jacob. Does not ask questions."
+    },
+    {
+      "id": "npc_carla_boone",
+      "name": "Carla Boone",
+      "faction": "Mortalis",
+      "hub": "Carytown",
+      "hub_id": "hub_carytown",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Jacob's younger sister. Works front desk at a physical therapy clinic in Carytown. Has a seven-year-old son named Marcus. Thinks boxing left Jacob strange.",
+      "player_interaction": "Anchor.",
+      "personality": {
+        "moral": 5,
+        "order": 4,
+        "manner": 5,
+        "violence": 1,
+        "voice_note": "Warm but not soft. Will say the hard thing with a steady voice. Loves Jacob completely and is running out of explanations for him."
+      },
+      "last_seen": "session_000",
+      "notes": "Anchor. Has a son, Marcus, age 7. Does not know about the supernatural world."
+    },
+    {
+      "id": "npc_tommy_greer",
+      "name": "Tommy Greer",
+      "faction": "Mortalis",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Childhood friend of Jacob's. Lives two blocks over in Oregon Hill. Small-time fixer, does favors for people he shouldn't. Saw something near the canal three months ago he can't explain. Owes Jacob a long-standing Debt.",
+      "player_interaction": "Owes Jacob 1 Debt",
+      "personality": {
+        "moral": 2,
+        "order": 2,
+        "manner": 3,
+        "violence": 3,
+        "voice_note": "Jokes when nervous, which is often. Talks around the point. Has seen enough to be scared but too much pride to show it clean."
+      },
+      "last_seen": "session_000",
+      "notes": "Saw something near the canal he can't explain. Jacob told him to forget it. He hasn't."
+    },
+    {
+      "id": "npc_priest",
+      "name": "Priest",
+      "faction": "Night",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [],
+      "status": "active",
+      "role": "Runs The Nail bar on Idlewood Avenue. Former military. Knows more about Richmond's supernatural ecosystem than he lets on. Charges information by the drink. Jacob holds 1 Debt on him.",
+      "player_interaction": "Jacob holds 1 Debt on Priest",
+      "personality": {
+        "moral": 3,
+        "order": 3,
+        "manner": 3,
+        "violence": 4,
+        "voice_note": "Economical. Pours a drink and lets you talk yourself into the corner. Never confirms what he knows — makes you earn it. Comfortable with silence and with consequences."
+      },
+      "last_seen": "session_000",
+      "notes": "Runs The Nail, Idlewood Ave. Jacob has back-door access. Information broker. Former military background."
     }
   ]
 }
