@@ -309,6 +309,10 @@ const ORPHAN_TAGS = [
   ...STRUCTURED_BARE_TAGS,
 ];
 
+// Matches an opening <save_onboarding> tag with no corresponding closing tag —
+// used to strip truncated/malformed blocks from player-facing text.
+const UNTERMINATED_SAVE_ONBOARDING_RE = /<save_onboarding>(?![\s\S]*<\/save_onboarding>)[\s\S]*$/;
+
 // Defense-in-depth sanitizer for MC output that has already passed through
 // stripSaveOnboardingBlock/stripCloseBlock. By the time text reaches this
 // function, any *valid* container block has been extracted. Anything
@@ -319,16 +323,18 @@ const ORPHAN_TAGS = [
 // thread and, if `leakDetected`, sets a session flag so the next MC turn
 // receives a re-emit nudge.
 export function sanitizePlayerFacingText(text) {
+  // Internal callers always pass a string, but the export is reachable from
+  // tests and future callers; guard so a null/undefined argument can't throw.
   if (typeof text !== 'string') return { cleaned: '', leakDetected: false };
   let working = text;
   let leakDetected = false;
 
-  // Step 1: unterminated <save_onboarding>. Negative lookahead asserts there
-  // is no </save_onboarding> later in the string, meaning the opening tag is
-  // orphaned. Strip from the open tag to end of string.
-  const unterminatedSave = /<save_onboarding>(?![\s\S]*<\/save_onboarding>)[\s\S]*$/;
-  if (unterminatedSave.test(working)) {
-    working = working.replace(unterminatedSave, '');
+  // Step 1: unterminated <save_onboarding> — opener with no matching closer;
+  // strip from the tag to end of string. Reaches this path only when the
+  // upstream stripSaveOnboardingBlock pass found no valid block (i.e., the
+  // MC's response was truncated mid-block or otherwise malformed).
+  if (UNTERMINATED_SAVE_ONBOARDING_RE.test(working)) {
+    working = working.replace(UNTERMINATED_SAVE_ONBOARDING_RE, '');
     leakDetected = true;
   }
 
