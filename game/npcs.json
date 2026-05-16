@@ -369,7 +369,7 @@
       "hub_id": "hub_university",
       "arc_ids": ["arc-005"],
       "status": "active",
-      "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with Chris; holds 1 Debt to Chris",
+      "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -669,7 +669,7 @@
       "hub_id": "hub_university",
       "arc_ids": ["arc-005"],
       "status": "active",
-      "role": "Chris's ward, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
+      "role": "Ward of an Acanthus practitioner, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -723,13 +723,13 @@
     },
     {
       "id": "npc_dad_grey",
-      "name": "Dad (Benjamin Grey's father)",
+      "name": "Reverend Grey (the hunter's father)",
       "faction": "Mortalis",
       "hub": "",
       "hub_id": "",
       "arc_ids": [],
       "status": "active",
-      "role": "Ben's father; hid his supernatural existence; involved in Ben's missing kidney",
+      "role": "The hunter's father; hid his supernatural existence; involved in the hunter's missing kidney",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -749,7 +749,7 @@
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Ben's parish superior at St. Angust Parish; genuinely devout; suspects Ben of something",
+      "role": "Parish superior at St. Angust Parish; genuinely devout; suspicious of his junior priest",
       "player_interaction": "None yet",
       "personality": {
         "moral": 5,
@@ -769,7 +769,7 @@
       "hub_id": "",
       "arc_ids": [],
       "status": "active",
-      "role": "Werewolf with a history of kidnapping Ben; now tolerates Ben's questions about the supernatural",
+      "role": "Werewolf with a history of kidnapping a hunter; now tolerates that hunter's questions about the supernatural",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -789,7 +789,7 @@
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "16-year-old congregation member at St. Angust Parish; trusts Ben completely; danger magnet",
+      "role": "16-year-old congregation member at St. Angust Parish; trusts his priest completely; danger magnet",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -809,7 +809,7 @@
       "hub_id": "",
       "arc_ids": [],
       "status": "active",
-      "role": "Ben's ex-wife; believes he is simply a priest now; calls occasionally",
+      "role": "A priest's ex-wife; believes he is simply a priest now; calls occasionally",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -829,7 +829,7 @@
       "hub_id": "hub_downtown",
       "arc_ids": ["arc-010"],
       "status": "active",
-      "role": "Unnamed vampire faction leader; Ben holds dirt on them; coup manipulation is ongoing",
+      "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing",
       "player_interaction": "None yet",
       "personality": {
         "moral": 1,
@@ -849,7 +849,7 @@
       "hub_id": "hub_downtown",
       "arc_ids": ["arc-014"],
       "status": "active",
-      "role": "Mortal medium who can see John Smith clearly; leaves offerings; waiting for something John doesn't know he has",
+      "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
