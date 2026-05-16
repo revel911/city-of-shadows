@@ -37,6 +37,7 @@ export async function execute(interaction) {
       await interaction.editReply(`No character "${requested}" found.`);
       return;
     }
+    chosen.discord_id = interaction.user.id;
     await openSession(interaction, channel, chosen);
     return;
   }
@@ -80,6 +81,7 @@ export async function handleSelect(interaction) {
     await interaction.editReply({ content: `No character "${value}" found.`, components: [] });
     return;
   }
+  chosen.discord_id = interaction.user.id;
   await openSession(interaction, channel, chosen);
 }
 

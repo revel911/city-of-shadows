@@ -1,5 +1,8 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { readFile, readJSON } from './github.js';
+import { readProfile } from './profile.js';
+
+const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
 
 const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 4096;
@@ -80,8 +83,32 @@ function tail(text, n) {
   return lines.slice(-n).join('\n');
 }
 
+function buildProfileContext(player) {
+  const profile = player.discord_id ? readProfile(REPO_ROOT, player.discord_id) : null;
+  if (profile) {
+    const hard = (profile.safety?.hard_limits || []).join('; ') || '(none)';
+    const soft = (profile.safety?.soft_limits || []).join('; ') || '(none)';
+    return [
+      '--- PLAYER PROFILE ---',
+      `Discord ID: ${profile.discord_id}`,
+      `Display name: ${profile.display_name || '(unknown)'}`,
+      'Safety:',
+      `  Hard limits: ${hard}`,
+      `  Soft limits: ${soft}`,
+      `Mechanics depth: ${profile.mechanics_depth} (apply the 5-level rubric from mc-instructions.md)`,
+    ].join('\n');
+  }
+  return [
+    '--- PLAYER PROFILE ---',
+    `FIRST-TIME PLAYER (Discord ID: ${player.discord_id || '(unknown)'}, display name: "${player.name}").`,
+    'No profile.json exists yet. Run the player-onboarding phase (see mc-instructions.md)',
+    'BEFORE character creation. Emit a <save_player> block at the end of onboarding.',
+  ].join('\n');
+}
+
 export async function buildOpeningContext(player) {
   const isNew = player.id === '__new__';
+  const profileContext = buildProfileContext(player);
 
   if (isNew) {
     const [events, worldBible] = await Promise.all([
@@ -90,6 +117,8 @@ export async function buildOpeningContext(player) {
     ]);
     return [
       `New player: Discord display name "${player.name}".`,
+      profileContext,
+      '',
       'This is a new character. Walk them through onboarding by following',
       '`mc-reference/character-creation.md` phase-by-phase (already in your',
       'context). At session close, emit the close block with the full sheet,',
@@ -116,6 +145,8 @@ export async function buildOpeningContext(player) {
 
   return [
     `Returning player: ${player.name} (id: ${player.id}).`,
+    profileContext,
+    '',
     'Read the documents below, then drop the player into the scene where the last handoff left off.',
     '',
     '--- HANDOFF ---',
