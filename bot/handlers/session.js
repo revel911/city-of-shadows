@@ -595,7 +595,7 @@ function stripCloseBlock(text) {
   return text.replace(CLOSE_BLOCK_RE, '').trim();
 }
 
-function applyPatch(current, patch) {
+export function applyPatch(current, patch) {
   if (current == null) return patch;
   const out = { ...current };
   for (const [k, v] of Object.entries(patch)) {
@@ -607,6 +607,31 @@ function applyPatch(current, patch) {
     }
   }
   return out;
+}
+
+// Full default state.json shape for a brand-new character. Mirrors
+// players/_template/state.json — kept in sync by convention. Used as the seed
+// before applying the MC's state_patch so any field the MC omits keeps its
+// zero default instead of going missing (dashboard reads state.json directly
+// and has no fallback for circle_ratings / circle_status / harm / etc.).
+export function freshCharacterState(id) {
+  return {
+    character_id: id,
+    character_name: '',
+    playbook: '',
+    wod_extension: '',
+    stats: { Blood: 0, Heart: 0, Mind: 0, Spirit: 0 },
+    harm: 0,
+    corrupt: 0,
+    xp: 0,
+    advances: 0,
+    circle_ratings: { Mortalis: 0, Night: 0, Power: 0, Wild: 0 },
+    circle_status:  { Mortalis: 0, Night: 0, Power: 0, Wild: 0 },
+    gear: [],
+    active_arc_ids: [],
+    last_session: 'session_000',
+    notes: '',
+  };
 }
 
 // Persists a new character mid-session, before the session ends. Writes sheet,
@@ -639,13 +664,15 @@ async function processSaveOnboarding(thread, session, save) {
     )]);
   }
 
-  if (parsedStatePatch) {
-    writes.push(['state', updateJSON(
-      `players/${id}/state.json`,
-      (current) => applyPatch(current || {}, parsedStatePatch),
-      `[onboarding] state for ${id} (${stamp})`
-    )]);
-  }
+  // Always write state.json on first save, seeded with the full schema so
+  // missing patch fields keep their template defaults. Dashboard reads
+  // state.json directly with no fallback for most fields — a sparse file
+  // makes circles/harm/xp silently vanish.
+  writes.push(['state', updateJSON(
+    `players/${id}/state.json`,
+    (current) => applyPatch(current || freshCharacterState(id), parsedStatePatch || {}),
+    `[onboarding] state for ${id} (${stamp})`
+  )]);
 
   if (save.npc_patch) {
     try {
