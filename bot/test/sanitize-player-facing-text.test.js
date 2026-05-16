@@ -9,8 +9,11 @@ test('returns unchanged on pure narrative with no tags', () => {
   assert.equal(leakDetected, false);
 });
 
-test('returns unchanged when no structured leftovers remain after upstream strip', () => {
-  const input = 'opener prose\nphase 13 narrative continues';
+test('returns unchanged when prose mentions tag-like words without actual tag syntax', () => {
+  // The MC may mention words like "sheet" or "state_patch" in prose
+  // (e.g., when explaining the system to a confused player). Without
+  // real <TAG>...</TAG> angle-bracket syntax, sanitize must not touch it.
+  const input = 'opener prose: the sheet of paper read "state_patch pending review"';
   const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
   assert.equal(cleaned, input);
   assert.equal(leakDetected, false);
@@ -46,6 +49,9 @@ test('strips unterminated <close_session> from open tag to end of string', () =>
 test('strips bare <state_patch> with JSON body floating in prose', () => {
   const input = 'before\n<state_patch>{ "character_name": "X" }</state_patch>\nafter';
   const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  // Surrounding \n is not consumed by the <TAG>...</TAG> match, so the blank
+  // line where the tag stood remains intentionally — sanitize does not collapse
+  // adjacent newlines.
   assert.equal(cleaned, 'before\n\nafter');
   assert.equal(leakDetected, true);
 });
@@ -53,6 +59,9 @@ test('strips bare <state_patch> with JSON body floating in prose', () => {
 test('strips bare <npc_patch> with array body floating in prose', () => {
   const input = 'before\n<npc_patch>[{ "id": "npc_x", "name": "X" }]</npc_patch>\nafter';
   const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  // Surrounding \n is not consumed by the <TAG>...</TAG> match, so the blank
+  // line where the tag stood remains intentionally — sanitize does not collapse
+  // adjacent newlines.
   assert.equal(cleaned, 'before\n\nafter');
   assert.equal(leakDetected, true);
 });
@@ -60,6 +69,9 @@ test('strips bare <npc_patch> with array body floating in prose', () => {
 test('strips bare <sheet> with known-schema-key body floating in prose', () => {
   const input = 'before\n<sheet>"character_name": "X"\nstats: ...</sheet>\nafter';
   const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  // Surrounding \n is not consumed by the <TAG>...</TAG> match, so the blank
+  // line where the tag stood remains intentionally — sanitize does not collapse
+  // adjacent newlines.
   assert.equal(cleaned, 'before\n\nafter');
   assert.equal(leakDetected, true);
 });
