@@ -1,6 +1,9 @@
 import { generate, buildOpeningContext } from './mc.js';
 import { writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
+import { writeProfile } from './profile.js';
+
+const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
 
 const sessions = new Map();
 
@@ -58,6 +61,51 @@ const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
 const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
 async function postMCResponse(thread, response, session) {
+  // 0. <save_player> — persists the *player* profile (Discord user) at the end
+  //    of player-onboarding. Runs BEFORE save_onboarding because a brand-new
+  //    user sometimes emits both in the same response (or back-to-back), and
+  //    the profile.json must exist before any character writes reference it.
+  //    Failures here log but never throw — we don't want a malformed
+  //    save_player to break the rest of the response handling.
+  const savePlayer = parseSavePlayerBlock(response);
+  if (savePlayer) {
+    const missingPlayer = missingSavePlayerFields(savePlayer);
+    if (missingPlayer.length) {
+      console.warn(
+        `<save_player> missing required fields: ${missingPlayer.join(', ')} — skipping write`
+      );
+    } else {
+      let safetyParsed;
+      try {
+        safetyParsed = JSON.parse(savePlayer.safety);
+        if (!safetyParsed || typeof safetyParsed !== 'object') {
+          throw new Error('safety did not parse to an object');
+        }
+      } catch (err) {
+        console.warn(
+          `<save_player> safety JSON did not parse: ${err.message} — writing empty limits`
+        );
+        safetyParsed = { hard_limits: [], soft_limits: [] };
+      }
+      if (!Array.isArray(safetyParsed.hard_limits)) safetyParsed.hard_limits = [];
+      if (!Array.isArray(safetyParsed.soft_limits)) safetyParsed.soft_limits = [];
+
+      const profile = {
+        discord_id: savePlayer.discord_id,
+        display_name: savePlayer.display_name || '',
+        safety: safetyParsed,
+        mechanics_depth: 3,
+        mechanics_depth_set: false,
+        characters: [],
+      };
+      try {
+        writeProfile(REPO_ROOT, profile);
+      } catch (err) {
+        console.error(`<save_player> writeProfile failed: ${err.message}`);
+      }
+    }
+  }
+
   // 1. <save_onboarding> — mid-flow persistence for a new character. Fires when
   //    onboarding completes (Phase 12 + player confirms done), when the player
   //    asks the MC to save, or when the player wants to start the first scene
