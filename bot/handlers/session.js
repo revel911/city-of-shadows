@@ -198,7 +198,14 @@ async function postMCResponse(thread, response, session) {
     }
   }
 
-  const visible = close ? stripCloseBlock(response) : response;
+  const stripped = close ? stripCloseBlock(response) : response;
+  const { cleaned: visible, leakDetected } = sanitizePlayerFacingText(stripped);
+  if (leakDetected) {
+    session._lastTurnSaveLeak = true;
+    console.warn(
+      `[session ${session.threadId}] sanitize stripped structured leak from MC output`
+    );
+  }
   for (const part of chunk(visible)) {
     if (part.trim()) await thread.send(part);
   }
