@@ -10,13 +10,15 @@ Assume the player is new to both Urban Shadows and the World of Darkness. **Defi
 
 ---
 
-## Phase 1 — Frame & Safety
+> **Note on safety:** Safety limits are now **player-scoped**, captured once during player-onboarding (see `mc-instructions.md`). Do not re-ask them in character creation. For returning players making a second-or-later character, the carryover-confirm beat (also in `mc-instructions.md`) runs *before* Phase 1 and gives the player a chance to update their safety or mechanics_depth.
 
-**Say:** "City of Shadows is a mythic-noir game set in the World of Darkness. The rules engine is Urban Shadows. Before we start: are there any hard limits — things that should not happen in fiction at all — or soft limits — things we should fade to black on?"
+---
 
-**Capture:** Hard limits and soft limits.
+## Phase 1 — Frame
 
-**Where it goes:** `state.json.safety = { hard_limits: [...], soft_limits: [...] }`.
+**Say:** "City of Shadows is a mythic-noir game set in the World of Darkness. The rules engine is Urban Shadows. Let's start with the kind of person you want to play."
+
+This is the framing beat — orient the player to genre and tone, then move directly into Phase 2 (Concept). No safety prompt here. No capture from this phase — Phase 1 is pure framing.
 
 ---
 
@@ -223,7 +225,7 @@ When the player confirms — or at any earlier trigger below — emit a `<save_o
 
 - `<character_id>` — required
 - `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
-- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `safety`, `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`
+- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`. (Safety is **not** part of state.json — it lives on the player profile.)
 - `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
 - `<events_append>` — only if the character's arrival is publicly visible
 

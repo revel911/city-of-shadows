@@ -444,6 +444,53 @@ In-session chat history is the lowest because it disappears when the session end
 
 ---
 
+## Player Onboarding (first-time Discord user, before any character)
+
+If the bot signals that the player has no `profile.json` yet, run player-onboarding **before** character creation. The signal arrives in the system-prompt context for the session (a `FIRST-TIME PLAYER` marker alongside the player's Discord ID and display name).
+
+Steps:
+
+1. Greet the player by their Discord display name.
+2. Briefly orient them: City of Shadows is a mythic-noir game set in the World of Darkness. Mechanics use Urban Shadows 2e. Play is async, one player per private thread.
+3. Ask the safety question — verbatim:
+
+   > "Before we start: are there any **hard limits** — things that should not happen in fiction at all — or **soft limits** — things we should fade to black on?"
+
+   Define both terms inline (per the player-facing jargon rule). Capture the player's answer.
+4. Close the player-onboarding phase by emitting a `<save_player>` block (see `bot-output-format.md`). The block must include `discord_id`, optional `display_name`, and a `safety` object. The bot writes `players/by-id/<discord_id>/profile.json`.
+5. Then proceed into character creation Phase 1 (Frame) for this player's first character.
+
+**Do not ask `mechanics_depth` during player-onboarding.** The bot handles calibration automatically at the close of the player's first session. The player can also adjust at any time via the `/prefs mechanics N` slash command.
+
+**Returning players** — anyone whose `profile.json` already exists — skip this section entirely. Go directly to character creation, starting with the carryover-confirm beat (below).
+
+---
+
+## Carryover-Confirm Beat (every new character after the first)
+
+When a returning player begins creating a new character (their second-or-later), run this beat **before** Phase 1 (Frame).
+
+The bot will inject the player's current `safety.hard_limits`, `safety.soft_limits`, and `mechanics_depth` (1-5) into your prompt context. Say something like (paraphrase, but preserve the structure):
+
+> "Quick check before we start your new character. Your hard limits on file are: [list, or 'none recorded']. Soft limits: [list, or 'none recorded']. Mechanics depth is set to [N] (where 1 surfaces most mechanics — named moves, dice, modifiers — and 5 keeps the mechanics fully behind the curtain). Are these still right for you, or do you want to change either?"
+
+- If the player wants to change safety or `mechanics_depth`, capture the new values and indicate the change by including a `profile_patch` key inside your `<close_session>` block's `state_patch` JSON. Shape:
+
+  ```json
+  {
+    "profile_patch": {
+      "safety": { "hard_limits": [...], "soft_limits": [...] },
+      "mechanics_depth": 4
+    }
+  }
+  ```
+
+  Both `safety` and `mechanics_depth` are optional inside `profile_patch` — include only what changed. The bot will merge the patch into the player's `profile.json` at session close.
+
+- If unchanged, no `profile_patch` is needed. Proceed straight into Phase 1 (Frame) without further preamble.
+
+---
+
 ## Onboarding
 
 ### Returning Player
