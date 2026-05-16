@@ -212,6 +212,45 @@ function stripSaveOnboardingBlock(text) {
   return text.replace(SAVE_ONBOARDING_BLOCK_RE, '').trim();
 }
 
+// Player-onboarding persistence block. Parallel to <save_onboarding> but for
+// the *player* entity (Discord user) rather than a character. Fires when the
+// MC finishes the player-onboarding phase (greeting, safety, display name) and
+// is about to hand off to character creation. Carries discord_id, optional
+// display_name, and a safety JSON object. Like <save_onboarding>, it can
+// appear mid-message — narrative may follow.
+const SAVE_PLAYER_OPEN = '<save_player>';
+const SAVE_PLAYER_CLOSE = '</save_player>';
+
+export function parseSavePlayerBlock(text) {
+  if (typeof text !== 'string') return null;
+  const openIdx = text.indexOf(SAVE_PLAYER_OPEN);
+  const closeIdx = text.indexOf(SAVE_PLAYER_CLOSE);
+  if (openIdx === -1 || closeIdx === -1 || closeIdx <= openIdx) return null;
+  const body = text.slice(openIdx + SAVE_PLAYER_OPEN.length, closeIdx);
+  const get = (tag) => {
+    const m = body.match(new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`));
+    return m ? m[1].trim() : null;
+  };
+  return {
+    discord_id: get('discord_id'),
+    display_name: get('display_name'),
+    safety: get('safety'),
+  };
+}
+
+// discord_id and safety are required; display_name is optional (the MC may
+// not have collected one yet, or the player may prefer to use their Discord
+// handle as-is).
+export function missingSavePlayerFields(save) {
+  if (!save) return ['discord_id', 'safety'];
+  const missing = [];
+  const did = typeof save.discord_id === 'string' ? save.discord_id.trim() : '';
+  if (!did) missing.push('discord_id');
+  const sa = typeof save.safety === 'string' ? save.safety.trim() : '';
+  if (!sa) missing.push('safety');
+  return missing;
+}
+
 // Validation for <save_onboarding>. The save MUST land a sheet — that's the
 // whole point of the mid-flow persistence (all three triggers — onboarding
 // complete, player says "save", player wants to start the story — require a
