@@ -70,7 +70,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Owner of Morrow's Books; 3rd-generation Bottom resident; protective of family legacy",
-      "player_interaction": "Chris — Declan Morrow owes Chris 1 Debt",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
@@ -90,7 +90,7 @@
       "arc_ids": ["arc-005"],
       "status": "active",
       "role": "Celestine's nephew; small-time supernatural fixer trying to stay useful",
-      "player_interaction": "Chris — owes Chris 1 Debt (tempted Nadia into danger; cost her a Scar)",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 2,
@@ -130,7 +130,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Robert's inside man; ex-private security; handles physical problems",
-      "player_interaction": "Robert Lagrange — employed",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 3,
@@ -150,7 +150,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Robert's second; handles problems before they become physical",
-      "player_interaction": "Robert Lagrange — employed",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 3,
@@ -170,7 +170,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Toreador vampire; Maison Rouge gallery/salon owner expanding supernatural influence through art",
-      "player_interaction": "None yet — split with Serrano 6 months ago",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 4,
@@ -190,7 +190,7 @@
       "arc_ids": ["arc-002"],
       "status": "active",
       "role": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe",
-      "player_interaction": "Chris — meeting secured at Grisette (Nadia must be present); clocked Nadia's Scar",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 2,
@@ -210,7 +210,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Wizened Fae; VMFA restoration expert; restores paintings 'too well'",
-      "player_interaction": "Chris — searching for her; Julia texted re: Vera",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 3,
@@ -370,7 +370,7 @@
       "arc_ids": ["arc-005"],
       "status": "active",
       "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with Chris; holds 1 Debt to Chris",
-      "player_interaction": "Chris — placed Nadia (Chris's ward) with him; owes Chris 1 Debt (secret kept)",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 5,
@@ -379,7 +379,7 @@
         "voice_note": "Every sentence is load-bearing. She never says anything she hasn't already thought three moves past."
       },
       "last_seen": "session_001",
-      "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. Chris knows. Chris kept quiet."
+      "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. An Acanthus knows. An Acanthus kept quiet."
     },
     {
       "id": "npc_prof_tanaka",
@@ -650,7 +650,7 @@
       "arc_ids": ["arc-002", "arc-004"],
       "status": "active",
       "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse",
-      "player_interaction": "Chris — meeting at Gild, 9am; agreed without pushing",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 4,
@@ -659,7 +659,7 @@
         "voice_note": "Controlled-still. Dressed like hospital administration. Says exactly what she means. Does not ask follow-up questions."
       },
       "last_seen": "session_001",
-      "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when Chris offered it."
+      "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered."
     },
     {
       "id": "npc_nadia_vasek",
@@ -670,7 +670,7 @@
       "arc_ids": ["arc-005"],
       "status": "active",
       "role": "Chris's ward, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
-      "player_interaction": "Chris — ward; Asha Tremblay has taken interest in her",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 1,
@@ -690,7 +690,7 @@
       "arc_ids": ["arc-001", "arc-002", "arc-003"],
       "status": "deceased",
       "role": "VCU Folklore & Mythology grad student; died 8 months ago; left a brick-encoded message for an Acanthus",
-      "player_interaction": "Chris — received her message via channeled brick",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 5,
         "order": 2,
@@ -710,7 +710,7 @@
       "arc_ids": ["arc-001"],
       "status": "active",
       "role": "Unknown entity that catalogs things-that-remember; killed Maren Voss; still in the city",
-      "player_interaction": "Chris — active threat; may have noticed Chris",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 1,
         "order": 4,
@@ -719,7 +719,7 @@
         "voice_note": "Leave blank until nature is established. Entity, not person. It catalogs. It does not speak."
       },
       "last_seen": "",
-      "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed Chris."
+      "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed an Acanthus."
     },
     {
       "id": "npc_dad_grey",
@@ -730,7 +730,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Ben's father; hid his supernatural existence; involved in Ben's missing kidney",
-      "player_interaction": "Benjamin — owes Ben 1 Debt",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 3,
@@ -739,7 +739,7 @@
         "voice_note": "TBD — establish in play."
       },
       "last_seen": "",
-      "notes": "Full name unknown. Location unknown. History with Ben's kidney unresolved."
+      "notes": "Full name unknown. Location unknown. History with a hunter's kidney unresolved."
     },
     {
       "id": "npc_father_dominic",
@@ -750,7 +750,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Ben's parish superior at St. Angust Parish; genuinely devout; suspects Ben of something",
-      "player_interaction": "Benjamin — suspicious of him",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 5,
         "order": 5,
@@ -770,7 +770,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Werewolf with a history of kidnapping Ben; now tolerates Ben's questions about the supernatural",
-      "player_interaction": "Benjamin — Ben owes Hannibal 1 Debt",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 1,
@@ -790,7 +790,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "16-year-old congregation member at St. Angust Parish; trusts Ben completely; danger magnet",
-      "player_interaction": "Benjamin — handle carefully; gravitating toward wrong people",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
@@ -810,7 +810,7 @@
       "arc_ids": [],
       "status": "active",
       "role": "Ben's ex-wife; believes he is simply a priest now; calls occasionally",
-      "player_interaction": "Benjamin — mortal relationship",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 4,
@@ -830,7 +830,7 @@
       "arc_ids": ["arc-010"],
       "status": "active",
       "role": "Unnamed vampire faction leader; Ben holds dirt on them; coup manipulation is ongoing",
-      "player_interaction": "Benjamin — Ben owes The General 1 Debt; volatile",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 1,
         "order": 3,
@@ -839,7 +839,7 @@
         "voice_note": "TBD — name and full description to be established in play."
       },
       "last_seen": "",
-      "notes": "Name TBD. Ben holds damaging information; using it to dangle coup bait. Situation is a standoff."
+      "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff."
     },
     {
       "id": "npc_vera_medium",
@@ -850,7 +850,7 @@
       "arc_ids": ["arc-014"],
       "status": "active",
       "role": "Mortal medium who can see John Smith clearly; leaves offerings; waiting for something John doesn't know he has",
-      "player_interaction": "John Smith — owes John 1 Debt",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
@@ -859,7 +859,7 @@
         "voice_note": "Not afraid. She's been leaving candles and water for a ghost she can see clearly. She is waiting."
       },
       "last_seen": "",
-      "notes": "Last name unknown. She knows something she is not telling John yet."
+      "notes": "Last name unknown. She knows something she is not telling the ghost yet."
     },
     {
       "id": "npc_roz_czerny",
@@ -870,7 +870,7 @@
       "arc_ids": ["arc-006"],
       "status": "active",
       "role": "Retired forensic pathologist turned fixer; provides information and cleanup",
-      "player_interaction": "Chris — Chris owes Roz 2 Debts; Johan — Johan owes Roz 1 Debt",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 2,
@@ -890,7 +890,7 @@
       "arc_ids": ["arc-006", "arc-007"],
       "status": "deceased",
       "role": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse",
-      "player_interaction": "Johan van Axel — killed by Johan in Session 1",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
@@ -899,7 +899,7 @@
         "voice_note": "Knew Johan's name without being told it. Said what she needed to say before the end."
       },
       "last_seen": "session_001",
-      "notes": "Deceased. Knew the people who sent Johan were 'cleaning house' and he was the mop. Carried Voss's sealed field research case."
+      "notes": "Deceased. Knew the people who sent the operative were 'cleaning house' and they were the mop. Carried Voss's sealed field research case."
     },
     {
       "id": "npc_henrik_vael",
@@ -910,7 +910,7 @@
       "arc_ids": ["arc-006"],
       "status": "active",
       "role": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order",
-      "player_interaction": "Johan van Axel — owes Johan a Debt (Johan sheltering him from the network)",
+      "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 3,
@@ -919,7 +919,7 @@
         "voice_note": "Talks like a man choosing each word carefully because he's already said too much once and paid for it."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0. Location known only to Johan. Surfaced in Richmond three weeks ago. Ran with Johan in Europe before the mission that went wrong."
+      "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong."
     }
   ]
 }
