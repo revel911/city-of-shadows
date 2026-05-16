@@ -1,0 +1,11 @@
+{
+  "discord_id": "",
+  "display_name": "",
+  "safety": {
+    "hard_limits": [],
+    "soft_limits": []
+  },
+  "mechanics_depth": 3,
+  "mechanics_depth_set": false,
+  "characters": []
+}
