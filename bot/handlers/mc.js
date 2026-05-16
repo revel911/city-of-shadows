@@ -2,8 +2,6 @@ import Anthropic from '@anthropic-ai/sdk';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
 
-const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
-
 const MODEL = 'claude-sonnet-4-6';
 const MAX_TOKENS = 4096;
 const EVENT_TAIL_LINES = 120;
@@ -83,8 +81,8 @@ function tail(text, n) {
   return lines.slice(-n).join('\n');
 }
 
-function buildProfileContext(player) {
-  const profile = player.discord_id ? readProfile(REPO_ROOT, player.discord_id) : null;
+async function buildProfileContext(player) {
+  const profile = player.discord_id ? await readProfile(player.discord_id) : null;
   if (profile) {
     const hard = (profile.safety?.hard_limits || []).join('; ') || '(none)';
     const soft = (profile.safety?.soft_limits || []).join('; ') || '(none)';
@@ -108,7 +106,7 @@ function buildProfileContext(player) {
 
 export async function buildOpeningContext(player) {
   const isNew = player.id === '__new__';
-  const profileContext = buildProfileContext(player);
+  const profileContext = await buildProfileContext(player);
 
   if (isNew) {
     const [events, worldBible] = await Promise.all([

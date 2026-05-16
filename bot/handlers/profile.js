@@ -1,22 +1,21 @@
-import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { join, dirname } from 'node:path';
+import { readJSON, writeFile } from './github.js';
 
-export function profilePath(repoRoot, discordId) {
-  return join(repoRoot, 'players', 'by-id', String(discordId), 'profile.json');
+export function profilePath(discordId) {
+  return `players/by-id/${String(discordId)}/profile.json`;
 }
 
-export function readProfile(repoRoot, discordId) {
-  const p = profilePath(repoRoot, discordId);
-  if (!existsSync(p)) return null;
-  const raw = readFileSync(p, 'utf8');
-  return JSON.parse(raw);
+export async function readProfile(discordId) {
+  return await readJSON(profilePath(discordId));
 }
 
-export function writeProfile(repoRoot, profile) {
+export async function writeProfile(profile, message) {
   if (!profile || typeof profile.discord_id !== 'string' || !profile.discord_id.trim()) {
     throw new Error('writeProfile: discord_id is required');
   }
-  const p = profilePath(repoRoot, profile.discord_id);
-  mkdirSync(dirname(p), { recursive: true });
-  writeFileSync(p, JSON.stringify(profile, null, 2) + '\n', 'utf8');
+  if (!message || typeof message !== 'string') {
+    throw new Error('writeProfile: commit message is required');
+  }
+  const path = profilePath(profile.discord_id);
+  const content = JSON.stringify(profile, null, 2) + '\n';
+  return await writeFile(path, content, message);
 }

@@ -3,8 +3,6 @@ import { writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { readProfile, writeProfile } from './profile.js';
 
-const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
-
 const sessions = new Map();
 
 // Serializes async work on a single session so concurrent player messages
@@ -99,7 +97,7 @@ async function postMCResponse(thread, response, session) {
         characters: [],
       };
       try {
-        writeProfile(REPO_ROOT, profile);
+        await writeProfile(profile, `[player] onboarding for ${profile.discord_id}`);
       } catch (err) {
         console.error(`<save_player> writeProfile failed: ${err.message}`);
       }
@@ -414,12 +412,12 @@ async function processSaveOnboarding(thread, session, save) {
 
   if (ownerId) {
     try {
-      const profile = readProfile(REPO_ROOT, ownerId);
+      const profile = await readProfile(ownerId);
       if (profile) {
         if (!Array.isArray(profile.characters)) profile.characters = [];
         if (!profile.characters.includes(id)) {
           profile.characters.push(id);
-          writeProfile(REPO_ROOT, profile);
+          await writeProfile(profile, `[onboarding] link character ${id} to player ${ownerId} (${stamp})`);
         }
       }
     } catch (err) {
@@ -579,12 +577,12 @@ async function processSessionClose(thread, session, close) {
 
     if (closeOwnerId) {
       try {
-        const profile = readProfile(REPO_ROOT, closeOwnerId);
+        const profile = await readProfile(closeOwnerId);
         if (profile) {
           if (!Array.isArray(profile.characters)) profile.characters = [];
           if (!profile.characters.includes(id)) {
             profile.characters.push(id);
-            writeProfile(REPO_ROOT, profile);
+            await writeProfile(profile, `[session] link character ${id} to player ${closeOwnerId} (${stamp})`);
           }
         }
       } catch (err) {
@@ -623,7 +621,7 @@ async function processSessionClose(thread, session, close) {
   // and out-of-range mechanics_depth values are dropped silently.
   const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
   if (discordId) {
-    let profile = readProfile(REPO_ROOT, discordId);
+    let profile = await readProfile(discordId);
 
     if (profile && parsedStatePatch && typeof parsedStatePatch === 'object') {
       const patch = parsedStatePatch.profile_patch;
@@ -647,7 +645,7 @@ async function processSessionClose(thread, session, close) {
         }
         if (dirty) {
           try {
-            writeProfile(REPO_ROOT, profile);
+            await writeProfile(profile, `[session] profile_patch for ${discordId} (${stamp})`);
           } catch (err) {
             console.warn(`[session] failed to apply profile_patch for ${discordId}: ${err.message}`);
           }
@@ -656,7 +654,7 @@ async function processSessionClose(thread, session, close) {
     }
 
     // Re-read (it may have just been patched) and fire calibration if still unset.
-    profile = readProfile(REPO_ROOT, discordId);
+    profile = await readProfile(discordId);
     if (profile && profile.mechanics_depth_set === false) {
       try {
         await thread.send({

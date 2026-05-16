@@ -1,8 +1,6 @@
 import { SlashCommandBuilder } from 'discord.js';
 import { readProfile, writeProfile } from '../handlers/profile.js';
 
-const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
-
 export const data = new SlashCommandBuilder()
   .setName('prefs')
   .setDescription('View or update your player preferences (safety, mechanics depth)')
@@ -29,7 +27,7 @@ export const data = new SlashCommandBuilder()
 export async function execute(interaction) {
   const sub = interaction.options.getSubcommand();
   const discordId = interaction.user.id;
-  const profile = readProfile(REPO_ROOT, discordId);
+  const profile = await readProfile(discordId);
 
   if (!profile) {
     await interaction.reply({
@@ -61,7 +59,7 @@ export async function execute(interaction) {
     const level = interaction.options.getInteger('level');
     profile.mechanics_depth = level;
     profile.mechanics_depth_set = true;
-    writeProfile(REPO_ROOT, profile);
+    await writeProfile(profile, `[/prefs] set mechanics_depth=${level} for ${discordId}`);
     await interaction.reply({
       content: `Mechanics depth set to **${level}**. (1 = surface most mechanics; 5 = hide most.)`,
       ephemeral: true,
