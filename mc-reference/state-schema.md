@@ -1,6 +1,6 @@
 # state.json — Field Reference
 
-`players/<player-id>/state.json` is the machine-readable game state for one character. The dashboard reads it. The MC reads it at session open. When `handoff.md` and `sheet.md` disagree on a number, `state.json` is the tiebreaker — keep it accurate.
+`players/<character-id>/state.json` is the machine-readable game state for one character. The dashboard reads it. The MC reads it at session open. When `handoff.md` and `sheet.md` disagree on a number, `state.json` is the tiebreaker — keep it accurate.
 
 **Template:** `players/_template/state.json`
 
@@ -12,7 +12,7 @@
 
 | Field | Type | Source on sheet |
 |---|---|---|
-| `player_id` | string | Folder name, kebab-case (e.g. `"chris-caustes"`) |
+| `character_id` | string | Folder name, kebab-case (e.g. `"chris-caustes"`) |
 | `character_name` | string | Sheet title / full name line |
 | `playbook` | string | Playbook line (e.g. `"The Wizard"`) |
 | `wod_extension` | string | WoD supplement + subtype (e.g. `"Mage: The Awakening (Acanthus / Silver Ladder)"`) |
@@ -94,7 +94,7 @@ Transcribe verbatim from the Gear / Resources section of the sheet. Each entry i
 
 | Field | Type | Source |
 |---|---|---|
-| `active_arc_ids` | string[] | Arc IDs from `game/arcs.json` where this character appears in `player_ids`. Update at session close when new arcs open or old ones resolve. |
+| `active_arc_ids` | string[] | Arc IDs from `game/arcs.json` where this character appears in `character_ids`. Update at session close when new arcs open or old ones resolve. |
 | `last_session` | string | `"session_NNN"` zero-padded (e.g. `"session_001"`). Update at session close. |
 
 ---
@@ -157,4 +157,4 @@ Update at **session close**, after writing `handoff.md` and before confirming sa
 - `last_session` — increment
 - `notes` — rewrite to reflect current state
 
-Fields that rarely change: `stats`, `gear`, `player_id`, `character_name`, `playbook`, `wod_extension`.
+Fields that rarely change: `stats`, `gear`, `character_id`, `character_name`, `playbook`, `wod_extension`.

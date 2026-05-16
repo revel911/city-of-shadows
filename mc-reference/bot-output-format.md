@@ -19,7 +19,7 @@ Keep messages under ~1900 characters where possible. Longer messages get split o
 
 Character creation must be persisted to GitHub **before** the first scene begins. Emit a `<save_onboarding>` block when any of these triggers fires:
 
-1. **Onboarding completes naturally.** You finish Phase 12 (player_id confirmed) and the player confirms the character is done. Before opening Phase 13, ask the player explicitly: *"Anything else to lock in before we drop into your first scene?"* If they're satisfied, emit `<save_onboarding>`, then open the scene in the same response.
+1. **Onboarding completes naturally.** You finish Phase 12 (character_id confirmed) and the player confirms the character is done. Before opening Phase 13, ask the player explicitly: *"Anything else to lock in before we drop into your first scene?"* If they're satisfied, emit `<save_onboarding>`, then open the scene in the same response.
 2. **Player says "save".** Any phrasing equivalent to "save", "save my character", "commit what we have" — emit `<save_onboarding>` with whatever data is filled in. The sheet may still have TBD fields; that's fine.
 3. **Player wants to start the story early.** Phrasings like "let's just start", "I'm ready to play", "skip the rest" — emit `<save_onboarding>` first with the current state, then open the first scene. Do not start play before the save is recorded.
 
@@ -29,7 +29,7 @@ The block may appear **anywhere in your message**, not just at the end. The bot 
 
 ```
 <save_onboarding>
-<player_id>kebab-case-id</player_id>
+<character_id>kebab-case-id</character_id>
 
 <sheet>
 ... full sheet.md content. REQUIRED. If onboarding is incomplete at save time, mark unfilled fields as "TBD" but include the sheet ...
@@ -51,13 +51,13 @@ The block may appear **anywhere in your message**, not just at the end. The bot 
 
 ### Save field rules
 
-- **`<player_id>`** — required. Kebab-case folder name (e.g. `joe-nakama`). The bot uses this to create the player's folder, write the sheet, and register the character in `players/index.json`.
+- **`<character_id>`** — required. Kebab-case folder name (e.g. `joe-nakama`). The bot uses this to create the player's folder, write the sheet, and register the character in `players/index.json`.
 - **`<sheet>`** — required. Full sheet content. If save is triggered early (case 2 or 3), include every section but use "TBD" for fields the player hasn't filled in yet.
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
 - **`<npc_patch>`** — required if any NPCs were introduced during onboarding (Phase 9 Debts & Anchors, in particular). Full personality-engine scores.
 - **`<events_append>`** — optional. Use only if the character's arrival is publicly visible.
 
-The bot validates the save block before writing. If `player_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
+The bot validates the save block before writing. If `character_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
 
 ### When not to emit save_onboarding
 
@@ -74,7 +74,7 @@ Everything inside the block is parsed by the bot and written to GitHub as separa
 
 ```
 <close_session>
-<player_id>kebab-case-id</player_id>
+<character_id>kebab-case-id</character_id>
 
 <handoff>
 ... full handoff.md content (markdown or YAML, per current convention) ...
@@ -119,7 +119,7 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 
 ### Field rules
 
-- **`<player_id>`** — required. Use the kebab-case folder name (e.g. `alex-chen`), not the display name.
+- **`<character_id>`** — required. Use the kebab-case folder name (e.g. `alex-chen`), not the display name.
 - **`<handoff>`** — full replacement file, not a diff.
 - **`<sheet>`** — full replacement file. Only emit when the sheet actually changes (character creation, advancement, gear shift). Omit otherwise.
 - **`<state_patch>`** — partial JSON. Object fields are merged one level deep (so `{"stats":{"Mind":2}}` updates only Mind). Scalar fields replace.

@@ -136,7 +136,7 @@ The full schema for the close block lives in `mc-reference/bot-output-format.md`
 
 ```
 <close_session>
-<player_id>kebab-case-id</player_id>
+<character_id>kebab-case-id</character_id>
 <handoff>... full handoff.md content ...</handoff>
 <sheet>... only if sheet changed ...</sheet>
 <state_patch>{ "harm": 1, "xp": 2, ... }</state_patch>
@@ -409,7 +409,7 @@ hard_rules:
   - pacing_follows_the_fiction_not_player_comfort
   # Close-block integrity
   - never_emit_close_block_mid_scene
-  - close_block_must_include_player_id
+  - close_block_must_include_character_id
   - state_patch_is_partial_handoff_is_full_replacement
 
 prohibited:
@@ -471,20 +471,20 @@ new:
     requirement: REQUIRED
     block: <save_onboarding>
     when: >
-      Emit AFTER Phase 12 (player_id confirmed) and BEFORE Phase 13 (first scene).
+      Emit AFTER Phase 12 (character_id confirmed) and BEFORE Phase 13 (first scene).
       Also emit immediately on any of these triggers, even mid-onboarding:
         1. Player confirms the character is done in response to your "anything else to lock in?" prompt
         2. Player says "save" (or any equivalent: "save my character", "commit this", "lock it in")
         3. Player wants to skip ahead to play ("let's just start", "I'm ready to play", "drop me in")
     required_fields:
-      - player_id          # kebab-case folder name
+      - character_id          # kebab-case folder name
       - sheet              # full sheet — use TBD for fields unfilled at early-save time
     encouraged_fields:
       - state_patch        # character_name + stats + harm/xp/corrupt/circles/safety/gear
       - npc_patch          # every NPC introduced (Phase 9 Debts & Anchors etc.)
       - events_append      # only if arrival is publicly visible
   required_at_close:
-    - player_id
+    - character_id
     - handoff              # full handoff doc for the next session
     # sheet / state_patch / npc_patch only if Phase 12.5 was skipped OR if something changed in the first scene
   rule: >

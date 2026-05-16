@@ -203,13 +203,13 @@ Walk advance list using `reference/rules.md` advancement rules. For each advance
 
 ---
 
-## Phase 12 — Player ID
+## Phase 12 — Character ID
 
 **Say:** "I'll use `firstname-lastname` (kebab-case) as your character's id in the repo. For [character name], that's `[proposed-id]`. Good?"
 
-**Capture:** player_id.
+**Capture:** character_id.
 
-**Where it goes:** `<player_id>` tag in the `<save_onboarding>` block (Phase 12.5); folder created automatically by the bot.
+**Where it goes:** `<character_id>` tag in the `<save_onboarding>` block (Phase 12.5); folder created automatically by the bot.
 
 ---
 
@@ -221,7 +221,7 @@ Character creation must be persisted **before** the first scene begins. After Ph
 
 When the player confirms — or at any earlier trigger below — emit a `<save_onboarding>` block in your response. See `bot-output-format.md` for the schema. The block contains:
 
-- `<player_id>` — required
+- `<character_id>` — required
 - `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
 - `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `safety`, `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`
 - `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
@@ -250,7 +250,7 @@ Wrap onboarding. Transition to a normal session: drop the player into their firs
 
 The save in Phase 12.5 already persisted the sheet, state, and NPCs. The closing `<close_session>` block at session end only needs:
 
-- `<player_id>` — same kebab-case id
+- `<character_id>` — same kebab-case id
 - `<handoff>` — full handoff doc for the next session
 - `<state_patch>` — any mechanical state changes from the first scene (harm taken, xp marked, etc.). Omit if nothing changed.
 - `<events_append>` — if anything publicly visible happened during the first scene
