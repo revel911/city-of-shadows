@@ -22,6 +22,14 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 4. When the session ends, Claude emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, arcs.
 5. The dashboard reflects the new world state on next refresh.
 
+**Player-onboarding (first-time Discord user)**
+
+The first time a Discord user runs `/play character:new`, the bot detects no `players/by-id/<their-discord-snowflake>/profile.json` exists and signals the MC to run a brief player-onboarding phase before character creation. The MC asks for content-safety limits, then emits a `<save_player>` close block. The bot writes the profile and proceeds directly into character-creation Phase 1. Every subsequent character this same Discord user creates reuses the existing profile — they get a one-line carryover-confirm beat ("your hard limits are X, mechanics depth is N — still good?") instead of re-onboarding.
+
+**Mechanics-depth calibration**
+
+After each session close, the bot checks the player's `mechanics_depth_set` flag. If it's `false` (player has never set their mechanics-depth level), the bot posts a one-shot calibration prompt in the thread: "Pick 1 (more mechanics) – 5 (more story) via `/prefs mechanics N`." Once answered, the flag flips to `true` and the prompt never fires again. Default level is 3.
+
 Discord identity isn't bound to characters — anyone in the guild can pick any character. If a character is currently in an open session thread, `/play` blocks a second attempt until that thread is archived.
 
 ---
@@ -134,6 +142,14 @@ If someone is already in a session for the character you picked, `/play` blocks 
 | `/play [character]` | ephemeral | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
 | `/roll` | public | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier on the next session turn. |
 
+**Player preference commands** (replies are ephemeral, profile is per-Discord-user)
+
+| Command | Behavior |
+|---------|----------|
+| `/prefs view` | DMs the invoking user their current profile: safety limits, mechanics depth, characters they own. Falls back to an ephemeral reply if DMs are disabled. |
+| `/prefs mechanics <1-5>` | Sets the player's `mechanics_depth`. Also sets `mechanics_depth_set: true`, suppressing the post-session-1 calibration prompt. |
+| `/prefs safety` | Shows current limits and pointers for editing them (v1: edit `profile.json` in the repo directly, or update during the carryover-confirm beat at next character creation). |
+
 **Read commands** (added in `feat(bot): add six read commands`)
 
 | Command | Reply visibility | Reads from | Behavior |
@@ -200,11 +216,16 @@ city-of-shadows/
 │   ├── index.json
 │   └── *.md
 │
-├── players/                       Per-character state, sheet, handoff
-│   ├── index.json                 Character roster (id + name)
+├── players/                       Per-player profile + per-character state
+│   ├── index.json                 Character roster (id + name + owner_id)
+│   ├── by-id/<discord-snowflake>/
+│   │   └── profile.json           Player-scoped: safety, mechanics_depth, characters[]
+│   ├── _player_template/
+│   │   └── profile.json
 │   ├── _template/
-│   └── <player-id>/
-│       ├── state.json
+│   │   └── state.json
+│   └── <character-id>/            Character-scoped folder
+│       ├── state.json             stats, harm, circles, gear (no safety here)
 │       ├── sheet.md
 │       └── handoff.md
 │
