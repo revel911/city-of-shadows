@@ -1,7 +1,7 @@
 import { generate, buildOpeningContext } from './mc.js';
 import { writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
-import { writeProfile } from './profile.js';
+import { readProfile, writeProfile } from './profile.js';
 
 const REPO_ROOT = process.env.COS_REPO_ROOT || process.cwd();
 
@@ -398,11 +398,34 @@ async function processSaveOnboarding(thread, session, save) {
   }
 
   const displayName = resolveNewCharacterName(parsedStatePatch, save.sheet, id);
+  const ownerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
   writes.push(['players-index', updateJSON('players/index.json', (current) => {
     const list = Array.isArray(current) ? current : [];
-    if (!list.some(p => p.id === id)) list.push({ id, name: displayName });
+    const existing = list.find(p => p.id === id);
+    if (existing) {
+      if (ownerId && !existing.owner_id) existing.owner_id = ownerId;
+    } else {
+      const entry = { id, name: displayName };
+      if (ownerId) entry.owner_id = ownerId;
+      list.push(entry);
+    }
     return list;
   }, `[onboarding] register new character ${id} (${stamp})`)]);
+
+  if (ownerId) {
+    try {
+      const profile = readProfile(REPO_ROOT, ownerId);
+      if (profile) {
+        if (!Array.isArray(profile.characters)) profile.characters = [];
+        if (!profile.characters.includes(id)) {
+          profile.characters.push(id);
+          writeProfile(REPO_ROOT, profile);
+        }
+      }
+    } catch (err) {
+      console.warn(`[onboarding] failed to link character ${id} to profile ${ownerId}: ${err.message}`);
+    }
+  }
 
   const results = await Promise.allSettled(writes.map(([, p]) => p));
   const okNames = [], failNames = [];
@@ -540,11 +563,34 @@ async function processSessionClose(thread, session, close) {
   // character (id was '__new__') and the close block named a concrete id.
   if (session.player.id === '__new__' && id && id !== '__new__') {
     const displayName = resolveNewCharacterName(parsedStatePatch, close.sheet, id);
+    const closeOwnerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
     writes.push(['players-index', updateJSON('players/index.json', (current) => {
       const list = Array.isArray(current) ? current : [];
-      if (!list.some(p => p.id === id)) list.push({ id, name: displayName });
+      const existing = list.find(p => p.id === id);
+      if (existing) {
+        if (closeOwnerId && !existing.owner_id) existing.owner_id = closeOwnerId;
+      } else {
+        const entry = { id, name: displayName };
+        if (closeOwnerId) entry.owner_id = closeOwnerId;
+        list.push(entry);
+      }
       return list;
     }, `[session] register new character ${id} (${stamp})`)]);
+
+    if (closeOwnerId) {
+      try {
+        const profile = readProfile(REPO_ROOT, closeOwnerId);
+        if (profile) {
+          if (!Array.isArray(profile.characters)) profile.characters = [];
+          if (!profile.characters.includes(id)) {
+            profile.characters.push(id);
+            writeProfile(REPO_ROOT, profile);
+          }
+        }
+      } catch (err) {
+        console.warn(`[session] failed to link character ${id} to profile ${closeOwnerId}: ${err.message}`);
+      }
+    }
   }
 
   const results = await Promise.allSettled(writes.map(([, p]) => p));
