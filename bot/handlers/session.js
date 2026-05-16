@@ -47,20 +47,13 @@ export async function handleMessage(message) {
   if (!message.content?.trim()) return;
 
   await lock(session, async () => {
-    let userContent = message.content;
-    if (session._lastTurnSaveLeak) {
-      const retries = (session._saveLeakRetries || 0) + 1;
-      session._saveLeakRetries = retries;
-      session._lastTurnSaveLeak = false;
-      if (retries <= SAVE_ONBOARDING_MAX_RETRIES) {
-        userContent = `${buildSaveLeakNudge(retries)}\n\n[PLAYER MESSAGE]\n${message.content}`;
-      } else {
-        await message.channel.send(
-          `⚠ <save_onboarding> still leaking after ${SAVE_ONBOARDING_MAX_RETRIES} retries. ` +
-          `The close block will need to carry the save data.`
-        );
-        console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
-      }
+    const { content: userContent, exhausted } = applySaveLeakNudge(session, message.content);
+    if (exhausted) {
+      await message.channel.send(
+        `⚠ <save_onboarding> still leaking after ${SAVE_ONBOARDING_MAX_RETRIES} retries. ` +
+        `The close block will need to carry the save data.`
+      );
+      console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
     }
     session.messages.push({ role: 'user', content: userContent });
     await message.channel.sendTyping();
@@ -74,6 +67,11 @@ const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
 export const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
 async function postMCResponse(thread, response, session) {
+  // Track whether a clean save fired this turn. If yes, suppress
+  // _lastTurnSaveLeak even if sanitize finds leftover bare tags — the save
+  // already persisted, so a re-emit nudge next turn would trigger the
+  // duplicate-save guard and confuse the MC.
+  let cleanSaveFiredThisTurn = false;
   // 0. <save_player> — persists the *player* profile (Discord user) at the end
   //    of player-onboarding. Runs BEFORE save_onboarding because a brand-new
   //    user sometimes emits both in the same response (or back-to-back), and
@@ -183,6 +181,7 @@ async function postMCResponse(thread, response, session) {
       // Clean save fired — reset the leak retry counter so a future,
       // unrelated leak gets the full SAVE_ONBOARDING_MAX_RETRIES budget.
       session._saveLeakRetries = 0;
+      cleanSaveFiredThisTurn = true;
     }
   }
 
@@ -219,10 +218,16 @@ async function postMCResponse(thread, response, session) {
   const stripped = close ? stripCloseBlock(response) : response;
   const { cleaned: visible, leakDetected } = sanitizePlayerFacingText(stripped);
   if (leakDetected) {
-    session._lastTurnSaveLeak = true;
     console.warn(
-      `[session ${session.threadId}] sanitize stripped structured leak from MC output`
+      `[session ${session.threadId}] sanitize stripped structured leak from MC output` +
+      (cleanSaveFiredThisTurn ? ' (clean save also fired this turn; suppressing re-emit nudge)' : '')
     );
+    if (!cleanSaveFiredThisTurn) {
+      // Only nudge for re-emit when no save actually fired. If a save
+      // succeeded this turn, the leftover bare-tag leak is just operator-
+      // visible noise — the persistence path already completed.
+      session._lastTurnSaveLeak = true;
+    }
   }
   for (const part of chunk(visible)) {
     if (part.trim()) await thread.send(part);
@@ -273,6 +278,29 @@ export function buildSaveLeakNudge(retryNumber) {
     `Re-emit a complete <save_onboarding> block as the FIRST content of your next response, before any narrative. Confirm the closing </save_onboarding> tag is present.`,
     `Retry ${retryNumber} of ${SAVE_ONBOARDING_MAX_RETRIES}.`,
   ].join('\n');
+}
+
+// Pure helper extracted from handleMessage so the nudge/exhaustion branches
+// can be unit-tested without a Discord channel mock. Mutates `session`
+// (clearing _lastTurnSaveLeak, bumping _saveLeakRetries) and returns the
+// composed user-message content plus whether the retry budget is exhausted.
+// `exhausted = true` tells the caller to surface a thread warning and skip
+// the nudge — the original player content is still returned in `content`.
+export function applySaveLeakNudge(session, playerContent) {
+  if (!session._lastTurnSaveLeak) {
+    return { content: playerContent, exhausted: false };
+  }
+  const retries = (session._saveLeakRetries || 0) + 1;
+  session._saveLeakRetries = retries;
+  session._lastTurnSaveLeak = false;
+  if (retries > SAVE_ONBOARDING_MAX_RETRIES) {
+    return { content: playerContent, exhausted: true, retries };
+  }
+  return {
+    content: `${buildSaveLeakNudge(retries)}\n\n[PLAYER MESSAGE]\n${playerContent}`,
+    exhausted: false,
+    retries,
+  };
 }
 
 function grabTag(body, tag) {
