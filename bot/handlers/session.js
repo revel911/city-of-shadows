@@ -47,7 +47,22 @@ export async function handleMessage(message) {
   if (!message.content?.trim()) return;
 
   await lock(session, async () => {
-    session.messages.push({ role: 'user', content: message.content });
+    let userContent = message.content;
+    if (session._lastTurnSaveLeak) {
+      const retries = (session._saveLeakRetries || 0) + 1;
+      session._saveLeakRetries = retries;
+      session._lastTurnSaveLeak = false;
+      if (retries <= SAVE_ONBOARDING_MAX_RETRIES) {
+        userContent = `${buildSaveLeakNudge(retries)}\n\n[PLAYER MESSAGE]\n${message.content}`;
+      } else {
+        await message.channel.send(
+          `⚠ <save_onboarding> still leaking after ${SAVE_ONBOARDING_MAX_RETRIES} retries. ` +
+          `The close block will need to carry the save data.`
+        );
+        console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
+      }
+    }
+    session.messages.push({ role: 'user', content: userContent });
     await message.channel.sendTyping();
     const response = await generate(session);
     session.messages.push({ role: 'assistant', content: response });
@@ -56,7 +71,7 @@ export async function handleMessage(message) {
 }
 
 const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
-const SAVE_ONBOARDING_MAX_RETRIES = 2;
+export const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
 async function postMCResponse(thread, response, session) {
   // 0. <save_player> — persists the *player* profile (Discord user) at the end
@@ -165,6 +180,9 @@ async function postMCResponse(thread, response, session) {
       await thread.send('— *saving character to GitHub…* —');
       await processSaveOnboarding(thread, session, save);
       response = stripSaveOnboardingBlock(response);
+      // Clean save fired — reset the leak retry counter so a future,
+      // unrelated leak gets the full SAVE_ONBOARDING_MAX_RETRIES budget.
+      session._saveLeakRetries = 0;
     }
   }
 
@@ -240,6 +258,20 @@ function buildSaveRetryPrompt(missing) {
     `Your <save_onboarding> block is missing required fields: ${missing.join(', ')}.`,
     'Re-emit the block now. At minimum it needs <character_id> (kebab-case, e.g. "joe-nakama").',
     'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced. Partial is fine — better to persist what we have than lose it.',
+  ].join('\n');
+}
+
+// Nudge prepended to the next MC turn after a leak was detected and stripped.
+// Reuses the SAVE_ONBOARDING_MAX_RETRIES cap so leak retries and missing-fields
+// retries share the same exhaustion budget shape, though they use separate
+// counters on the session (_saveLeakRetries vs _saveRetries).
+export function buildSaveLeakNudge(retryNumber) {
+  return [
+    `[SYSTEM] Your previous response contained an unterminated <save_onboarding> (or <close_session>) block, or bare structured tags outside any container.`,
+    `The bot stripped that content before posting, and the persistence did not occur.`,
+    ``,
+    `Re-emit a complete <save_onboarding> block as the FIRST content of your next response, before any narrative. Confirm the closing </save_onboarding> tag is present.`,
+    `Retry ${retryNumber} of ${SAVE_ONBOARDING_MAX_RETRIES}.`,
   ].join('\n');
 }
 
