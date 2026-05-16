@@ -25,6 +25,14 @@ Sessions are async — start, stop, come back tomorrow. When you close a session
 | `/play [character]` | Opens a private session thread with the MC. With no arg, replies with a character-picker menu. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding. |
 | `/roll` | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier. |
 
+**Your preferences** (player-scoped, replies are private to you)
+
+| Command | What It Does |
+|---------|--------------|
+| `/prefs view` | DMs you your current profile — safety limits, mechanics depth, characters you own. |
+| `/prefs mechanics <1-5>` | Sets how much of the engine the MC surfaces. 1 = full crunch (named moves, visible dice, stat math). 5 = pure narrative (mechanics fully hidden). Default 3. |
+| `/prefs safety` | Shows your current hard/soft limits and where to edit them. |
+
 **Look at your character** (replies are private to you)
 
 | Command | What It Does |
@@ -58,6 +66,17 @@ This is a read-only window into the world. The MC updates it at the end of every
 The city's state — every NPC, arc, character sheet, handoff — lives as plain text files in this repository. A Discord bot routes player messages to Claude (Sonnet 4.6) with the relevant context loaded, and writes session results back to the repo when the session closes. The dashboard reads those same files and renders them.
 
 No live GM. No prep. The world persists between sessions because the documents do.
+
+### Player vs Character
+
+The repo separates two things that look alike but aren't:
+
+- A **player** is a Discord user. You have content-safety preferences and a mechanics-depth preference (how visible the rules engine is in MC narration). One person, one profile. Lives at `players/by-id/<your-discord-snowflake>/profile.json`.
+- A **character** is a fictional PC you run — stats, sheet, gear, advances. One person can own multiple characters. Lives at `players/<character-slug>/`.
+
+Player-scoped data (safety, mechanics depth) carries forward across every character you create. You set safety once during player-onboarding the first time the MC meets you; you tune mechanics depth once at the end of your first session (one-shot calibration prompt), and from there `/prefs mechanics N` is the way to change it.
+
+The 5-level mechanics scale runs **1 (open table — named moves, visible dice and modifiers, stat math)** to **5 (pure narrative — no rolls visible, no move names, no stat references)**. The bot still rolls dice and applies rules at every level — only the surface of the narration changes.
 
 ---
 
