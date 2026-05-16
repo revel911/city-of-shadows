@@ -392,6 +392,60 @@ export function sanitizePlayerFacingText(text) {
     });
   }
 
+  // Step 4: orphan-tag cleanup. By this point, every valid <TAG>...</TAG>
+  // pair from STRUCTURED_BARE_TAGS with a structured body has been removed,
+  // and unterminated containers (save_onboarding, close_session) have been
+  // stripped to end-of-string by steps 1-2. Any remaining standalone <TAG>
+  // or </TAG> for a tag in ORPHAN_TAGS is by definition orphaned. Three
+  // sub-cases handled per tag:
+  //   a) Unterminated open with structured-data payload (<TAG> with no </TAG>)
+  //      — applies only to STRUCTURED_BARE_TAGS. Strip from the open tag to
+  //      end-of-string so the trailing JSON/payload fragment is removed too.
+  //      (Non-structured tags like character_id carry short IDs, not payloads,
+  //      so stripping to end-of-string would wrongly discard subsequent prose.)
+  //   b) Lone close (</TAG> with no matching <TAG> in the string) — strip just
+  //      the close tag.
+  //   c) Lone open (<TAG> with no matching </TAG>) for non-structured tags —
+  //      strip just the open tag, preserving the content that follows it.
+  //   d) Balanced pairs (<TAG>...</TAG> surviving step 3 as legit narrative) —
+  //      leave alone.
+  for (const tag of ORPHAN_TAGS) {
+    const isStructured = STRUCTURED_BARE_TAGS.includes(tag);
+
+    if (isStructured) {
+      // Sub-case (a): unterminated structured open — strip from tag to EOS.
+      // Catches "<npc_patch>\n[truncated JSON" where </npc_patch> was never
+      // emitted. Use the same negative-lookahead shape as steps 1-2.
+      const unterminatedRe = new RegExp(`<${tag}>(?![\\s\\S]*<\\/${tag}>)[\\s\\S]*$`);
+      if (unterminatedRe.test(working)) {
+        working = working.replace(unterminatedRe, '');
+        leakDetected = true;
+      }
+    }
+
+    // Sub-case (b): lone close tag — no matching open left in the string.
+    // After sub-case (a) may have consumed an unterminated open above, any
+    // surviving </TAG> without a <TAG> counterpart is orphaned.
+    const hasOpen = new RegExp(`<${tag}>`).test(working);
+    if (!hasOpen) {
+      const closeRe = new RegExp(`<\\/${tag}>`, 'g');
+      if (closeRe.test(working)) {
+        working = working.replace(new RegExp(`<\\/${tag}>`, 'g'), '');
+        leakDetected = true;
+      }
+    } else if (!isStructured) {
+      // Sub-case (c): non-structured tag with an open but no close — strip
+      // just the open tag. (Structured tags with unmatched open are handled
+      // by sub-case (a) above; balanced pairs are left alone per sub-case (d).)
+      const hasClose = new RegExp(`<\\/${tag}>`).test(working);
+      if (!hasClose) {
+        working = working.replace(new RegExp(`<${tag}>`, 'g'), '');
+        leakDetected = true;
+      }
+    }
+    // Sub-case (d): balanced pair — no action; step 3 already decided it.
+  }
+
   return { cleaned: working.trim(), leakDetected };
 }
 
