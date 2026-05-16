@@ -144,7 +144,7 @@ function buildCloseRetryPrompt(missing) {
     `Your <close_session> block is missing required fields: ${missing.join(', ')}.`,
     'This is a new-character session — character creation must persist a full sheet and full initial state.',
     'Re-emit your closing message now with a COMPLETE <close_session> block, including:',
-    '- <player_id>: kebab-case id (firstname-lastname)',
+    '- <character_id>: kebab-case id (firstname-lastname)',
     '- <sheet>: the full sheet you built across onboarding (Identity, Playbook, Stats, Moves, Circle Ratings & Status, Debts, Anchors, Gear, Experience Tier)',
     '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, active_arc_ids: [], last_session, notes',
     '- <handoff>: full first handoff',
@@ -157,7 +157,7 @@ function buildCloseRetryPrompt(missing) {
 function buildSaveRetryPrompt(missing) {
   return [
     `Your <save_onboarding> block is missing required fields: ${missing.join(', ')}.`,
-    'Re-emit the block now. At minimum it needs <player_id> (kebab-case, e.g. "joe-nakama").',
+    'Re-emit the block now. At minimum it needs <character_id> (kebab-case, e.g. "joe-nakama").',
     'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced. Partial is fine — better to persist what we have than lose it.',
   ].join('\n');
 }
@@ -186,7 +186,7 @@ function parseCloseBlock(text) {
     arc_patch:     grabTag(body, 'arc_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
     world_event:   grabTag(body, 'world_event'),
-    player_id:     grabTag(body, 'player_id'),
+    character_id:     grabTag(body, 'character_id'),
   };
 }
 
@@ -204,7 +204,7 @@ export function parseSaveOnboardingBlock(text) {
     state_patch:   grabTag(body, 'state_patch'),
     events_append: grabTag(body, 'events_append'),
     npc_patch:     grabTag(body, 'npc_patch'),
-    player_id:     grabTag(body, 'player_id'),
+    character_id:     grabTag(body, 'character_id'),
   };
 }
 
@@ -220,8 +220,8 @@ function stripSaveOnboardingBlock(text) {
 // via state_patch in the session-close block.
 export function missingSaveOnboardingFields(save) {
   const missing = [];
-  const pid = typeof save.player_id === 'string' ? save.player_id.trim() : '';
-  if (!pid || pid === '__new__') missing.push('player_id');
+  const pid = typeof save.character_id === 'string' ? save.character_id.trim() : '';
+  if (!pid || pid === '__new__') missing.push('character_id');
   if (!save.sheet || !save.sheet.trim()) missing.push('sheet');
   return missing;
 }
@@ -255,7 +255,7 @@ async function processSaveOnboarding(thread, session, save) {
     await thread.send('ℹ️ Character is already saved — ignoring duplicate <save_onboarding>.');
     return;
   }
-  const id = (save.player_id || '').trim();
+  const id = (save.character_id || '').trim();
   const stamp = new Date().toISOString().slice(0, 10);
   const writes = [];
   const warnings = [];
@@ -347,9 +347,9 @@ async function processSaveOnboarding(thread, session, save) {
 }
 
 async function processSessionClose(thread, session, close) {
-  const id = close.player_id || session.player.id;
+  const id = close.character_id || session.player.id;
   if (id === '__new__') {
-    await thread.send('⚠️ Cannot write session close for a new character without a player_id in the close block. Skipping writes.');
+    await thread.send('⚠️ Cannot write session close for a new character without a character_id in the close block. Skipping writes.');
     return;
   }
   const stamp = new Date().toISOString().slice(0, 10);
@@ -508,8 +508,8 @@ async function processSessionClose(thread, session, close) {
 // here — partial updates are fine for those.
 export function missingNewCharCloseFields(close) {
   const missing = [];
-  const pid = typeof close.player_id === 'string' ? close.player_id.trim() : '';
-  if (!pid || pid === '__new__') missing.push('player_id');
+  const pid = typeof close.character_id === 'string' ? close.character_id.trim() : '';
+  if (!pid || pid === '__new__') missing.push('character_id');
   if (!close.sheet || !close.sheet.trim()) missing.push('sheet');
 
   let stateOk = false;

@@ -4,7 +4,7 @@ import { missingNewCharCloseFields } from '../handlers/session.js';
 
 function completeClose() {
   return {
-    player_id: 'jacob-brooks',
+    character_id: 'jacob-brooks',
     sheet: '# Jacob Brooks — Character Sheet\n\nStuff',
     state_patch: JSON.stringify({
       character_name: 'Jacob Brooks',
@@ -19,22 +19,22 @@ test('complete close returns no missing fields', () => {
   assert.deepEqual(missingNewCharCloseFields(completeClose()), []);
 });
 
-test('missing player_id is flagged', () => {
+test('missing character_id is flagged', () => {
   const c = completeClose();
-  c.player_id = null;
-  assert.deepEqual(missingNewCharCloseFields(c), ['player_id']);
+  c.character_id = null;
+  assert.deepEqual(missingNewCharCloseFields(c), ['character_id']);
 });
 
-test('player_id of "__new__" is treated as missing', () => {
+test('character_id of "__new__" is treated as missing', () => {
   const c = completeClose();
-  c.player_id = '__new__';
-  assert.deepEqual(missingNewCharCloseFields(c), ['player_id']);
+  c.character_id = '__new__';
+  assert.deepEqual(missingNewCharCloseFields(c), ['character_id']);
 });
 
-test('whitespace-only player_id is flagged', () => {
+test('whitespace-only character_id is flagged', () => {
   const c = completeClose();
-  c.player_id = '   ';
-  assert.deepEqual(missingNewCharCloseFields(c), ['player_id']);
+  c.character_id = '   ';
+  assert.deepEqual(missingNewCharCloseFields(c), ['character_id']);
 });
 
 test('missing sheet is flagged', () => {
@@ -74,9 +74,9 @@ test('unparseable state_patch is flagged', () => {
 });
 
 test('multiple missing fields are all reported', () => {
-  const c = { handoff: 'just a handoff', player_id: null, sheet: null, state_patch: null };
+  const c = { handoff: 'just a handoff', character_id: null, sheet: null, state_patch: null };
   assert.deepEqual(
     missingNewCharCloseFields(c),
-    ['player_id', 'sheet', 'state_patch (with stats)']
+    ['character_id', 'sheet', 'state_patch (with stats)']
   );
 });

@@ -59,7 +59,7 @@ export function formatArc(arc, hubsIndex, npcsById, playersIndex) {
     `**${arc.title}**`,
     `Hubs: ${resolveList(arc.hub_ids, hubsByIdMap)}`,
     `NPCs: ${resolveList(arc.npc_ids, npcsByIdNameMap)}`,
-    `PCs: ${resolveList(arc.player_ids, playersByIdMap)}`,
+    `PCs: ${resolveList(arc.character_ids, playersByIdMap)}`,
   ];
   if (arc.summary) lines.push(arc.summary);
   return lines.join('\n');

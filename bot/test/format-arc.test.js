@@ -21,7 +21,7 @@ test('renders arc with all ID lists resolved', () => {
     title: 'The Collector',
     hub_ids: ['hub_shockoe_bottom', 'hub_downtown'],
     npc_ids: ['npc_maren_voss'],
-    player_ids: ['chris-caustes'],
+    character_ids: ['chris-caustes'],
     summary: 'An entity that catalogs things-that-remember.',
   };
   const out = formatArc(arc, hubsIndex, npcsById, playersIndex);
@@ -40,7 +40,7 @@ test('empty ID lists render as —', () => {
     title: 'Floating',
     hub_ids: [],
     npc_ids: [],
-    player_ids: [],
+    character_ids: [],
     summary: 'Nowhere yet.',
   };
   const out = formatArc(arc, hubsIndex, npcsById, playersIndex);
@@ -54,7 +54,7 @@ test('unknown IDs in lists are skipped silently', () => {
     title: 'Partial',
     hub_ids: ['hub_shockoe_bottom', 'hub_unknown'],
     npc_ids: ['npc_unknown'],
-    player_ids: ['ghost-player'],
+    character_ids: ['ghost-player'],
     summary: 'Some known, some not.',
   };
   const out = formatArc(arc, hubsIndex, npcsById, playersIndex);
@@ -69,7 +69,7 @@ test('missing summary omits the trailing line', () => {
     title: 'No Summary',
     hub_ids: [],
     npc_ids: [],
-    player_ids: [],
+    character_ids: [],
   };
   const out = formatArc(arc, hubsIndex, npcsById, playersIndex);
   const lines = out.split('\n');
