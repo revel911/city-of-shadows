@@ -309,6 +309,30 @@ const ORPHAN_TAGS = [
   ...STRUCTURED_BARE_TAGS,
 ];
 
+// Schema-key markers used by sanitize step 3 to decide whether a <TAG>body</TAG>
+// payload is structured data. Looking only at first-char {/[ would miss
+// hand-written sheet bodies that aren't strictly JSON but still belong inside
+// a container block.
+const STRUCTURED_KEY_MARKERS = [
+  '"id":',
+  '"character_name":',
+  '"stats":',
+  '"personality":',
+  '"faction":',
+];
+
+// True when the body of a <TAG>...</TAG> match looks like a structured payload
+// (starts with { or [, or contains a known schema-key marker). Used by step 3
+// to distinguish accidental leaks from in-fiction prose like
+// "Marcus glanced at the <sheet>blank paper</sheet>".
+function looksStructured(body) {
+  const trimmed = body.trim();
+  if (trimmed.length === 0) return false;
+  const first = trimmed[0];
+  if (first === '{' || first === '[') return true;
+  return STRUCTURED_KEY_MARKERS.some((k) => trimmed.includes(k));
+}
+
 // Matches an opening <save_onboarding> tag with no corresponding closing tag —
 // used to strip truncated/malformed blocks from player-facing text.
 const UNTERMINATED_SAVE_ONBOARDING_RE = /<save_onboarding>(?![\s\S]*<\/save_onboarding>)[\s\S]*$/;
@@ -348,6 +372,24 @@ export function sanitizePlayerFacingText(text) {
   if (UNTERMINATED_CLOSE_SESSION_RE.test(working)) {
     working = working.replace(UNTERMINATED_CLOSE_SESSION_RE, '');
     leakDetected = true;
+  }
+
+  // Step 3: bare structured tags floating outside any container. By this
+  // point, all *valid* save/close blocks were already removed upstream by
+  // stripSaveOnboardingBlock / stripCloseBlock. Anything still matching a
+  // <TAG>...</TAG> pair from STRUCTURED_BARE_TAGS is therefore floating —
+  // but we only strip if the body looks structured (JSON-shaped or contains
+  // a known schema key marker), to avoid false-positives on legitimate
+  // narrative prose that happens to use one of these words in angle brackets.
+  for (const tag of STRUCTURED_BARE_TAGS) {
+    const re = new RegExp(`<${tag}>([\\s\\S]*?)<\\/${tag}>`, 'g');
+    working = working.replace(re, (match, body) => {
+      if (looksStructured(body)) {
+        leakDetected = true;
+        return '';
+      }
+      return match;
+    });
   }
 
   return { cleaned: working.trim(), leakDetected };
