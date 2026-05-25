@@ -93,14 +93,27 @@ function resolveCharacter(value, players, fallbackName) {
 }
 
 async function openSession(interaction, channel, chosen) {
-  const threadName = `${chosen.name} — session`;
-  const active = await findActiveSessionThread(channel.guild, threadName);
-  if (active) {
-    await interaction.editReply({
-      content: `**${chosen.name}** is currently in a session: <#${active.id}>. Try again once it's archived.`,
-      components: [],
-    });
-    return;
+  // A new character has no character id yet (the MC mints the kebab id partway
+  // through onboarding), so its thread can't yet be named per-character — it
+  // launches titled "<username> — new character" and is renamed to
+  // "<character name> — session" once <save_onboarding>/<close_session> lands
+  // the id+name (see renameSessionThread in session.js). We never block a new
+  // character: each launch is a genuinely distinct character, and the old
+  // name-based block collapsed them all under the player's Discord username.
+  const isNew = chosen.id === NEW_CHARACTER_VALUE;
+  const threadName = isNew
+    ? `${chosen.name} — new character`
+    : `${chosen.name} — session`;
+
+  if (!isNew) {
+    const active = await findActiveSessionThread(channel.guild, threadName);
+    if (active) {
+      await interaction.editReply({
+        content: `**${chosen.name}** is currently in a session: <#${active.id}>. Try again once it's archived.`,
+        components: [],
+      });
+      return;
+    }
   }
 
   const thread = await channel.threads.create({
