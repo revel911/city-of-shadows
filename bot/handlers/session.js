@@ -7,7 +7,7 @@ const sessions = new Map();
 
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
-// (which Anthropic rejects with a 400 alternation error).
+// (which the chat-completions API rejects as an alternation error).
 function lock(session, fn) {
   const prev = session._chain || Promise.resolve();
   const next = prev.then(() => fn(), () => fn());
@@ -39,7 +39,8 @@ export async function handleMessage(message) {
     // Session thread we no longer have state for — most likely a bot restart.
     // Tell the player so they don't sit there typing into a void.
     const ch = message.channel;
-    if (ch?.isThread?.() && typeof ch.name === 'string' && ch.name.endsWith(' — session')) {
+    if (ch?.isThread?.() && typeof ch.name === 'string' &&
+        (ch.name.endsWith(' — session') || ch.name.endsWith(' — new character'))) {
       try { await ch.send('Session state was lost (the bot likely restarted). Use `/play` to start a new session.'); } catch {}
     }
     return;
@@ -318,6 +319,24 @@ export function applySaveLeakNudge(session, playerContent) {
     exhausted: false,
     retries,
   };
+}
+
+// Rename a new-character session thread once the character's real display name
+// is known. New-character threads launch titled "<username> — new character"
+// (no character id/name exists at /play time), which collapses every character
+// a player creates under their Discord username and makes review confusing.
+// Renaming to "<name> — session" gives each character a distinct, reviewable
+// thread and lets the per-character active-session block work on later plays.
+// Best-effort: a failed rename only affects the thread title, never persistence.
+async function renameSessionThread(thread, displayName) {
+  if (!thread || typeof thread.setName !== 'function') return;
+  const target = `${displayName} — session`;
+  if (thread.name === target) return;
+  try {
+    await thread.setName(target);
+  } catch (err) {
+    console.error(`[session] failed to rename thread ${thread.id} to "${target}": ${err.message}`);
+  }
 }
 
 function grabTag(body, tag) {
@@ -818,6 +837,9 @@ async function processSaveOnboarding(thread, session, save) {
     // (a brand-new player just finishing onboarding).
     session.player = { ...session.player, id, name: displayName };
     session._onboardingSaved = true;
+    // Thread launched as "<username> — new character"; now that the character
+    // has a real name, retitle it so this character's thread is distinct.
+    await renameSessionThread(thread, displayName);
   }
 
   const lines = [];
@@ -943,6 +965,10 @@ async function processSessionClose(thread, session, close) {
   // character (id was '__new__') and the close block named a concrete id.
   if (session.player.id === '__new__' && id && id !== '__new__') {
     const displayName = resolveNewCharacterName(parsedStatePatch, close.sheet, id);
+    // save_onboarding never fired this session, so the thread is still titled
+    // "<username> — new character". Retitle before it's archived so the
+    // reviewable record shows the character's name, not the player's username.
+    await renameSessionThread(thread, displayName);
     const closeOwnerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
     writes.push(['players-index', updateJSON('players/index.json', (current) => {
       const list = Array.isArray(current) ? current : [];

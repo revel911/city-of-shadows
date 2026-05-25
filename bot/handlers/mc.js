@@ -1,9 +1,13 @@
-import Anthropic from '@anthropic-ai/sdk';
+import OpenAI from 'openai';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
 
-const MODEL = 'claude-sonnet-4-6';
+const MODEL = 'deepseek-chat';
 const MAX_TOKENS = 4096;
+// DeepSeek's recommended temperature for creative/roleplay output (their docs
+// map 1.3 to general conversation/creative writing); the summarizer overrides
+// this with 0 for faithful, low-variance recaps.
+const GENERATE_TEMPERATURE = 1.3;
 const EVENT_TAIL_LINES = 120;
 
 const COMPACT_AT = Number(process.env.COMPACT_AT) || 30;
@@ -17,7 +21,19 @@ const SUMMARY_SYSTEM = [
   'Be terse, concrete, and chronological. No flavor prose.',
 ].join(' ');
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+// Constructed lazily: the OpenAI SDK throws at construction if the key is
+// absent, so building it at import time would break any context that loads
+// this module without DEEPSEEK_API_KEY set (e.g. the test suite).
+let _deepseek = null;
+function client() {
+  if (!_deepseek) {
+    _deepseek = new OpenAI({
+      baseURL: 'https://api.deepseek.com',
+      apiKey: process.env.DEEPSEEK_API_KEY,
+    });
+  }
+  return _deepseek;
+}
 
 let _systemCache = null;
 
@@ -166,20 +182,9 @@ export async function buildOpeningContext(player) {
   ].join('\n');
 }
 
-function withCacheBreakpoints(messages) {
-  // Cache the opening context (always at index 0 — opening user message that
-  // contains the handoff/sheet/state/events tail). Stable across the session,
-  // so every turn after the first pays ~10% of input cost on it.
-  return messages.map((m, i) => {
-    if (i !== 0) return m;
-    const text = typeof m.content === 'string' ? m.content : null;
-    if (text === null) return m;
-    return {
-      role: m.role,
-      content: [{ type: 'text', text, cache_control: { type: 'ephemeral' } }],
-    };
-  });
-}
+// DeepSeek does automatic disk-based context caching keyed on the longest
+// shared prefix, so no explicit cache breakpoints are needed: the stable
+// system prompt + opening user message are cached transparently across turns.
 
 function messageToText(m) {
   if (typeof m.content === 'string') return m.content;
@@ -201,13 +206,16 @@ async function maybeCompact(session) {
     .join('\n\n');
 
   try {
-    const resp = await anthropic.messages.create({
+    const resp = await client().chat.completions.create({
       model: MODEL,
-      system: SUMMARY_SYSTEM,
-      messages: [{ role: 'user', content: `Transcript to summarize:\n\n${transcript}` }],
+      messages: [
+        { role: 'system', content: SUMMARY_SYSTEM },
+        { role: 'user', content: `Transcript to summarize:\n\n${transcript}` },
+      ],
       max_tokens: SUMMARY_MAX_TOKENS,
+      temperature: 0,
     });
-    const text = resp.content.filter(b => b.type === 'text').map(b => b.text).join('\n').trim();
+    const text = (resp.choices[0]?.message?.content || '').trim();
     if (!text) return;
     // Summary goes in as an assistant message so alternation stays valid:
     // [user head, assistant recap, user, assistant, ...]
@@ -225,21 +233,18 @@ async function maybeCompact(session) {
 export async function generate(session) {
   await maybeCompact(session);
   const system = await getSystemPrompt();
-  const resp = await anthropic.messages.create({
+  const resp = await client().chat.completions.create({
     model: MODEL,
-    system: [{ type: 'text', text: system, cache_control: { type: 'ephemeral' } }],
-    messages: withCacheBreakpoints(session.messages),
+    messages: [{ role: 'system', content: system }, ...session.messages],
     max_tokens: MAX_TOKENS,
+    temperature: GENERATE_TEMPERATURE,
   });
   const u = resp.usage || {};
   console.log(
     `[mc] thread=${session.threadId} msgs=${session.messages.length} ` +
-    `in=${u.input_tokens || 0} out=${u.output_tokens || 0} ` +
-    `cache_create=${u.cache_creation_input_tokens || 0} ` +
-    `cache_read=${u.cache_read_input_tokens || 0}`
+    `in=${u.prompt_tokens || 0} out=${u.completion_tokens || 0} ` +
+    `cache_hit=${u.prompt_cache_hit_tokens || 0} ` +
+    `cache_miss=${u.prompt_cache_miss_tokens || 0}`
   );
-  return resp.content
-    .filter(b => b.type === 'text')
-    .map(b => b.text)
-    .join('\n');
+  return resp.choices[0]?.message?.content || '';
 }

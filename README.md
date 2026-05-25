@@ -1,6 +1,6 @@
 # City of Shadows
 
-An async TTRPG set in **Richmond, Virginia, 2026**, where Claude plays the Master of Ceremonies. Built on **Urban Shadows 2nd Edition** with a **World of Darkness supplement**.
+An async TTRPG set in **Richmond, Virginia, 2026**, where a language model plays the Master of Ceremonies. Built on **Urban Shadows 2nd Edition** with a **World of Darkness supplement**.
 
 The city is shared. Other people are playing other characters in the same world. What you do bleeds into their game; what they do bleeds into yours.
 
@@ -63,7 +63,7 @@ This is a read-only window into the world. The MC updates it at the end of every
 
 ## How It Works
 
-The city's state — every NPC, arc, character sheet, handoff — lives as plain text files in this repository. A Discord bot routes player messages to Claude (Sonnet 4.6) with the relevant context loaded, and writes session results back to the repo when the session closes. The dashboard reads those same files and renders them.
+The city's state — every NPC, arc, character sheet, handoff — lives as plain text files in this repository. A Discord bot routes player messages to a language model (DeepSeek `deepseek-chat`) with the relevant context loaded, and writes session results back to the repo when the session closes. The dashboard reads those same files and renders them.
 
 No live GM. No prep. The world persists between sessions because the documents do.
 
@@ -82,4 +82,4 @@ The 5-level mechanics scale runs **1 (open table — named moves, visible dice a
 
 ## Running Your Own
 
-Want to host your own instance? See [docs/OPERATOR.md](docs/OPERATOR.md) for the full setup: forking the repo, deploying the bot to Fly.io, creating the Discord app, linking your Anthropic key, and onboarding your first player.
+Want to host your own instance? See [docs/OPERATOR.md](docs/OPERATOR.md) for the full setup: forking the repo, deploying the bot to Fly.io, creating the Discord app, linking your DeepSeek key, and onboarding your first player. For how it's built, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md); for where it's going, [docs/VISION.md](docs/VISION.md).

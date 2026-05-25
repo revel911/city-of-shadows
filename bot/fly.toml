@@ -1,6 +1,6 @@
 # Fly.io config for the City of Shadows Discord bot.
 # Deploy with: fly deploy
-# Set secrets with: fly secrets set DISCORD_TOKEN=... ANTHROPIC_API_KEY=... GITHUB_TOKEN=...
+# Set secrets with: fly secrets set DISCORD_TOKEN=... DEEPSEEK_API_KEY=... GITHUB_TOKEN=...
 
 app = "cos-bot-revel911"
 primary_region = "iad"

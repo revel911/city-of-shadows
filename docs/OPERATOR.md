@@ -1,6 +1,6 @@
 # City of Shadows — Operator Guide
 
-End-to-end setup for running your own instance of City of Shadows. If you just want to play, see the [README](../README.md).
+End-to-end setup for running your own instance of City of Shadows. If you just want to play, see the [README](../README.md). For a deeper treatment of how the system fits together and why, see [ARCHITECTURE.md](ARCHITECTURE.md); for design direction, [VISION.md](VISION.md).
 
 ---
 
@@ -10,16 +10,16 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 |-------|-------------|
 | **This repo** | Single source of truth for all game state (plain text + JSON). |
 | **`dashboard/`** | Static site published to GitHub Pages. Read-only window into the world. |
-| **`bot/`** | Node.js Discord bot. Routes player messages to Claude, writes session results back to GitHub. |
-| **`mc-reference/`** | System prompt for the MC. Loaded into Claude's context on every session. |
+| **`bot/`** | Node.js Discord bot. Routes player messages to the MC model, writes session results back to GitHub. |
+| **`mc-reference/`** | System prompt for the MC. Loaded into the model's context on every session. |
 | **`game/`, `hubs/`, `players/`** | The world state. The MC reads it at session start and patches it at session close. |
 
 **Player flow**
 
 1. Player runs `/play` in Discord. The bot replies with a menu listing every character plus a `+ New character` entry.
-2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks Claude (`claude-sonnet-4-6`) for the opening scene.
-3. Player and Claude trade messages in the thread.
-4. When the session ends, Claude emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, arcs.
+2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks the MC model (`deepseek-chat`) for the opening scene.
+3. Player and the MC trade messages in the thread.
+4. When the session ends, the MC emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, arcs.
 5. The dashboard reflects the new world state on next refresh.
 
 **Player-onboarding (first-time Discord user)**
@@ -30,7 +30,7 @@ The first time a Discord user runs `/play character:new`, the bot detects no `pl
 
 After each session close, the bot checks the player's `mechanics_depth_set` flag. If it's `false` (player has never set their mechanics-depth level), the bot posts a one-shot calibration prompt in the thread: "Pick 1 (more mechanics) – 5 (more story) via `/prefs mechanics N`." Once answered, the flag flips to `true` and the prompt never fires again. Default level is 3.
 
-Discord identity isn't bound to characters — anyone in the guild can pick any character. If a character is currently in an open session thread, `/play` blocks a second attempt until that thread is archived.
+Discord identity isn't bound to characters — anyone in the guild can pick any character. If an existing character is currently in an open session thread, `/play` blocks a second attempt until that thread is archived. New characters are never blocked: each `+ New character` launch opens a fresh thread titled `<username> — new character`, which the bot renames to `<character name> — session` once onboarding saves the character. This keeps every character a player creates in its own distinct, reviewable thread instead of collapsing them all under the player's username.
 
 ---
 
@@ -39,7 +39,7 @@ Discord identity isn't bound to characters — anyone in the guild can pick any 
 ### Prerequisites
 
 - A GitHub account
-- An Anthropic API key with credits
+- A DeepSeek API key with credits
 - A Discord account and a Discord server you control
 - Node.js 20+ locally
 - A Fly.io account (free tier works) for hosting the bot
@@ -87,9 +87,9 @@ The bot writes session results back to this repo. Create a fine-grained personal
 7. In Discord, right-click your server icon → **Copy Server ID** (this is `DISCORD_GUILD_ID`; enable Developer Mode in user settings first if needed).
 8. (Optional) Create a `#world-events` channel and copy its ID for `WORLD_EVENTS_CHANNEL_ID`.
 
-### 5 — Anthropic API key
+### 5 — DeepSeek API key
 
-Get one at [console.anthropic.com](https://console.anthropic.com). The bot uses `claude-sonnet-4-6`.
+Get one at [platform.deepseek.com](https://platform.deepseek.com). The bot uses `deepseek-chat` through the OpenAI-compatible SDK (base URL `https://api.deepseek.com`).
 
 ### 6 — Deploy the bot to Fly.io
 
@@ -102,7 +102,7 @@ fly secrets set \
   DISCORD_TOKEN=... \
   DISCORD_CLIENT_ID=... \
   DISCORD_GUILD_ID=... \
-  ANTHROPIC_API_KEY=... \
+  DEEPSEEK_API_KEY=... \
   GITHUB_TOKEN=... \
   GITHUB_OWNER=YOUR_GITHUB_USERNAME \
   WORLD_EVENTS_CHANNEL_ID=...
@@ -125,7 +125,7 @@ In your Discord server, run:
 /play
 ```
 
-The bot replies (ephemerally) with a select menu listing every character in [players/index.json](../players/index.json) plus a `+ New character` entry. Pick one and the bot opens a private session thread. Reply in the thread to play. When you're ready to stop, tell the MC you're ending the session — Claude will write its final beat and emit a close block. The bot writes the handoff, state, events log, and any NPC/arc updates back to GitHub as separate commits, then archives the thread.
+The bot replies (ephemerally) with a select menu listing every character in [players/index.json](../players/index.json) plus a `+ New character` entry. Pick one and the bot opens a private session thread. Reply in the thread to play. When you're ready to stop, tell the MC you're ending the session — the MC will write its final beat and emit a close block. The bot writes the handoff, state, events log, and any NPC/arc updates back to GitHub as separate commits, then archives the thread.
 
 To skip the menu, pass `character:<id>` directly (e.g. `/play character:alex-chen`). Use `character:new` to jump straight into onboarding — the MC walks through playbook → stats → moves → gear → debts/circles → first scene, and on close writes a new `players/<id>/` folder.
 
@@ -195,7 +195,7 @@ city-of-shadows/
 │   │   └── arcs.js                /arcs   (read)
 │   ├── handlers/
 │   │   ├── github.js              GitHub Contents API wrapper (retries 409/422; updateFile/updateJSON for read-modify-write)
-│   │   ├── mc.js                  Anthropic API + context builder
+│   │   ├── mc.js                  DeepSeek API (OpenAI SDK) + context builder
 │   │   ├── read-utils.js          Shared helpers: chunk, sendChunked, resolveCharacter, formatNpc, formatArc, parseRecentEvents
 │   │   └── session.js             Session state, per-session async lock, close-block parser, write fan-out
 │   └── test/                      node --test unit tests for pure helpers
@@ -259,13 +259,13 @@ Continuity comes from documents, not chat history:
 - `game/events-log.md` — public events log (tail loaded each session)
 - `game/interactions.json` — pending player-to-player effects
 
-Every session starts by feeding these into Claude's context. The MC reads them and drops the player back into the scene where they left off.
+Every session starts by feeding these into the model's context. The MC reads them and drops the player back into the scene where they left off.
 
 ---
 
 ## Concurrency & retries
 
-- `bot/handlers/session.js` runs a per-session `lock()` so two messages typed quickly into the same thread can't interleave Claude calls (Anthropic 400 alternation error). New characters are auto-registered in `players/index.json` via `updateJSON` on close.
+- `bot/handlers/session.js` runs a per-session `lock()` so two messages typed quickly into the same thread can't interleave model calls (chat-completions APIs reject two consecutive user turns). New characters are auto-registered in `players/index.json` via `updateJSON` on close.
 - `bot/handlers/github.js` `writeFile` retries 409/422 conflicts up to 5 times with jittered backoff. `updateFile` and `updateJSON` do read-modify-write with the same retry loop, so two close blocks that touch the same shared file (`game/npcs.json`, `arcs.json`, `events-log.md`) merge against fresh content instead of one silently overwriting the other.
 - The close-block parser is anchored to end-of-response (`\s*$`), so an MC that quotes the `<close_session>` tag mid-narrative won't accidentally end the session.
 - The dashboard sanitizes markdown through DOMPurify before `innerHTML`, and bumps a `?v=` token on Refresh to defeat Fastly's 5-minute raw-content CDN cache.
@@ -274,7 +274,7 @@ Every session starts by feeding these into Claude's context. The MC reads them a
 
 ## Cost notes
 
-- **Anthropic**: Each turn round-trips the full conversation. A 1-hour session is roughly 30-60 turns. Sonnet 4.6 with a ~100k-token system prompt (full reference layer + WoD extensions + character-creation wizard) and growing message history will run somewhere around $3-8 per session at current pricing — verify on your dashboard. Prompt caching is applied to the system prompt to keep cost down across multi-turn sessions.
+- **DeepSeek**: Each turn round-trips the full conversation. A 1-hour session is roughly 30-60 turns against a large system prompt (full reference layer + WoD extensions + character-creation wizard) plus growing message history. DeepSeek pricing is a fraction of frontier-model pricing, so sessions typically cost cents rather than dollars — verify on your [DeepSeek dashboard](https://platform.deepseek.com). DeepSeek's automatic disk-based context cache keeps the stable system-prompt prefix cheap across multi-turn sessions (logged per turn as `cache_hit` / `cache_miss` tokens), and `maybeCompact()` summarizes long transcripts to cap context growth.
 - **Fly.io**: A 256MB shared-cpu instance is well within the free tier.
 - **GitHub**: Free for public repos.
 - **Discord**: Free.
@@ -287,7 +287,7 @@ Every session starts by feeding these into Claude's context. The MC reads them a
 → Another open thread already exists for that character. Open the linked thread and close that session (or wait for Discord's 24h auto-archive), then try again.
 
 **The bot never replies in the thread**
-→ Check `fly logs` for errors. Most common: `ANTHROPIC_API_KEY` not set, or `MESSAGE CONTENT INTENT` not enabled on the Discord app.
+→ Check `fly logs` for errors. Most common: `DEEPSEEK_API_KEY` not set, or `MESSAGE CONTENT INTENT` not enabled on the Discord app.
 
 **Session close commit fails**
 → Check that the GitHub token has **Contents: Read and write** on this repo and hasn't expired. The bot logs the GitHub error message to the thread.
