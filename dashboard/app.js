@@ -974,8 +974,26 @@ async function renderRelationships() {
       <button id="graph-reset" type="button">Reset view</button>
     </div>
     <p class="graph-mode-note" id="graph-mode-note"><strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.</p>
-    <div class="graph-shell">
+    <div class="graph-shell" id="graph-shell">
       <div id="world-graph" role="img" aria-label="Interactive constellation of city relationships"></div>
+      <div class="graph-controls" role="group" aria-label="Map movement and zoom controls">
+        <div class="graph-pan-pad">
+          <button type="button" class="graph-control graph-pan-up" data-graph-pan="up" aria-label="Move map up" title="Move up">&uarr;</button>
+          <button type="button" class="graph-control graph-pan-left" data-graph-pan="left" aria-label="Move map left" title="Move left">&larr;</button>
+          <button type="button" class="graph-control graph-pan-center" data-graph-fit aria-label="Center and fit map" title="Center map">&bull;</button>
+          <button type="button" class="graph-control graph-pan-right" data-graph-pan="right" aria-label="Move map right" title="Move right">&rarr;</button>
+          <button type="button" class="graph-control graph-pan-down" data-graph-pan="down" aria-label="Move map down" title="Move down">&darr;</button>
+        </div>
+        <div class="graph-control-row">
+          <button type="button" class="graph-control" data-graph-zoom="out" aria-label="Zoom out" title="Zoom out">&minus;</button>
+          <button type="button" class="graph-control graph-fit" data-graph-fit>Fit</button>
+          <button type="button" class="graph-control" data-graph-zoom="in" aria-label="Zoom in" title="Zoom in">+</button>
+        </div>
+        <button type="button" class="graph-control graph-fullscreen" id="graph-fullscreen" aria-pressed="false" title="Enter fullscreen">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg>
+          <span>Fullscreen</span>
+        </button>
+      </div>
       <aside id="graph-detail" aria-live="polite">
         <p class="graph-detail-kicker">Select a node</p>
         <h2>The city remembers</h2>
@@ -1056,9 +1074,9 @@ async function renderRelationships() {
     container: document.getElementById('world-graph'),
     elements,
     layout: { name: 'preset', fit: false },
-    minZoom: 0.2,
-    maxZoom: 2.8,
-    wheelSensitivity: 0.2,
+    minZoom: 0.1,
+    maxZoom: 5.6,
+    wheelSensitivity: 0.4,
     style: [
       { selector: 'node', style: { 'label': 'data(label)', 'font-family': 'DM Sans', 'font-size': 11, 'color': '#d8d4cf', 'text-wrap': 'wrap', 'text-max-width': 110, 'text-valign': 'bottom', 'text-margin-y': 10, 'text-outline-color': '#030305', 'text-outline-width': 3, 'background-color': '#160c34', 'border-width': 3, 'border-color': '#a81616', 'width': 58, 'height': 58, 'overlay-opacity': 0 } },
       { selector: 'node[kind="npc"]', style: { 'shape': 'ellipse', 'width': 64, 'height': 64, 'background-color': '#160c34', 'background-image': 'data(visual)', 'background-fit': 'cover', 'background-clip': 'node', 'border-color': '#a81616', 'shadow-color': '#a81616', 'shadow-opacity': 0.24, 'shadow-blur': 12 } },
@@ -1081,6 +1099,8 @@ async function renderRelationships() {
   const kind = document.getElementById('graph-kind');
   const detail = document.getElementById('graph-detail');
   const modeNote = document.getElementById('graph-mode-note');
+  const graphShell = document.getElementById('graph-shell');
+  const fullscreenButton = document.getElementById('graph-fullscreen');
 
   function fitVisible(duration = 0) {
     const visible = cy.elements().filter(element => !element.hasClass('context-hidden') && !element.hasClass('filter-hidden'));
@@ -1127,6 +1147,43 @@ async function renderRelationships() {
     scope.value = 'story'; search.value = ''; hub.value = ''; kind.value = '';
     restoreScopePositions(); applyFilters({ fit: true });
   });
+
+  document.querySelectorAll('[data-graph-pan]').forEach(button => button.addEventListener('click', () => {
+    const amount = 120;
+    const movement = {
+      up: { x: 0, y: amount }, down: { x: 0, y: -amount },
+      left: { x: amount, y: 0 }, right: { x: -amount, y: 0 },
+    }[button.dataset.graphPan];
+    cy.animate({ panBy: movement, duration: 160 });
+  }));
+  document.querySelectorAll('[data-graph-zoom]').forEach(button => button.addEventListener('click', () => {
+    const factor = button.dataset.graphZoom === 'in' ? 1.45 : 1 / 1.45;
+    const level = Math.max(cy.minZoom(), Math.min(cy.maxZoom(), cy.zoom() * factor));
+    cy.animate({ zoom: { level, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } }, duration: 180 });
+  }));
+  document.querySelectorAll('[data-graph-fit]').forEach(button => button.addEventListener('click', () => fitVisible(260)));
+
+  function updateFullscreenControl() {
+    const expanded = document.fullscreenElement === graphShell || document.webkitFullscreenElement === graphShell;
+    fullscreenButton.setAttribute('aria-pressed', String(expanded));
+    fullscreenButton.title = expanded ? 'Exit fullscreen' : 'Enter fullscreen';
+    fullscreenButton.querySelector('span').textContent = expanded ? 'Collapse' : 'Fullscreen';
+    fullscreenButton.querySelector('svg').innerHTML = expanded
+      ? '<path d="M6 2v4H2M10 2v4h4M14 10h-4v4M2 10h4v4"/>'
+      : '<path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/>';
+    requestAnimationFrame(() => { cy.resize(); });
+  }
+  fullscreenButton.addEventListener('click', async () => {
+    const expanded = document.fullscreenElement === graphShell || document.webkitFullscreenElement === graphShell;
+    if (expanded) {
+      if (document.exitFullscreen) await document.exitFullscreen();
+      else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    } else if (graphShell.requestFullscreen) await graphShell.requestFullscreen();
+    else if (graphShell.webkitRequestFullscreen) graphShell.webkitRequestFullscreen();
+  });
+  document.addEventListener('fullscreenchange', updateFullscreenControl);
+  document.addEventListener('webkitfullscreenchange', updateFullscreenControl);
+  if (!graphShell.requestFullscreen && !graphShell.webkitRequestFullscreen) fullscreenButton.hidden = true;
 
   cy.on('tap', 'node', event => {
     const node = event.target;
