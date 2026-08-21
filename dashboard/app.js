@@ -411,6 +411,15 @@ async function renderSummary() {
       <div class="world-vital"><strong>${edgeCount}</strong><span>Visible ties</span></div>
     </div>
     ${recentCharSection}
+    <section class="atlas-callout" role="link" tabindex="0" data-nav="/relationships" aria-labelledby="atlas-callout-title">
+      <div class="atlas-callout-copy">
+        <span class="page-kicker">The relationship atlas</span>
+        <h2 id="atlas-callout-title">See who binds the city together</h2>
+        <p>Explore the authored ties between characters, NPCs, and the places they control, protect, haunt, and owe.</p>
+        <span class="atlas-callout-link">Open the constellation &rarr;</span>
+      </div>
+      <div class="atlas-motif" aria-hidden="true"><span class="atlas-node">PC</span><span class="atlas-node">NPC</span><span class="atlas-node">LOC</span><span class="atlas-node">NPC</span><span class="atlas-node">NPC</span></div>
+    </section>
     <div class="dashboard-grid">
       <div class="sidebar-cards">
         <nav class="card" aria-label="Explore the chronicle">
@@ -932,7 +941,7 @@ async function renderEvents() {
 // ── Page: Connections ────────────────────────────────────────────────────────
 async function renderRelationships() {
   setSideNav([]);
-  showLoading('Tracing the city&rsquo;s connections…');
+  showLoading('Tracing the city&rsquo;s connections&hellip;');
 
   let graph;
   try { graph = await getWorldGraph(); }
@@ -943,106 +952,201 @@ async function renderRelationships() {
   }
 
   const hubs = graph.nodes.filter(node => node.data.kind === 'hub');
+  const storyEdges = graph.edges.filter(edge => edge.data.layer !== 'structural');
+  const storyNodeIds = new Set(storyEdges.flatMap(edge => [edge.data.source, edge.data.target]));
+  const storyNodeCount = storyNodeIds.size;
+
   $content.innerHTML = `
     <div class="page-header relationship-header">
       <div>
         <span class="page-kicker">The relationship atlas</span>
         <h1>Connections</h1>
-        <p>NPCs, characters, locations, and the neighborhoods binding them together.</p>
-        <div class="graph-stats"><span class="graph-stat"><strong>${graph.nodes.length}</strong> nodes</span><span class="graph-stat"><strong>${graph.edges.length}</strong> links</span><span class="graph-stat"><strong>${hubs.length}</strong> hubs</span></div>
+        <p>An interactive constellation of people, places, obligations, and control.</p>
+        <div class="graph-stats"><span class="graph-stat"><strong>${storyNodeCount}</strong> story nodes</span><span class="graph-stat"><strong>${storyEdges.length}</strong> authored ties</span><span class="graph-stat"><strong>${graph.nodes.length}</strong> city records</span></div>
       </div>
       <span class="graph-as-of">World state as of ${esc(graph.as_of || 'unknown')}</span>
     </div>
     <div class="graph-toolbar" aria-label="Graph filters">
-      <label><span>Find</span><input id="graph-search" type="search" placeholder="NPC or location…"></label>
+      <label class="graph-view-label"><span>View</span><select id="graph-scope"><option value="story">Story ties</option><option value="city">Whole city</option></select></label>
+      <label><span>Find</span><input id="graph-search" type="search" placeholder="NPC, character, or place&hellip;"></label>
       <label><span>Hub</span><select id="graph-hub"><option value="">All hubs</option>${hubs.map(h => `<option value="${esc(h.data.id)}">${esc(h.data.label)}</option>`).join('')}</select></label>
-      <label><span>Show</span><select id="graph-kind"><option value="">Everything</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option></select></label>
-      <label class="graph-check"><input id="graph-structural" type="checkbox" checked><span>Location links</span></label>
+      <label><span>Show</span><select id="graph-kind"><option value="">Everyone</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option></select></label>
       <button id="graph-reset" type="button">Reset view</button>
     </div>
+    <p class="graph-mode-note" id="graph-mode-note"><strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.</p>
     <div class="graph-shell">
-      <div id="world-graph" role="img" aria-label="Interactive network of city NPCs and locations"></div>
+      <div id="world-graph" role="img" aria-label="Interactive constellation of city relationships"></div>
       <aside id="graph-detail" aria-live="polite">
         <p class="graph-detail-kicker">Select a node</p>
         <h2>The city remembers</h2>
-        <p>Click an NPC, character, location, or hub to inspect it and highlight its immediate connections.</p>
+        <p>Choose a person or place to isolate its immediate ties. Drag nodes to arrange the constellation; scroll to zoom.</p>
       </aside>
     </div>
     <div class="graph-legend" aria-label="Graph legend">
       <span><i class="legend-dot legend-pc"></i>PC</span><span><i class="legend-dot legend-npc"></i>NPC</span><span><i class="legend-square"></i>Location</span><span><i class="legend-diamond"></i>Hub</span>
     </div>`;
 
+  const edgeColor = type => ({
+    family: '#a81616', mentor: '#7b4ac2', anchor: '#b8924a', friend: '#678f55',
+    debt: '#cc2020', controls: '#8c7238', works_at: '#527f91',
+  }[type] || '#7b4ac2');
+  function nodeVisual(data) {
+    if (data.portrait) return data.portrait;
+    const initials = data.label.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
+    const ring = data.kind === 'pc' ? '#b8924a' : data.kind === 'location' ? '#527f91' : '#a81616';
+    const fill = data.kind === 'pc' ? '#3b0a13' : data.kind === 'location' ? '#09131a' : '#10091e';
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" fill="${fill}"/><circle cx="48" cy="48" r="43" fill="none" stroke="${ring}" stroke-width="2" opacity=".55"/><text x="48" y="55" text-anchor="middle" fill="#d8d4cf" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">${initials}</text></svg>`;
+    return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
+  }
+
+  const cityPositions = new Map(graph.nodes.map(node => [node.data.id, { ...node.position }]));
+  function buildStoryPositions() {
+    const adjacency = new Map([...storyNodeIds].map(id => [id, new Set()]));
+    storyEdges.forEach(edge => {
+      adjacency.get(edge.data.source)?.add(edge.data.target);
+      adjacency.get(edge.data.target)?.add(edge.data.source);
+    });
+    const components = [];
+    const visited = new Set();
+    [...storyNodeIds].sort().forEach(start => {
+      if (visited.has(start)) return;
+      const component = [], queue = [start];
+      visited.add(start);
+      while (queue.length) {
+        const id = queue.shift(); component.push(id);
+        [...(adjacency.get(id) || [])].sort().forEach(next => {
+          if (!visited.has(next)) { visited.add(next); queue.push(next); }
+        });
+      }
+      components.push(component);
+    });
+    components.sort((a, b) => b.length - a.length || a[0].localeCompare(b[0]));
+    const centers = [
+      { x: 650, y: 390 }, { x: 150, y: 120 }, { x: 470, y: 95 },
+      { x: 830, y: 105 }, { x: 1135, y: 170 }, { x: 125, y: 430 },
+      { x: 170, y: 700 }, { x: 485, y: 735 }, { x: 850, y: 720 }, { x: 1160, y: 610 },
+    ];
+    const positions = new Map();
+    components.forEach((component, index) => {
+      const center = centers[index] || { x: 180 + (index % 4) * 320, y: 120 + Math.floor(index / 4) * 280 };
+      if (component.length === 1) { positions.set(component[0], center); return; }
+      if (component.length === 2) {
+        const angle = index % 2 ? -.2 : .18;
+        const dx = Math.cos(angle) * 88, dy = Math.sin(angle) * 88;
+        positions.set(component[0], { x: center.x - dx, y: center.y - dy });
+        positions.set(component[1], { x: center.x + dx, y: center.y + dy });
+        return;
+      }
+      const anchor = [...component].sort((a, b) => (adjacency.get(b)?.size || 0) - (adjacency.get(a)?.size || 0))[0];
+      positions.set(anchor, center);
+      component.filter(id => id !== anchor).sort().forEach((id, childIndex, children) => {
+        const angle = -Math.PI / 2 + (Math.PI * 2 * childIndex / children.length);
+        positions.set(id, { x: center.x + Math.cos(angle) * 170, y: center.y + Math.sin(angle) * 150 });
+      });
+    });
+    return positions;
+  }
+  const storyPositions = buildStoryPositions();
+  const elements = [
+    ...graph.nodes.map(node => ({ ...node, position: storyPositions.get(node.data.id) || node.position, data: { ...node.data, visual: nodeVisual(node.data) } })),
+    ...graph.edges.map(edge => ({ ...edge, data: { ...edge.data, color: edgeColor(edge.data.type) } })),
+  ];
+
   const cy = cytoscape({
     container: document.getElementById('world-graph'),
-    elements: [...graph.nodes, ...graph.edges],
-    layout: { name: 'preset', fit: true, padding: 55 },
-    minZoom: 0.18,
-    maxZoom: 2.4,
-    wheelSensitivity: 0.22,
+    elements,
+    layout: { name: 'preset', fit: false },
+    minZoom: 0.2,
+    maxZoom: 2.8,
+    wheelSensitivity: 0.2,
     style: [
-      { selector: 'node', style: { 'label': 'data(label)', 'font-family': 'DM Sans', 'font-size': 12, 'color': '#d8d0c4', 'text-wrap': 'wrap', 'text-max-width': 105, 'text-valign': 'bottom', 'text-margin-y': 8, 'background-color': '#332d2c', 'border-width': 2, 'border-color': '#665b55', 'width': 42, 'height': 42 } },
-      { selector: 'node[kind="npc"]', style: { 'shape': 'ellipse', 'width': 50, 'height': 50, 'background-image': 'data(portrait)', 'background-fit': 'cover', 'background-clip': 'node', 'border-color': '#a74646' } },
-      { selector: 'node[kind="pc"]', style: { 'shape': 'ellipse', 'width': 58, 'height': 58, 'background-color': '#7d252b', 'border-width': 4, 'border-color': '#d8aa61', 'font-weight': 600 } },
-      { selector: 'node[kind="location"]', style: { 'shape': 'round-rectangle', 'width': 46, 'height': 38, 'background-color': '#2c3435', 'border-color': '#6f8585' } },
-      { selector: 'node[kind="hub"]', style: { 'shape': 'diamond', 'width': 70, 'height': 70, 'background-color': '#17191c', 'border-width': 3, 'border-color': '#a88756', 'font-size': 15, 'font-weight': 600, 'text-margin-y': 12 } },
+      { selector: 'node', style: { 'label': 'data(label)', 'font-family': 'DM Sans', 'font-size': 11, 'color': '#d8d4cf', 'text-wrap': 'wrap', 'text-max-width': 110, 'text-valign': 'bottom', 'text-margin-y': 10, 'text-outline-color': '#030305', 'text-outline-width': 3, 'background-color': '#160c34', 'border-width': 3, 'border-color': '#a81616', 'width': 58, 'height': 58, 'overlay-opacity': 0 } },
+      { selector: 'node[kind="npc"]', style: { 'shape': 'ellipse', 'width': 64, 'height': 64, 'background-color': '#160c34', 'background-image': 'data(visual)', 'background-fit': 'cover', 'background-clip': 'node', 'border-color': '#a81616', 'shadow-color': '#a81616', 'shadow-opacity': 0.24, 'shadow-blur': 12 } },
+      { selector: 'node[kind="pc"]', style: { 'shape': 'ellipse', 'width': 76, 'height': 76, 'background-color': '#7a0e0e', 'border-width': 4, 'border-color': '#b8924a', 'font-size': 13, 'font-weight': 600, 'background-image': 'data(visual)', 'background-fit': 'cover', 'shadow-color': '#b8924a', 'shadow-opacity': 0.28, 'shadow-blur': 16 } },
+      { selector: 'node[kind="location"]', style: { 'shape': 'round-rectangle', 'width': 60, 'height': 48, 'background-color': '#0d1720', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#527f91' } },
+      { selector: 'node[kind="hub"]', style: { 'shape': 'diamond', 'width': 72, 'height': 72, 'background-color': '#0d0b18', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#8c7238', 'font-size': 13 } },
       { selector: 'node[status="deceased"]', style: { 'opacity': 0.42, 'border-style': 'dashed' } },
-      { selector: 'edge', style: { 'width': 1.5, 'line-color': '#514947', 'curve-style': 'bezier', 'target-arrow-shape': 'triangle', 'target-arrow-color': '#6d6260', 'arrow-scale': 0.65, 'label': 'data(label)', 'font-family': 'JetBrains Mono', 'font-size': 7, 'color': '#8e827b', 'text-background-color': '#111316', 'text-background-opacity': 0.78, 'text-background-padding': 2 } },
-      { selector: 'edge[layer="structural"]', style: { 'line-style': 'dotted', 'target-arrow-shape': 'none', 'opacity': 0.34, 'label': '' } },
-      { selector: 'edge[layer="derived"]', style: { 'line-style': 'dashed', 'line-color': '#6f8585' } },
+      { selector: 'edge', style: { 'width': 2, 'line-color': 'data(color)', 'curve-style': 'unbundled-bezier', 'control-point-distances': 32, 'control-point-weights': 0.5, 'target-arrow-shape': 'triangle', 'target-arrow-color': 'data(color)', 'arrow-scale': 0.72, 'label': 'data(label)', 'font-family': 'JetBrains Mono', 'font-size': 7, 'color': '#9a9490', 'text-background-color': '#030305', 'text-background-opacity': 0.92, 'text-background-padding': 3, 'text-rotation': 'autorotate', 'opacity': 0.88 } },
+      { selector: 'edge[layer="structural"]', style: { 'width': 1, 'line-style': 'dotted', 'target-arrow-shape': 'none', 'line-color': '#5834a0', 'opacity': 0.22, 'label': '' } },
       { selector: 'edge[direction="undirected"]', style: { 'target-arrow-shape': 'none' } },
-      { selector: '.dimmed', style: { 'opacity': 0.09, 'text-opacity': 0 } },
-      { selector: '.focused', style: { 'border-color': '#f2c879', 'border-width': 5, 'z-index': 999 } }
-    ]
+      { selector: '.context-hidden, .filter-hidden', style: { 'display': 'none' } },
+      { selector: '.dimmed', style: { 'opacity': 0.08, 'text-opacity': 0 } },
+      { selector: '.focused', style: { 'border-color': '#d8aa61', 'border-width': 5, 'z-index': 999 } },
+    ],
   });
 
+  const scope = document.getElementById('graph-scope');
   const search = document.getElementById('graph-search');
   const hub = document.getElementById('graph-hub');
   const kind = document.getElementById('graph-kind');
-  const structural = document.getElementById('graph-structural');
   const detail = document.getElementById('graph-detail');
+  const modeNote = document.getElementById('graph-mode-note');
 
-  function applyFilters() {
+  function fitVisible(duration = 0) {
+    const visible = cy.elements().filter(element => !element.hasClass('context-hidden') && !element.hasClass('filter-hidden'));
+    if (!visible.length) return;
+    if (duration) cy.animate({ fit: { eles: visible, padding: 80 }, duration });
+    else cy.fit(visible, 80);
+  }
+
+  function applyFilters({ fit = false } = {}) {
+    const storyOnly = scope.value === 'story';
     const query = search.value.trim().toLowerCase();
     const hubId = hub.value;
     const entityKind = kind.value;
+
     cy.batch(() => {
-      cy.elements().removeClass('dimmed focused');
+      cy.elements().removeClass('context-hidden filter-hidden dimmed focused');
       cy.nodes().forEach(node => {
-        const d = node.data();
-        const matchesQuery = !query || d.label.toLowerCase().includes(query) || String(d.details || '').toLowerCase().includes(query);
-        const matchesHub = !hubId || d.hub_id === hubId || d.id === hubId;
-        const matchesKind = !entityKind || d.kind === entityKind || d.kind === 'hub';
-        if (!(matchesQuery && matchesHub && matchesKind)) node.addClass('dimmed');
+        const data = node.data();
+        if (storyOnly && !storyNodeIds.has(data.id)) node.addClass('context-hidden');
+        const matchesQuery = !query || data.label.toLowerCase().includes(query) || String(data.details || '').toLowerCase().includes(query);
+        const matchesHub = !hubId || data.hub_id === hubId || data.id === hubId;
+        const matchesKind = !entityKind || data.kind === entityKind;
+        if (!(matchesQuery && matchesHub && matchesKind)) node.addClass('filter-hidden');
       });
       cy.edges().forEach(edge => {
-        const hideStructural = !structural.checked && edge.data('layer') === 'structural';
-        if (hideStructural || edge.source().hasClass('dimmed') || edge.target().hasClass('dimmed')) edge.addClass('dimmed');
+        if (storyOnly && edge.data('layer') === 'structural') edge.addClass('context-hidden');
+        if (edge.source().hasClass('context-hidden') || edge.source().hasClass('filter-hidden') || edge.target().hasClass('context-hidden') || edge.target().hasClass('filter-hidden')) edge.addClass('filter-hidden');
       });
     });
+
+    modeNote.innerHTML = storyOnly
+      ? `<strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.`
+      : `<strong>Whole city</strong> shows all ${graph.nodes.length} records and their structural location links. Switch back to Story ties for the cleaner social constellation.`;
+    if (fit) requestAnimationFrame(() => fitVisible(320));
   }
 
-  [search, hub, kind, structural].forEach(control => control.addEventListener(control === search ? 'input' : 'change', applyFilters));
+  [search, hub, kind].forEach(control => control.addEventListener(control === search ? 'input' : 'change', () => applyFilters()));
+  function restoreScopePositions() {
+    const positions = scope.value === 'story' ? storyPositions : cityPositions;
+    cy.nodes().positions(node => positions.get(node.id()) || node.position());
+  }
+  scope.addEventListener('change', () => { restoreScopePositions(); applyFilters({ fit: true }); });
   document.getElementById('graph-reset').addEventListener('click', () => {
-    search.value = ''; hub.value = ''; kind.value = ''; structural.checked = true;
-    applyFilters(); cy.animate({ fit: { eles: cy.elements(), padding: 55 }, duration: 350 });
+    scope.value = 'story'; search.value = ''; hub.value = ''; kind.value = '';
+    restoreScopePositions(); applyFilters({ fit: true });
   });
 
   cy.on('tap', 'node', event => {
     const node = event.target;
-    const neighborhood = node.closedNeighborhood();
+    const neighborhood = node.closedNeighborhood().filter(element => !element.hasClass('context-hidden') && !element.hasClass('filter-hidden'));
     cy.elements().addClass('dimmed').removeClass('focused');
     neighborhood.removeClass('dimmed');
     node.addClass('focused');
-    const d = node.data();
+    const data = node.data();
     const connected = node.connectedEdges().filter(edge => edge.data('layer') !== 'structural').map(edge => edge.data('label')).filter(Boolean);
     detail.innerHTML = `
-      <p class="graph-detail-kicker">${esc(d.kind)}${d.faction ? ' · ' + esc(d.faction) : ''}</p>
-      <h2>${esc(d.label)}</h2>
-      ${d.subtype ? '<p class="graph-detail-role">' + esc(d.subtype) + '</p>' : ''}
-      <p>${esc(d.details || 'No public details recorded.')}</p>
+      <p class="graph-detail-kicker">${esc(data.kind)}${data.faction ? ' &middot; ' + esc(data.faction) : ''}</p>
+      <h2>${esc(data.label)}</h2>
+      ${data.subtype ? '<p class="graph-detail-role">' + esc(data.subtype) + '</p>' : ''}
+      <p>${esc(data.details || 'No public details recorded.')}</p>
       ${connected.length ? '<div class="graph-detail-links"><strong>Connections</strong>' + connected.map(label => '<span>' + esc(label) + '</span>').join('') + '</div>' : ''}`;
   });
   cy.on('tap', event => { if (event.target === cy) applyFilters(); });
+
+  applyFilters();
+  requestAnimationFrame(() => fitVisible());
 }
 
 // ── Router ────────────────────────────────────────────────────────────
