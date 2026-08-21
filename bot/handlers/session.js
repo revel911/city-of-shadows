@@ -1,8 +1,20 @@
-import { generate, buildOpeningContext } from './mc.js';
-import { writeFile, updateFile, updateJSON } from './github.js';
+import { generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
+import { readJSON, writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
 import { mergeCanonicalPatches } from './world-state.js';
+import {
+  auditSession,
+  createRollRecord,
+  deriveActiveArcIds,
+  formatRoll,
+  mergeDebtPatches,
+  nextSessionId,
+  parseRollRequest,
+  reconcileArcs,
+  reconcileCharacterState,
+  stripRollRequest,
+} from './mechanics.js';
 
 const sessions = new Map();
 
@@ -17,12 +29,26 @@ function lock(session, fn) {
 }
 
 export async function startSession(thread, player) {
-  const opening = await buildOpeningContext(player);
+  const [opening, profile, openingState, openingInteractions] = await Promise.all([
+    buildOpeningContext(player),
+    player.discord_id ? readProfile(player.discord_id) : null,
+    player.id !== '__new__' ? readJSON(`players/${player.id}/state.json`) : null,
+    player.id !== '__new__' ? readJSON('game/interactions.json') : null,
+  ]);
   const session = {
     player,
     threadId: thread.id,
     messages: [{ role: 'user', content: opening }],
     startedAt: Date.now(),
+    rolls: [],
+    pendingRoll: null,
+    mechanicsDepth: profile?.mechanics_depth || 3,
+    rulesProfile: {
+      isNew: player.id === '__new__',
+      playbook: openingState?.playbook || '',
+      wod_extension: openingState?.wod_extension || '',
+    },
+    openingEchoId: selectInteractionEcho(openingInteractions, player.id)?.id || null,
   };
   sessions.set(thread.id, session);
 
@@ -65,10 +91,73 @@ export async function handleMessage(message) {
   });
 }
 
+export async function resolveSessionRoll(interaction) {
+  const session = sessions.get(interaction.channelId);
+  if (!session) {
+    await interaction.reply({
+      content: 'Use `/roll` inside an active character session.',
+      ephemeral: true,
+    });
+    return;
+  }
+  if (session.player.discord_id && String(interaction.user.id) !== String(session.player.discord_id)) {
+    await interaction.reply({
+      content: 'Only the player who owns this session can resolve its pending move.',
+      ephemeral: true,
+    });
+    return;
+  }
+  if (!session.pendingRoll) {
+    await interaction.reply({
+      content: 'There is no unresolved move right now. Wait for the MC to request a roll.',
+      ephemeral: true,
+    });
+    return;
+  }
+
+  await interaction.deferReply({ ephemeral: session.mechanicsDepth >= 4 });
+  await lock(session, async () => {
+    const request = session.pendingRoll;
+    const state = await readJSON(`players/${session.player.id}/state.json`) || {};
+    const d6 = () => 1 + Math.floor(Math.random() * 6);
+    const record = createRollRecord({
+      request,
+      state,
+      instinct: d6(),
+      other: d6(),
+      sessionId: session.threadId,
+      characterId: session.player.id,
+    });
+    session.pendingRoll = null;
+    session.rolls.push(record);
+    session.messages.push({
+      role: 'user',
+      content: [
+        '[SYSTEM — AUTHORITATIVE ROLL RESULT]',
+        JSON.stringify(record),
+        'Resolve this move now. Do not ask the player to repeat the dice and do not alter the total or result tier.',
+      ].join('\n'),
+    });
+    await interaction.editReply(formatRoll(record, session.mechanicsDepth));
+    await interaction.channel.sendTyping();
+    const response = await generate(session);
+    session.messages.push({ role: 'assistant', content: response });
+    await postMCResponse(interaction.channel, response, session);
+  });
+}
+
 const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
 export const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
 async function postMCResponse(thread, response, session) {
+  const rollRequest = parseRollRequest(response);
+  if (rollRequest) {
+    session.pendingRoll = rollRequest;
+    response = stripRollRequest(response);
+  } else if (/<roll_request>/.test(response)) {
+    console.warn(`[session ${session.threadId}] ignored malformed roll_request`);
+    response = stripRollRequest(response);
+  }
   // Track whether a clean save fired this turn. If yes, suppress
   // _lastTurnSaveLeak even if sanitize finds leftover bare tags — the save
   // already persisted, so a re-emit nudge next turn would trigger the
@@ -269,7 +358,7 @@ function buildCloseRetryPrompt(missing) {
     'Re-emit your closing message now with a COMPLETE <close_session> block, including:',
     '- <character_id>: kebab-case id (firstname-lastname)',
     '- <sheet>: the full sheet you built across onboarding (Identity, Playbook, Stats, Moves, Circle Ratings & Status, Debts, Anchors, Gear, Experience Tier)',
-    '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, active_arc_ids: [], last_session, notes',
+    '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, circle_marks, effects, playbook_state, notes. Omit bot-owned active_arc_ids and last_session.',
     '- <handoff>: full first handoff',
     '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
     '',
@@ -363,6 +452,7 @@ function parseCloseBlock(text) {
     npc_patch:     grabTag(body, 'npc_patch'),
     location_patch: grabTag(body, 'location_patch'),
     relationship_patch: grabTag(body, 'relationship_patch'),
+    debt_patch:    grabTag(body, 'debt_patch'),
     arc_patch:     grabTag(body, 'arc_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
     world_event:   grabTag(body, 'world_event'),
@@ -386,6 +476,7 @@ export function parseSaveOnboardingBlock(text) {
     npc_patch:     grabTag(body, 'npc_patch'),
     location_patch: grabTag(body, 'location_patch'),
     relationship_patch: grabTag(body, 'relationship_patch'),
+    debt_patch:    grabTag(body, 'debt_patch'),
     character_id:     grabTag(body, 'character_id'),
   };
 }
@@ -402,6 +493,8 @@ const STRUCTURED_BARE_TAGS = [
   'npc_patch',
   'location_patch',
   'relationship_patch',
+  'debt_patch',
+  'roll_request',
   'sheet',
   'handoff',
   'arc_patch',
@@ -714,9 +807,12 @@ export function freshCharacterState(id) {
     advances: 0,
     circle_ratings: { Mortalis: 0, Night: 0, Power: 0, Wild: 0 },
     circle_status:  { Mortalis: 0, Night: 0, Power: 0, Wild: 0 },
+    circle_marks:   { Mortalis: false, Night: false, Power: false, Wild: false },
     gear: [],
     active_arc_ids: [],
     last_session: 'session_000',
+    effects: { holds: [], forward: [], ongoing: [] },
+    playbook_state: {},
     notes: '',
   };
 }
@@ -734,6 +830,7 @@ async function processSaveOnboarding(thread, session, save) {
   }
   const id = (save.character_id || '').trim();
   const stamp = new Date().toISOString().slice(0, 10);
+  const publicSessionId = `${id}:session_000`;
   const writes = [];
   const warnings = [];
 
@@ -765,7 +862,7 @@ async function processSaveOnboarding(thread, session, save) {
     try {
       const patches = JSON.parse(save.npc_patch);
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: publicSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
         return result.doc;
       }, `[onboarding] npcs (${stamp})`)]);
@@ -776,7 +873,7 @@ async function processSaveOnboarding(thread, session, save) {
     try {
       const patches = JSON.parse(save.location_patch);
       writes.push(['locations', updateJSON('game/locations.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: publicSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
         return result.doc;
       }, `[onboarding] locations (${stamp})`)]);
@@ -787,11 +884,22 @@ async function processSaveOnboarding(thread, session, save) {
     try {
       const patches = JSON.parse(save.relationship_patch);
       writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: session.threadId, stamp, publicOnly: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: publicSessionId, stamp, publicOnly: true });
         warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
         return result.doc;
       }, `[onboarding] relationships (${stamp})`)]);
     } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
+  }
+
+  if (save.debt_patch) {
+    try {
+      const patches = JSON.parse(save.debt_patch);
+      writes.push(['debts', updateJSON('game/debts.json', (doc) => {
+        const result = mergeDebtPatches(doc, patches, { sessionId: publicSessionId, stamp });
+        warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
+        return result.doc;
+      }, `[onboarding] debts (${stamp})`)]);
+    } catch (e) { warnings.push(`debt_patch: ${e.message}`); }
   }
 
   if (save.events_append) {
@@ -880,6 +988,10 @@ async function processSessionClose(thread, session, close) {
   const stamp = new Date().toISOString().slice(0, 10);
   const writes = [];
   const warnings = [];
+  const okNames = [];
+  const failNames = [];
+  const stateBeforeClose = await readJSON(`players/${id}/state.json`) || freshCharacterState(id);
+  const logicalSessionId = `${id}:${nextSessionId(stateBeforeClose.last_session)}`;
 
   if (close.handoff) {
     writes.push(['handoff', writeFile(
@@ -897,7 +1009,7 @@ async function processSessionClose(thread, session, close) {
     )]);
   }
 
-  let parsedStatePatch = null;
+  let parsedStatePatch = {};
   let profilePatch = null;
   if (close.state_patch) {
     try {
@@ -909,16 +1021,67 @@ async function processSessionClose(thread, session, close) {
         const { profile_patch, ...stateOnly } = parsedStatePatch;
         parsedStatePatch = stateOnly;
       }
-      // RMW so a concurrent edit to state.json (rare for per-player files,
-      // but cheap insurance) merges against the latest state.
-      writes.push(['state', updateJSON(
-        `players/${id}/state.json`,
-        (current) => applyPatch(current || {}, parsedStatePatch),
-        `[session] state for ${session.player.name} (${stamp})`
-      )]);
     } catch (e) {
       warnings.push(`state_patch: ${e.message}`);
+      parsedStatePatch = {};
     }
+  }
+
+  let arcPatches = [];
+  if (close.arc_patch) {
+    try {
+      const parsed = JSON.parse(close.arc_patch);
+      if (!Array.isArray(parsed)) throw new Error('expected an array');
+      arcPatches = parsed;
+    } catch (e) {
+      warnings.push(`arc_patch: ${e.message}`);
+    }
+  }
+
+  // Arcs are reconciled before character state because active_arc_ids is a
+  // derived index. An involved arc ignored for two consecutive sessions gains
+  // one pressure (escalation), while a touched arc resets its ignore counter.
+  let currentArcs = await readJSON('game/arcs.json') || { arcs: [] };
+  const originalArcs = currentArcs;
+  const hadActiveArcs = deriveActiveArcIds(currentArcs, id).length > 0;
+  if (arcPatches.length || hadActiveArcs) {
+    try {
+      await updateJSON('game/arcs.json', (doc) => {
+        currentArcs = reconcileArcs(doc, arcPatches, {
+          characterId: id,
+          sessionId: logicalSessionId,
+          stamp,
+        });
+        return currentArcs;
+      }, `[session] arcs (${stamp})`);
+      okNames.push('arcs');
+    } catch (e) {
+      currentArcs = originalArcs;
+      failNames.push(`arcs: ${e.message}`);
+      console.error(`[session-close] arc reconciliation failed for ${id}: ${e.message}`);
+    }
+  }
+  const activeArcIds = deriveActiveArcIds(currentArcs, id);
+
+  // State is always written on a real close. Session numbering, ranges,
+  // Circle marks from recorded rolls, effects containers, and arc membership
+  // are bot-owned invariants rather than model suggestions.
+  let reconciledState = null;
+  try {
+    await updateJSON(`players/${id}/state.json`, (current) => {
+      const result = reconcileCharacterState(current || stateBeforeClose, parsedStatePatch, {
+        characterId: id,
+        activeArcIds,
+        rolls: session.rolls || [],
+      });
+      reconciledState = result.state;
+      warnings.push(...result.warnings);
+      return result.state;
+    }, `[session] state for ${session.player.name} (${stamp})`);
+    okNames.push('state');
+  } catch (e) {
+    failNames.push(`state: ${e.message}`);
+    console.error(`[session-close] state reconciliation failed for ${id}: ${e.message}`);
   }
 
   if (close.events_append) {
@@ -934,7 +1097,7 @@ async function processSessionClose(thread, session, close) {
     try {
       const patches = JSON.parse(close.npc_patch);
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
         return result.doc;
       }, `[session] npcs (${stamp})`)]);
@@ -945,7 +1108,7 @@ async function processSessionClose(thread, session, close) {
     try {
       const patches = JSON.parse(close.location_patch);
       writes.push(['locations', updateJSON('game/locations.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
         return result.doc;
       }, `[session] locations (${stamp})`)]);
@@ -956,38 +1119,39 @@ async function processSessionClose(thread, session, close) {
     try {
       const patches = JSON.parse(close.relationship_patch);
       writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: session.threadId, stamp, publicOnly: true });
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: logicalSessionId, stamp, publicOnly: true });
         warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
         return result.doc;
       }, `[session] relationships (${stamp})`)]);
     } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
   }
 
-  if (close.arc_patch) {
+  if (close.debt_patch) {
     try {
-      const patches = JSON.parse(close.arc_patch);
-      writes.push(['arcs', updateJSON('game/arcs.json', (doc) => {
-        const d = doc || { arcs: [] };
-        const list = d.arcs || [];
-        for (const p of patches) {
-          const idx = list.findIndex(a => a.id === p.id);
-          if (idx >= 0) list[idx] = { ...list[idx], ...p };
-          else list.push(p);
-        }
-        d.arcs = list;
-        return d;
-      }, `[session] arcs (${stamp})`)]);
-    } catch (e) {
-      warnings.push(`arc_patch: ${e.message}`);
-    }
+      const patches = JSON.parse(close.debt_patch);
+      writes.push(['debts', updateJSON('game/debts.json', (doc) => {
+        const result = mergeDebtPatches(doc, patches, { sessionId: logicalSessionId, stamp });
+        warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
+        return result.doc;
+      }, `[session] debts (${stamp})`)]);
+    } catch (e) { warnings.push(`debt_patch: ${e.message}`); }
   }
 
-  if (close.interactions_patch) {
+  if (close.interactions_patch || session.openingEchoId) {
     try {
-      const next = JSON.parse(close.interactions_patch);
+      const emitted = close.interactions_patch ? JSON.parse(close.interactions_patch) : null;
       writes.push(['interactions', updateJSON(
         'game/interactions.json',
-        () => next,
+        (current) => {
+          const next = emitted || current || { interactions: [] };
+          const list = Array.isArray(next.interactions) ? next.interactions : [];
+          return {
+            ...next,
+            interactions: session.openingEchoId
+              ? list.filter(item => item.id !== session.openingEchoId)
+              : list,
+          };
+        },
         `[session] interactions (${stamp})`
       )]);
     } catch (e) {
@@ -1037,7 +1201,6 @@ async function processSessionClose(thread, session, close) {
   }
 
   const results = await Promise.allSettled(writes.map(([, p]) => p));
-  const okNames = [], failNames = [];
   results.forEach((r, i) => {
     const name = writes[i][0];
     if (r.status === 'fulfilled') okNames.push(name);
@@ -1050,6 +1213,41 @@ async function processSessionClose(thread, session, close) {
       console.error(`[session-close] write '${name}' failed for ${id} (${stamp}):`, reason);
     }
   });
+
+  if (reconciledState?.last_session) {
+    const publicRolls = (session.rolls || []).map(roll => ({
+      move: roll.move,
+      modifier_key: roll.modifier_key,
+      circle: roll.circle,
+      instinct_die: roll.instinct_die,
+      other_die: roll.other_die,
+      modifier: roll.modifier,
+      total: roll.total,
+      result: roll.result,
+      extreme_failure: roll.extreme_failure,
+    }));
+    const receipt = {
+      schema_version: 1,
+      session_id: reconciledState.last_session,
+      character_id: id,
+      date: stamp,
+      rolls: publicRolls,
+      active_arc_ids: reconciledState.active_arc_ids || [],
+      touched_arc_ids: arcPatches.map(item => item.id).filter(Boolean),
+      pacing_audit: auditSession({ messages: session.messages, rolls: session.rolls, close }),
+    };
+    try {
+      await writeFile(
+        `players/${id}/sessions/${reconciledState.last_session}.json`,
+        JSON.stringify(receipt, null, 2) + '\n',
+        `[session] receipt for ${session.player.name} ${reconciledState.last_session} (${stamp})`
+      );
+      okNames.push('receipt');
+    } catch (e) {
+      failNames.push(`receipt: ${e.message}`);
+      console.error(`[session-close] receipt write failed for ${id}: ${e.message}`);
+    }
+  }
 
   const lines = [];
   if (okNames.length) lines.push(`✓ wrote: ${okNames.join(', ')}`);

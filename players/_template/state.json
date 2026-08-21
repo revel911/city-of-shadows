@@ -25,8 +25,20 @@
     "Power":    0,
     "Wild":     0
   },
+  "circle_marks": {
+    "Mortalis": false,
+    "Night":    false,
+    "Power":    false,
+    "Wild":     false
+  },
   "gear": [],
   "active_arc_ids": [],
   "last_session": "session_000",
+  "effects": {
+    "holds": [],
+    "forward": [],
+    "ongoing": []
+  },
+  "playbook_state": {},
   "notes": ""
 }

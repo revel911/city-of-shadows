@@ -1,7 +1,7 @@
 import OpenAI from 'openai';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
-import { buildCanonicalWorldContext } from './world-state.js';
+import { buildCanonicalWorldContext, buildRelevantWorldContext } from './world-state.js';
 
 const MODEL = 'deepseek-chat';
 const MAX_TOKENS = 4096;
@@ -36,66 +36,100 @@ function client() {
   return _deepseek;
 }
 
-let _systemCache = null;
+let _coreSystemCache = null;
+const _referenceCache = new Map();
 
-async function loadSystemPrompt() {
-  const parts = await Promise.all([
-    readFile('mc-reference/mc-instructions.md'),
-    readFile('mc-reference/reference/rules.md'),
-    readFile('mc-reference/reference/basic-moves.md'),
-    readFile('mc-reference/reference/mc-moves.md'),
-    readFile('mc-reference/reference/playbooks.md'),
-    readFile('mc-reference/reference/world-of-darkness/changeling.md'),
-    readFile('mc-reference/reference/world-of-darkness/demon.md'),
-    readFile('mc-reference/reference/world-of-darkness/hunter.md'),
-    readFile('mc-reference/reference/world-of-darkness/mage.md'),
-    readFile('mc-reference/reference/world-of-darkness/orpheus.md'),
-    readFile('mc-reference/reference/world-of-darkness/slasher.md'),
-    readFile('mc-reference/reference/world-of-darkness/vampire.md'),
-    readFile('mc-reference/reference/world-of-darkness/werewolf.md'),
-    readFile('mc-reference/character-creation.md'),
-    readFile('mc-reference/npc-personality-engine.md'),
-    readFile('mc-reference/state-schema.md'),
-    readFile('mc-reference/bot-output-format.md'),
-  ]);
-  const labels = [
-    'MC Instructions',
-    'Rules — Fundamentals of Play',
-    'Basic Moves',
-    'MC Moves',
-    'Playbooks',
-    'WoD — Changeling: The Lost',
-    'WoD — Demon: The Descent',
-    'WoD — Hunter: The Vigil',
-    'WoD — Mage: The Awakening',
-    'WoD — Orpheus',
-    'WoD — Slasher',
-    'WoD — Vampire: The Masquerade',
-    'WoD — Werewolf: The Forsaken',
-    'Character Creation Wizard',
-    'NPC Personality Engine',
-    'state.json Schema',
-    'Bot Output Format',
-  ];
-  const sections = parts
-    .map((content, i) => content && `# ${labels[i]}\n\n${content}`)
-    .filter(Boolean);
-  return sections.join('\n\n---\n\n');
+async function labeledFiles(entries) {
+  const contents = await Promise.all(entries.map(([, path]) => readFile(path)));
+  return contents
+    .map((content, index) => content && `# ${entries[index][0]}\n\n${content}`)
+    .filter(Boolean)
+    .join('\n\n---\n\n');
 }
 
-export async function getSystemPrompt() {
-  if (!_systemCache) _systemCache = await loadSystemPrompt();
-  return _systemCache;
+async function loadCoreSystemPrompt() {
+  return labeledFiles([
+    ['Mechanics Contract', 'mc-reference/MECHANICS-CONTRACT.md'],
+    ['MC Instructions', 'mc-reference/mc-instructions.md'],
+    ['Rules — Fundamentals of Play', 'mc-reference/reference/rules.md'],
+    ['Basic Moves', 'mc-reference/reference/basic-moves.md'],
+    ['MC Moves', 'mc-reference/reference/mc-moves.md'],
+    ['state.json Schema', 'mc-reference/state-schema.md'],
+    ['Bot Output Format', 'mc-reference/bot-output-format.md'],
+  ]);
+}
+
+export function extractPlaybookSection(text, playbook) {
+  if (!text || !playbook) return '';
+  const heading = String(playbook).replace(/^The\s+/i, '').trim();
+  const escaped = heading.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const match = text.match(new RegExp(`^##\\s+The\\s+${escaped}\\s*$([\\s\\S]*?)(?=^##\\s+|(?![\\s\\S]))`, 'im'));
+  return match ? `## The ${heading}${match[1]}`.trim() : '';
+}
+
+function wodExtensionSlug(value) {
+  const normalized = String(value || '').toLowerCase();
+  for (const slug of ['changeling', 'demon', 'hunter', 'mage', 'orpheus', 'slasher', 'vampire', 'werewolf']) {
+    if (normalized.includes(slug)) return slug;
+  }
+  return null;
+}
+
+async function loadReferencePack(profile = {}) {
+  if (profile.isNew) {
+    return labeledFiles([
+      ['Character Creation Wizard', 'mc-reference/character-creation.md'],
+      ['NPC Personality Engine', 'mc-reference/npc-personality-engine.md'],
+      ['All Playbooks — creation only', 'mc-reference/reference/playbooks.md'],
+      ['WoD — Changeling', 'mc-reference/reference/world-of-darkness/changeling.md'],
+      ['WoD — Demon', 'mc-reference/reference/world-of-darkness/demon.md'],
+      ['WoD — Hunter', 'mc-reference/reference/world-of-darkness/hunter.md'],
+      ['WoD — Mage', 'mc-reference/reference/world-of-darkness/mage.md'],
+      ['WoD — Orpheus', 'mc-reference/reference/world-of-darkness/orpheus.md'],
+      ['WoD — Slasher', 'mc-reference/reference/world-of-darkness/slasher.md'],
+      ['WoD — Vampire', 'mc-reference/reference/world-of-darkness/vampire.md'],
+      ['WoD — Werewolf', 'mc-reference/reference/world-of-darkness/werewolf.md'],
+    ]);
+  }
+  const extensionSlug = wodExtensionSlug(profile.wod_extension);
+  const [allPlaybooks, extension] = await Promise.all([
+    readFile('mc-reference/reference/playbooks.md'),
+    extensionSlug ? readFile(`mc-reference/reference/world-of-darkness/${extensionSlug}.md`) : null,
+  ]);
+  const playbook = extractPlaybookSection(allPlaybooks, profile.playbook);
+  return [
+    playbook && `# Active Playbook Only\n\n${playbook}`,
+    extension && `# Active World of Darkness Extension Only\n\n${extension}`,
+  ].filter(Boolean).join('\n\n---\n\n');
+}
+
+export async function getSystemPrompt(profile = {}) {
+  if (!_coreSystemCache) _coreSystemCache = await loadCoreSystemPrompt();
+  const key = profile.isNew
+    ? 'new-character'
+    : `${profile.playbook || 'unknown'}|${wodExtensionSlug(profile.wod_extension) || 'none'}`;
+  if (!_referenceCache.has(key)) _referenceCache.set(key, await loadReferencePack(profile));
+  const reference = _referenceCache.get(key);
+  return reference ? `${_coreSystemCache}\n\n---\n\n${reference}` : _coreSystemCache;
 }
 
 export function resetSystemCache() {
-  _systemCache = null;
+  _coreSystemCache = null;
+  _referenceCache.clear();
 }
 
 function tail(text, n) {
   if (!text) return '';
   const lines = text.split('\n');
   return lines.slice(-n).join('\n');
+}
+
+export function selectInteractionEcho(document, characterId) {
+  const interactions = Array.isArray(document?.interactions) ? document.interactions : [];
+  return interactions.find(item =>
+    item?.status !== 'consumed'
+    && (item?.to === characterId || item?.target_character_id === characterId)
+  ) || null;
 }
 
 async function buildProfileContext(player) {
@@ -153,14 +187,19 @@ export async function buildOpeningContext(player) {
     ].join('\n');
   }
 
-  const [handoff, sheet, state, events, interactions, worldContext] = await Promise.all([
+  const [handoff, sheet, state, events, interactions] = await Promise.all([
     readFile(`players/${player.id}/handoff.md`),
     readFile(`players/${player.id}/sheet.md`),
     readJSON(`players/${player.id}/state.json`),
     readFile('game/events-log.md'),
     readJSON('game/interactions.json'),
-    buildCanonicalWorldContext(),
   ]);
+  const worldContext = await buildRelevantWorldContext({
+    characterId: player.id,
+    state: state || {},
+    handoff: handoff || '',
+  });
+  const interactionEcho = selectInteractionEcho(interactions, player.id);
 
   return [
     `Returning player: ${player.name} (id: ${player.id}).`,
@@ -180,8 +219,10 @@ export async function buildOpeningContext(player) {
     '--- RECENT WORLD EVENTS (tail) ---',
     tail(events, EVENT_TAIL_LINES) || '(empty)',
     '',
-    '--- INTERACTION QUEUE ---',
-    interactions ? JSON.stringify(interactions, null, 2) : '(empty)',
+    '--- ONE RELEVANT PLAYER ECHO ---',
+    interactionEcho
+      ? `${JSON.stringify(interactionEcho, null, 2)}\nSurface this once, naturally, when it fits the opening scene.`
+      : '(none)',
     '',
     worldContext,
     '',
@@ -239,7 +280,7 @@ async function maybeCompact(session) {
 
 export async function generate(session) {
   await maybeCompact(session);
-  const system = await getSystemPrompt();
+  const system = await getSystemPrompt(session.rulesProfile || {});
   const resp = await client().chat.completions.create({
     model: MODEL,
     messages: [{ role: 'system', content: system }, ...session.messages],

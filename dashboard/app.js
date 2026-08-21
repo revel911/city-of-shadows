@@ -805,7 +805,7 @@ function parseThreats(text) {
     const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
     return raw.map(arc => ({
       id:          (arc.id || '').replace(/^arc[-_]0*/i, '').padStart(3, '0'),
-      name:        arc.name || '',
+      name:        arc.title || arc.name || '',
       type:        cap(arc.type || ''),
       escalation:  arc.escalation ? String(arc.escalation) : '',
       status:      cap(arc.status || ''),
@@ -970,7 +970,7 @@ async function renderRelationships() {
       <label class="graph-view-label"><span>View</span><select id="graph-scope"><option value="story">Story ties</option><option value="city">Whole city</option></select></label>
       <label><span>Find</span><input id="graph-search" type="search" placeholder="NPC, character, or place&hellip;"></label>
       <label><span>Hub</span><select id="graph-hub"><option value="">All hubs</option>${hubs.map(h => `<option value="${esc(h.data.id)}">${esc(h.data.label)}</option>`).join('')}</select></label>
-      <label><span>Show</span><select id="graph-kind"><option value="">Everyone</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option></select></label>
+      <label><span>Show</span><select id="graph-kind"><option value="">Everyone</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option><option value="arc">Story arcs</option></select></label>
       <button id="graph-reset" type="button">Reset view</button>
     </div>
     <p class="graph-mode-note" id="graph-mode-note"><strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.</p>
@@ -1001,18 +1001,18 @@ async function renderRelationships() {
       </aside>
     </div>
     <div class="graph-legend" aria-label="Graph legend">
-      <span><i class="legend-dot legend-pc"></i>PC</span><span><i class="legend-dot legend-npc"></i>NPC</span><span><i class="legend-square"></i>Location</span><span><i class="legend-diamond"></i>Hub</span>
+      <span><i class="legend-dot legend-pc"></i>PC</span><span><i class="legend-dot legend-npc"></i>NPC</span><span><i class="legend-square"></i>Location</span><span><i class="legend-diamond"></i>Hub</span><span><i class="legend-arc"></i>Arc</span>
     </div>`;
 
   const edgeColor = type => ({
     family: '#a81616', mentor: '#7b4ac2', anchor: '#b8924a', friend: '#678f55',
-    debt: '#cc2020', controls: '#8c7238', works_at: '#527f91',
+    debt: '#cc2020', controls: '#8c7238', works_at: '#527f91', involves: '#7b4ac2',
   }[type] || '#7b4ac2');
   function nodeVisual(data) {
     if (data.portrait) return data.portrait;
     const initials = data.label.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
-    const ring = data.kind === 'pc' ? '#b8924a' : data.kind === 'location' ? '#527f91' : '#a81616';
-    const fill = data.kind === 'pc' ? '#3b0a13' : data.kind === 'location' ? '#09131a' : '#10091e';
+    const ring = data.kind === 'pc' ? '#b8924a' : data.kind === 'location' ? '#527f91' : data.kind === 'arc' ? '#7b4ac2' : '#a81616';
+    const fill = data.kind === 'pc' ? '#3b0a13' : data.kind === 'location' ? '#09131a' : data.kind === 'arc' ? '#170d29' : '#10091e';
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" fill="${fill}"/><circle cx="48" cy="48" r="43" fill="none" stroke="${ring}" stroke-width="2" opacity=".55"/><text x="48" y="55" text-anchor="middle" fill="#d8d4cf" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">${initials}</text></svg>`;
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
@@ -1083,6 +1083,7 @@ async function renderRelationships() {
       { selector: 'node[kind="pc"]', style: { 'shape': 'ellipse', 'width': 76, 'height': 76, 'background-color': '#7a0e0e', 'border-width': 4, 'border-color': '#b8924a', 'font-size': 13, 'font-weight': 600, 'background-image': 'data(visual)', 'background-fit': 'cover', 'shadow-color': '#b8924a', 'shadow-opacity': 0.28, 'shadow-blur': 16 } },
       { selector: 'node[kind="location"]', style: { 'shape': 'round-rectangle', 'width': 60, 'height': 48, 'background-color': '#0d1720', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#527f91' } },
       { selector: 'node[kind="hub"]', style: { 'shape': 'diamond', 'width': 72, 'height': 72, 'background-color': '#0d0b18', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#8c7238', 'font-size': 13 } },
+      { selector: 'node[kind="arc"]', style: { 'shape': 'hexagon', 'width': 68, 'height': 60, 'background-color': '#170d29', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#7b4ac2', 'font-size': 11 } },
       { selector: 'node[status="deceased"]', style: { 'opacity': 0.42, 'border-style': 'dashed' } },
       { selector: 'edge', style: { 'width': 2, 'line-color': 'data(color)', 'curve-style': 'unbundled-bezier', 'control-point-distances': 32, 'control-point-weights': 0.5, 'target-arrow-shape': 'triangle', 'target-arrow-color': 'data(color)', 'arrow-scale': 0.72, 'label': 'data(label)', 'font-family': 'JetBrains Mono', 'font-size': 7, 'color': '#9a9490', 'text-background-color': '#030305', 'text-background-opacity': 0.92, 'text-background-padding': 3, 'text-rotation': 'autorotate', 'opacity': 0.88 } },
       { selector: 'edge[layer="structural"]', style: { 'width': 1, 'line-style': 'dotted', 'target-arrow-shape': 'none', 'line-color': '#5834a0', 'opacity': 0.22, 'label': '' } },

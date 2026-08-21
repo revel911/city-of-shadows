@@ -1,0 +1,33 @@
+{
+  "last_updated": "2026-08-21",
+  "debts": [
+    {
+      "id": "debt_dara_jacob",
+      "creditor_id": "npc_dara_shin",
+      "debtor_id": "jacob-boone",
+      "amount": 1,
+      "status": "open",
+      "visibility": "public",
+      "source_session": "session_000",
+      "note": "Dara Shin vouched for Jacob in the Night Circle."
+    },
+    {
+      "id": "debt_jacob_priest",
+      "creditor_id": "jacob-boone",
+      "debtor_id": "npc_priest",
+      "amount": 1,
+      "status": "open",
+      "visibility": "public",
+      "source_session": "session_000"
+    },
+    {
+      "id": "debt_jacob_tommy",
+      "creditor_id": "jacob-boone",
+      "debtor_id": "npc_tommy_greer",
+      "amount": 1,
+      "status": "open",
+      "visibility": "public",
+      "source_session": "session_000"
+    }
+  ]
+}

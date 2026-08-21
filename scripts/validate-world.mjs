@@ -1,13 +1,15 @@
 import { readJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
   readJSON('game/arcs.json'),
   readJSON('players/index.json'),
   readJSON('game/relationships.manual.json'),
-  readJSON('game/relationships.derived.json')
+  readJSON('game/relationships.derived.json'),
+  readJSON('game/debts.json'),
+  readJSON('game/interactions.json')
 ]);
 
 const errors = [];
@@ -63,6 +65,8 @@ for (const arc of arcDoc.arcs || []) {
   for (const id of arc.hub_ids || []) if (!ids.hub.has(id)) errors.push(`${arc.id} references missing hub ${id}`);
   for (const id of arc.npc_ids || []) if (!ids.npc.has(id)) errors.push(`${arc.id} references missing NPC ${id}`);
   for (const id of arc.character_ids || []) if (!ids.pc.has(id)) errors.push(`${arc.id} references missing PC ${id}`);
+  if (!Number.isInteger(arc.escalation) || arc.escalation < 0 || arc.escalation > 4) errors.push(`${arc.id}.escalation must be 0-4`);
+  if (arc.ignored_sessions != null && (!Number.isInteger(arc.ignored_sessions) || arc.ignored_sessions < 0 || arc.ignored_sessions > 1)) errors.push(`${arc.id}.ignored_sessions must be 0-1`);
 }
 
 const relationships = [...(manualDoc.relationships || []), ...(derivedDoc.relationships || [])];
@@ -74,10 +78,31 @@ for (const rel of relationships) {
   if (!rel.type || !rel.label) errors.push(`${rel.id} requires type and label`);
 }
 
+const debts = debtDoc.debts || [];
+duplicateValues(debts, 'id', 'Debt');
+for (const debt of debts) {
+  if (!debt.id.startsWith('debt_')) errors.push(`${debt.id} must start with debt_`);
+  if (!entityIds.has(debt.creditor_id)) errors.push(`${debt.id} references missing creditor ${debt.creditor_id}`);
+  if (!entityIds.has(debt.debtor_id)) errors.push(`${debt.id} references missing debtor ${debt.debtor_id}`);
+  if (debt.creditor_id === debt.debtor_id) errors.push(`${debt.id} creditor and debtor must differ`);
+  if (!Number.isInteger(debt.amount) || debt.amount < 0) errors.push(`${debt.id}.amount must be a non-negative integer`);
+  if (debt.visibility !== 'public') errors.push(`${debt.id} is not public; game/debts.json is public`);
+}
+
+const interactions = interactionDoc.interactions || [];
+duplicateValues(interactions, 'id', 'interaction');
+for (const interaction of interactions) {
+  const target = interaction.to || interaction.target_character_id;
+  if (!interaction.id?.startsWith('interaction_')) errors.push(`${interaction.id || '(missing id)'} must start with interaction_`);
+  if (!target || !ids.pc.has(target)) errors.push(`${interaction.id} references missing target PC ${target || '(missing)'}`);
+  if (!interaction.effect) errors.push(`${interaction.id} requires effect`);
+  if (interaction.status !== 'pending') errors.push(`${interaction.id}.status must be pending while queued`);
+}
+
 for (const warning of warnings) console.warn(`WARN: ${warning}`);
 if (errors.length) {
   for (const error of errors) console.error(`ERROR: ${error}`);
   process.exitCode = 1;
 } else {
-  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships.`);
+  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships, ${debts.length} Debts.`);
 }

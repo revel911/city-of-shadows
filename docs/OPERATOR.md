@@ -151,7 +151,14 @@ If someone is already in a session for the character you picked, `/play` blocks 
 | Command | Reply visibility | Behavior |
 |---------|------------------|----------|
 | `/play [character]` | ephemeral | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
-| `/roll` | public | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier on the next session turn. |
+| `/roll` | public | Resolves the pending move inside an active session and injects the authoritative result back into the MC conversation. |
+
+### Narrator regression evaluation
+
+`npm --prefix bot run eval:narrator` runs opt-in live DeepSeek scenarios for move
+requests, authoritative result handling, Debt close patches, and Extreme
+Failures. It requires `DEEPSEEK_API_KEY` and consumes API tokens, so it is not
+part of the normal test suite. Run it after changing prompts or models.
 
 **Player preference commands** (replies are ephemeral, profile is per-Discord-user)
 

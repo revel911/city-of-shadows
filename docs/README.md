@@ -10,6 +10,7 @@ review. Start here instead of scanning the repository alphabetically.
 | Understand the product | [VISION.md](VISION.md) | [../README.md](../README.md) |
 | Understand the runtime | [ARCHITECTURE.md](ARCHITECTURE.md) | [AI-CONTEXT.md](AI-CONTEXT.md) |
 | Understand world files | [DATA-MODEL.md](DATA-MODEL.md) | [../game/README.md](../game/README.md) |
+| Understand mechanics execution | [../mc-reference/MECHANICS-CONTRACT.md](../mc-reference/MECHANICS-CONTRACT.md) | [../mc-reference/reference/basic-moves.md](../mc-reference/reference/basic-moves.md) |
 | Operate or deploy it | [OPERATOR.md](OPERATOR.md) | [ARCHITECTURE.md](ARCHITECTURE.md) |
 | Review with an AI agent | [AI-CONTEXT.md](AI-CONTEXT.md) | [DATA-MODEL.md](DATA-MODEL.md) |
 | See current work | [../CHANGELOG.md](../CHANGELOG.md) | [../ROADMAP.md](../ROADMAP.md) |

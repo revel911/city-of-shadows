@@ -29,11 +29,14 @@ DeepSeek does not browse GitHub. The bot is the retrieval layer:
 2. `bot/handlers/mc.js` assembles the stable MC reference prompt and a per-session
    opening context.
 3. The opening context includes player preferences, handoff/sheet/state, recent
-   events, interactions, and the canonical hub/NPC/location/relationship index.
+   events, one relevant interaction echo, detailed relevant world entities, and
+   an identity-only directory that prevents duplicates.
 4. The bot sends that material to the configured DeepSeek chat model.
-5. The model returns narrative plus a trailing structured save block.
-6. `bot/handlers/session.js` strips the block from player-visible text and writes
-   its patches back to GitHub.
+5. For moves, the model emits a hidden `roll_request`; the bot resolves canonical
+   dice and modifiers and injects the authoritative result back into the session.
+6. The model returns narrative plus a trailing structured save block.
+7. `bot/handlers/session.js` strips structured blocks, reconciles bot-owned
+   invariants, and writes patches plus a public-safe mechanical receipt to GitHub.
 
 The model is stateless between sessions. GitHub files are memory; the bot makes
 that memory available.

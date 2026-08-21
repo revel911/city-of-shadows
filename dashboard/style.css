@@ -1491,11 +1491,12 @@ body.nav-open #nav-overlay { display: block; }
 .graph-detail-links span { padding-left: 0.6rem; border-left: 1px solid var(--border-blood); }
 .graph-legend { display: flex; flex-wrap: wrap; gap: 1rem; padding: 0.65rem 0; color: var(--faded); font: 0.56rem 'JetBrains Mono', monospace; letter-spacing: 0.08em; text-transform: uppercase; }
 .graph-legend span { display: inline-flex; align-items: center; gap: 0.35rem; }
-.legend-dot, .legend-square, .legend-diamond { width: 0.65rem; height: 0.65rem; display: inline-block; border: 2px solid #a74646; background: #332d2c; }
+.legend-dot, .legend-square, .legend-diamond, .legend-arc { width: 0.65rem; height: 0.65rem; display: inline-block; border: 2px solid #a74646; background: #332d2c; }
 .legend-dot { border-radius: 50%; }
 .legend-pc { border-color: #d8aa61; background: #7d252b; }
 .legend-square { border-color: #6f8585; background: #2c3435; }
 .legend-diamond { border-color: #a88756; background: #17191c; transform: rotate(45deg); }
+.legend-arc { border-color: #7b4ac2; background: #170d29; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); }
 
 @media (max-width: 820px) {
   .relationship-header { align-items: start; flex-direction: column; }

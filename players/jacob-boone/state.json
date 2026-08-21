@@ -25,6 +25,12 @@
     "Power": 0,
     "Wild": 0
   },
+  "circle_marks": {
+    "Mortalis": false,
+    "Night": false,
+    "Power": false,
+    "Wild": false
+  },
   "gear": [
     "Boxing wraps, worn",
     "Beat-up Ford F-150",
@@ -33,5 +39,28 @@
   ],
   "active_arc_ids": [],
   "last_session": "session_000",
+  "effects": {
+    "holds": [],
+    "forward": [],
+    "ongoing": []
+  },
+  "playbook_state": {
+    "move_modifiers": {
+      "Persuade an NPC": {
+        "type": "stat",
+        "key": "Spirit"
+      }
+    },
+    "workshop": {
+      "name": "Converted garage",
+      "hub_id": "hub_oregon_hill",
+      "address": null
+    },
+    "territory": {
+      "hub_id": "hub_oregon_hill",
+      "blessings": ["influence", "supported"],
+      "troubles": ["obligations", "encroachment"]
+    }
+  },
   "notes": "Six months post-First Change. Established in Night Circle via Dara Shin's voucher. Oregon Hill territory claimed, blessings and troubles to be established in play. Workshop: converted garage, address TBD."
 }

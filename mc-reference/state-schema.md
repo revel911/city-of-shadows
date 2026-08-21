@@ -144,6 +144,14 @@ Values are signed integers exactly as written on the sheet (e.g. `+2 → 2`, `-1
 
 **Never conflate the two fields.** Rating and Status are different numbers even when they share a value. Recording the wrong column into the wrong field is the most common state.json error.
 
+### Circle advancement marks
+
+`circle_marks` contains one boolean for each Circle. The bot marks the relevant
+Circle when an authoritative roll identifies one. Non-roll triggers such as
+honoring a Debt or an intimacy move must be included in `state_patch`. When all
+four are marked, clear them and take the advance described in
+`reference/basic-moves.md`.
+
 ---
 
 ### Gear
@@ -160,8 +168,29 @@ Transcribe verbatim from the Gear / Resources section of the sheet. Each entry i
 
 | Field | Type | Source |
 |---|---|---|
-| `active_arc_ids` | string[] | Arc IDs from `game/arcs.json` where this character appears in `character_ids`. Update at session close when new arcs open or old ones resolve. |
-| `last_session` | string | `"session_NNN"` zero-padded (e.g. `"session_001"`). Update at session close. |
+| `active_arc_ids` | string[] | Derived by the bot from `game/arcs.json.character_ids`. The MC does not patch it. |
+| `last_session` | string | `"session_NNN"` zero-padded (e.g. `"session_001"`). Incremented by the bot on every real close. |
+
+### Structured effects and playbook state
+
+`effects` owns temporary mechanical carryover:
+
+```json
+{
+  "holds": [{ "source": "The Best Laid Plans", "amount": 2 }],
+  "forward": [{ "amount": 1, "applies_to": "Keep Your Cool" }],
+  "ongoing": [{ "amount": 1, "applies_to": "safety in a prevented fight" }]
+}
+```
+
+`playbook_state` is a namespaced object for durable playbook resources such as a
+Veteran's workshop, a Wolf's territory, a Vamp's Web, or a Wizard's Ward. Do not
+add a new top-level state field for each playbook.
+
+If a character move changes the stat used by a basic move, record it under
+`playbook_state.move_modifiers`, keyed by the canonical move name. Example:
+`{"Persuade an NPC":{"type":"stat","key":"Spirit"}}`. These character-specific
+overrides take precedence over the basic move's default.
 
 ---
 
@@ -206,8 +235,10 @@ Update at **session close**, after writing `handoff.md` and before confirming sa
 - `xp` — update to current marks
 - `advances` — increment if an advance was taken
 - `circle_ratings` / `circle_status` — update if a circle-related advance was taken
-- `active_arc_ids` — add newly opened arcs; remove fully resolved arcs
-- `last_session` — increment
+- `active_arc_ids` — bot-derived; do not emit
+- `last_session` — bot-owned; do not emit
+- `circle_marks` — patch only non-roll advancement triggers
+- `effects` / `playbook_state` — update structured mechanical carryover
 - `notes` — rewrite to reflect current state
 
 Fields that rarely change: `stats`, `gear`, `character_id`, `character_name`, `playbook`, `wod_extension`.

@@ -225,7 +225,7 @@ When the player confirms — or at any earlier trigger below — emit a `<save_o
 
 - `<character_id>` — required
 - `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
-- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `gear`, `active_arc_ids: []`, `last_session: "session_000"`, `notes`. (Safety is **not** part of state.json — it lives on the player profile.)
+- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `circle_marks`, `gear`, `effects`, `playbook_state`, and `notes`. Omit bot-owned `active_arc_ids` and `last_session`. (Safety is **not** part of state.json — it lives on the player profile.)
 - `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
 - `<location_patch>` — any new named place established during onboarding
 - `<relationship_patch>` — public Debts, Anchors, family, mentor, employer, and location ties

@@ -31,7 +31,7 @@ Sessions are async — start, stop, come back tomorrow. When you close a session
 | Command | What It Does |
 |---------|--------------|
 | `/play [character]` | Opens a private session thread with the MC. With no arg, replies with a character-picker menu. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding. |
-| `/roll` | Rolls raw 2d6. The left die is the Instinct Die. The MC applies the stat modifier. |
+| `/roll` | Resolves the MC's pending move from canonical character state, including the Instinct Die, modifier cap, result tier, and Extreme Failure trigger. |
 
 **Your preferences** (player-scoped, replies are private to you)
 

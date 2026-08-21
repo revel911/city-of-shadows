@@ -2,14 +2,15 @@
 
 This document tells the MC how to format its output so the bot can read it. It supplements `mc-instructions.md`.
 
-The bot is a Discord client that posts your messages directly to the player. Anything you write is sent verbatim **except** two structured blocks, which are parsed, processed, and stripped before posting:
+The bot is a Discord client that posts your messages directly to the player. Anything you write is sent verbatim **except** the structured blocks below, which are parsed, processed, and stripped before posting:
 
 - `<save_onboarding>` — emitted **once**, during onboarding, to persist the new character before play begins.
 - `<close_session>` — emitted at session end to persist the handoff and final state, and to archive the thread.
+- `<roll_request>` — emitted on a move-triggering turn so `/roll` can resolve canonical dice and modifiers.
 
 ## Normal Turn
 
-Just write narrative. The bot posts your message and waits for the player's reply. There is no slash-command vocabulary you need to use — the player rolls dice using Discord's `/roll` command (which produces raw 2d6), and you apply the modifier in the next turn.
+Write narrative normally. When a move triggers, follow `MECHANICS-CONTRACT.md`: emit one JSON `<roll_request>`, ask the player to use `/roll`, and stop before the outcome. The bot strips the request, resolves canonical dice and modifiers, then injects the authoritative result into your next turn.
 
 Keep messages under ~1900 characters where possible. Longer messages get split on paragraph/line boundaries.
 
@@ -82,6 +83,10 @@ The `<save_onboarding>` block MUST be the **first content** in your response, be
 [ { "id": "rel_public_example", "source": "npc_example", "target": "loc_example", "type": "works_at", "label": "Works at", "direction": "outbound", "visibility": "public" } ]
 </relationship_patch>
 
+<debt_patch>
+[ { "id": "debt_joe_ximena", "creditor_id": "joe-nakama", "debtor_id": "npc_ximena_reyes", "amount": 1, "status": "open", "visibility": "public" } ]
+</debt_patch>
+
 <events_append>
 ... optional: if the character's arrival is publicly visible to the city ...
 </events_append>
@@ -96,7 +101,8 @@ The `<save_onboarding>` block MUST be the **first content** in your response, be
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
 - **`<npc_patch>`** — required if any NPCs were introduced during onboarding (Phase 9 Debts & Anchors, in particular). Full personality-engine scores.
 - **`<location_patch>`** — include only when onboarding establishes a new named place not already present in the canonical world index.
-- **`<relationship_patch>`** — include public Debts, Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties.
+- **`<relationship_patch>`** — include public Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties.
+- **`<debt_patch>`** — authoritative public Debt amounts. Every entry uses a stable `debt_*` ID plus creditor, debtor, amount, status, and `visibility: "public"`.
 - **`<events_append>`** — optional. Use only if the character's arrival is publicly visible.
 
 The bot validates the save block before writing. If `character_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
@@ -164,6 +170,12 @@ Everything inside the block is parsed by the bot and written to GitHub as separa
 ]
 </relationship_patch>
 
+<debt_patch>
+[
+  { "id": "debt_alex_ada", "creditor_id": "alex-chen", "debtor_id": "npc_ada_thorne", "amount": 0, "status": "settled", "visibility": "public" }
+]
+</debt_patch>
+
 <arc_patch>
 [
   { "id": "arc-003", "escalation": 3, "status": "active" }
@@ -172,7 +184,7 @@ Everything inside the block is parsed by the bot and written to GitHub as separa
 
 <interactions_patch>
 { "interactions": [
-  { "from": "alex-chen", "to": "robert-lagrange", "effect": "left a sealed letter at the bar" }
+  { "id": "interaction_alex_robert_letter", "from": "alex-chen", "to": "robert-lagrange", "effect": "left a sealed letter at the bar", "status": "pending" }
 ] }
 </interactions_patch>
 
@@ -187,13 +199,14 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<character_id>`** — required. Use the kebab-case folder name (e.g. `alex-chen`), not the display name.
 - **`<handoff>`** — full replacement file, not a diff.
 - **`<sheet>`** — full replacement file. Only emit when the sheet actually changes (character creation, advancement, gear shift). Omit otherwise.
-- **`<state_patch>`** — partial JSON. Object fields are merged one level deep (so `{"stats":{"Mind":2}}` updates only Mind). Scalar fields replace.
+- **`<state_patch>`** — partial JSON for fiction-driven changes. Do not emit bot-owned `last_session` or `active_arc_ids`; the close reconciler writes those. Use `effects` and namespaced `playbook_state` for mechanical carryover.
 - **`<events_append>`** — text appended to the end of `events-log.md`. Use markdown. Include a date/session header.
 - **`<npc_patch>`** — array. Each entry must have a canonical `npc_*` ID. The bot also resolves an exact canonical name match so a mistaken new ID cannot duplicate an existing NPC. Include only changed fields for an existing NPC.
 - **`<location_patch>`** — array of partial location records keyed by canonical `loc_*` IDs. Use this when a named place is introduced or its controller, status, atmosphere, or notes change. A location belongs to exactly one canonical `hub_id`.
 - **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.
-- **`<arc_patch>`** — array. Each entry must have `id`. Existing arcs are merged; new ones are appended.
-- **`<interactions_patch>`** — full replacement of the interactions document. Must be a JSON object with shape `{ "interactions": [...] }`. Omit to leave the queue unchanged.
+- **`<debt_patch>`** — array of public Debt changes keyed by `debt_*` ID. Setting `amount` to zero settles a Debt.
+- **`<arc_patch>`** — array. Each entry must have `id`. Including an arc marks it touched and resets its ignored-session pressure counter.
+- **`<interactions_patch>`** — full replacement of the interactions document. Must be a JSON object with shape `{ "interactions": [...] }`. Every entry needs a stable `interaction_*` ID, target PC (`to`), effect, and `status: "pending"`. The bot surfaces at most one relevant entry and removes it at close. Omit to leave the queue unchanged.
 - **`<world_event>`** — single short line. Posted to the configured `#world-events` channel if one is set. Omit for purely private scenes.
 
 Any field you omit is skipped — the bot only writes fields that are present. If a field's content does not parse (bad JSON), the bot reports the error in-thread and continues with the rest.

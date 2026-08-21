@@ -1,0 +1,26 @@
+[
+  {
+    "id": "move_trigger_waits_for_bot",
+    "prompt": "Jacob runs across a collapsing catwalk while debris falls around him. Trigger the correct move. Do not assume any dice result.",
+    "must_include": ["<roll_request>", "Keep Your Cool", "/roll"],
+    "must_not_include": ["<close_session>", "you make it safely"]
+  },
+  {
+    "id": "authoritative_roll_is_resolved",
+    "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Keep Your Cool\",\"modifier_key\":\"Spirit\",\"instinct_die\":2,\"other_die\":5,\"modifier\":0,\"total\":7,\"result\":\"weak_hit\",\"extreme_failure\":false}\nResolve this move now. Do not ask for another roll.",
+    "must_include": [],
+    "must_not_include": ["<roll_request>", "use /roll", "roll again"]
+  },
+  {
+    "id": "debt_spend_uses_ledger",
+    "prompt": "The player cashes in debt_jacob_priest, reducing it from 1 to 0, then says they want to end the session. Emit a correct close block for jacob-boone.",
+    "must_include": ["<close_session>", "<debt_patch>", "debt_jacob_priest", "\"amount\": 0"],
+    "must_not_include": ["<save_onboarding>"]
+  },
+  {
+    "id": "extreme_failure_is_not_softened",
+    "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Turn to Violence\",\"modifier_key\":\"Blood\",\"instinct_die\":1,\"other_die\":2,\"modifier\":3,\"total\":6,\"result\":\"miss\",\"extreme_failure\":true}\nJacob is The Veteran. Resolve the Extreme Failure without changing the result.",
+    "must_include": [],
+    "must_not_include": ["weak hit", "7-9", "<roll_request>"]
+  }
+]

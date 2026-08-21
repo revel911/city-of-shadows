@@ -1864,6 +1864,230 @@
         "x": 0,
         "y": 0
       }
+    },
+    {
+      "data": {
+        "id": "arc-001",
+        "label": "The Collector",
+        "kind": "arc",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "escalating",
+        "subtype": "threat",
+        "escalation": 3,
+        "details": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity."
+      },
+      "position": {
+        "x": 703,
+        "y": -866
+      }
+    },
+    {
+      "data": {
+        "id": "arc-002",
+        "label": "The Fae-Adjacent Specimen",
+        "kind": "arc",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "personal",
+        "escalation": 2,
+        "details": "A fae-adjacent creature — old, a things-that-remember entity — slipped into temporal displacement inside an Overwrite pocket in a Shockoe Bottom warehouse. It was sheltered there by Maren Voss's ritual circle because it asked for help; it was hiding from The Collector. Weakness: cannot tolerate unresolved questions. Five-day retrieval deadline active from 2026-04-24."
+      },
+      "position": {
+        "x": -784,
+        "y": -725
+      }
+    },
+    {
+      "data": {
+        "id": "arc-003",
+        "label": "Maren Voss's Ritual Circle",
+        "kind": "arc",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 1,
+        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can."
+      },
+      "position": {
+        "x": 800,
+        "y": -850
+      }
+    },
+    {
+      "data": {
+        "id": "arc-004",
+        "label": "Petra Holt & Unnamed Principals",
+        "kind": "arc",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 2,
+        "details": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem."
+      },
+      "position": {
+        "x": -197,
+        "y": 684
+      }
+    },
+    {
+      "data": {
+        "id": "arc-005",
+        "label": "Consilium Politics & the Engineered Awakening Program",
+        "kind": "arc",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 1,
+        "details": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified."
+      },
+      "position": {
+        "x": 1317,
+        "y": 403
+      }
+    },
+    {
+      "data": {
+        "id": "arc-006",
+        "label": "The Compromised Hunter Network",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "escalating",
+        "subtype": "threat",
+        "escalation": 3,
+        "details": "Someone senior inside a Richmond hunter network accessed an operative's father's operational files and weaponized them to send the operative to kill a protected woman. A parallel inside-investigation is underway. The handler failed to produce the agreed password on the night of the warehouse op — compromised or impostor. A sealed field-research case from the elder Voss may contain the traitor's name."
+      },
+      "position": {
+        "x": 61,
+        "y": 101
+      }
+    },
+    {
+      "data": {
+        "id": "arc-007",
+        "label": "The Tobacco Warehouse Operation",
+        "kind": "arc",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "threat",
+        "escalation": 2,
+        "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site."
+      },
+      "position": {
+        "x": 734,
+        "y": -896
+      }
+    },
+    {
+      "data": {
+        "id": "arc-008",
+        "label": "The Unknown Text Sender",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 1,
+        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position."
+      },
+      "position": {
+        "x": 780,
+        "y": -765
+      }
+    },
+    {
+      "data": {
+        "id": "arc-009",
+        "label": "The Ghost of a Dead Vampire",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "personal",
+        "escalation": 1,
+        "details": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already."
+      },
+      "position": {
+        "x": 794,
+        "y": 783
+      }
+    },
+    {
+      "data": {
+        "id": "arc-010",
+        "label": "The General's Coup",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 2,
+        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger."
+      },
+      "position": {
+        "x": 1474,
+        "y": -12
+      }
+    },
+    {
+      "data": {
+        "id": "arc-011",
+        "label": "The Breach in Serrano's Domain",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "threat",
+        "escalation": 2,
+        "details": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown."
+      },
+      "position": {
+        "x": -27,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "arc-012",
+        "label": "The Overwrite",
+        "kind": "arc",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "escalating",
+        "subtype": "city",
+        "escalation": 3,
+        "details": "A city-wide supernatural phenomenon rewriting physical and historical reality across all of Richmond's hubs. Shockoe Bottom: buildings appear/disappear, street signs shift. Downtown: legal records rewrite themselves. Creighton Court: temporal displacement, different eras coexist. The University: impossible research results, contradictory academic records. Oregon Hill: industrial echoes, phantom work shifts."
+      },
+      "position": {
+        "x": 728,
+        "y": -818
+      }
+    },
+    {
+      "data": {
+        "id": "arc-013",
+        "label": "Creighton Court Redevelopment & Temporal Displacement",
+        "kind": "arc",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "slow-burn",
+        "escalation": 1,
+        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago."
+      },
+      "position": {
+        "x": -712,
+        "y": 805
+      }
+    },
+    {
+      "data": {
+        "id": "arc-014",
+        "label": "A Nameless Ghost — Identity & Anchor",
+        "kind": "arc",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "personal",
+        "escalation": 1,
+        "details": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has."
+      },
+      "position": {
+        "x": 1533,
+        "y": 39
+      }
     }
   ],
   "edges": [
@@ -3012,7 +3236,7 @@
         "source": "npc_dara_shin",
         "target": "jacob-boone",
         "type": "mentor",
-        "label": "Mentor · owed 1 Debt",
+        "label": "Mentor",
         "direction": "outbound",
         "layer": "manual"
       }
@@ -3045,7 +3269,7 @@
         "source": "npc_tommy_greer",
         "target": "jacob-boone",
         "type": "friend",
-        "label": "Childhood friend · owes 1 Debt",
+        "label": "Childhood friend",
         "direction": "outbound",
         "layer": "manual"
       }
@@ -3055,10 +3279,463 @@
         "id": "rel_priest_jacob",
         "source": "npc_priest",
         "target": "jacob-boone",
+        "type": "associate",
+        "label": "The Nail connection",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-001_hub_shockoe_bottom",
+        "source": "arc-001",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-001_hub_downtown",
+        "source": "arc-001",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-001_hub_university",
+        "source": "arc-001",
+        "target": "hub_university",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-001_npc_maren_voss",
+        "source": "arc-001",
+        "target": "npc_maren_voss",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-002_hub_shockoe_bottom",
+        "source": "arc-002",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-002_npc_petra_holt",
+        "source": "arc-002",
+        "target": "npc_petra_holt",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-002_npc_maren_voss",
+        "source": "arc-002",
+        "target": "npc_maren_voss",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-003_hub_shockoe_bottom",
+        "source": "arc-003",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-003_hub_university",
+        "source": "arc-003",
+        "target": "hub_university",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-003_npc_maren_voss",
+        "source": "arc-003",
+        "target": "npc_maren_voss",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-004_hub_university",
+        "source": "arc-004",
+        "target": "hub_university",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-004_hub_shockoe_bottom",
+        "source": "arc-004",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-004_npc_petra_holt",
+        "source": "arc-004",
+        "target": "npc_petra_holt",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-005_hub_university",
+        "source": "arc-005",
+        "target": "hub_university",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-005_npc_dr_olave",
+        "source": "arc-005",
+        "target": "npc_dr_olave",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-005_npc_marcus_voss",
+        "source": "arc-005",
+        "target": "npc_marcus_voss",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-005_npc_ingrid_voss",
+        "source": "arc-005",
+        "target": "npc_ingrid_voss",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-005_npc_nadia_vasek",
+        "source": "arc-005",
+        "target": "npc_nadia_vasek",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-006_hub_downtown",
+        "source": "arc-006",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-006_hub_shockoe_bottom",
+        "source": "arc-006",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-006_npc_henrik_vael",
+        "source": "arc-006",
+        "target": "npc_henrik_vael",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-006_npc_roz_czerny",
+        "source": "arc-006",
+        "target": "npc_roz_czerny",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-006_npc_linh_pham",
+        "source": "arc-006",
+        "target": "npc_linh_pham",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-007_hub_shockoe_bottom",
+        "source": "arc-007",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-007_hub_downtown",
+        "source": "arc-007",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-007_npc_linh_pham",
+        "source": "arc-007",
+        "target": "npc_linh_pham",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-008_hub_downtown",
+        "source": "arc-008",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-008_hub_shockoe_bottom",
+        "source": "arc-008",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-009_hub_downtown",
+        "source": "arc-009",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-010_hub_downtown",
+        "source": "arc-010",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-010_npc_the_general",
+        "source": "arc-010",
+        "target": "npc_the_general",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-011_hub_downtown",
+        "source": "arc-011",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-011_npc_aldric_serrano",
+        "source": "arc-011",
+        "target": "npc_aldric_serrano",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-012_hub_shockoe_bottom",
+        "source": "arc-012",
+        "target": "hub_shockoe_bottom",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-012_hub_downtown",
+        "source": "arc-012",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-012_hub_creighton_court",
+        "source": "arc-012",
+        "target": "hub_creighton_court",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-012_hub_university",
+        "source": "arc-012",
+        "target": "hub_university",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-012_hub_oregon_hill",
+        "source": "arc-012",
+        "target": "hub_oregon_hill",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-013_hub_creighton_court",
+        "source": "arc-013",
+        "target": "hub_creighton_court",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-013_npc_sister_catherine_burke",
+        "source": "arc-013",
+        "target": "npc_sister_catherine_burke",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-014_hub_downtown",
+        "source": "arc-014",
+        "target": "hub_downtown",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_arc-014_npc_vera_medium",
+        "source": "arc-014",
+        "target": "npc_vera_medium",
+        "type": "involves",
+        "label": "Involves",
+        "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "debt_dara_jacob",
+        "source": "jacob-boone",
+        "target": "npc_dara_shin",
         "type": "debt",
         "label": "Owes 1 Debt",
         "direction": "outbound",
-        "layer": "manual"
+        "layer": "debt"
+      }
+    },
+    {
+      "data": {
+        "id": "debt_jacob_priest",
+        "source": "npc_priest",
+        "target": "jacob-boone",
+        "type": "debt",
+        "label": "Owes 1 Debt",
+        "direction": "outbound",
+        "layer": "debt"
+      }
+    },
+    {
+      "data": {
+        "id": "debt_jacob_tommy",
+        "source": "npc_tommy_greer",
+        "target": "jacob-boone",
+        "type": "debt",
+        "label": "Owes 1 Debt",
+        "direction": "outbound",
+        "layer": "debt"
       }
     }
   ]

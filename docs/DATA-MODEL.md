@@ -23,6 +23,8 @@ There must be one authoritative definition for each fact. In particular:
   `hubs/index.json`.
 - Public relationship truth is the union of `relationships.manual.json` and
   `relationships.derived.json`.
+- Public Debt amounts live only in `game/debts.json`; relationship labels may
+  describe a social tie but are not a Debt ledger.
 - Character mechanics live under `players/<character-id>/`.
 
 Reference documents may describe schemas, but must not duplicate named NPC facts.
@@ -36,6 +38,7 @@ Reference documents may describe schemas, but must not duplicate named NPC facts
 | NPC | `npc_<slug>` | `npc_celestine_morrow` |
 | Relationship | `rel_<slug>` | `rel_celestine_morrows_books` |
 | Arc | `arc-NNN` | `arc-012` |
+| Debt | `debt_<slug>` | `debt_jacob_priest` |
 | Player character | kebab-case | `jacob-boone` |
 
 IDs are permanent. Rename display names without changing IDs. A close-block patch
@@ -50,6 +53,7 @@ must reuse the canonical ID shown in the opening world index.
 | `game/relationships.manual.json` | Human operator | Hand-curated; never changed by the MC |
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |
 | `game/arcs.json` | Bot/MC | Partial records merged by ID |
+| `game/debts.json` | Bot/MC | Public Debt records merged by stable ID |
 | `game/events-log.md` | Bot/MC | Append-only public chronology |
 | `game/interactions.json` | Bot/MC | Full queue replacement |
 | `hubs/index.json` | Human operator | Canonical hub registry |
@@ -58,6 +62,7 @@ must reuse the canonical ID shown in the opening world index.
 | `players/<id>/handoff.md` | Bot/MC | Full replacement at session close |
 | `players/<id>/state.json` | Bot/MC | Partial mechanical merge |
 | `players/<id>/sheet.md` | Bot/MC | Full replacement when changed |
+| `players/<id>/sessions/session_NNN.json` | Bot | Append-only public-safe mechanical receipt |
 
 ## References
 
@@ -67,6 +72,7 @@ must reuse the canonical ID shown in the opening world index.
 - Arc NPC, hub, and character IDs must resolve.
 - Relationship `source` and `target` may point to a hub, location, NPC, arc, or PC,
   but both endpoints must exist.
+- Debt `creditor_id` and `debtor_id` must resolve to an NPC or PC and must differ.
 
 An NPC can distinguish:
 
@@ -76,9 +82,14 @@ An NPC can distinguish:
 
 ## Patch rules
 
-`npc_patch`, `location_patch`, and `relationship_patch` are arrays of partial
+`npc_patch`, `location_patch`, `relationship_patch`, `debt_patch`, and `arc_patch` are arrays of partial
 records. Shared-file writes use read-modify-write with conflict retries. The bot
 adds `last_updated` and `updated_by_session` to patched records.
+
+At session close the bot, rather than the narrator, increments `last_session`,
+validates mechanical ranges, derives `active_arc_ids`, reconciles arc pressure,
+and writes the session receipt. See
+[`../mc-reference/MECHANICS-CONTRACT.md`](../mc-reference/MECHANICS-CONTRACT.md).
 
 Identity fields should not be casually rewritten. Status, current location,
 relationships, notes, and voice evolution are ordinary session changes.

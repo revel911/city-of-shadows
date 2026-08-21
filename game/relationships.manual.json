@@ -10,10 +10,10 @@
     { "id": "rel_olave_hibbs", "source": "npc_dr_olave", "target": "loc_hibbs_hall", "type": "works_at", "label": "Office", "direction": "outbound", "visibility": "public", "source_session": "canonical" },
     { "id": "rel_tanaka_harris", "source": "npc_prof_tanaka", "target": "loc_harris_hall", "type": "works_at", "label": "Office", "direction": "outbound", "visibility": "public", "source_session": "canonical" },
     { "id": "rel_catherine_resource_center", "source": "npc_sister_catherine_burke", "target": "loc_east_end_family_resource_center", "type": "controls", "label": "Community anchor", "direction": "outbound", "visibility": "public", "source_session": "canonical" },
-    { "id": "rel_dara_jacob", "source": "npc_dara_shin", "target": "jacob-boone", "type": "mentor", "label": "Mentor · owed 1 Debt", "direction": "outbound", "visibility": "public", "source_session": "session_000" },
+    { "id": "rel_dara_jacob", "source": "npc_dara_shin", "target": "jacob-boone", "type": "mentor", "label": "Mentor", "direction": "outbound", "visibility": "public", "source_session": "session_000" },
     { "id": "rel_ray_jacob", "source": "npc_ray_cutler", "target": "jacob-boone", "type": "anchor", "label": "Trainer · Anchor", "direction": "outbound", "visibility": "public", "source_session": "session_000" },
     { "id": "rel_carla_jacob", "source": "npc_carla_boone", "target": "jacob-boone", "type": "family", "label": "Sister · Anchor", "direction": "undirected", "visibility": "public", "source_session": "session_000" },
-    { "id": "rel_tommy_jacob", "source": "npc_tommy_greer", "target": "jacob-boone", "type": "friend", "label": "Childhood friend · owes 1 Debt", "direction": "outbound", "visibility": "public", "source_session": "session_000" },
-    { "id": "rel_priest_jacob", "source": "npc_priest", "target": "jacob-boone", "type": "debt", "label": "Owes 1 Debt", "direction": "outbound", "visibility": "public", "source_session": "session_000" }
+    { "id": "rel_tommy_jacob", "source": "npc_tommy_greer", "target": "jacob-boone", "type": "friend", "label": "Childhood friend", "direction": "outbound", "visibility": "public", "source_session": "session_000" },
+    { "id": "rel_priest_jacob", "source": "npc_priest", "target": "jacob-boone", "type": "associate", "label": "The Nail connection", "direction": "outbound", "visibility": "public", "source_session": "session_000" }
   ]
 }

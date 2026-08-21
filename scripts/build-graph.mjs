@@ -1,12 +1,14 @@
 import { hashNumber, readJSON, writeJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
   readJSON('players/index.json'),
   readJSON('game/relationships.manual.json'),
-  readJSON('game/relationships.derived.json')
+  readJSON('game/relationships.derived.json'),
+  readJSON('game/arcs.json'),
+  readJSON('game/debts.json')
 ]);
 
 const hubPositions = new Map();
@@ -53,6 +55,18 @@ players.forEach((pc, index) => nodes.push({
   position: { x: (index - (players.length - 1) / 2) * 180, y: 0 }
 }));
 
+for (const arc of arcDoc.arcs || []) {
+  const hubId = arc.hub_ids?.[0] || '';
+  nodes.push({
+    data: {
+      id: arc.id, label: arc.title, kind: 'arc', hub_id: hubId,
+      status: arc.status || 'active', subtype: arc.type || 'arc',
+      escalation: arc.escalation || 0, details: arc.summary || ''
+    },
+    position: positionNear(hubId, arc.id, 560, 120)
+  });
+}
+
 const edges = [];
 for (const location of locationDoc.locations || []) edges.push({
   data: { id: `edge_${location.id}_${location.hub_id}`, source: location.id, target: location.hub_id, type: 'in_hub', label: 'In', layer: 'structural' }
@@ -69,8 +83,21 @@ for (const rel of authored.filter(rel => rel.visibility === 'public')) edges.pus
   data: { id: rel.id, source: rel.source, target: rel.target, type: rel.type, label: rel.label, direction: rel.direction || 'outbound', layer: manualDoc.relationships?.some(x => x.id === rel.id) ? 'manual' : 'derived' }
 });
 
+for (const arc of arcDoc.arcs || []) {
+  for (const target of [...(arc.hub_ids || []), ...(arc.npc_ids || []), ...(arc.character_ids || [])]) edges.push({
+    data: { id: `edge_${arc.id}_${target}`, source: arc.id, target, type: 'involves', label: 'Involves', layer: 'arc' }
+  });
+}
+
+for (const debt of (debtDoc.debts || []).filter(item => item.visibility === 'public' && item.amount > 0)) edges.push({
+  data: {
+    id: debt.id, source: debt.debtor_id, target: debt.creditor_id, type: 'debt',
+    label: `Owes ${debt.amount} Debt${debt.amount === 1 ? '' : 's'}`, direction: 'outbound', layer: 'debt'
+  }
+});
+
 await writeJSON('dashboard/data/world-graph.json', {
-  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated].filter(Boolean).sort().at(-1),
+  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, debtDoc.last_updated].filter(Boolean).sort().at(-1),
   derived_through: derivedDoc.derived_through || null,
   nodes,
   edges
