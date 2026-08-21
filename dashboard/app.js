@@ -1089,6 +1089,8 @@ async function renderRelationships() {
       { selector: 'edge[layer="structural"]', style: { 'width': 1, 'line-style': 'dotted', 'target-arrow-shape': 'none', 'line-color': '#5834a0', 'opacity': 0.22, 'label': '' } },
       { selector: 'edge[direction="undirected"]', style: { 'target-arrow-shape': 'none' } },
       { selector: '.context-hidden, .filter-hidden', style: { 'display': 'none' } },
+      { selector: 'node.filter-context', style: { 'opacity': 0.52, 'text-opacity': 0.72, 'border-style': 'dashed' } },
+      { selector: 'edge.filter-context-edge', style: { 'opacity': 0.62 } },
       { selector: '.dimmed', style: { 'opacity': 0.08, 'text-opacity': 0 } },
       { selector: '.focused', style: { 'border-color': '#d8aa61', 'border-width': 5, 'z-index': 999 } },
     ],
@@ -1110,43 +1112,121 @@ async function renderRelationships() {
     else cy.fit(visible, 80);
   }
 
-  function applyFilters({ fit = false } = {}) {
+  let activeLayout = null;
+  function reflowVisible({ fit = false } = {}) {
+    if (activeLayout) activeLayout.stop();
+    const visible = cy.elements().filter(element => !element.hasClass('context-hidden') && !element.hasClass('filter-hidden'));
+    const visibleNodes = visible.nodes();
+    if (!visibleNodes.length) return;
+    activeLayout = visible.layout({
+      name: 'cose',
+      animate: false,
+      randomize: false,
+      nodeDimensionsIncludeLabels: true,
+      componentSpacing: 150,
+      nodeRepulsion: () => 900000,
+      nodeOverlap: 60,
+      idealEdgeLength: () => visibleNodes.length > 70 ? 165 : 190,
+      edgeElasticity: () => 80,
+      nestingFactor: 1.2,
+      gravity: 0.16,
+      numIter: 1800,
+      initialTemp: 160,
+      coolingFactor: 0.96,
+      minTemp: 1,
+    });
+    activeLayout.one('layoutstop', () => {
+      activeLayout = null;
+      if (fit) requestAnimationFrame(() => fitVisible(280));
+    });
+    activeLayout.run();
+  }
+
+  function applyFilters({ fit = false, reflow = false } = {}) {
     const storyOnly = scope.value === 'story';
     const query = search.value.trim().toLowerCase();
     const hubId = hub.value;
     const entityKind = kind.value;
+    const filtering = Boolean(query || hubId || entityKind);
+    const eligibleNodeIds = new Set();
+    const matchingNodeIds = new Set();
+    const visibleNodeIds = new Set();
+
+    cy.nodes().forEach(node => {
+      const data = node.data();
+      if (storyOnly && !storyNodeIds.has(data.id)) return;
+      eligibleNodeIds.add(data.id);
+      const matchesQuery = !query || data.label.toLowerCase().includes(query) || String(data.details || '').toLowerCase().includes(query);
+      const matchesHub = !hubId || data.hub_id === hubId || data.id === hubId;
+      const matchesKind = !entityKind || data.kind === entityKind;
+      if (matchesQuery && matchesHub && matchesKind) matchingNodeIds.add(data.id);
+    });
+
+    if (!filtering) {
+      eligibleNodeIds.forEach(id => visibleNodeIds.add(id));
+    } else {
+      matchingNodeIds.forEach(id => visibleNodeIds.add(id));
+      cy.edges().forEach(edge => {
+        if (storyOnly && edge.data('layer') === 'structural') return;
+        const source = edge.data('source');
+        const target = edge.data('target');
+        if (!eligibleNodeIds.has(source) || !eligibleNodeIds.has(target)) return;
+        if (matchingNodeIds.has(source) || matchingNodeIds.has(target)) {
+          visibleNodeIds.add(source);
+          visibleNodeIds.add(target);
+        }
+      });
+    }
 
     cy.batch(() => {
-      cy.elements().removeClass('context-hidden filter-hidden dimmed focused');
+      cy.elements().removeClass('context-hidden filter-hidden filter-context filter-context-edge dimmed focused');
       cy.nodes().forEach(node => {
         const data = node.data();
-        if (storyOnly && !storyNodeIds.has(data.id)) node.addClass('context-hidden');
-        const matchesQuery = !query || data.label.toLowerCase().includes(query) || String(data.details || '').toLowerCase().includes(query);
-        const matchesHub = !hubId || data.hub_id === hubId || data.id === hubId;
-        const matchesKind = !entityKind || data.kind === entityKind;
-        if (!(matchesQuery && matchesHub && matchesKind)) node.addClass('filter-hidden');
+        if (!eligibleNodeIds.has(data.id)) node.addClass('context-hidden');
+        else if (!visibleNodeIds.has(data.id)) node.addClass('filter-hidden');
+        else if (filtering && !matchingNodeIds.has(data.id)) node.addClass('filter-context');
       });
       cy.edges().forEach(edge => {
-        if (storyOnly && edge.data('layer') === 'structural') edge.addClass('context-hidden');
-        if (edge.source().hasClass('context-hidden') || edge.source().hasClass('filter-hidden') || edge.target().hasClass('context-hidden') || edge.target().hasClass('filter-hidden')) edge.addClass('filter-hidden');
+        const sourceId = edge.data('source');
+        const targetId = edge.data('target');
+        if (storyOnly && edge.data('layer') === 'structural') {
+          edge.addClass('context-hidden');
+        } else if (!visibleNodeIds.has(sourceId) || !visibleNodeIds.has(targetId)) {
+          edge.addClass('filter-hidden');
+        } else if (filtering && !matchingNodeIds.has(sourceId) && !matchingNodeIds.has(targetId)) {
+          edge.addClass('filter-hidden');
+        } else if (filtering && (!matchingNodeIds.has(sourceId) || !matchingNodeIds.has(targetId))) {
+          edge.addClass('filter-context-edge');
+        }
       });
     });
 
-    modeNote.innerHTML = storyOnly
+    const scopeMessage = storyOnly
       ? `<strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.`
       : `<strong>Whole city</strong> shows all ${graph.nodes.length} records and their structural location links. Switch back to Story ties for the cleaner social constellation.`;
-    if (fit) requestAnimationFrame(() => fitVisible(320));
+    const contextCount = Math.max(0, visibleNodeIds.size - matchingNodeIds.size);
+    const filterMessage = filtering
+      ? ` <strong>${matchingNodeIds.size}</strong> match${matchingNodeIds.size === 1 ? '' : 'es'} highlighted; ${contextCount} directly connected record${contextCount === 1 ? '' : 's'} retained for context.`
+      : '';
+    modeNote.innerHTML = scopeMessage + filterMessage;
+    if (reflow) reflowVisible({ fit });
+    else if (fit) requestAnimationFrame(() => fitVisible(320));
   }
 
-  [search, hub, kind].forEach(control => control.addEventListener(control === search ? 'input' : 'change', () => applyFilters()));
+  let searchTimer;
+  search.addEventListener('input', () => {
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => applyFilters({ fit: true, reflow: true }), 140);
+  });
+  [hub, kind].forEach(control => control.addEventListener('change', () => applyFilters({ fit: true, reflow: true })));
   function restoreScopePositions() {
     const positions = scope.value === 'story' ? storyPositions : cityPositions;
     cy.nodes().positions(node => positions.get(node.id()) || node.position());
   }
-  scope.addEventListener('change', () => { restoreScopePositions(); applyFilters({ fit: true }); });
+  scope.addEventListener('change', () => { restoreScopePositions(); applyFilters({ fit: true, reflow: true }); });
   document.getElementById('graph-reset').addEventListener('click', () => {
     scope.value = 'story'; search.value = ''; hub.value = ''; kind.value = '';
-    restoreScopePositions(); applyFilters({ fit: true });
+    restoreScopePositions(); applyFilters({ fit: true, reflow: true });
   });
 
   document.querySelectorAll('[data-graph-pan]').forEach(button => button.addEventListener('click', () => {
@@ -1201,10 +1281,11 @@ async function renderRelationships() {
       <p>${esc(data.details || 'No public details recorded.')}</p>
       ${connected.length ? '<div class="graph-detail-links"><strong>Connections</strong>' + connected.map(label => '<span>' + esc(label) + '</span>').join('') + '</div>' : ''}`;
   });
-  cy.on('tap', event => { if (event.target === cy) applyFilters(); });
+  cy.on('tap', event => {
+    if (event.target === cy) cy.elements().removeClass('dimmed focused');
+  });
 
-  applyFilters();
-  requestAnimationFrame(() => fitVisible());
+  applyFilters({ fit: true, reflow: true });
 }
 
 // ── Router ────────────────────────────────────────────────────────────
