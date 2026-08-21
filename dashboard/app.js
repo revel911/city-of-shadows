@@ -1,6 +1,7 @@
 // ── Config — set your GitHub username and repo ───────────────────────
 const CONFIG = {
   GITHUB_RAW: 'https://raw.githubusercontent.com/revel911/city-of-shadows/main',
+  LOCAL_PREVIEW: ['localhost', '127.0.0.1'].includes(window.location.hostname),
 };
 
 // ── Simple in-session cache (clears on page reload) ──────────────────
@@ -24,7 +25,10 @@ function clearCache() { _cache.clear(); _fetchToken = Date.now(); }
 let _fetchToken = Date.now();
 
 async function ghText(path) {
-  const res = await fetch(`${CONFIG.GITHUB_RAW}/${path}?v=${_fetchToken}`, { cache: 'no-cache' });
+  const source = CONFIG.LOCAL_PREVIEW
+    ? new URL(`../${path}`, window.location.href).href
+    : `${CONFIG.GITHUB_RAW}/${path}`;
+  const res = await fetch(`${source}?v=${_fetchToken}`, { cache: 'no-cache' });
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`Could not load ${path} (${res.status})`);
   return res.text();
@@ -336,86 +340,96 @@ function updateTopNav() {
 // ── Page: Summary ─────────────────────────────────────────────────────
 async function renderSummary() {
   setSideNav([]);
-  showLoading('Reading the city…');
+  showLoading('Reading the city&hellip;');
 
-  let players = [], events = '', err = '';
+  let players = [], events = '', hubs = [], npcs = [], graph = null, err = '';
   try {
-    [players, events] = await Promise.all([getPlayers(), getEventsLog()]);
+    [players, events, hubs, npcs, graph] = await Promise.all([
+      getPlayers(), getEventsLog(), getHubDocs(), getAllNPCRoster(), getWorldGraph(),
+    ]);
   } catch (e) { err = e.message; }
 
-  const chars = await Promise.all(
-    players.map(async p => {
-      try { const d = await getPlayerData(p.id); return { ...p, ...d }; }
-      catch { return { ...p, state: null, handoff: '', sheet: '' }; }
-    })
-  );
+  const chars = await Promise.all(players.map(async p => {
+    try { const d = await getPlayerData(p.id); return { ...p, ...d }; }
+    catch { return { ...p, state: null, handoff: '', sheet: '' }; }
+  }));
 
   const errorHtml = err ? `
-    <div class="error-card" style="margin-bottom:1.5rem">
-      <h3>Could not load game data</h3>
+    <div class="error-card summary-error">
+      <h3>Could not load all game data</h3>
       <p>${esc(err)}</p>
-      <p class="error-setup">Open <code>app.js</code> and set <code>YOUR_GITHUB_USERNAME</code> in CONFIG.</p>
+      <p class="error-setup">The chronicle may be temporarily incomplete. Try Refresh once the source is available.</p>
     </div>` : '';
 
   const charCards = chars.map(c => {
-    const stats    = statsFromState(c.state) || parseStats(c.sheet || '');
+    const stats = statsFromState(c.state) || parseStats(c.sheet || '');
     const playbook = c.state?.playbook || parsePlaybook(c.sheet || '');
     return `
-      <div class="char-card" data-nav="/characters/${encodeURIComponent(c.name)}">
+      <div class="char-card" role="link" tabindex="0" data-nav="/characters/${encodeURIComponent(c.name)}">
         <div class="char-card-inner">
           <div>
             <div class="char-name">${esc(c.name)}</div>
             ${playbook ? `<div class="char-playbook">${esc(playbook)}</div>` : ''}
           </div>
           ${statPills(stats)}
-          <div class="char-link">View Sheet &rarr;</div>
+          <div class="char-link">Open dossier &rarr;</div>
         </div>
       </div>`;
   }).join('');
 
   const recentCharSection = chars.length ? `
-    <div style="margin-bottom:1.75rem">
-      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:.75rem">
-        <h2 style="font-family:'JetBrains Mono',monospace;font-size:.8rem;font-weight:400;color:var(--gold-light);letter-spacing:.16em;text-transform:uppercase">Characters</h2>
-        <span class="card-footer-link" data-nav="/characters">All Characters (${chars.length}) &rarr;</span>
+    <section class="summary-characters" aria-labelledby="summary-characters-title">
+      <div class="section-heading">
+        <h2 class="h2" id="summary-characters-title">Characters</h2>
+        <button type="button" class="card-footer-link link-button" data-nav="/characters">All characters (${chars.length}) &rarr;</button>
       </div>
       <div class="char-grid">${charCards}</div>
-    </div>` : '';
+    </section>` : '';
 
   const eventItems = recentLines(events);
   const eventHtml = eventItems.length
-    ? `<div class="timeline">${eventItems.map((e, i) => `
+    ? `<div class="timeline">${eventItems.map((event, index) => `
         <div class="timeline-item">
-          <div class="timeline-num">${String(eventItems.length - i).padStart(3, '0')}</div>
-          <div class="timeline-text">${esc(e)}</div>
+          <div class="timeline-num">${String(eventItems.length - index).padStart(3, '0')}</div>
+          <div class="timeline-text">${esc(event)}</div>
         </div>`).join('')}</div>`
     : '<p class="empty-note">Events log not loaded.</p>';
 
+  const edgeCount = graph?.edges?.length || 0;
   $content.innerHTML = `
     ${errorHtml}
-    <div class="page-header">
+    <header class="page-header summary-hero">
+      <span class="page-kicker">An asynchronous urban fantasy chronicle</span>
       <h1>Richmond, Virginia</h1>
       <p>The city breathes. The city bleeds. The city remembers.</p>
-      <div class="ornament"><span style="font-size:.7rem">✦</span></div>
+      <div class="ornament" aria-hidden="true"></div>
+    </header>
+    <div class="world-vitals" aria-label="World at a glance">
+      <div class="world-vital"><strong>${chars.length}</strong><span>Player characters</span></div>
+      <div class="world-vital"><strong>${npcs.length}</strong><span>Known faces</span></div>
+      <div class="world-vital"><strong>${hubs.length}</strong><span>City hubs</span></div>
+      <div class="world-vital"><strong>${edgeCount}</strong><span>Visible ties</span></div>
     </div>
     ${recentCharSection}
     <div class="dashboard-grid">
       <div class="sidebar-cards">
-        <div class="card">
-          <h2>Navigate</h2>
-          <div class="quick-link purple" data-nav="/characters">Characters</div>
-          <div class="quick-link purple" data-nav="/city">City</div>
-          <div class="quick-link purple" data-nav="/events">Public Events Log</div>
-          <div class="quick-link purple" data-nav="/relationships">Connections</div>
-        </div>
+        <nav class="card" aria-label="Explore the chronicle">
+          <h2>Enter the city</h2>
+          <div class="portal-list">
+            <button type="button" class="quick-link" data-nav="/characters"><span class="portal-mark">PC</span><span class="portal-copy"><strong>Characters</strong><small>Sheets, debts, and handoffs</small></span></button>
+            <button type="button" class="quick-link" data-nav="/city"><span class="portal-mark">CT</span><span class="portal-copy"><strong>City</strong><small>People, hubs, and places</small></span></button>
+            <button type="button" class="quick-link" data-nav="/events"><span class="portal-mark">EV</span><span class="portal-copy"><strong>Events</strong><small>Threats and public memory</small></span></button>
+            <button type="button" class="quick-link" data-nav="/relationships"><span class="portal-mark">NX</span><span class="portal-copy"><strong>Connections</strong><small>The living world graph</small></span></button>
+          </div>
+        </nav>
       </div>
-      <div class="card">
-        <h2>Recent Events</h2>
+      <section class="card" aria-labelledby="recent-events-title">
+        <h2 id="recent-events-title">Recent events</h2>
         ${eventHtml}
         <div class="card-footer">
-          <span class="card-footer-link" data-nav="/events">Full Events Log &rarr;</span>
+          <button type="button" class="card-footer-link link-button" data-nav="/events">Open the full chronicle &rarr;</button>
         </div>
-      </div>
+      </section>
     </div>`;
 }
 
@@ -450,7 +464,7 @@ async function renderCharacters() {
       .split('\n').map(l => l.trim()).filter(l => l.length > 5 && !l.startsWith('-'))
       .join(' ').slice(0, 200);
     return `
-      <div class="char-card" data-nav="/characters/${encodeURIComponent(c.name)}">
+      <div class="char-card" role="link" tabindex="0" data-nav="/characters/${encodeURIComponent(c.name)}">
         <div class="char-card-inner">
           <div>
             <div class="char-name">${esc(c.name)}</div>
@@ -465,6 +479,7 @@ async function renderCharacters() {
 
   $content.innerHTML = `
     <div class="page-header">
+      <span class="page-kicker">The cast</span>
       <h1>The Shadows</h1>
       <p>Those who walk between the world that is and the world that hungers.</p>
     </div>
@@ -736,6 +751,7 @@ async function renderCity() {
 
   $content.innerHTML = `
     <div id="city-overview" class="page-header">
+      <span class="page-kicker">The shared world</span>
       <h1>Richmond, Virginia</h1>
       <p>The shared world state. What is real, what is hidden, what is hunted.</p>
     </div>
@@ -897,6 +913,7 @@ async function renderEvents() {
 
   $content.innerHTML = `
     <div class="page-header">
+      <span class="page-kicker">The public chronicle</span>
       <h1>Events</h1>
       <p>The city&rsquo;s open wounds and its append-only memory.</p>
     </div>
@@ -929,8 +946,10 @@ async function renderRelationships() {
   $content.innerHTML = `
     <div class="page-header relationship-header">
       <div>
+        <span class="page-kicker">The relationship atlas</span>
         <h1>Connections</h1>
         <p>NPCs, characters, locations, and the neighborhoods binding them together.</p>
+        <div class="graph-stats"><span class="graph-stat"><strong>${graph.nodes.length}</strong> nodes</span><span class="graph-stat"><strong>${graph.edges.length}</strong> links</span><span class="graph-stat"><strong>${hubs.length}</strong> hubs</span></div>
       </div>
       <span class="graph-as-of">World state as of ${esc(graph.as_of || 'unknown')}</span>
     </div>
@@ -1033,6 +1052,9 @@ function navigate(path) { window.location.hash = path; }
 async function render() {
   const route = getRoute();
   updateTopNav();
+  document.body.dataset.route = route.split('/')[1] || 'summary';
+  const routeName = route === '/' ? 'Summary' : route.split('/').filter(Boolean).pop() || 'Summary';
+  document.title = `${routeName.charAt(0).toUpperCase() + routeName.slice(1)} - City of Shadows`;
   if (route === '/' || route === '') { await renderSummary(); }
   else if (route === '/characters')        { await renderCharacters(); }
   else if (route.startsWith('/characters/')){ await renderCharacter(decodeURIComponent(route.replace('/characters/', ''))); }
@@ -1043,12 +1065,22 @@ async function render() {
 }
 
 // ── Mobile nav ────────────────────────────────────────────────────────
-function closeDrawer() { document.body.classList.remove('nav-open'); }
-document.getElementById('nav-toggle').addEventListener('click', () => document.body.classList.toggle('nav-open'));
+function closeDrawer() { document.body.classList.remove('nav-open'); document.getElementById('nav-toggle').setAttribute('aria-expanded', 'false'); }
+document.getElementById('nav-toggle').addEventListener('click', event => {
+  const open = document.body.classList.toggle('nav-open');
+  event.currentTarget.setAttribute('aria-expanded', String(open));
+});
 document.getElementById('nav-overlay').addEventListener('click', closeDrawer);
 document.querySelectorAll('[data-drawer-link]').forEach(a => a.addEventListener('click', closeDrawer));
 
 // ── Click delegation ──────────────────────────────────────────────────
+document.addEventListener('keydown', event => {
+  if ((event.key === 'Enter' || event.key === ' ') && event.target.matches('[data-nav][role="link"]')) {
+    event.preventDefault();
+    navigate(event.target.dataset.nav);
+  }
+});
+
 document.addEventListener('click', e => {
   const scrollEl = e.target.closest('[data-scroll-to]');
   if (scrollEl) {
@@ -1094,8 +1126,8 @@ render();
     if (_building) return null;
     _building = true;
     try {
-      const [npcs, threatsText, hubDocs, players] = await Promise.all([
-        getAllNPCRoster(), getThreatsDoc(), getHubDocs(), getPlayers(),
+      const [npcs, threatsText, hubDocs, players, locations] = await Promise.all([
+        getAllNPCRoster(), getThreatsDoc(), getHubDocs(), getPlayers(), getLocations(),
       ]);
       _index = [];
       for (const npc of npcs) {
@@ -1121,6 +1153,13 @@ render();
           haystack: hub.name.toLowerCase(),
           nav: '/city',
           scrollTo: 'hub-' + hub.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+        });
+      }
+      for (const location of locations) {
+        _index.push({
+          type: 'location', title: location.name, sub: location.type || 'Location',
+          haystack: [location.name, location.type, location.atmosphere, location.description, location.hub_id].filter(Boolean).join(' ').toLowerCase(),
+          nav: '/relationships', scrollTo: null,
         });
       }
       for (const p of players) {
@@ -1152,13 +1191,13 @@ render();
     }).filter(r => r.score > 0).sort((a, b) => b.score - a.score).slice(0, 14).map(r => r.item);
   }
 
-  const TYPE_LABELS = { npc: 'NPC', arc: 'Arc', hub: 'Hub', character: 'PC' };
+  const TYPE_LABELS = { npc: 'NPC', arc: 'Arc', hub: 'Hub', location: 'Place', character: 'PC' };
 
   function renderResults(results, query) {
     if (results === null) { $results.innerHTML = `<div class="search-loading">Indexing…</div>`; return; }
     if (!query.trim()) { $results.innerHTML = ''; return; }
     if (!results.length) { $results.innerHTML = `<div class="search-empty">No results for &ldquo;${esc(query)}&rdquo;</div>`; return; }
-    const ORDER = ['character', 'npc', 'arc', 'hub'];
+    const ORDER = ['character', 'npc', 'location', 'arc', 'hub'];
     const groups = new Map();
     for (const item of results) { if (!groups.has(item.type)) groups.set(item.type, []); groups.get(item.type).push(item); }
     const sorted = [...groups.entries()].sort(([a], [b]) => ORDER.indexOf(a) - ORDER.indexOf(b));

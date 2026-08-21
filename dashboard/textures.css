@@ -1,0 +1,98 @@
+/* City of Shadows — subtle material textures (no image assets required) */
+
+:root {
+  --texture-fiber: rgba(216, 212, 207, .018);
+  --texture-gold: rgba(184, 146, 74, .022);
+  --texture-blood: rgba(168, 22, 22, .025);
+}
+
+/* Fine paper fibers on the primary reading surfaces. */
+.card::after,
+.char-card-inner::after,
+.npc-card::after,
+.location-card::after,
+.threat-card::after,
+.events-entry::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .65;
+  background-image:
+    repeating-linear-gradient(7deg, transparent 0 4px, var(--texture-fiber) 4px 5px),
+    repeating-linear-gradient(97deg, transparent 0 11px, var(--texture-gold) 11px 12px);
+  background-size: 17px 19px, 29px 31px;
+  mix-blend-mode: screen;
+}
+
+.card > *,
+.char-card-inner > *,
+.npc-card > *,
+.location-card > *,
+.threat-card > *,
+.events-entry > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* A barely visible old-paper grain beneath long-form chronicle text. */
+.prose {
+  position: relative;
+  isolation: isolate;
+}
+
+.prose::before {
+  content: '';
+  position: absolute;
+  inset: -.35rem;
+  z-index: -1;
+  pointer-events: none;
+  opacity: .24;
+  background-image:
+    radial-gradient(ellipse at 18% 22%, var(--texture-gold) 0 1px, transparent 1.5px),
+    radial-gradient(ellipse at 72% 64%, var(--texture-fiber) 0 1px, transparent 1.6px);
+  background-size: 23px 29px, 31px 37px;
+}
+
+/* Crosshatched utility surfaces feel more architectural than paper-like. */
+.graph-toolbar,
+#graph-detail,
+#search-box,
+#dice-panel,
+#nav-drawer {
+  background-image:
+    repeating-linear-gradient(135deg, transparent 0 8px, rgba(88, 52, 160, .018) 8px 9px),
+    repeating-linear-gradient(45deg, transparent 0 13px, var(--texture-blood) 13px 14px);
+}
+
+/* Preserve each component's dark base below its texture layer. */
+.graph-toolbar { background-color: rgba(7, 6, 13, .96); }
+#graph-detail { background-color: rgba(13, 11, 24, .98); }
+#search-box, #dice-panel, #nav-drawer { background-color: var(--bg-card); }
+
+/* Localized wear on dividers, avoiding texture over the actual text. */
+.ornament,
+.card-footer,
+.hub-location-section,
+.graph-legend {
+  border-image: linear-gradient(90deg, var(--border-blood), rgba(184, 146, 74, .18), transparent) 1;
+}
+
+@media (max-width: 639px) {
+  .card::after,
+  .char-card-inner::after,
+  .npc-card::after,
+  .location-card::after,
+  .threat-card::after { opacity: .48; }
+}
+
+@media (prefers-contrast: more) {
+  .card::after,
+  .char-card-inner::after,
+  .npc-card::after,
+  .location-card::after,
+  .threat-card::after,
+  .events-entry::after,
+  .prose::before { display: none; }
+}
