@@ -52,14 +52,9 @@ When you invoke the history of this place to compel someone to honesty, action, 
 
 ## Locations
 
-| Name | Type | Controlled By | Nature | Atmosphere | Notes |
-|------|------|--------------|--------|------------|-------|
-| The Buried Street | Sealed underground site | Unknown | An intact 19th-century street below the current grid | Airless, uncanny, time-wrong | Sealed entrance found by construction; city records of its excavation are false |
-| St. Peter's Catholic | Church / community anchor | Father Hruska (Mortalis) | Refuge, gathering point, oldest continuously operating building in the Bottom | Heavy, safe, slowly changing | The basement has been locked since 1943. Hruska has never asked why. |
-| Morrow's Books | Independent bookshop | Celestine Morrow | Used and rare books; local history section unusually complete | Dusty, warm, watched | Has a copy of a book that was never published |
-| The Old Market Site | Open plaza / contested | N/A | Former slave market; memorial marker; active gentrification pressure | Haunted, raw | The Overwrite is most visible here — the marker sometimes reads different names |
-| Serrano's Entry | Hidden passage | Aldric Serrano (Night) | Access point to the canal tunnels from the Bottom | Cold, wet, absolute dark | Location known to Declan Morrow. Cost: a Debt. |
-| Hollywood Cemetery | Historic cemetery | Emmett Daye (nominal) | Maze-like; overlooks the James; presidents and Confederate generals | Heavy, beautiful, wrong | New sections Emmett does not remember. One grave has a recent date for a living person. |
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

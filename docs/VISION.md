@@ -6,6 +6,15 @@ see [CHANGELOG.md](../CHANGELOG.md).
 
 ---
 
+## Contents
+
+- [The pitch](#the-pitch)
+- [Why it exists](#why-it-exists)
+- [Design pillars](#design-pillars)
+- [The setting promise](#the-setting-promise-the-overwrite)
+- [Where it's headed](#where-its-headed)
+- [Non-goals](#non-goals)
+
 ## The pitch
 
 A persistent, shared, supernatural city you can drop into for fifteen minutes or

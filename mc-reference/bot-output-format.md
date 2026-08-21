@@ -74,6 +74,14 @@ The `<save_onboarding>` block MUST be the **first content** in your response, be
 [ { "id": "npc_ximena_reyes", "name": "Ximena Reyes", "faction": "Mortalis", "personality": { "moral": 4, "order": 3, "manner": 4, "violence": 2, "voice_note": "..." }, ... } ]
 </npc_patch>
 
+<location_patch>
+[ { "id": "loc_example", "name": "Example", "hub_id": "hub_downtown", "type": "site", "status": "active" } ]
+</location_patch>
+
+<relationship_patch>
+[ { "id": "rel_public_example", "source": "npc_example", "target": "loc_example", "type": "works_at", "label": "Works at", "direction": "outbound", "visibility": "public" } ]
+</relationship_patch>
+
 <events_append>
 ... optional: if the character's arrival is publicly visible to the city ...
 </events_append>
@@ -87,6 +95,8 @@ The `<save_onboarding>` block MUST be the **first content** in your response, be
 - **`<sheet>`** — required. Full sheet content. If save is triggered early (case 2 or 3), include every section but use "TBD" for fields the player hasn't filled in yet.
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
 - **`<npc_patch>`** — required if any NPCs were introduced during onboarding (Phase 9 Debts & Anchors, in particular). Full personality-engine scores.
+- **`<location_patch>`** — include only when onboarding establishes a new named place not already present in the canonical world index.
+- **`<relationship_patch>`** — include public Debts, Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties.
 - **`<events_append>`** — optional. Use only if the character's arrival is publicly visible.
 
 The bot validates the save block before writing. If `character_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
@@ -142,6 +152,18 @@ Everything inside the block is parsed by the bot and written to GitHub as separa
 ]
 </npc_patch>
 
+<location_patch>
+[
+  { "id": "loc_new_site", "name": "New Site", "hub_id": "hub_downtown", "status": "active" }
+]
+</location_patch>
+
+<relationship_patch>
+[
+  { "id": "rel_public_meeting", "source": "npc_ada_thorne", "target": "loc_new_site", "type": "seen_at", "label": "Seen at", "direction": "outbound", "visibility": "public" }
+]
+</relationship_patch>
+
 <arc_patch>
 [
   { "id": "arc-003", "escalation": 3, "status": "active" }
@@ -167,7 +189,9 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<sheet>`** — full replacement file. Only emit when the sheet actually changes (character creation, advancement, gear shift). Omit otherwise.
 - **`<state_patch>`** — partial JSON. Object fields are merged one level deep (so `{"stats":{"Mind":2}}` updates only Mind). Scalar fields replace.
 - **`<events_append>`** — text appended to the end of `events-log.md`. Use markdown. Include a date/session header.
-- **`<npc_patch>`** — array. Each entry must have `id` (format: `npc_<firstname>_<lastname>`, snake_case). Existing NPCs are merged by `id`; entries with new ids are appended as new NPCs. Always use the canonical `npc_*` id format — kebab-case or unprefixed ids will create duplicates.
+- **`<npc_patch>`** — array. Each entry must have a canonical `npc_*` ID. The bot also resolves an exact canonical name match so a mistaken new ID cannot duplicate an existing NPC. Include only changed fields for an existing NPC.
+- **`<location_patch>`** — array of partial location records keyed by canonical `loc_*` IDs. Use this when a named place is introduced or its controller, status, atmosphere, or notes change. A location belongs to exactly one canonical `hub_id`.
+- **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.
 - **`<arc_patch>`** — array. Each entry must have `id`. Existing arcs are merged; new ones are appended.
 - **`<interactions_patch>`** — full replacement of the interactions document. Must be a JSON object with shape `{ "interactions": [...] }`. Omit to leave the queue unchanged.
 - **`<world_event>`** — single short line. Posted to the configured `#world-events` channel if one is set. Omit for purely private scenes.

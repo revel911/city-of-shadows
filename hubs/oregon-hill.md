@@ -36,25 +36,9 @@
 
 ## Locations
 
-### Residential Core
-- **The Historic District:** 19th-century worker cottages on narrow lots. Some houses show room additions from multiple time periods existing simultaneously.
-- **Student Blocks:** Rental properties near VCU campus. Landlords sometimes collect rent for apartments that existed in previous configurations of the buildings.
-- **The Old Families:** Long-term residents in houses passed down through generations. These families anchor the community's memory and cultural continuity.
-
-### Community Anchors
-- **St. Andrew's Episcopal Church:** Built with Grace Arents funding in 1894. Services sometimes include parishioners from different eras of the neighborhood's history.
-- **William Byrd Community House:** Provides social services and meeting space. Programs occasionally serve participants who died years ago but continue attending.
-- **Arents Free Library:** Small neighborhood library. Books sometimes include local histories that describe events before they happen.
-
-### Work & Art Spaces
-- **Byrd Park Overlook:** Scenic views of the James River where residents gather. Sometimes shows industrial landscape from the valley's manufacturing heyday.
-- **The Art Collective:** Informal spaces where local artists work and display. Exhibitions sometimes include work by artists who haven't moved to the neighborhood yet.
-- **Home Studios:** Many residents work from converted garages and basements. Musicians hear echoes of industrial rhythms in their compositions.
-
-### Liminal Spaces
-- **Hollywood Cemetery Border:** The neighborhood's western edge where residents walk among Civil War graves and famous burials. New graves occasionally appear for living residents.
-- **Tredegar Overlook:** Views of the old iron works site below. Workers sometimes appear at the historical park, continuing shifts that ended 150 years ago.
-- **The Expressway Cut:** Where the Downtown Expressway carved through the neighborhood in the 1970s. The road sometimes shows different routes or doesn't exist at all.
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

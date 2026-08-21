@@ -1,6 +1,7 @@
 import OpenAI from 'openai';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
+import { buildCanonicalWorldContext } from './world-state.js';
 
 const MODEL = 'deepseek-chat';
 const MAX_TOKENS = 4096;
@@ -125,9 +126,10 @@ export async function buildOpeningContext(player) {
   const profileContext = await buildProfileContext(player);
 
   if (isNew) {
-    const [events, worldBible] = await Promise.all([
+    const [events, worldBible, worldContext] = await Promise.all([
       readFile('game/events-log.md'),
       readFile('game/world-bible.md'),
+      buildCanonicalWorldContext(),
     ]);
     return [
       `New player: Discord display name "${player.name}".`,
@@ -145,16 +147,19 @@ export async function buildOpeningContext(player) {
       '--- WORLD BIBLE (excerpt) ---',
       (worldBible || '').slice(0, 4000) || '(none)',
       '',
+      worldContext,
+      '',
       'Begin onboarding now.',
     ].join('\n');
   }
 
-  const [handoff, sheet, state, events, interactions] = await Promise.all([
+  const [handoff, sheet, state, events, interactions, worldContext] = await Promise.all([
     readFile(`players/${player.id}/handoff.md`),
     readFile(`players/${player.id}/sheet.md`),
     readJSON(`players/${player.id}/state.json`),
     readFile('game/events-log.md'),
     readJSON('game/interactions.json'),
+    buildCanonicalWorldContext(),
   ]);
 
   return [
@@ -177,6 +182,8 @@ export async function buildOpeningContext(player) {
     '',
     '--- INTERACTION QUEUE ---',
     interactions ? JSON.stringify(interactions, null, 2) : '(empty)',
+    '',
+    worldContext,
     '',
     'Begin the scene.',
   ].join('\n');

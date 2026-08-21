@@ -6,6 +6,14 @@ The city is shared. Other people are playing other characters in the same world.
 
 ---
 
+## Contents
+
+- [Playing](#playing)
+- [World State](#world-state)
+- [How It Works](#how-it-works)
+- [Running Your Own](#running-your-own)
+- [Documentation](#documentation)
+
 ## Playing
 
 You only need a Discord account.
@@ -82,4 +90,8 @@ The 5-level mechanics scale runs **1 (open table — named moves, visible dice a
 
 ## Running Your Own
 
-Want to host your own instance? See [docs/OPERATOR.md](docs/OPERATOR.md) for the full setup: forking the repo, deploying the bot to Fly.io, creating the Discord app, linking your DeepSeek key, and onboarding your first player. For how it's built, see [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md); for where it's going, [docs/VISION.md](docs/VISION.md).
+Want to host your own instance? See [docs/OPERATOR.md](docs/OPERATOR.md) for the full setup: forking the repo, deploying the bot to Fly.io, creating the Discord app, linking your DeepSeek key, and onboarding your first player.
+
+## Documentation
+
+Start at [docs/README.md](docs/README.md). The key references are [ARCHITECTURE](docs/ARCHITECTURE.md), [DATA MODEL](docs/DATA-MODEL.md), [AI CONTEXT](docs/AI-CONTEXT.md), [OPERATOR](docs/OPERATOR.md), and [VISION](docs/VISION.md).

@@ -33,21 +33,9 @@
 
 ## Locations
 
-### Corporate & Government
-- **Riverfront Plaza:** Modern office complex. Several law firms have offices here. The building has sub-basements that connect to the old canal system.
-- **Federal Courthouse:** Night faction has cultivated several court staff as assets. Some cases are decided before they're filed.
-- **City Hall Annex:** Where the real municipal business happens, away from the ceremonial main building.
-- **James Center:** Mixed-use towers. Corporate law, financial services, and discrete meeting spaces. Several Night faction fronts operate from here.
-
-### The Canal System
-- **Canal Walk (Surface):** Tourist boardwalk with restaurants and shops. The public face conceals the true nature of what lies beneath.
-- **The Old Canal Locks:** Partially restored, partially flooded. Access points to deeper tunnel systems. Tourist tours end before the interesting parts.
-- **Serrano's Domain:** Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the "breach."
-- **The Flood Chambers:** Deeper sections that can be rapidly flooded to prevent intrusion. Serrano's last line of defense.
-
-### Night Venues
-- **The Exchange:** Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched.
-- **The Club at 101:** Private club in the penthouse of a financial building. Members-only. The real membership list is very different from the official one.
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

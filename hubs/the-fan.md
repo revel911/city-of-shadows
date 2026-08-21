@@ -33,20 +33,9 @@
 
 ## Locations
 
-### Galleries & Arts Venues
-- **Maison Rouge:** Mireille's gallery and salon. Converted Victorian mansion. Hosts evening salons where art, politics, and supernatural business intertwine. The basement wine cellar has been... expanded.
-- **Threshold:** Asha's vintage shop on Ellwood. Specializes in "authentic" pieces from different eras. The changing room is a Hedge Door (currently unsafe — opening onto unfamiliar ground for three weeks).
-- **Virginia Museum of Fine Arts:** Major cultural institution. Vera Solis works in the conservation department. Has wings that sometimes appear on floor plans but don't exist in the building.
-- **1708 Gallery:** Independent contemporary art space. Marcus sometimes shows his Overwrite documentation here, though the pieces tend to "evolve" after installation.
-
-### The Monument Scars
-- **Monument Avenue:** Former Confederate statues created wounds in reality when they were erected, wounds that widened when they were removed. The Hedge grows thin here.
-- **Arthur Ashe Monument:** Stands in stark contrast to the Confederate legacy. Seems to anchor reality more firmly, but something watches from behind the tennis racket's strings.
-- **The Empty Plinths:** Where removed monuments stood. Reality is thin here. Late at night, shapes that might be statues cast shadows.
-
-### Residential
-- **The Fan Historic District:** Rows of Victorian houses. Many converted to apartments for VCU students. Some houses have more rooms inside than their exterior should allow.
-- **Canterbury:** Exclusive neighborhood. Old Richmond money. Where Power faction members live when they want to be close to Wild energy.
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

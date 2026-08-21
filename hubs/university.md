@@ -34,23 +34,9 @@
 
 ## Locations
 
-### Academic Buildings
-- **Hibbs Hall:** Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests.
-- **Cabell Library:** Massive research library. Special Collections contains books that shouldn't exist. The basement levels extend deeper than official plans show.
-- **Harris Hall:** Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.*
-- **Fine Arts Building:** Art history department has a private collection of Richmond artwork that shows different scenes depending on when you look at them.
-
-### Medical District (MCV)
-- **Main Hospital:** VCU Health's primary facility. Power faction uses medical access for research into life, death, and consciousness.
-- **Medical Education Building:** Where Power faction members train new mages in the intersection of magic and medicine.
-- **Research Labs:** Cutting-edge facilities that sometimes produce impossible results. The ethics review board has learned not to ask too many questions about certain projects.
-
-### Consilium Sanctum
-- **The Observatory:** Hidden facility built into the structure of multiple university buildings. Accessible through a network of maintenance tunnels and forgotten sub-basements. Contains the true Consilium library and ritual spaces.
-
-### Student Life
-- **Monroe Park:** Central campus green space. The ley line beneath the park has run measurably off-tempo three times in six weeks. Power faction monitors this closely.
-- **The Commons:** Student center and gathering space. The Power faction monitors student population for potential Awakening candidates.
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

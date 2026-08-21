@@ -6,6 +6,16 @@ How the platform is put together and why. For setup instructions see
 
 ---
 
+## Contents
+
+- [The one-line model](#the-one-line-model)
+- [Components](#components)
+- [The session loop](#the-session-loop)
+- [Data model](#data-model)
+- [The MC contract](#the-mc-contract)
+- [Cross-cutting concerns](#cross-cutting-concerns)
+- [Deployment](#deployment)
+
 ## The one-line model
 
 > **The repository is the database. The MC is a stateless function over it.**
@@ -125,7 +135,10 @@ players/
     └── handoff.md
 
 game/
-├── npcs.json                   NPCs with personality-engine scores
+├── npcs.json                   canonical NPC identity, voice, status, location refs
+├── locations.json              canonical named places linked to hubs
+├── relationships.manual.json   human-curated public ties
+├── relationships.derived.json  public ties discovered in play
 ├── arcs.json                   story arcs (status: active/escalating/resolved)
 ├── interactions.json           pending player-to-player effects
 ├── events-log.md               public timeline (markdown H2 entries)
@@ -155,7 +168,9 @@ lifetime (`resetSystemCache()` clears it).
 
 **In (per session):** `buildOpeningContext()` assembles the player profile plus
 either the new-character onboarding brief or the returning character's
-handoff/sheet/state/events/interactions.
+handoff/sheet/state/events/interactions. Both paths also receive the canonical
+hub/NPC/location/public-relationship index, so different players encounter the
+same identities, statuses, places, and voices.
 
 **Out (structured blocks):** the MC embeds machine-parseable blocks in otherwise
 natural prose. `session.js` extracts them, acts on them, and strips them before
@@ -164,8 +179,8 @@ posting:
 | Block | When | Writes |
 |-------|------|--------|
 | `<save_player>` | end of first-time player onboarding | `profile.json` |
-| `<save_onboarding>` | new character created mid-session | sheet, state, npcs, roster, profile link |
-| `<close_session>` | session ends | handoff, state, events, npcs, arcs, interactions, world event |
+| `<save_onboarding>` | new character created mid-session | sheet, state, NPCs, locations, public relationships, roster, profile link |
+| `<close_session>` | session ends | handoff, state, events, NPCs, locations, public relationships, arcs, interactions, world event |
 
 Because the MC writes free prose around these tags, a defense-in-depth
 `sanitizePlayerFacingText()` pass strips any leaked, truncated, or orphaned

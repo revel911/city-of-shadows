@@ -1,0 +1,3065 @@
+{
+  "as_of": "2026-08-21",
+  "derived_through": "2026-08-21",
+  "nodes": [
+    {
+      "data": {
+        "id": "hub_shockoe_bottom",
+        "label": "Shockoe Bottom",
+        "kind": "hub",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": 0,
+        "y": -780
+      }
+    },
+    {
+      "data": {
+        "id": "hub_the_fan",
+        "label": "The Fan",
+        "kind": "hub",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": 552,
+        "y": -552
+      }
+    },
+    {
+      "data": {
+        "id": "hub_downtown",
+        "label": "Downtown",
+        "kind": "hub",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": 780,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "hub_university",
+        "label": "University",
+        "kind": "hub",
+        "hub_id": "hub_university",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": 552,
+        "y": 552
+      }
+    },
+    {
+      "data": {
+        "id": "hub_creighton_court",
+        "label": "Creighton Court",
+        "kind": "hub",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": 0,
+        "y": 780
+      }
+    },
+    {
+      "data": {
+        "id": "hub_oregon_hill",
+        "label": "Oregon Hill",
+        "kind": "hub",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": -552,
+        "y": 552
+      }
+    },
+    {
+      "data": {
+        "id": "hub_church_hill",
+        "label": "Church Hill",
+        "kind": "hub",
+        "hub_id": "hub_church_hill",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": -780,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "hub_carytown",
+        "label": "Carytown",
+        "kind": "hub",
+        "hub_id": "hub_carytown",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": -552,
+        "y": -552
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_buried_street",
+        "label": "The Buried Street",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Sealed underground site",
+        "details": "An intact 19th-century street below the current grid"
+      },
+      "position": {
+        "x": 201,
+        "y": -564
+      }
+    },
+    {
+      "data": {
+        "id": "loc_st_peters_catholic",
+        "label": "St. Peter's Catholic",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Church / community anchor",
+        "details": "Refuge, gathering point, oldest continuously operating building in the Bottom"
+      },
+      "position": {
+        "x": -56,
+        "y": -494
+      }
+    },
+    {
+      "data": {
+        "id": "loc_morrows_books",
+        "label": "Morrow's Books",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Independent bookshop",
+        "details": "Used and rare books; local history section unusually complete"
+      },
+      "position": {
+        "x": -307,
+        "y": -845
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_old_market_site",
+        "label": "The Old Market Site",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Open plaza / contested",
+        "details": "Former slave market; memorial marker; active gentrification pressure"
+      },
+      "position": {
+        "x": 107,
+        "y": -541
+      }
+    },
+    {
+      "data": {
+        "id": "loc_serranos_entry",
+        "label": "Serrano's Entry",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Hidden passage",
+        "details": "Access point to the canal tunnels from the Bottom"
+      },
+      "position": {
+        "x": -12,
+        "y": -1117
+      }
+    },
+    {
+      "data": {
+        "id": "loc_hollywood_cemetery",
+        "label": "Hollywood Cemetery",
+        "kind": "location",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Historic cemetery",
+        "details": "Maze-like; overlooks the James; presidents and Confederate generals"
+      },
+      "position": {
+        "x": -240,
+        "y": -1011
+      }
+    },
+    {
+      "data": {
+        "id": "loc_maison_rouge",
+        "label": "Maison Rouge",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Galleries & Arts Venues",
+        "details": "Mireille's gallery and salon. Converted Victorian mansion. Hosts evening salons where art, politics, and supernatural business intertwine. The basement wine cellar has been... expanded."
+      },
+      "position": {
+        "x": 305,
+        "y": -421
+      }
+    },
+    {
+      "data": {
+        "id": "loc_threshold",
+        "label": "Threshold",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Galleries & Arts Venues",
+        "details": "Asha's vintage shop on Ellwood. Specializes in \"authentic\" pieces from different eras. The changing room is a Hedge Door (currently unsafe — opening onto unfamiliar ground for three weeks)."
+      },
+      "position": {
+        "x": 815,
+        "y": -429
+      }
+    },
+    {
+      "data": {
+        "id": "loc_virginia_museum_of_fine_arts",
+        "label": "Virginia Museum of Fine Arts",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Galleries & Arts Venues",
+        "details": "Major cultural institution. Vera Solis works in the conservation department. Has wings that sometimes appear on floor plans but don't exist in the building."
+      },
+      "position": {
+        "x": 572,
+        "y": -261
+      }
+    },
+    {
+      "data": {
+        "id": "loc_1708_gallery",
+        "label": "1708 Gallery",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Galleries & Arts Venues",
+        "details": "Independent contemporary art space. Marcus sometimes shows his Overwrite documentation here, though the pieces tend to \"evolve\" after installation."
+      },
+      "position": {
+        "x": 740,
+        "y": -769
+      }
+    },
+    {
+      "data": {
+        "id": "loc_monument_avenue",
+        "label": "Monument Avenue",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "The Monument Scars",
+        "details": "Former Confederate statues created wounds in reality when they were erected, wounds that widened when they were removed. The Hedge grows thin here."
+      },
+      "position": {
+        "x": 793,
+        "y": -769
+      }
+    },
+    {
+      "data": {
+        "id": "loc_arthur_ashe_monument",
+        "label": "Arthur Ashe Monument",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "The Monument Scars",
+        "details": "Stands in stark contrast to the Confederate legacy. Seems to anchor reality more firmly, but something watches from behind the tennis racket's strings."
+      },
+      "position": {
+        "x": 676,
+        "y": -858
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_empty_plinths",
+        "label": "The Empty Plinths",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "The Monument Scars",
+        "details": "Where removed monuments stood. Reality is thin here. Late at night, shapes that might be statues cast shadows."
+      },
+      "position": {
+        "x": 593,
+        "y": -321
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_fan_historic_district",
+        "label": "The Fan Historic District",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Residential",
+        "details": "Rows of Victorian houses. Many converted to apartments for VCU students. Some houses have more rooms inside than their exterior should allow."
+      },
+      "position": {
+        "x": 721,
+        "y": -364
+      }
+    },
+    {
+      "data": {
+        "id": "loc_canterbury",
+        "label": "Canterbury",
+        "kind": "location",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Residential",
+        "details": "Exclusive neighborhood. Old Richmond money. Where Power faction members live when they want to be close to Wild energy."
+      },
+      "position": {
+        "x": 742,
+        "y": -348
+      }
+    },
+    {
+      "data": {
+        "id": "loc_riverfront_plaza",
+        "label": "Riverfront Plaza",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Corporate & Government",
+        "details": "Modern office complex. Several law firms have offices here. The building has sub-basements that connect to the old canal system."
+      },
+      "position": {
+        "x": 561,
+        "y": -171
+      }
+    },
+    {
+      "data": {
+        "id": "loc_federal_courthouse",
+        "label": "Federal Courthouse",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Corporate & Government",
+        "details": "Night faction has cultivated several court staff as assets. Some cases are decided before they're filed."
+      },
+      "position": {
+        "x": 1029,
+        "y": 96
+      }
+    },
+    {
+      "data": {
+        "id": "loc_city_hall_annex",
+        "label": "City Hall Annex",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Corporate & Government",
+        "details": "Where the real municipal business happens, away from the ceremonial main building."
+      },
+      "position": {
+        "x": 589,
+        "y": 139
+      }
+    },
+    {
+      "data": {
+        "id": "loc_james_center",
+        "label": "James Center",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Corporate & Government",
+        "details": "Mixed-use towers. Corporate law, financial services, and discrete meeting spaces. Several Night faction fronts operate from here."
+      },
+      "position": {
+        "x": 495,
+        "y": -50
+      }
+    },
+    {
+      "data": {
+        "id": "loc_canal_walk_surface",
+        "label": "Canal Walk (Surface)",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "The Canal System",
+        "details": "Tourist boardwalk with restaurants and shops. The public face conceals the true nature of what lies beneath."
+      },
+      "position": {
+        "x": 1061,
+        "y": -131
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_old_canal_locks",
+        "label": "The Old Canal Locks",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "The Canal System",
+        "details": "Partially restored, partially flooded. Access points to deeper tunnel systems. Tourist tours end before the interesting parts."
+      },
+      "position": {
+        "x": 1046,
+        "y": -37
+      }
+    },
+    {
+      "data": {
+        "id": "loc_serranos_domain",
+        "label": "Serrano's Domain",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "The Canal System",
+        "details": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the \"breach.\""
+      },
+      "position": {
+        "x": 672,
+        "y": 333
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_flood_chambers",
+        "label": "The Flood Chambers",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "The Canal System",
+        "details": "Deeper sections that can be rapidly flooded to prevent intrusion. Serrano's last line of defense."
+      },
+      "position": {
+        "x": 1025,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_exchange",
+        "label": "The Exchange",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Night Venues",
+        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched."
+      },
+      "position": {
+        "x": 1059,
+        "y": -130
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_club_at_101",
+        "label": "The Club at 101",
+        "kind": "location",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Night Venues",
+        "details": "Private club in the penthouse of a financial building. Members-only. The real membership list is very different from the official one."
+      },
+      "position": {
+        "x": 987,
+        "y": 207
+      }
+    },
+    {
+      "data": {
+        "id": "loc_hibbs_hall",
+        "label": "Hibbs Hall",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Academic Buildings",
+        "details": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests."
+      },
+      "position": {
+        "x": 675,
+        "y": 805
+      }
+    },
+    {
+      "data": {
+        "id": "loc_cabell_library",
+        "label": "Cabell Library",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Academic Buildings",
+        "details": "Massive research library. Special Collections contains books that shouldn't exist. The basement levels extend deeper than official plans show."
+      },
+      "position": {
+        "x": 774,
+        "y": 467
+      }
+    },
+    {
+      "data": {
+        "id": "loc_harris_hall",
+        "label": "Harris Hall",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Academic Buildings",
+        "details": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.*"
+      },
+      "position": {
+        "x": 339,
+        "y": 780
+      }
+    },
+    {
+      "data": {
+        "id": "loc_fine_arts_building",
+        "label": "Fine Arts Building",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Academic Buildings",
+        "details": "Art history department has a private collection of Richmond artwork that shows different scenes depending on when you look at them."
+      },
+      "position": {
+        "x": 619,
+        "y": 866
+      }
+    },
+    {
+      "data": {
+        "id": "loc_main_hospital",
+        "label": "Main Hospital",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Medical District (MCV)",
+        "details": "VCU Health's primary facility. Power faction uses medical access for research into life, death, and consciousness."
+      },
+      "position": {
+        "x": 714,
+        "y": 292
+      }
+    },
+    {
+      "data": {
+        "id": "loc_medical_education_building",
+        "label": "Medical Education Building",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Medical District (MCV)",
+        "details": "Where Power faction members train new mages in the intersection of magic and medicine."
+      },
+      "position": {
+        "x": 274,
+        "y": 606
+      }
+    },
+    {
+      "data": {
+        "id": "loc_research_labs",
+        "label": "Research Labs",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Medical District (MCV)",
+        "details": "Cutting-edge facilities that sometimes produce impossible results. The ethics review board has learned not to ask too many questions about certain projects."
+      },
+      "position": {
+        "x": 805,
+        "y": 764
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_observatory",
+        "label": "The Observatory",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Consilium Sanctum",
+        "details": "Hidden facility built into the structure of multiple university buildings. Accessible through a network of maintenance tunnels and forgotten sub-basements. Contains the true Consilium library and ritual spaces."
+      },
+      "position": {
+        "x": 775,
+        "y": 608
+      }
+    },
+    {
+      "data": {
+        "id": "loc_monroe_park",
+        "label": "Monroe Park",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Student Life",
+        "details": "Central campus green space. The ley line beneath the park has run measurably off-tempo three times in six weeks. Power faction monitors this closely."
+      },
+      "position": {
+        "x": 874,
+        "y": 591
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_commons",
+        "label": "The Commons",
+        "kind": "location",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Student Life",
+        "details": "Student center and gathering space. The Power faction monitors student population for potential Awakening candidates."
+      },
+      "position": {
+        "x": 865,
+        "y": 438
+      }
+    },
+    {
+      "data": {
+        "id": "loc_creighton_renaissance_phase_a",
+        "label": "Creighton Renaissance (Phase A)",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Residential Areas",
+        "details": "New mixed-income units where displaced families have returned. Some units overlook spaces where the old buildings still exist in parallel time."
+      },
+      "position": {
+        "x": -47,
+        "y": 1115
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_courts",
+        "label": "The Courts",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Residential Areas",
+        "details": "Remaining original buildings scheduled for demolition. Families live knowing their homes have expiration dates. Some buildings appear empty but show signs of ongoing habitation."
+      },
+      "position": {
+        "x": -292,
+        "y": 638
+      }
+    },
+    {
+      "data": {
+        "id": "loc_transition_housing",
+        "label": "Transition Housing",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Residential Areas",
+        "details": "Scattered sites where displaced families wait for new units. RRHA vouchers sometimes lead to addresses that don't exist on current maps."
+      },
+      "position": {
+        "x": -222,
+        "y": 657
+      }
+    },
+    {
+      "data": {
+        "id": "loc_east_end_family_resource_center",
+        "label": "East End Family Resource Center",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help."
+      },
+      "position": {
+        "x": 241,
+        "y": 556
+      }
+    },
+    {
+      "data": {
+        "id": "loc_oakland_cemetery",
+        "label": "Oakland Cemetery",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Historic African-American cemetery that borders the community. Graves sometimes show fresh flowers on plots that have been empty for decades."
+      },
+      "position": {
+        "x": 29,
+        "y": 449
+      }
+    },
+    {
+      "data": {
+        "id": "loc_corner_stores",
+        "label": "Corner Stores",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Neighborhood markets that serve as informal community hubs. Owners know everyone's business and notice when temporal anomalies affect their customers."
+      },
+      "position": {
+        "x": -234,
+        "y": 1022
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_old_armstrong_site",
+        "label": "The Old Armstrong Site",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Sacred/Contested Spaces",
+        "details": "Former high school being developed as mixed-income housing. Construction workers find classrooms with lessons still on the boards."
+      },
+      "position": {
+        "x": 270,
+        "y": 906
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_playground_that_wasnt",
+        "label": "The Playground That Wasn't",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Sacred/Contested Spaces",
+        "details": "Children play on equipment that doesn't appear in any development plans, but has been there \"forever\" according to residents."
+      },
+      "position": {
+        "x": 300,
+        "y": 677
+      }
+    },
+    {
+      "data": {
+        "id": "loc_nine_mile_road_overpass",
+        "label": "Nine Mile Road Overpass",
+        "kind": "location",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Sacred/Contested Spaces",
+        "details": "Where the community connects to the wider city. Graffiti sometimes appears in styles from decades past, depicting events that haven't happened yet."
+      },
+      "position": {
+        "x": 138,
+        "y": 510
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_historic_district",
+        "label": "The Historic District",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Residential Core",
+        "details": "19th-century worker cottages on narrow lots. Some houses show room additions from multiple time periods existing simultaneously."
+      },
+      "position": {
+        "x": -292,
+        "y": 561
+      }
+    },
+    {
+      "data": {
+        "id": "loc_student_blocks",
+        "label": "Student Blocks",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Residential Core",
+        "details": "Rental properties near VCU campus. Landlords sometimes collect rent for apartments that existed in previous configurations of the buildings."
+      },
+      "position": {
+        "x": -749,
+        "y": 362
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_old_families",
+        "label": "The Old Families",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Residential Core",
+        "details": "Long-term residents in houses passed down through generations. These families anchor the community's memory and cultural continuity."
+      },
+      "position": {
+        "x": -227,
+        "y": 697
+      }
+    },
+    {
+      "data": {
+        "id": "loc_st_andrews_episcopal_church",
+        "label": "St. Andrew's Episcopal Church",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Built with Grace Arents funding in 1894. Services sometimes include parishioners from different eras of the neighborhood's history."
+      },
+      "position": {
+        "x": -352,
+        "y": 352
+      }
+    },
+    {
+      "data": {
+        "id": "loc_william_byrd_community_house",
+        "label": "William Byrd Community House",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Provides social services and meeting space. Programs occasionally serve participants who died years ago but continue attending."
+      },
+      "position": {
+        "x": -909,
+        "y": 590
+      }
+    },
+    {
+      "data": {
+        "id": "loc_arents_free_library",
+        "label": "Arents Free Library",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Community Anchors",
+        "details": "Small neighborhood library. Books sometimes include local histories that describe events before they happen."
+      },
+      "position": {
+        "x": -415,
+        "y": 859
+      }
+    },
+    {
+      "data": {
+        "id": "loc_byrd_park_overlook",
+        "label": "Byrd Park Overlook",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Work & Art Spaces",
+        "details": "Scenic views of the James River where residents gather. Sometimes shows industrial landscape from the valley's manufacturing heyday."
+      },
+      "position": {
+        "x": -455,
+        "y": 214
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_art_collective",
+        "label": "The Art Collective",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Work & Art Spaces",
+        "details": "Informal spaces where local artists work and display. Exhibitions sometimes include work by artists who haven't moved to the neighborhood yet."
+      },
+      "position": {
+        "x": -563,
+        "y": 860
+      }
+    },
+    {
+      "data": {
+        "id": "loc_home_studios",
+        "label": "Home Studios",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Work & Art Spaces",
+        "details": "Many residents work from converted garages and basements. Musicians hear echoes of industrial rhythms in their compositions."
+      },
+      "position": {
+        "x": -244,
+        "y": 367
+      }
+    },
+    {
+      "data": {
+        "id": "loc_hollywood_cemetery_border",
+        "label": "Hollywood Cemetery Border",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Liminal Spaces",
+        "details": "The neighborhood's western edge where residents walk among Civil War graves and famous burials. New graves occasionally appear for living residents."
+      },
+      "position": {
+        "x": -295,
+        "y": 661
+      }
+    },
+    {
+      "data": {
+        "id": "loc_tredegar_overlook",
+        "label": "Tredegar Overlook",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Liminal Spaces",
+        "details": "Views of the old iron works site below. Workers sometimes appear at the historical park, continuing shifts that ended 150 years ago."
+      },
+      "position": {
+        "x": -661,
+        "y": 758
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_expressway_cut",
+        "label": "The Expressway Cut",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Liminal Spaces",
+        "details": "Where the Downtown Expressway carved through the neighborhood in the 1970s. The road sometimes shows different routes or doesn't exist at all."
+      },
+      "position": {
+        "x": -319,
+        "y": 494
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_nail",
+        "label": "The Nail",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Bar / information broker",
+        "details": "A bar on Idlewood Avenue where information is charged by the drink."
+      },
+      "position": {
+        "x": -791,
+        "y": 577
+      }
+    },
+    {
+      "data": {
+        "id": "loc_cutlers_gym",
+        "label": "Cutler's Gym",
+        "kind": "location",
+        "hub_id": "hub_oregon_hill",
+        "status": "active",
+        "subtype": "Boxing gym",
+        "details": "A boxing gym on Decatur Street and one of Jacob Boone's mortal anchors."
+      },
+      "position": {
+        "x": -497,
+        "y": 810
+      }
+    },
+    {
+      "data": {
+        "id": "npc_det_okafor",
+        "label": "Det. Sgt. Paulette Okafor",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "RPD cold case detective; unofficial breach manager for supernatural incidents",
+        "portrait": "",
+        "details": "RPD cold case detective; unofficial breach manager for supernatural incidents"
+      },
+      "position": {
+        "x": -562,
+        "y": -731
+      }
+    },
+    {
+      "data": {
+        "id": "npc_father_hruska",
+        "label": "Father Benedikt Hruska",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Priest of St. Peter's Catholic; community anchor for the Bottom",
+        "portrait": "",
+        "details": "Priest of St. Peter's Catholic; community anchor for the Bottom"
+      },
+      "position": {
+        "x": -498,
+        "y": -1023
+      }
+    },
+    {
+      "data": {
+        "id": "npc_emmett_daye",
+        "label": "Emmett Daye",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Hollywood Cemetery groundskeeper, 40 years; has seen things he can't explain",
+        "portrait": "",
+        "details": "Hollywood Cemetery groundskeeper, 40 years; has seen things he can't explain"
+      },
+      "position": {
+        "x": -458,
+        "y": -674
+      }
+    },
+    {
+      "data": {
+        "id": "npc_celestine_morrow",
+        "label": "Celestine Morrow",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Owner of Morrow's Books; 3rd-generation Bottom resident; protective of family legacy",
+        "portrait": "",
+        "details": "Owner of Morrow's Books; 3rd-generation Bottom resident; protective of family legacy"
+      },
+      "position": {
+        "x": 411,
+        "y": -523
+      }
+    },
+    {
+      "data": {
+        "id": "npc_declan_morrow",
+        "label": "Declan Morrow",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Celestine's nephew; small-time supernatural fixer trying to stay useful",
+        "portrait": "",
+        "details": "Celestine's nephew; small-time supernatural fixer trying to stay useful"
+      },
+      "position": {
+        "x": -440,
+        "y": -985
+      }
+    },
+    {
+      "data": {
+        "id": "npc_aldric_serrano",
+        "label": "Aldric Serrano",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Nosferatu elder and canal tunnel patriarch; wants to be left alone",
+        "portrait": "",
+        "details": "Nosferatu elder and canal tunnel patriarch; wants to be left alone"
+      },
+      "position": {
+        "x": -265,
+        "y": -1258
+      }
+    },
+    {
+      "data": {
+        "id": "npc_theo_marchand",
+        "label": "Theo Marchand",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Robert's inside man; ex-private security; handles physical problems",
+        "portrait": "",
+        "details": "Robert's inside man; ex-private security; handles physical problems"
+      },
+      "position": {
+        "x": 125,
+        "y": -1366
+      }
+    },
+    {
+      "data": {
+        "id": "npc_patrice_guidry",
+        "label": "Patrice Guidry",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Robert's second; handles problems before they become physical",
+        "portrait": "",
+        "details": "Robert's second; handles problems before they become physical"
+      },
+      "position": {
+        "x": 556,
+        "y": -819
+      }
+    },
+    {
+      "data": {
+        "id": "npc_mireille_fontenot",
+        "label": "Mireille Fontenot",
+        "kind": "npc",
+        "hub_id": "hub_the_fan",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Toreador vampire; Maison Rouge gallery/salon owner expanding supernatural influence through art",
+        "portrait": "",
+        "details": "Toreador vampire; Maison Rouge gallery/salon owner expanding supernatural influence through art"
+      },
+      "position": {
+        "x": 533,
+        "y": -8
+      }
+    },
+    {
+      "data": {
+        "id": "npc_asha_tremblay",
+        "label": "Asha Tremblay",
+        "kind": "npc",
+        "hub_id": "hub_the_fan",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe",
+        "portrait": "",
+        "details": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe"
+      },
+      "position": {
+        "x": 312,
+        "y": -119
+      }
+    },
+    {
+      "data": {
+        "id": "npc_vera_solis",
+        "label": "Vera Solis",
+        "kind": "npc",
+        "hub_id": "hub_the_fan",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Wizened Fae; VMFA restoration expert; restores paintings 'too well'",
+        "portrait": "",
+        "details": "Wizened Fae; VMFA restoration expert; restores paintings 'too well'"
+      },
+      "position": {
+        "x": 960,
+        "y": -210
+      }
+    },
+    {
+      "data": {
+        "id": "npc_marcus_delacroix",
+        "label": "Marcus Delacroix",
+        "kind": "npc",
+        "hub_id": "hub_the_fan",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Mortal street artist; documents the Overwrite in the visual record",
+        "portrait": "",
+        "details": "Mortal street artist; documents the Overwrite in the visual record"
+      },
+      "position": {
+        "x": 604,
+        "y": -1042
+      }
+    },
+    {
+      "data": {
+        "id": "npc_jonah_pryce",
+        "label": "Jonah Pryce",
+        "kind": "npc",
+        "hub_id": "hub_the_fan",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Mortal collector being groomed by Mireille for Blood Bond; doesn't know it yet",
+        "portrait": "",
+        "details": "Mortal collector being groomed by Mireille for Blood Bond; doesn't know it yet"
+      },
+      "position": {
+        "x": 315,
+        "y": -1017
+      }
+    },
+    {
+      "data": {
+        "id": "npc_elspeth_crane",
+        "label": "Elspeth Crane",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Ventrue lawyer; Serrano's surface liaison; handles supernatural legal issues",
+        "portrait": "",
+        "details": "Ventrue lawyer; Serrano's surface liaison; handles supernatural legal issues"
+      },
+      "position": {
+        "x": 1256,
+        "y": 136
+      }
+    },
+    {
+      "data": {
+        "id": "npc_judge_kellom",
+        "label": "Judge Patricia Kellom",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Federal judge; unaware Night asset managed through careful case selection",
+        "portrait": "",
+        "details": "Federal judge; unaware Night asset managed through careful case selection"
+      },
+      "position": {
+        "x": 612,
+        "y": 488
+      }
+    },
+    {
+      "data": {
+        "id": "npc_marcus_voss",
+        "label": "Marcus Voss",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand",
+        "portrait": "",
+        "details": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand"
+      },
+      "position": {
+        "x": 994,
+        "y": 529
+      }
+    },
+    {
+      "data": {
+        "id": "npc_riley_hoffman",
+        "label": "Riley Hoffman",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise",
+        "portrait": "",
+        "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise"
+      },
+      "position": {
+        "x": 1138,
+        "y": 370
+      }
+    },
+    {
+      "data": {
+        "id": "npc_dr_olave",
+        "label": "Dr. Sebastian Olave",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation",
+        "portrait": "",
+        "details": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation"
+      },
+      "position": {
+        "x": 86,
+        "y": 354
+      }
+    },
+    {
+      "data": {
+        "id": "npc_ingrid_voss",
+        "label": "Councilor Ingrid Voss",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner",
+        "portrait": "",
+        "details": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner"
+      },
+      "position": {
+        "x": 291,
+        "y": 1044
+      }
+    },
+    {
+      "data": {
+        "id": "npc_prof_tanaka",
+        "label": "Prof. Yuki Tanaka",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up",
+        "portrait": "",
+        "details": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up"
+      },
+      "position": {
+        "x": 598,
+        "y": 1079
+      }
+    },
+    {
+      "data": {
+        "id": "npc_fen_adeyemi",
+        "label": "Fen Adeyemi",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Young Consilium archivist with more clearance than experience",
+        "portrait": "",
+        "details": "Young Consilium archivist with more clearance than experience"
+      },
+      "position": {
+        "x": 379,
+        "y": 1053
+      }
+    },
+    {
+      "data": {
+        "id": "npc_dr_ashford",
+        "label": "Dr. Camille Ashford",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "VCU Art History professor; studies Overwrite anomalies in Richmond artwork",
+        "portrait": "",
+        "details": "VCU Art History professor; studies Overwrite anomalies in Richmond artwork"
+      },
+      "position": {
+        "x": 833,
+        "y": 85
+      }
+    },
+    {
+      "data": {
+        "id": "npc_mama_dee_washington",
+        "label": "Denise \"Mama Dee\" Washington",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "30-year community organizer; leads resident council; can see through Overwrite effects",
+        "portrait": "",
+        "details": "30-year community organizer; leads resident council; can see through Overwrite effects"
+      },
+      "position": {
+        "x": -264,
+        "y": 1187
+      }
+    },
+    {
+      "data": {
+        "id": "npc_marcus_ghost_williams",
+        "label": "Marcus \"Ghost\" Williams",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Young father and maintenance worker; quiet, notices temporal anomalies; knows how not to be seen",
+        "portrait": "",
+        "details": "Young father and maintenance worker; quiet, notices temporal anomalies; knows how not to be seen"
+      },
+      "position": {
+        "x": 42,
+        "y": 295
+      }
+    },
+    {
+      "data": {
+        "id": "npc_sister_catherine_burke",
+        "label": "Sister Catherine Burke",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway",
+        "portrait": "",
+        "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway"
+      },
+      "position": {
+        "x": -91,
+        "y": 313
+      }
+    },
+    {
+      "data": {
+        "id": "npc_jrock_thompson",
+        "label": "Jamal \"J-Rock\" Thompson",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Street artist and community historian; creates murals showing past/present simultaneously",
+        "portrait": "",
+        "details": "Street artist and community historian; creates murals showing past/present simultaneously"
+      },
+      "position": {
+        "x": -484,
+        "y": 1119
+      }
+    },
+    {
+      "data": {
+        "id": "npc_dr_reeves",
+        "label": "Dr. Angela Reeves",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "RRHA social worker; Richmond native; grew up in the East End; conflicted about redevelopment",
+        "portrait": "",
+        "details": "RRHA social worker; Richmond native; grew up in the East End; conflicted about redevelopment"
+      },
+      "position": {
+        "x": -472,
+        "y": 662
+      }
+    },
+    {
+      "data": {
+        "id": "npc_eddie_mcallister",
+        "label": "Eddie \"Iron\" McAllister",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Third-generation resident; retired steelworker; grandfather worked Tredegar; sees through industrial echoes",
+        "portrait": "",
+        "details": "Third-generation resident; retired steelworker; grandfather worked Tredegar; sees through industrial echoes"
+      },
+      "position": {
+        "x": -1025,
+        "y": 577
+      }
+    },
+    {
+      "data": {
+        "id": "npc_lucia_santos",
+        "label": "Lucia Santos",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Artist and community organizer; runs gallery/venue; moved here 15 years ago, earned respect through advocacy",
+        "portrait": "",
+        "details": "Artist and community organizer; runs gallery/venue; moved here 15 years ago, earned respect through advocacy"
+      },
+      "position": {
+        "x": -85,
+        "y": 704
+      }
+    },
+    {
+      "data": {
+        "id": "npc_tommy_barrett",
+        "label": "Tommy Barrett",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Bartender at Poe Museum; local historian; collects oral histories; notices Overwrite-related job references",
+        "portrait": "",
+        "details": "Bartender at Poe Museum; local historian; collects oral histories; notices Overwrite-related job references"
+      },
+      "position": {
+        "x": -235,
+        "y": 115
+      }
+    },
+    {
+      "data": {
+        "id": "npc_becca_chen",
+        "label": "Rebecca \"Becca\" Chen",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "VCU art student and neighborhood liaison; organizes student volunteer projects",
+        "portrait": "",
+        "details": "VCU art student and neighborhood liaison; organizes student volunteer projects"
+      },
+      "position": {
+        "x": -474,
+        "y": 1107
+      }
+    },
+    {
+      "data": {
+        "id": "npc_pete_kowalski",
+        "label": "Pete Kowalski",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Retired city worker; de facto neighborhood watch; knows every family for blocks, suspicious of anomalies",
+        "portrait": "",
+        "details": "Retired city worker; de facto neighborhood watch; knows every family for blocks, suspicious of anomalies"
+      },
+      "position": {
+        "x": -724,
+        "y": 105
+      }
+    },
+    {
+      "data": {
+        "id": "npc_petra_holt",
+        "label": "Petra Holt",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse",
+        "portrait": "",
+        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse"
+      },
+      "position": {
+        "x": 72,
+        "y": -1363
+      }
+    },
+    {
+      "data": {
+        "id": "npc_nadia_vasek",
+        "label": "Nadia Vasek",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Ward of an Acanthus practitioner, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar",
+        "portrait": "",
+        "details": "Ward of an Acanthus practitioner, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar"
+      },
+      "position": {
+        "x": 786,
+        "y": 1011
+      }
+    },
+    {
+      "data": {
+        "id": "npc_maren_voss",
+        "label": "Maren Voss",
+        "kind": "npc",
+        "hub_id": "hub_shockoe_bottom",
+        "faction": "Mortalis",
+        "status": "deceased",
+        "subtype": "VCU Folklore & Mythology grad student; died 8 months ago; left a brick-encoded message for an Acanthus",
+        "portrait": "",
+        "details": "VCU Folklore & Mythology grad student; died 8 months ago; left a brick-encoded message for an Acanthus"
+      },
+      "position": {
+        "x": -464,
+        "y": -913
+      }
+    },
+    {
+      "data": {
+        "id": "npc_the_collector",
+        "label": "The Collector",
+        "kind": "npc",
+        "hub_id": "",
+        "faction": "Unknown",
+        "status": "active",
+        "subtype": "Unknown entity that catalogs things-that-remember; killed Maren Voss; still in the city",
+        "portrait": "",
+        "details": "Unknown entity that catalogs things-that-remember; killed Maren Voss; still in the city"
+      },
+      "position": {
+        "x": -378,
+        "y": -317
+      }
+    },
+    {
+      "data": {
+        "id": "npc_dad_grey",
+        "label": "Reverend Grey (the hunter's father)",
+        "kind": "npc",
+        "hub_id": "",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "The hunter's father; hid his supernatural existence; involved in the hunter's missing kidney",
+        "portrait": "",
+        "details": "The hunter's father; hid his supernatural existence; involved in the hunter's missing kidney"
+      },
+      "position": {
+        "x": -364,
+        "y": -305
+      }
+    },
+    {
+      "data": {
+        "id": "npc_father_dominic",
+        "label": "Father Dominic",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Parish superior at St. Angust Parish; genuinely devout; suspicious of his junior priest",
+        "portrait": "",
+        "details": "Parish superior at St. Angust Parish; genuinely devout; suspicious of his junior priest"
+      },
+      "position": {
+        "x": 990,
+        "y": 495
+      }
+    },
+    {
+      "data": {
+        "id": "npc_hannibal",
+        "label": "Hannibal",
+        "kind": "npc",
+        "hub_id": "",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Werewolf with a history of kidnapping a hunter; now tolerates that hunter's questions about the supernatural",
+        "portrait": "",
+        "details": "Werewolf with a history of kidnapping a hunter; now tolerates that hunter's questions about the supernatural"
+      },
+      "position": {
+        "x": 388,
+        "y": 431
+      }
+    },
+    {
+      "data": {
+        "id": "npc_marcus_teen",
+        "label": "Marcus (teen)",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "16-year-old congregation member at St. Angust Parish; trusts his priest completely; danger magnet",
+        "portrait": "",
+        "details": "16-year-old congregation member at St. Angust Parish; trusts his priest completely; danger magnet"
+      },
+      "position": {
+        "x": 298,
+        "y": 129
+      }
+    },
+    {
+      "data": {
+        "id": "npc_sandra_grey",
+        "label": "Sandra Grey",
+        "kind": "npc",
+        "hub_id": "",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "A priest's ex-wife; believes he is simply a priest now; calls occasionally",
+        "portrait": "",
+        "details": "A priest's ex-wife; believes he is simply a priest now; calls occasionally"
+      },
+      "position": {
+        "x": -482,
+        "y": 68
+      }
+    },
+    {
+      "data": {
+        "id": "npc_the_general",
+        "label": "The General",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing",
+        "portrait": "",
+        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing"
+      },
+      "position": {
+        "x": 279,
+        "y": 192
+      }
+    },
+    {
+      "data": {
+        "id": "npc_vera_medium",
+        "label": "Vera (medium)",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has",
+        "portrait": "",
+        "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has"
+      },
+      "position": {
+        "x": 626,
+        "y": 575
+      }
+    },
+    {
+      "data": {
+        "id": "npc_roz_czerny",
+        "label": "Rosamund \"Roz\" Czerny",
+        "kind": "npc",
+        "hub_id": "",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Retired forensic pathologist turned fixer; provides information and cleanup",
+        "portrait": "",
+        "details": "Retired forensic pathologist turned fixer; provides information and cleanup"
+      },
+      "position": {
+        "x": 424,
+        "y": 286
+      }
+    },
+    {
+      "data": {
+        "id": "npc_linh_pham",
+        "label": "Dr. Linh Pham",
+        "kind": "npc",
+        "hub_id": "hub_university",
+        "faction": "Power",
+        "status": "deceased",
+        "subtype": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse",
+        "portrait": "",
+        "details": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse"
+      },
+      "position": {
+        "x": 107,
+        "y": 285
+      }
+    },
+    {
+      "data": {
+        "id": "npc_henrik_vael",
+        "label": "Henrik Vael",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order",
+        "portrait": "",
+        "details": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order"
+      },
+      "position": {
+        "x": 715,
+        "y": -533
+      }
+    },
+    {
+      "data": {
+        "id": "npc_dara_shin",
+        "label": "Dara Shin",
+        "kind": "npc",
+        "hub_id": "hub_church_hill",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Forsaken Storm Lords / Irraka. Found Jacob after his First Change. Has been in Richmond twelve years, holds Church Hill territory. Trained Jacob and holds 1 Debt on him.",
+        "portrait": "",
+        "details": "Forsaken Storm Lords / Irraka. Found Jacob after his First Change. Has been in Richmond twelve years, holds Church Hill territory. Trained Jacob and holds 1 Debt on him."
+      },
+      "position": {
+        "x": -762,
+        "y": 505
+      }
+    },
+    {
+      "data": {
+        "id": "npc_ray_cutler",
+        "label": "Ray Cutler",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Jacob's boxing trainer. Runs a gym on Decatur Street. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor.",
+        "portrait": "",
+        "details": "Jacob's boxing trainer. Runs a gym on Decatur Street. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor."
+      },
+      "position": {
+        "x": -505,
+        "y": 17
+      }
+    },
+    {
+      "data": {
+        "id": "npc_carla_boone",
+        "label": "Carla Boone",
+        "kind": "npc",
+        "hub_id": "hub_carytown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Jacob's younger sister. Works front desk at a physical therapy clinic in Carytown. Has a seven-year-old son named Marcus. Thinks boxing left Jacob strange.",
+        "portrait": "",
+        "details": "Jacob's younger sister. Works front desk at a physical therapy clinic in Carytown. Has a seven-year-old son named Marcus. Thinks boxing left Jacob strange."
+      },
+      "position": {
+        "x": -258,
+        "y": -928
+      }
+    },
+    {
+      "data": {
+        "id": "npc_tommy_greer",
+        "label": "Tommy Greer",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Childhood friend of Jacob's. Lives two blocks over in Oregon Hill. Small-time fixer, does favors for people he shouldn't. Saw something near the canal three months ago he can't explain. Owes Jacob a long-standing Debt.",
+        "portrait": "",
+        "details": "Childhood friend of Jacob's. Lives two blocks over in Oregon Hill. Small-time fixer, does favors for people he shouldn't. Saw something near the canal three months ago he can't explain. Owes Jacob a long-standing Debt."
+      },
+      "position": {
+        "x": -827,
+        "y": 55
+      }
+    },
+    {
+      "data": {
+        "id": "npc_priest",
+        "label": "Priest",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Runs The Nail bar on Idlewood Avenue. Former military. Knows more about Richmond's supernatural ecosystem than he lets on. Charges information by the drink. Jacob holds 1 Debt on him.",
+        "portrait": "",
+        "details": "Runs The Nail bar on Idlewood Avenue. Former military. Knows more about Richmond's supernatural ecosystem than he lets on. Charges information by the drink. Jacob holds 1 Debt on him."
+      },
+      "position": {
+        "x": -392,
+        "y": 1109
+      }
+    },
+    {
+      "data": {
+        "id": "jacob-boone",
+        "label": "Jacob Boone",
+        "kind": "pc",
+        "hub_id": "",
+        "status": "active",
+        "details": "Player character"
+      },
+      "position": {
+        "x": 0,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "data": {
+        "id": "edge_loc_the_buried_street_hub_shockoe_bottom",
+        "source": "loc_the_buried_street",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_st_peters_catholic_hub_shockoe_bottom",
+        "source": "loc_st_peters_catholic",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_morrows_books_hub_shockoe_bottom",
+        "source": "loc_morrows_books",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_old_market_site_hub_shockoe_bottom",
+        "source": "loc_the_old_market_site",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_serranos_entry_hub_shockoe_bottom",
+        "source": "loc_serranos_entry",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_hollywood_cemetery_hub_shockoe_bottom",
+        "source": "loc_hollywood_cemetery",
+        "target": "hub_shockoe_bottom",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_maison_rouge_hub_the_fan",
+        "source": "loc_maison_rouge",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_threshold_hub_the_fan",
+        "source": "loc_threshold",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_virginia_museum_of_fine_arts_hub_the_fan",
+        "source": "loc_virginia_museum_of_fine_arts",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_1708_gallery_hub_the_fan",
+        "source": "loc_1708_gallery",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_monument_avenue_hub_the_fan",
+        "source": "loc_monument_avenue",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_arthur_ashe_monument_hub_the_fan",
+        "source": "loc_arthur_ashe_monument",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_empty_plinths_hub_the_fan",
+        "source": "loc_the_empty_plinths",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_fan_historic_district_hub_the_fan",
+        "source": "loc_the_fan_historic_district",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_canterbury_hub_the_fan",
+        "source": "loc_canterbury",
+        "target": "hub_the_fan",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_riverfront_plaza_hub_downtown",
+        "source": "loc_riverfront_plaza",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_federal_courthouse_hub_downtown",
+        "source": "loc_federal_courthouse",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_city_hall_annex_hub_downtown",
+        "source": "loc_city_hall_annex",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_james_center_hub_downtown",
+        "source": "loc_james_center",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_canal_walk_surface_hub_downtown",
+        "source": "loc_canal_walk_surface",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_old_canal_locks_hub_downtown",
+        "source": "loc_the_old_canal_locks",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_serranos_domain_hub_downtown",
+        "source": "loc_serranos_domain",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_flood_chambers_hub_downtown",
+        "source": "loc_the_flood_chambers",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_exchange_hub_downtown",
+        "source": "loc_the_exchange",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_club_at_101_hub_downtown",
+        "source": "loc_the_club_at_101",
+        "target": "hub_downtown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_hibbs_hall_hub_university",
+        "source": "loc_hibbs_hall",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_cabell_library_hub_university",
+        "source": "loc_cabell_library",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_harris_hall_hub_university",
+        "source": "loc_harris_hall",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_fine_arts_building_hub_university",
+        "source": "loc_fine_arts_building",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_main_hospital_hub_university",
+        "source": "loc_main_hospital",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_medical_education_building_hub_university",
+        "source": "loc_medical_education_building",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_research_labs_hub_university",
+        "source": "loc_research_labs",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_observatory_hub_university",
+        "source": "loc_the_observatory",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_monroe_park_hub_university",
+        "source": "loc_monroe_park",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_commons_hub_university",
+        "source": "loc_the_commons",
+        "target": "hub_university",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_creighton_renaissance_phase_a_hub_creighton_court",
+        "source": "loc_creighton_renaissance_phase_a",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_courts_hub_creighton_court",
+        "source": "loc_the_courts",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_transition_housing_hub_creighton_court",
+        "source": "loc_transition_housing",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_east_end_family_resource_center_hub_creighton_court",
+        "source": "loc_east_end_family_resource_center",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_oakland_cemetery_hub_creighton_court",
+        "source": "loc_oakland_cemetery",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_corner_stores_hub_creighton_court",
+        "source": "loc_corner_stores",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_old_armstrong_site_hub_creighton_court",
+        "source": "loc_the_old_armstrong_site",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_playground_that_wasnt_hub_creighton_court",
+        "source": "loc_the_playground_that_wasnt",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_nine_mile_road_overpass_hub_creighton_court",
+        "source": "loc_nine_mile_road_overpass",
+        "target": "hub_creighton_court",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_historic_district_hub_oregon_hill",
+        "source": "loc_the_historic_district",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_student_blocks_hub_oregon_hill",
+        "source": "loc_student_blocks",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_old_families_hub_oregon_hill",
+        "source": "loc_the_old_families",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_st_andrews_episcopal_church_hub_oregon_hill",
+        "source": "loc_st_andrews_episcopal_church",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_william_byrd_community_house_hub_oregon_hill",
+        "source": "loc_william_byrd_community_house",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_arents_free_library_hub_oregon_hill",
+        "source": "loc_arents_free_library",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_byrd_park_overlook_hub_oregon_hill",
+        "source": "loc_byrd_park_overlook",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_art_collective_hub_oregon_hill",
+        "source": "loc_the_art_collective",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_home_studios_hub_oregon_hill",
+        "source": "loc_home_studios",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_hollywood_cemetery_border_hub_oregon_hill",
+        "source": "loc_hollywood_cemetery_border",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_tredegar_overlook_hub_oregon_hill",
+        "source": "loc_tredegar_overlook",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_expressway_cut_hub_oregon_hill",
+        "source": "loc_the_expressway_cut",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_nail_hub_oregon_hill",
+        "source": "loc_the_nail",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_cutlers_gym_hub_oregon_hill",
+        "source": "loc_cutlers_gym",
+        "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_det_okafor_hub_shockoe_bottom",
+        "source": "npc_det_okafor",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_father_hruska_loc_st_peters_catholic",
+        "source": "npc_father_hruska",
+        "target": "loc_st_peters_catholic",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_emmett_daye_loc_hollywood_cemetery",
+        "source": "npc_emmett_daye",
+        "target": "loc_hollywood_cemetery",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_celestine_morrow_loc_morrows_books",
+        "source": "npc_celestine_morrow",
+        "target": "loc_morrows_books",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_declan_morrow_hub_shockoe_bottom",
+        "source": "npc_declan_morrow",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_aldric_serrano_loc_serranos_domain",
+        "source": "npc_aldric_serrano",
+        "target": "loc_serranos_domain",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_theo_marchand_hub_shockoe_bottom",
+        "source": "npc_theo_marchand",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_patrice_guidry_hub_shockoe_bottom",
+        "source": "npc_patrice_guidry",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_mireille_fontenot_loc_maison_rouge",
+        "source": "npc_mireille_fontenot",
+        "target": "loc_maison_rouge",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_asha_tremblay_loc_threshold",
+        "source": "npc_asha_tremblay",
+        "target": "loc_threshold",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_vera_solis_hub_the_fan",
+        "source": "npc_vera_solis",
+        "target": "hub_the_fan",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marcus_delacroix_hub_the_fan",
+        "source": "npc_marcus_delacroix",
+        "target": "hub_the_fan",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_jonah_pryce_hub_the_fan",
+        "source": "npc_jonah_pryce",
+        "target": "hub_the_fan",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_elspeth_crane_hub_downtown",
+        "source": "npc_elspeth_crane",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_judge_kellom_hub_downtown",
+        "source": "npc_judge_kellom",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marcus_voss_hub_downtown",
+        "source": "npc_marcus_voss",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_riley_hoffman_hub_downtown",
+        "source": "npc_riley_hoffman",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dr_olave_loc_hibbs_hall",
+        "source": "npc_dr_olave",
+        "target": "loc_hibbs_hall",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ingrid_voss_hub_university",
+        "source": "npc_ingrid_voss",
+        "target": "hub_university",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_prof_tanaka_loc_harris_hall",
+        "source": "npc_prof_tanaka",
+        "target": "loc_harris_hall",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_fen_adeyemi_hub_university",
+        "source": "npc_fen_adeyemi",
+        "target": "hub_university",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dr_ashford_hub_university",
+        "source": "npc_dr_ashford",
+        "target": "hub_university",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_mama_dee_washington_hub_creighton_court",
+        "source": "npc_mama_dee_washington",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marcus_ghost_williams_hub_creighton_court",
+        "source": "npc_marcus_ghost_williams",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_sister_catherine_burke_loc_east_end_family_resource_center",
+        "source": "npc_sister_catherine_burke",
+        "target": "loc_east_end_family_resource_center",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_jrock_thompson_hub_creighton_court",
+        "source": "npc_jrock_thompson",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dr_reeves_hub_creighton_court",
+        "source": "npc_dr_reeves",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_eddie_mcallister_hub_oregon_hill",
+        "source": "npc_eddie_mcallister",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_lucia_santos_hub_oregon_hill",
+        "source": "npc_lucia_santos",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_tommy_barrett_hub_oregon_hill",
+        "source": "npc_tommy_barrett",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_becca_chen_hub_oregon_hill",
+        "source": "npc_becca_chen",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_pete_kowalski_hub_oregon_hill",
+        "source": "npc_pete_kowalski",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_petra_holt_hub_shockoe_bottom",
+        "source": "npc_petra_holt",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_nadia_vasek_hub_university",
+        "source": "npc_nadia_vasek",
+        "target": "hub_university",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_maren_voss_hub_shockoe_bottom",
+        "source": "npc_maren_voss",
+        "target": "hub_shockoe_bottom",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_father_dominic_hub_downtown",
+        "source": "npc_father_dominic",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marcus_teen_hub_downtown",
+        "source": "npc_marcus_teen",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_the_general_hub_downtown",
+        "source": "npc_the_general",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_vera_medium_hub_downtown",
+        "source": "npc_vera_medium",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_linh_pham_hub_university",
+        "source": "npc_linh_pham",
+        "target": "hub_university",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_henrik_vael_hub_downtown",
+        "source": "npc_henrik_vael",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dara_shin_hub_church_hill",
+        "source": "npc_dara_shin",
+        "target": "hub_church_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ray_cutler_loc_cutlers_gym",
+        "source": "npc_ray_cutler",
+        "target": "loc_cutlers_gym",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_carla_boone_hub_carytown",
+        "source": "npc_carla_boone",
+        "target": "hub_carytown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_tommy_greer_hub_oregon_hill",
+        "source": "npc_tommy_greer",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_priest_loc_the_nail",
+        "source": "npc_priest",
+        "target": "loc_the_nail",
+        "type": "located_at",
+        "label": "At",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_hruska_st_peters",
+        "source": "npc_father_hruska",
+        "target": "loc_st_peters_catholic",
+        "type": "controls",
+        "label": "Community anchor",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_celestine_morrows_books",
+        "source": "npc_celestine_morrow",
+        "target": "loc_morrows_books",
+        "type": "controls",
+        "label": "Owns",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_emmett_hollywood",
+        "source": "npc_emmett_daye",
+        "target": "loc_hollywood_cemetery",
+        "type": "works_at",
+        "label": "Groundskeeper",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_serrano_domain",
+        "source": "npc_aldric_serrano",
+        "target": "loc_serranos_domain",
+        "type": "controls",
+        "label": "Domain",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_mireille_maison_rouge",
+        "source": "npc_mireille_fontenot",
+        "target": "loc_maison_rouge",
+        "type": "controls",
+        "label": "Owns",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_asha_threshold",
+        "source": "npc_asha_tremblay",
+        "target": "loc_threshold",
+        "type": "controls",
+        "label": "Owns",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_olave_hibbs",
+        "source": "npc_dr_olave",
+        "target": "loc_hibbs_hall",
+        "type": "works_at",
+        "label": "Office",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_tanaka_harris",
+        "source": "npc_prof_tanaka",
+        "target": "loc_harris_hall",
+        "type": "works_at",
+        "label": "Office",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_catherine_resource_center",
+        "source": "npc_sister_catherine_burke",
+        "target": "loc_east_end_family_resource_center",
+        "type": "controls",
+        "label": "Community anchor",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_dara_jacob",
+        "source": "npc_dara_shin",
+        "target": "jacob-boone",
+        "type": "mentor",
+        "label": "Mentor · owed 1 Debt",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_ray_jacob",
+        "source": "npc_ray_cutler",
+        "target": "jacob-boone",
+        "type": "anchor",
+        "label": "Trainer · Anchor",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_carla_jacob",
+        "source": "npc_carla_boone",
+        "target": "jacob-boone",
+        "type": "family",
+        "label": "Sister · Anchor",
+        "direction": "undirected",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_tommy_jacob",
+        "source": "npc_tommy_greer",
+        "target": "jacob-boone",
+        "type": "friend",
+        "label": "Childhood friend · owes 1 Debt",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_priest_jacob",
+        "source": "npc_priest",
+        "target": "jacob-boone",
+        "type": "debt",
+        "label": "Owes 1 Debt",
+        "direction": "outbound",
+        "layer": "manual"
+      }
+    }
+  ]
+}

@@ -4,6 +4,17 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 
 ---
 
+## Contents
+
+- [Architecture](#architecture)
+- [Setup](#setup)
+- [Discord commands](#discord-commands)
+- [File map](#file-map)
+- [How sessions persist across runs](#how-sessions-persist-across-runs)
+- [Concurrency and retries](#concurrency--retries)
+- [Cost notes](#cost-notes)
+- [Troubleshooting](#troubleshooting)
+
 ## Architecture
 
 | Piece | What It Does |
@@ -19,7 +30,7 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 1. Player runs `/play` in Discord. The bot replies with a menu listing every character plus a `+ New character` entry.
 2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks the MC model (`deepseek-chat`) for the opening scene.
 3. Player and the MC trade messages in the thread.
-4. When the session ends, the MC emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, arcs.
+4. When the session ends, the MC emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, locations, public relationships, and arcs.
 5. The dashboard reflects the new world state on next refresh.
 
 **Player-onboarding (first-time Discord user)**

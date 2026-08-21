@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-04-30",
+  "last_updated": "2026-08-21",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -19,7 +19,9 @@
         "voice_note": "Speaks like every word is already on the record, because in her head it is."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 2. Quietly pulling contradictory cold cases from the 1970s."
+      "notes": "Status: Mortalis 2. Quietly pulling contradictory cold cases from the 1970s.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_father_hruska",
@@ -39,7 +41,13 @@
         "voice_note": "Warmth that feels earned rather than performed — the most disarming thing about him in this city."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Church basement locked since 1943. He has never asked why."
+      "notes": "Status: Mortalis 1. Church basement locked since 1943. He has never asked why.",
+      "associated_location_ids": [
+        "loc_st_peters_catholic"
+      ],
+      "home_location_id": "loc_st_peters_catholic",
+      "current_location_id": "loc_st_peters_catholic",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_emmett_daye",
@@ -59,7 +67,13 @@
         "voice_note": "Talks around what he's seen rather than at it. Forty years of watching strange things taught him not to name them out loud."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0. Cemetery has new sections he doesn't remember being built."
+      "notes": "Status: Mortalis 0. Cemetery has new sections he doesn't remember being built.",
+      "associated_location_ids": [
+        "loc_hollywood_cemetery"
+      ],
+      "home_location_id": "loc_hollywood_cemetery",
+      "current_location_id": "loc_hollywood_cemetery",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_celestine_morrow",
@@ -79,7 +93,13 @@
         "voice_note": "Knows more than she says. Measures you by how you treat the neighborhood before she'll treat you well."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Shop has a copy of a book that was never published."
+      "notes": "Status: Mortalis 1. Shop has a copy of a book that was never published.",
+      "associated_location_ids": [
+        "loc_morrows_books"
+      ],
+      "home_location_id": "loc_morrows_books",
+      "current_location_id": "loc_morrows_books",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_declan_morrow",
@@ -101,7 +121,9 @@
         "voice_note": "Charming in the way that makes you check your pockets. Thinks being useful excuses being reckless."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0 / Night 0. Convinced Nadia to follow him; she got a Scar. Knows Serrano's tunnel entry location."
+      "notes": "Status: Mortalis 0 / Night 0. Convinced Nadia to follow him; she got a Scar. Knows Serrano's tunnel entry location.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_aldric_serrano",
@@ -123,7 +145,13 @@
         "voice_note": "Doesn't threaten. States facts about consequences in the same tone he'd use to describe the weather."
       },
       "last_seen": "",
-      "notes": "Status: Night 3. Entry location known to Declan Morrow; access costs a Debt. Something breached his domain recently."
+      "notes": "Status: Night 3. Entry location known to Declan Morrow; access costs a Debt. Something breached his domain recently.",
+      "associated_location_ids": [
+        "loc_serranos_domain"
+      ],
+      "home_location_id": "loc_serranos_domain",
+      "current_location_id": "loc_serranos_domain",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_theo_marchand",
@@ -143,7 +171,9 @@
         "voice_note": "Quiet professional. Does the job, doesn't editorialize. You'd walk past him twice."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0."
+      "notes": "Status: Mortalis 0.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_patrice_guidry",
@@ -163,7 +193,9 @@
         "voice_note": "Reads a room faster than most people breathe. Tells you what you need to hear just late enough that you can't argue."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0."
+      "notes": "Status: Mortalis 0.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_mireille_fontenot",
@@ -183,7 +215,13 @@
         "voice_note": "Impeccably kind right up until she isn't, and the transition is invisible until it's too late."
       },
       "last_seen": "",
-      "notes": "Status: Night 2. Grooming Jonah Pryce for Blood Bond. Buying the Tobacco Exchange Building — basement levels not on official plans."
+      "notes": "Status: Night 2. Grooming Jonah Pryce for Blood Bond. Buying the Tobacco Exchange Building — basement levels not on official plans.",
+      "associated_location_ids": [
+        "loc_maison_rouge"
+      ],
+      "home_location_id": "loc_maison_rouge",
+      "current_location_id": "loc_maison_rouge",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_asha_tremblay",
@@ -205,7 +243,13 @@
         "voice_note": "Curious and careful in equal measure. Asks questions like she's already decided not to be surprised by the answer."
       },
       "last_seen": "session_001",
-      "notes": "Status: Wild 2. Hedge Door unstable — opens onto unfamiliar ground for 3 weeks. Had a visitor from 'prior version of the city.' Meeting: Grisette on Ellwood, 7am 2026-04-25."
+      "notes": "Status: Wild 2. Hedge Door unstable — opens onto unfamiliar ground for 3 weeks. Had a visitor from 'prior version of the city.' Meeting: Grisette on Ellwood, 7am 2026-04-25.",
+      "associated_location_ids": [
+        "loc_threshold"
+      ],
+      "home_location_id": "loc_threshold",
+      "current_location_id": "loc_threshold",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_vera_solis",
@@ -225,7 +269,9 @@
         "voice_note": "Still. Precise. The way she handles objects tells you she remembers every one that passed through her hands."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1. No photo, no social media, no prior existence. Suspected Wizened. Contact pending intro from Asha."
+      "notes": "Status: Wild 1. No photo, no social media, no prior existence. Suspected Wizened. Contact pending intro from Asha.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_marcus_delacroix",
@@ -245,7 +291,9 @@
         "voice_note": "Earnest in a city that punishes it. Says what he means because he hasn't learned yet that nobody wants to hear it."
       },
       "last_seen": "",
-      "notes": "Status: Wild 0. His pieces 'evolve' after installation — change to match whatever the current reality becomes."
+      "notes": "Status: Wild 0. His pieces 'evolve' after installation — change to match whatever the current reality becomes.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_jonah_pryce",
@@ -265,7 +313,9 @@
         "voice_note": "Enthusiastic about things with no idea what they cost. The kind of person Mireille collects."
       },
       "last_seen": "",
-      "notes": "Status: Night 0. At risk — actively being groomed."
+      "notes": "Status: Night 0. At risk — actively being groomed.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_elspeth_crane",
@@ -285,7 +335,9 @@
         "voice_note": "Everything measured. Everything billed. Warmth is a service she charges extra for."
       },
       "last_seen": "",
-      "notes": "Status: Night 2. Private office in Riverfront Plaza with no official address — listed as 'storage.'"
+      "notes": "Status: Night 2. Private office in Riverfront Plaza with no official address — listed as 'storage.'",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_judge_kellom",
@@ -305,7 +357,9 @@
         "voice_note": "Genuine conviction in every ruling. The tragedy is she means every word."
       },
       "last_seen": "",
-      "notes": "Status: Power 3. Night faction asset — she doesn't know it. Consistently rules in favor of development projects that create underground access."
+      "notes": "Status: Power 3. Night faction asset — she doesn't know it. Consistently rules in favor of development projects that create underground access.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_marcus_voss",
@@ -327,7 +381,9 @@
         "voice_note": "Smart enough to see the outline of the thing, not smart enough to stop looking."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Runs secretive program to engineer Awakenings in promising VCU students."
+      "notes": "Status: Power 2. Runs secretive program to engineer Awakenings in promising VCU students.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_riley_hoffman",
@@ -347,7 +403,9 @@
         "voice_note": "Keeps the tour moving past the parts that would ruin it. Professional pretending — the good kind."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years."
+      "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_dr_olave",
@@ -369,7 +427,13 @@
         "voice_note": "Collegial and measured. The warmth is real; so is the calculation underneath it."
       },
       "last_seen": "",
-      "notes": "Status: Power 3. Convening closed faculty meetings with no agenda. Two junior Consilium members not invited."
+      "notes": "Status: Power 3. Convening closed faculty meetings with no agenda. Two junior Consilium members not invited.",
+      "associated_location_ids": [
+        "loc_hibbs_hall"
+      ],
+      "home_location_id": "loc_hibbs_hall",
+      "current_location_id": "loc_hibbs_hall",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_ingrid_voss",
@@ -391,7 +455,9 @@
         "voice_note": "Every sentence is load-bearing. She never says anything she hasn't already thought three moves past."
       },
       "last_seen": "session_001",
-      "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. An Acanthus knows. An Acanthus kept quiet."
+      "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. An Acanthus knows. An Acanthus kept quiet.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_prof_tanaka",
@@ -411,7 +477,13 @@
         "voice_note": "Precise. Frustrated. The equations are right but the conclusions are impossible, and she knows it."
       },
       "last_seen": "",
-      "notes": "Status: Power 1. Tracking mathematical patterns in Richmond's layout that shouldn't exist given when the streets were laid."
+      "notes": "Status: Power 1. Tracking mathematical patterns in Richmond's layout that shouldn't exist given when the streets were laid.",
+      "associated_location_ids": [
+        "loc_harris_hall"
+      ],
+      "home_location_id": "loc_harris_hall",
+      "current_location_id": "loc_harris_hall",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_fen_adeyemi",
@@ -431,7 +503,9 @@
         "voice_note": "Eager to use the access he has. Not quite sure what for. That combination is how things get loose."
       },
       "last_seen": "",
-      "notes": "Status: Power 0. Has access to restricted knowledge he doesn't fully understand."
+      "notes": "Status: Power 0. Has access to restricted knowledge he doesn't fully understand.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_dr_ashford",
@@ -451,7 +525,9 @@
         "voice_note": "Gets excited about things most people would find alarming. Writes grants for research she can't quite explain to committees."
       },
       "last_seen": "",
-      "notes": "Status: Power 1. Has a painting donated in 1995 — canvas and pigments date to the 1850s."
+      "notes": "Status: Power 1. Has a painting donated in 1995 — canvas and pigments date to the 1850s.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_mama_dee_washington",
@@ -471,7 +547,9 @@
         "voice_note": "Treats the impossible as a practical problem. Has been solving impossible problems for thirty years."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 2. Holds community meetings where some attendees are families displaced months ago."
+      "notes": "Status: Mortalis 2. Holds community meetings where some attendees are families displaced months ago.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_marcus_ghost_williams",
@@ -491,7 +569,9 @@
         "voice_note": "Never explains how he got there. Never explains how he left."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Works maintenance on buildings that appear on his work orders but not current site maps."
+      "notes": "Status: Mortalis 1. Works maintenance on buildings that appear on his work orders but not current site maps.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_sister_catherine_burke",
@@ -513,7 +593,13 @@
         "voice_note": "Hears the impossible thing and asks what they need to eat."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 2. Food pantry serves families from multiple timeline layers simultaneously."
+      "notes": "Status: Mortalis 2. Food pantry serves families from multiple timeline layers simultaneously.",
+      "associated_location_ids": [
+        "loc_east_end_family_resource_center"
+      ],
+      "home_location_id": "loc_east_end_family_resource_center",
+      "current_location_id": "loc_east_end_family_resource_center",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_jrock_thompson",
@@ -533,7 +619,9 @@
         "voice_note": "Talks about the neighborhood like it's a living person. Because for him, it is."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1. Murals sometimes appear overnight depicting community events from decades past."
+      "notes": "Status: Wild 1. Murals sometimes appear overnight depicting community events from decades past.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_dr_reeves",
@@ -553,7 +641,9 @@
         "voice_note": "Keeps notes about which timeline she's operating in for each appointment. Does not explain this to supervisors."
       },
       "last_seen": "",
-      "notes": "Status: Power 1. Case files include families whose addresses change depending on what day she visits."
+      "notes": "Status: Power 1. Case files include families whose addresses change depending on what day she visits.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_eddie_mcallister",
@@ -573,7 +663,9 @@
         "voice_note": "Tells stories about his grandfather's work at Tredegar, sometimes speaking as if the old man is still showing up for shifts."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 3."
+      "notes": "Status: Mortalis 3.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_lucia_santos",
@@ -593,7 +685,9 @@
         "voice_note": "Holds opening nights where attendees include longtime residents who moved away decades ago. She introduces them by name."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2."
+      "notes": "Status: Wild 2.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_tommy_barrett",
@@ -613,7 +707,9 @@
         "voice_note": "Interviews residents about companies that officially closed before the interview subjects were born. Takes it in stride."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1."
+      "notes": "Status: Mortalis 1.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_becca_chen",
@@ -633,7 +729,9 @@
         "voice_note": "Earnest connector. Finds tools and work clothes from previous generations of neighborhood maintenance during her clean-up days."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1."
+      "notes": "Status: Wild 1.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_pete_kowalski",
@@ -653,7 +751,9 @@
         "voice_note": "Patrols streets that sometimes show different house numbers. Adjusts his rounds based on which version of the neighborhood he's experiencing."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 2."
+      "notes": "Status: Mortalis 2.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_petra_holt",
@@ -676,7 +776,9 @@
         "voice_note": "Controlled-still. Dressed like hospital administration. Says exactly what she means. Does not ask follow-up questions."
       },
       "last_seen": "session_001",
-      "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered."
+      "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_nadia_vasek",
@@ -698,7 +800,9 @@
         "voice_note": "Not rude — just nineteen and terrified and trying not to burn something down. The bluntness is a side effect of the fear."
       },
       "last_seen": "session_001",
-      "notes": "Status: Power 0 (ward). Awakened 8 months ago. Scar on left palm from Declan Morrow. Timing of Awakening matches Maren Voss's death."
+      "notes": "Status: Power 0 (ward). Awakened 8 months ago. Scar on left palm from Declan Morrow. Timing of Awakening matches Maren Voss's death.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_maren_voss",
@@ -722,7 +826,9 @@
         "voice_note": "Pressed a memory into river clay knowing she was going to die. Whatever she was, she was not afraid of what came next."
       },
       "last_seen": "session_001",
-      "notes": "Deceased. Obituary: six lines, no cause of death. One of three ritual practitioners in the warehouse. The Collector killed her. Relation to Ingrid Voss unknown but surname matches."
+      "notes": "Deceased. Obituary: six lines, no cause of death. One of three ritual practitioners in the warehouse. The Collector killed her. Relation to Ingrid Voss unknown but surname matches.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_the_collector",
@@ -744,7 +850,10 @@
         "voice_note": "Leave blank until nature is established. Entity, not person. It catalogs. It does not speak."
       },
       "last_seen": "",
-      "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed an Acanthus."
+      "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed an Acanthus.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical",
+      "location_status": "unestablished"
     },
     {
       "id": "npc_dad_grey",
@@ -764,7 +873,10 @@
         "voice_note": "TBD — establish in play."
       },
       "last_seen": "",
-      "notes": "Full name unknown. Location unknown. History with a hunter's kidney unresolved."
+      "notes": "Full name unknown. Location unknown. History with a hunter's kidney unresolved.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical",
+      "location_status": "unknown"
     },
     {
       "id": "npc_father_dominic",
@@ -784,7 +896,9 @@
         "voice_note": "The calls always come at the worst possible moment. This is not entirely coincidental."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1."
+      "notes": "Status: Mortalis 1.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_hannibal",
@@ -804,7 +918,10 @@
         "voice_note": "Tolerates. That is the word. The gap between tolerate and welcome is wider than most people survive crossing."
       },
       "last_seen": "",
-      "notes": "Full name unknown. Location unknown."
+      "notes": "Full name unknown. Location unknown.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical",
+      "location_status": "mobile"
     },
     {
       "id": "npc_marcus_teen",
@@ -824,7 +941,9 @@
         "voice_note": "Trusts completely. That is his danger."
       },
       "last_seen": "",
-      "notes": "Last name unknown. No father. Gravitating toward wrong people."
+      "notes": "Last name unknown. No father. Gravitating toward wrong people.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_sandra_grey",
@@ -844,7 +963,10 @@
         "voice_note": "TBD — establish in play."
       },
       "last_seen": "",
-      "notes": "He always picks up."
+      "notes": "He always picks up.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical",
+      "location_status": "unknown"
     },
     {
       "id": "npc_the_general",
@@ -866,7 +988,9 @@
         "voice_note": "TBD — name and full description to be established in play."
       },
       "last_seen": "",
-      "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff."
+      "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_vera_medium",
@@ -888,7 +1012,9 @@
         "voice_note": "Not afraid. She's been leaving candles and water for a ghost she can see clearly. She is waiting."
       },
       "last_seen": "",
-      "notes": "Last name unknown. She knows something she is not telling the ghost yet."
+      "notes": "Last name unknown. She knows something she is not telling the ghost yet.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_roz_czerny",
@@ -910,7 +1036,10 @@
         "voice_note": "Professionally smooth. Personally done. Every favor she does is a small step closer to the retirement she knows isn't coming."
       },
       "last_seen": "",
-      "notes": "61 years old. Smokes cheap cigars. Drives a van with a broken heater. Knows what dies in this city and how."
+      "notes": "61 years old. Smokes cheap cigars. Drives a van with a broken heater. Knows what dies in this city and how.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical",
+      "location_status": "mobile"
     },
     {
       "id": "npc_linh_pham",
@@ -933,7 +1062,9 @@
         "voice_note": "Knew Johan's name without being told it. Said what she needed to say before the end."
       },
       "last_seen": "session_001",
-      "notes": "Deceased. Knew the people who sent the operative were 'cleaning house' and they were the mop. Carried Voss's sealed field research case."
+      "notes": "Deceased. Knew the people who sent the operative were 'cleaning house' and they were the mop. Carried Voss's sealed field research case.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_henrik_vael",
@@ -955,7 +1086,9 @@
         "voice_note": "Talks like a man choosing each word carefully because he's already said too much once and paid for it."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong."
+      "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_dara_shin",
@@ -975,7 +1108,9 @@
         "voice_note": "Minimal words. Reads the room before speaking. Asks questions by waiting. Warmth is functional — she invests in what's worth investing in. No performance."
       },
       "last_seen": "session_000",
-      "notes": "Irraka auspice. Patient, territorial, reads people like exits. Vouched for Jacob with Night Circle."
+      "notes": "Irraka auspice. Patient, territorial, reads people like exits. Vouched for Jacob with Night Circle.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_ray_cutler",
@@ -995,7 +1130,13 @@
         "voice_note": "Talks like a man who has said hard things before and doesn't need to raise his voice. Uses your name. Notices when you're not okay and doesn't push."
       },
       "last_seen": "session_000",
-      "notes": "Anchor. Knows something is different about Jacob. Does not ask questions."
+      "notes": "Anchor. Knows something is different about Jacob. Does not ask questions.",
+      "associated_location_ids": [
+        "loc_cutlers_gym"
+      ],
+      "home_location_id": "loc_cutlers_gym",
+      "current_location_id": "loc_cutlers_gym",
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_carla_boone",
@@ -1015,7 +1156,9 @@
         "voice_note": "Warm but not soft. Will say the hard thing with a steady voice. Loves Jacob completely and is running out of explanations for him."
       },
       "last_seen": "session_000",
-      "notes": "Anchor. Has a son, Marcus, age 7. Does not know about the supernatural world."
+      "notes": "Anchor. Has a son, Marcus, age 7. Does not know about the supernatural world.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_tommy_greer",
@@ -1035,7 +1178,9 @@
         "voice_note": "Jokes when nervous, which is often. Talks around the point. Has seen enough to be scared but too much pride to show it clean."
       },
       "last_seen": "session_000",
-      "notes": "Saw something near the canal he can't explain. Jacob told him to forget it. He hasn't."
+      "notes": "Saw something near the canal he can't explain. Jacob told him to forget it. He hasn't.",
+      "associated_location_ids": [],
+      "updated_by_session": "canonical"
     },
     {
       "id": "npc_priest",
@@ -1055,7 +1200,13 @@
         "voice_note": "Economical. Pours a drink and lets you talk yourself into the corner. Never confirms what he knows — makes you earn it. Comfortable with silence and with consequences."
       },
       "last_seen": "session_000",
-      "notes": "Runs The Nail, Idlewood Ave. Jacob has back-door access. Information broker. Former military background."
+      "notes": "Runs The Nail, Idlewood Ave. Jacob has back-door access. Information broker. Former military background.",
+      "associated_location_ids": [
+        "loc_the_nail"
+      ],
+      "home_location_id": "loc_the_nail",
+      "current_location_id": "loc_the_nail",
+      "updated_by_session": "canonical"
     }
   ]
 }

@@ -92,43 +92,13 @@ Use `voice_note` in the personality block as the most specific guidance. The axi
 
 ---
 
-## Established NPCs
+## Canonical NPC records
 
-### Detective Okafor
-`moral: 4, order: 5, manner: 3, violence: 4`
-
-Voice note: *"Clipped questions. Never explains his reasoning aloud. Uses silence as pressure. Nods once when he has what he needs."*
-
-- He believes in the law as a system, even knowing the system is broken.
-- He does not explain himself. If he asks you something twice, you should be worried.
-- He has seen things he cannot explain. He files them under "pending."
-- He does not threaten. He states outcomes.
-- He remembers everything. Always.
-
-**Sample dialogue register:**
-> "Walk me through Tuesday again."
-> *(silence)*
-> "That part. Again."
-
----
-
-### Hruska
-`moral: 5, order: 4, manner: 5, violence: 5`
-
-Voice note: *"Warm and expansive until the deal turns. Then nothing. No raised voice, no threat — just absence of warmth where warmth was."*
-
-- Hruska has a moral code but it is entirely their own and not legible from the outside.
-- They are delightful company right up until they aren't.
-- Violence is a tool. They pick it up without ceremony.
-- They remember every favor, every slight, every dollar.
-- They do not explain what they want — they let you figure out how to be useful.
-
-**Sample dialogue register:**
-> "You know what I love about you? You always come back."
-> *(beat)*
-> "You owe me the thing from April. We both know it. How do you want to handle that?"
-
----
+Named NPC facts never live in this reference document. Before portraying an NPC,
+read that NPC's canonical record from the session's `CANONICAL WORLD INDEX`.
+The record's name, pronouns, role, status, locations, scores, and `voice_note`
+override recollection and examples. Never create a second NPC when a canonical ID
+or name already matches.
 
 ## Adding New NPCs
 

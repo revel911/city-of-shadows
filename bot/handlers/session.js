@@ -2,6 +2,7 @@ import { generate, buildOpeningContext } from './mc.js';
 import { writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
+import { mergeCanonicalPatches } from './world-state.js';
 
 const sessions = new Map();
 
@@ -360,6 +361,8 @@ function parseCloseBlock(text) {
     state_patch:   grabTag(body, 'state_patch'),
     events_append: grabTag(body, 'events_append'),
     npc_patch:     grabTag(body, 'npc_patch'),
+    location_patch: grabTag(body, 'location_patch'),
+    relationship_patch: grabTag(body, 'relationship_patch'),
     arc_patch:     grabTag(body, 'arc_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
     world_event:   grabTag(body, 'world_event'),
@@ -381,6 +384,8 @@ export function parseSaveOnboardingBlock(text) {
     state_patch:   grabTag(body, 'state_patch'),
     events_append: grabTag(body, 'events_append'),
     npc_patch:     grabTag(body, 'npc_patch'),
+    location_patch: grabTag(body, 'location_patch'),
+    relationship_patch: grabTag(body, 'relationship_patch'),
     character_id:     grabTag(body, 'character_id'),
   };
 }
@@ -395,6 +400,8 @@ function stripSaveOnboardingBlock(text) {
 const STRUCTURED_BARE_TAGS = [
   'state_patch',
   'npc_patch',
+  'location_patch',
+  'relationship_patch',
   'sheet',
   'handoff',
   'arc_patch',
@@ -758,19 +765,33 @@ async function processSaveOnboarding(thread, session, save) {
     try {
       const patches = JSON.parse(save.npc_patch);
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
-        const d = doc || { npcs: [] };
-        const list = d.npcs || [];
-        for (const p of patches) {
-          const idx = list.findIndex(n => (p.id && n.id === p.id) || (p.name && n.name === p.name));
-          if (idx >= 0) list[idx] = { ...list[idx], ...p };
-          else list.push(p);
-        }
-        d.npcs = list;
-        return d;
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
+        return result.doc;
       }, `[onboarding] npcs (${stamp})`)]);
-    } catch (e) {
-      warnings.push(`npc_patch: ${e.message}`);
-    }
+    } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
+  }
+
+  if (save.location_patch) {
+    try {
+      const patches = JSON.parse(save.location_patch);
+      writes.push(['locations', updateJSON('game/locations.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
+        return result.doc;
+      }, `[onboarding] locations (${stamp})`)]);
+    } catch (e) { warnings.push(`location_patch: ${e.message}`); }
+  }
+
+  if (save.relationship_patch) {
+    try {
+      const patches = JSON.parse(save.relationship_patch);
+      writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: session.threadId, stamp, publicOnly: true });
+        warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
+        return result.doc;
+      }, `[onboarding] relationships (${stamp})`)]);
+    } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
   }
 
   if (save.events_append) {
@@ -913,19 +934,33 @@ async function processSessionClose(thread, session, close) {
     try {
       const patches = JSON.parse(close.npc_patch);
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
-        const d = doc || { npcs: [] };
-        const list = d.npcs || [];
-        for (const p of patches) {
-          const idx = list.findIndex(n => (p.id && n.id === p.id) || (p.name && n.name === p.name));
-          if (idx >= 0) list[idx] = { ...list[idx], ...p };
-          else list.push(p);
-        }
-        d.npcs = list;
-        return d;
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
+        return result.doc;
       }, `[session] npcs (${stamp})`)]);
-    } catch (e) {
-      warnings.push(`npc_patch: ${e.message}`);
-    }
+    } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
+  }
+
+  if (close.location_patch) {
+    try {
+      const patches = JSON.parse(close.location_patch);
+      writes.push(['locations', updateJSON('game/locations.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: session.threadId, stamp, allowNameMatch: true });
+        warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
+        return result.doc;
+      }, `[session] locations (${stamp})`)]);
+    } catch (e) { warnings.push(`location_patch: ${e.message}`); }
+  }
+
+  if (close.relationship_patch) {
+    try {
+      const patches = JSON.parse(close.relationship_patch);
+      writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: session.threadId, stamp, publicOnly: true });
+        warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
+        return result.doc;
+      }, `[session] relationships (${stamp})`)]);
+    } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
   }
 
   if (close.arc_patch) {

@@ -219,7 +219,10 @@ Files live at fixed paths in this repository. There is no version ambiguity, no 
 | `players/<id>/state.json` | mechanical state (merged patch on close) |
 | `players/index.json` | character roster — `[{ id, name }]`. Bot auto-appends new characters at the first close after onboarding; you do not emit this file in your close block. |
 | `game/events-log.md` | append-only public events log |
-| `game/npcs.json` | NPC roster (patched on close) |
+| `game/npcs.json` | Canonical NPC roster and voice records (patched on close) |
+| `game/locations.json` | Canonical named locations, each linked to one hub (patched on close) |
+| `game/relationships.manual.json` | Human-curated public relationship truth (never patched by the MC) |
+| `game/relationships.derived.json` | Public relationships discovered in play (patched incrementally on close) |
 | `game/arcs.json` | active story arcs (patched on close) |
 | `game/interactions.json` | Tier-2 interaction queue (full replacement on close) |
 | `game/world-bible.md` | setting truth (not patched by the bot; flag in handoff if it needs updating) |
@@ -262,6 +265,8 @@ two_write_rule:
       - npc_patch (if a named NPC was affected)
     new_npc:
       - npc_patch (new entry, full personality scores)
+      - location_patch (if a new named place was established)
+      - relationship_patch (only city-visible ties; never secrets)
     new_arc_or_threat:
       - arc_patch (new entry)
       - handoff (tension_threads referencing the arc id)

@@ -34,20 +34,9 @@
 
 ## Locations
 
-### Residential Areas
-- **Creighton Renaissance (Phase A):** New mixed-income units where displaced families have returned. Some units overlook spaces where the old buildings still exist in parallel time.
-- **The Courts:** Remaining original buildings scheduled for demolition. Families live knowing their homes have expiration dates. Some buildings appear empty but show signs of ongoing habitation.
-- **Transition Housing:** Scattered sites where displaced families wait for new units. RRHA vouchers sometimes lead to addresses that don't exist on current maps.
-
-### Community Anchors
-- **East End Family Resource Center:** Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help.
-- **Oakland Cemetery:** Historic African-American cemetery that borders the community. Graves sometimes show fresh flowers on plots that have been empty for decades.
-- **Corner Stores:** Neighborhood markets that serve as informal community hubs. Owners know everyone's business and notice when temporal anomalies affect their customers.
-
-### Sacred/Contested Spaces
-- **The Old Armstrong Site:** Former high school being developed as mixed-income housing. Construction workers find classrooms with lessons still on the boards.
-- **The Playground That Wasn't:** Children play on equipment that doesn't appear in any development plans, but has been there "forever" according to residents.
-- **Nine Mile Road Overpass:** Where the community connects to the wider city. Graffiti sometimes appears in styles from decades past, depicting events that haven't happened yet.
+Named locations are maintained in [`game/locations.json`](../game/locations.json)
+and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
+location records.
 
 ---
 

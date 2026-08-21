@@ -1,0 +1,13 @@
+{
+  "name": "city-of-shadows",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build:graph": "node scripts/build-graph.mjs",
+    "validate": "node scripts/validate-world.mjs",
+    "test": "npm --prefix bot test && npm run validate"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

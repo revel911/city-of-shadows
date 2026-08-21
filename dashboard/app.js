@@ -101,6 +101,17 @@ async function getAllNPCRoster() {
   });
 }
 
+async function getLocations() {
+  return cached('locations', async () => {
+    const data = await ghJSON('game/locations.json');
+    return data?.locations || [];
+  });
+}
+
+async function getWorldGraph() {
+  return cached('world-graph', () => ghJSON('dashboard/data/world-graph.json'));
+}
+
 async function getThreatsDoc() {
   // Returns the raw JSON text so parseThreats() can JSON.parse it (same API as before)
   return cached('threats', () => ghText('game/arcs.json').then(t => t || ''));
@@ -395,6 +406,7 @@ async function renderSummary() {
           <div class="quick-link purple" data-nav="/characters">Characters</div>
           <div class="quick-link purple" data-nav="/city">City</div>
           <div class="quick-link purple" data-nav="/events">Public Events Log</div>
+          <div class="quick-link purple" data-nav="/relationships">Connections</div>
         </div>
       </div>
       <div class="card">
@@ -672,13 +684,24 @@ async function renderCharacter(name) {
 }
 
 // ── Page: City ────────────────────────────────────────────────────────
+function renderLocationGrid(locations) {
+  if (!locations.length) return '<p class="empty-note">No named locations recorded.</p>';
+  return `<div class="location-grid">${locations.map(location => `
+    <article class="location-card">
+      <div class="location-name">${esc(location.name)}</div>
+      <div class="location-type">${esc(location.type || 'Site')}</div>
+      ${location.atmosphere ? `<div class="location-atmosphere">${esc(location.atmosphere)}</div>` : ''}
+      ${location.description ? `<p>${esc(location.description)}</p>` : ''}
+    </article>`).join('')}</div>`;
+}
+
 async function renderCity() {
   showLoading('Reading the world bible…');
 
-  let worldBible = '', hubDocs = [], npcs = [];
+  let worldBible = '', hubDocs = [], npcs = [], locations = [];
   try {
-    [worldBible, hubDocs, npcs] = await Promise.all([
-      getWorldBible(), getHubDocs(), getAllNPCRoster(),
+    [worldBible, hubDocs, npcs, locations] = await Promise.all([
+      getWorldBible(), getHubDocs(), getAllNPCRoster(), getLocations(),
     ]);
   } catch (e) { showError('Could not load city data', e.message); return; }
 
@@ -699,7 +722,8 @@ async function renderCity() {
 
   const hubCards = activeHubs.map(h => {
     const display = excludeMarkdownSections(h.content, NPC_HEADINGS);
-    return `<div class="card" id="${h.elemId}"><h2>${esc(h.name)}</h2><div class="prose">${md(display)}</div></div>`;
+    const hubLocations = locations.filter(location => location.hub_id === h.id);
+    return `<div class="card" id="${h.elemId}"><h2>${esc(h.name)}</h2><div class="prose">${md(display)}</div><div class="hub-location-section"><h3>Named locations</h3>${renderLocationGrid(hubLocations)}</div></div>`;
   }).join('');
 
   const worldBibleCollapsible = worldBible ? `
@@ -888,6 +912,120 @@ async function renderEvents() {
     </div>`;
 }
 
+// ── Page: Connections ────────────────────────────────────────────────────────
+async function renderRelationships() {
+  setSideNav([]);
+  showLoading('Tracing the city&rsquo;s connections…');
+
+  let graph;
+  try { graph = await getWorldGraph(); }
+  catch (e) { showError('Could not load relationship data', e.message); return; }
+  if (!graph || typeof cytoscape === 'undefined') {
+    showError('Connections unavailable', 'The graph library or generated graph data could not be loaded.');
+    return;
+  }
+
+  const hubs = graph.nodes.filter(node => node.data.kind === 'hub');
+  $content.innerHTML = `
+    <div class="page-header relationship-header">
+      <div>
+        <h1>Connections</h1>
+        <p>NPCs, characters, locations, and the neighborhoods binding them together.</p>
+      </div>
+      <span class="graph-as-of">World state as of ${esc(graph.as_of || 'unknown')}</span>
+    </div>
+    <div class="graph-toolbar" aria-label="Graph filters">
+      <label><span>Find</span><input id="graph-search" type="search" placeholder="NPC or location…"></label>
+      <label><span>Hub</span><select id="graph-hub"><option value="">All hubs</option>${hubs.map(h => `<option value="${esc(h.data.id)}">${esc(h.data.label)}</option>`).join('')}</select></label>
+      <label><span>Show</span><select id="graph-kind"><option value="">Everything</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option></select></label>
+      <label class="graph-check"><input id="graph-structural" type="checkbox" checked><span>Location links</span></label>
+      <button id="graph-reset" type="button">Reset view</button>
+    </div>
+    <div class="graph-shell">
+      <div id="world-graph" role="img" aria-label="Interactive network of city NPCs and locations"></div>
+      <aside id="graph-detail" aria-live="polite">
+        <p class="graph-detail-kicker">Select a node</p>
+        <h2>The city remembers</h2>
+        <p>Click an NPC, character, location, or hub to inspect it and highlight its immediate connections.</p>
+      </aside>
+    </div>
+    <div class="graph-legend" aria-label="Graph legend">
+      <span><i class="legend-dot legend-pc"></i>PC</span><span><i class="legend-dot legend-npc"></i>NPC</span><span><i class="legend-square"></i>Location</span><span><i class="legend-diamond"></i>Hub</span>
+    </div>`;
+
+  const cy = cytoscape({
+    container: document.getElementById('world-graph'),
+    elements: [...graph.nodes, ...graph.edges],
+    layout: { name: 'preset', fit: true, padding: 55 },
+    minZoom: 0.18,
+    maxZoom: 2.4,
+    wheelSensitivity: 0.22,
+    style: [
+      { selector: 'node', style: { 'label': 'data(label)', 'font-family': 'DM Sans', 'font-size': 12, 'color': '#d8d0c4', 'text-wrap': 'wrap', 'text-max-width': 105, 'text-valign': 'bottom', 'text-margin-y': 8, 'background-color': '#332d2c', 'border-width': 2, 'border-color': '#665b55', 'width': 42, 'height': 42 } },
+      { selector: 'node[kind="npc"]', style: { 'shape': 'ellipse', 'width': 50, 'height': 50, 'background-image': 'data(portrait)', 'background-fit': 'cover', 'background-clip': 'node', 'border-color': '#a74646' } },
+      { selector: 'node[kind="pc"]', style: { 'shape': 'ellipse', 'width': 58, 'height': 58, 'background-color': '#7d252b', 'border-width': 4, 'border-color': '#d8aa61', 'font-weight': 600 } },
+      { selector: 'node[kind="location"]', style: { 'shape': 'round-rectangle', 'width': 46, 'height': 38, 'background-color': '#2c3435', 'border-color': '#6f8585' } },
+      { selector: 'node[kind="hub"]', style: { 'shape': 'diamond', 'width': 70, 'height': 70, 'background-color': '#17191c', 'border-width': 3, 'border-color': '#a88756', 'font-size': 15, 'font-weight': 600, 'text-margin-y': 12 } },
+      { selector: 'node[status="deceased"]', style: { 'opacity': 0.42, 'border-style': 'dashed' } },
+      { selector: 'edge', style: { 'width': 1.5, 'line-color': '#514947', 'curve-style': 'bezier', 'target-arrow-shape': 'triangle', 'target-arrow-color': '#6d6260', 'arrow-scale': 0.65, 'label': 'data(label)', 'font-family': 'JetBrains Mono', 'font-size': 7, 'color': '#8e827b', 'text-background-color': '#111316', 'text-background-opacity': 0.78, 'text-background-padding': 2 } },
+      { selector: 'edge[layer="structural"]', style: { 'line-style': 'dotted', 'target-arrow-shape': 'none', 'opacity': 0.34, 'label': '' } },
+      { selector: 'edge[layer="derived"]', style: { 'line-style': 'dashed', 'line-color': '#6f8585' } },
+      { selector: 'edge[direction="undirected"]', style: { 'target-arrow-shape': 'none' } },
+      { selector: '.dimmed', style: { 'opacity': 0.09, 'text-opacity': 0 } },
+      { selector: '.focused', style: { 'border-color': '#f2c879', 'border-width': 5, 'z-index': 999 } }
+    ]
+  });
+
+  const search = document.getElementById('graph-search');
+  const hub = document.getElementById('graph-hub');
+  const kind = document.getElementById('graph-kind');
+  const structural = document.getElementById('graph-structural');
+  const detail = document.getElementById('graph-detail');
+
+  function applyFilters() {
+    const query = search.value.trim().toLowerCase();
+    const hubId = hub.value;
+    const entityKind = kind.value;
+    cy.batch(() => {
+      cy.elements().removeClass('dimmed focused');
+      cy.nodes().forEach(node => {
+        const d = node.data();
+        const matchesQuery = !query || d.label.toLowerCase().includes(query) || String(d.details || '').toLowerCase().includes(query);
+        const matchesHub = !hubId || d.hub_id === hubId || d.id === hubId;
+        const matchesKind = !entityKind || d.kind === entityKind || d.kind === 'hub';
+        if (!(matchesQuery && matchesHub && matchesKind)) node.addClass('dimmed');
+      });
+      cy.edges().forEach(edge => {
+        const hideStructural = !structural.checked && edge.data('layer') === 'structural';
+        if (hideStructural || edge.source().hasClass('dimmed') || edge.target().hasClass('dimmed')) edge.addClass('dimmed');
+      });
+    });
+  }
+
+  [search, hub, kind, structural].forEach(control => control.addEventListener(control === search ? 'input' : 'change', applyFilters));
+  document.getElementById('graph-reset').addEventListener('click', () => {
+    search.value = ''; hub.value = ''; kind.value = ''; structural.checked = true;
+    applyFilters(); cy.animate({ fit: { eles: cy.elements(), padding: 55 }, duration: 350 });
+  });
+
+  cy.on('tap', 'node', event => {
+    const node = event.target;
+    const neighborhood = node.closedNeighborhood();
+    cy.elements().addClass('dimmed').removeClass('focused');
+    neighborhood.removeClass('dimmed');
+    node.addClass('focused');
+    const d = node.data();
+    const connected = node.connectedEdges().filter(edge => edge.data('layer') !== 'structural').map(edge => edge.data('label')).filter(Boolean);
+    detail.innerHTML = `
+      <p class="graph-detail-kicker">${esc(d.kind)}${d.faction ? ' · ' + esc(d.faction) : ''}</p>
+      <h2>${esc(d.label)}</h2>
+      ${d.subtype ? '<p class="graph-detail-role">' + esc(d.subtype) + '</p>' : ''}
+      <p>${esc(d.details || 'No public details recorded.')}</p>
+      ${connected.length ? '<div class="graph-detail-links"><strong>Connections</strong>' + connected.map(label => '<span>' + esc(label) + '</span>').join('') + '</div>' : ''}`;
+  });
+  cy.on('tap', event => { if (event.target === cy) applyFilters(); });
+}
+
 // ── Router ────────────────────────────────────────────────────────────
 function getRoute() { return window.location.hash.replace(/^#/, '') || '/'; }
 function navigate(path) { window.location.hash = path; }
@@ -900,6 +1038,7 @@ async function render() {
   else if (route.startsWith('/characters/')){ await renderCharacter(decodeURIComponent(route.replace('/characters/', ''))); }
   else if (route === '/city')              { await renderCity(); }
   else if (route === '/events')            { await renderEvents(); }
+  else if (route === '/relationships')     { await renderRelationships(); }
   else { $content.innerHTML = '<p class="empty-note">Page not found.</p>'; }
 }
 
