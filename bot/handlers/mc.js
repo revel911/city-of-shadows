@@ -284,14 +284,14 @@ async function maybeCompact(session) {
   }
 }
 
-export async function generate(session) {
+export async function generate(session, { maxTokens = MAX_TOKENS, temperature = GENERATE_TEMPERATURE } = {}) {
   await maybeCompact(session);
   const system = await getSystemPrompt(session.rulesProfile || {});
   const resp = await client().chat.completions.create({
     model: MODEL,
     messages: [{ role: 'system', content: system }, ...session.messages],
-    max_tokens: MAX_TOKENS,
-    temperature: GENERATE_TEMPERATURE,
+    max_tokens: maxTokens,
+    temperature,
   });
   const u = resp.usage || {};
   console.log(

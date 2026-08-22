@@ -17,6 +17,9 @@ import {
 } from './mechanics.js';
 
 const sessions = new Map();
+const GENERATION_RETRIES = 2;
+const OPENING_MAX_CHARS = 1800;
+const OPENING_MAX_TOKENS = 550;
 
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
@@ -55,11 +58,68 @@ export async function startSession(thread, player) {
   sessions.set(thread.id, session);
 
   await lock(session, async () => {
+    const notice = await thread.send('— *The city is gathering your opening scene. This can take a minute…* —');
     await thread.sendTyping();
-    const response = await generate(session);
-    session.messages.push({ role: 'assistant', content: response });
-    await postMCResponse(thread, response, session);
+    try {
+      const response = await generateSafeResponse(session, { opening: true });
+      session.messages.push({ role: 'assistant', content: response });
+      await postMCResponse(thread, response, session);
+      if (typeof notice?.delete === 'function') notice.delete().catch(() => {});
+    } catch (err) {
+      console.error(`[opening] failed for ${player.id}: ${err.message}`);
+      if (typeof notice?.edit === 'function') {
+        await notice.edit('⚠ The opening scene could not be prepared cleanly. Send a message here to retry.');
+      } else {
+        await thread.send('⚠ The opening scene could not be prepared cleanly. Send a message here to retry.');
+      }
+    }
   });
+}
+
+export function responseSafetyProblems(response, { opening = false } = {}) {
+  const text = typeof response === 'string' ? response.trim() : '';
+  const problems = [];
+  if (!text) problems.push('empty response');
+  if (/<\/?think(?:ing)?>/i.test(text)) problems.push('internal thinking tag');
+  if (/THOUGHTS APPLIED|OPENING ANGLES TO NOTE/i.test(text)) problems.push('internal planning marker');
+  if (opening && text.length > OPENING_MAX_CHARS) {
+    problems.push(`opening exceeds ${OPENING_MAX_CHARS} characters`);
+  }
+  return problems;
+}
+
+async function generateSafeResponse(session, { opening = false } = {}) {
+  let response = await generate(session, opening
+    ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
+    : {});
+  for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
+    const problems = responseSafetyProblems(response, { opening });
+    if (!problems.length) return response;
+    console.warn(`[generation-safety] rejected response: ${problems.join('; ')}`);
+    if (attempt === GENERATION_RETRIES) {
+      throw new Error(`unsafe response after ${GENERATION_RETRIES + 1} attempts: ${problems.join('; ')}`);
+    }
+    session.messages.push({ role: 'assistant', content: response });
+    session.messages.push({
+      role: 'user',
+      content: [
+        '[SYSTEM — RESPONSE CORRECTION]',
+        `The previous response was rejected: ${problems.join('; ')}.`,
+        opening
+          ? 'Re-emit only the player-facing opening scene: 2–5 clear, concrete paragraphs, at most 1800 characters. Establish the location, immediate pressure, and one actionable hook, then end with a direct question. No fragmented or stream-of-consciousness prose.'
+          : 'Re-emit only the player-facing response.',
+        'Never output analysis, planning, chain-of-thought, <think>, or <thinking> tags.',
+      ].join('\n'),
+    });
+    try {
+      response = await generate(session, opening
+        ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.5 }
+        : {});
+    } finally {
+      session.messages.splice(-2, 2);
+    }
+  }
+  throw new Error('unreachable generation safety state');
 }
 
 export async function handleMessage(message) {
@@ -88,7 +148,7 @@ export async function handleMessage(message) {
     }
     session.messages.push({ role: 'user', content: userContent });
     await message.channel.sendTyping();
-    const response = await generate(session);
+    const response = await generateSafeResponse(session);
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });
@@ -172,7 +232,7 @@ export async function resolveSessionRoll(interaction) {
     });
     await interaction.editReply(formatRoll(record, session.mechanicsDepth));
     await interaction.channel.sendTyping();
-    const response = await generate(session);
+    const response = await generateSafeResponse(session);
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(interaction.channel, response, session);
   });
@@ -319,7 +379,7 @@ async function postMCResponse(thread, response, session) {
         );
         session.messages.push({ role: 'user', content: buildSaveRetryPrompt(missing) });
         await thread.sendTyping();
-        const retryResp = await generate(session);
+        const retryResp = await generateSafeResponse(session);
         session.messages.push({ role: 'assistant', content: retryResp });
         await postMCResponse(thread, retryResp, session);
         return;
@@ -357,7 +417,7 @@ async function postMCResponse(thread, response, session) {
         );
         session.messages.push({ role: 'user', content: buildCloseRetryPrompt(missing) });
         await thread.sendTyping();
-        const retryResp = await generate(session);
+        const retryResp = await generateSafeResponse(session);
         session.messages.push({ role: 'assistant', content: retryResp });
         await postMCResponse(thread, retryResp, session);
         return;
@@ -382,7 +442,7 @@ async function postMCResponse(thread, response, session) {
         );
         session.messages.push({ role: 'user', content: buildImpactRetryPrompt(impactProblems) });
         await thread.sendTyping();
-        const retryResp = await generate(session);
+        const retryResp = await generateSafeResponse(session);
         session.messages.push({ role: 'assistant', content: retryResp });
         await postMCResponse(thread, retryResp, session);
         return;
