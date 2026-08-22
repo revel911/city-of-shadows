@@ -1,8 +1,21 @@
 {
   "schema_version": 1,
-  "last_processed_commit": null,
-  "last_successful_run": null,
+  "last_processed_commit": "3ba9a48727077f927ffab81d18aa02b806f72fc7",
+  "last_successful_run": "2026-08-22T20:54:02.316Z",
   "last_city_turn": null,
   "arc_cooldowns": {},
-  "runs": []
+  "runs": [
+    {
+      "id": "keeper_reconcile_20260822205402",
+      "phase": "reconcile",
+      "completed_at": "2026-08-22T20:54:02.316Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase completed. No changes required; all provided data is consistent.",
+      "dry_run": false
+    }
+  ],
+  "last_processed_session": null
 }
