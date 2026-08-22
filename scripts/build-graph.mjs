@@ -1,6 +1,6 @@
 import { hashNumber, readJSON, writeJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDoc, hubStateDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
@@ -8,7 +8,8 @@ const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDo
   readJSON('game/relationships.manual.json'),
   readJSON('game/relationships.derived.json'),
   readJSON('game/arcs.json'),
-  readJSON('game/debts.json')
+  readJSON('game/debts.json'),
+  readJSON('game/hub-state.json')
 ]);
 
 const hubPositions = new Map();
@@ -26,9 +27,13 @@ function positionNear(hubId, id, distance, band = 0) {
   return { x: Math.round(center.x + Math.cos(angle) * spread), y: Math.round(center.y + Math.sin(angle) * spread) };
 }
 
+const hubStateById = new Map((hubStateDoc.hubs || []).map(item => [item.id, item]));
 const nodes = [];
 for (const hub of hubs) nodes.push({
-  data: { id: hub.id, label: hub.name, kind: 'hub', hub_id: hub.id, status: 'active', details: 'Neighborhood hub' },
+  data: {
+    id: hub.id, label: hub.name, kind: 'hub', hub_id: hub.id, status: 'active',
+    details: (hubStateById.get(hub.id)?.conditions || []).join('; ') || 'Neighborhood hub'
+  },
   position: hubPositions.get(hub.id)
 });
 
@@ -97,7 +102,7 @@ for (const debt of (debtDoc.debts || []).filter(item => item.visibility === 'pub
 });
 
 await writeJSON('dashboard/data/world-graph.json', {
-  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, debtDoc.last_updated].filter(Boolean).sort().at(-1),
+  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, debtDoc.last_updated, hubStateDoc.last_updated].filter(Boolean).sort().at(-1),
   derived_through: derivedDoc.derived_through || null,
   nodes,
   edges

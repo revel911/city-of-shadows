@@ -54,7 +54,7 @@ Sessions are async — start, stop, come back tomorrow. When you close a session
 |---------|--------------|
 | `/events [n]` | Shows the N most recent entries from the public events log. Default 3, max 10. |
 | `/npc <name>` | Looks up an NPC by id, name, or substring. |
-| `/hub <name>` | Shows the doc for a neighborhood hub (Shockoe Bottom, The Fan, Downtown, University, Creighton Court, Oregon Hill). |
+| `/hub <name>` | Shows a neighborhood hub, including Shockoe Bottom, The Fan, Downtown, University, Creighton Court, Oregon Hill, Church Hill, and Carytown. |
 | `/arcs [status]` | Lists arcs filtered by status (default `active`; also `escalating`, `resolved`, `all`). |
 
 ---
@@ -65,7 +65,7 @@ The live state of the city — characters, NPCs, story arcs, public events — l
 
 **https://revel911.github.io/city-of-shadows/**
 
-This is a read-only window into the world. The MC updates it at the end of every session.
+This is a read-only window into the world. Sessions update it at close, and the bounded City Keeper reconciles continuity and advances eligible city pressure on schedule.
 
 ---
 

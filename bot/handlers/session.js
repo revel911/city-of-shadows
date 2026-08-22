@@ -1,8 +1,8 @@
 import { generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
-import { readJSON, writeFile, updateFile, updateJSON } from './github.js';
+import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
-import { mergeCanonicalPatches } from './world-state.js';
+import { applyInteractionOperations, buildRelevantWorldContext, mergeCanonicalPatches } from './world-state.js';
 import {
   auditSession,
   createRollRecord,
@@ -29,11 +29,12 @@ function lock(session, fn) {
 }
 
 export async function startSession(thread, player) {
-  const [opening, profile, openingState, openingInteractions] = await Promise.all([
+  const [opening, profile, openingState, openingInteractions, worldMeta] = await Promise.all([
     buildOpeningContext(player),
     player.discord_id ? readProfile(player.discord_id) : null,
     player.id !== '__new__' ? readJSON(`players/${player.id}/state.json`) : null,
     player.id !== '__new__' ? readJSON('game/interactions.json') : null,
+    readJSON('game/world-meta.json'),
   ]);
   const session = {
     player,
@@ -49,6 +50,7 @@ export async function startSession(thread, player) {
       wod_extension: openingState?.wod_extension || '',
     },
     openingEchoId: selectInteractionEcho(openingInteractions, player.id)?.id || null,
+    worldRevision: Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0,
   };
   sessions.set(thread.id, session);
 
@@ -75,6 +77,7 @@ export async function handleMessage(message) {
   if (!message.content?.trim()) return;
 
   await lock(session, async () => {
+    await refreshSessionWorld(session);
     const { content: userContent, exhausted } = applySaveLeakNudge(session, message.content);
     if (exhausted) {
       await message.channel.send(
@@ -89,6 +92,34 @@ export async function handleMessage(message) {
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });
+}
+
+async function refreshSessionWorld(session) {
+  if (!session?.player?.id || session.player.id === '__new__') return;
+  const worldMeta = await readJSON('game/world-meta.json');
+  const nextRevision = Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0;
+  if (nextRevision <= (session.worldRevision || 0)) return;
+  const [state, handoff, events] = await Promise.all([
+    readJSON(`players/${session.player.id}/state.json`),
+    readFile(`players/${session.player.id}/handoff.md`),
+    readFile('game/events-log.md'),
+  ]);
+  const world = await buildRelevantWorldContext({
+    characterId: session.player.id,
+    state: state || {},
+    handoff: handoff || '',
+  });
+  const eventTail = String(events || '').split('\n').slice(0, 120).join('\n');
+  session.messages.push({
+    role: 'user',
+    content: [
+      `[SYSTEM — SHARED WORLD UPDATE revision ${session.worldRevision || 0} → ${nextRevision}]`,
+      'Another session or the City Keeper changed the shared city. Integrate these facts without retconning actions already established in this thread.',
+      eventTail,
+      world,
+    ].join('\n\n'),
+  });
+  session.worldRevision = nextRevision;
 }
 
 export async function resolveSessionRoll(interaction) {
@@ -117,6 +148,7 @@ export async function resolveSessionRoll(interaction) {
 
   await interaction.deferReply({ ephemeral: session.mechanicsDepth >= 4 });
   await lock(session, async () => {
+    await refreshSessionWorld(session);
     const request = session.pendingRoll;
     const state = await readJSON(`players/${session.player.id}/state.json`) || {};
     const d6 = () => 1 + Math.floor(Math.random() * 6);
@@ -163,6 +195,21 @@ async function postMCResponse(thread, response, session) {
   // already persisted, so a re-emit nudge next turn would trigger the
   // duplicate-save guard and confuse the MC.
   let cleanSaveFiredThisTurn = false;
+
+  // Lightweight crash/restart recovery. The MC emits this after meaningful
+  // scene transitions; it is stripped before Discord and stores no transcript
+  // or player profile data.
+  const checkpoint = parseCheckpointBlock(response);
+  if (checkpoint) {
+    response = stripCheckpointBlock(response);
+    if (session.player.id !== '__new__') {
+      try {
+        await writeCheckpoint(session, checkpoint);
+      } catch (err) {
+        console.error(`[checkpoint] write failed for ${session.player.id}: ${err.message}`);
+      }
+    }
+  }
   // 0. <save_player> — persists the *player* profile (Discord user) at the end
   //    of player-onboarding. Runs BEFORE save_onboarding because a brand-new
   //    user sometimes emits both in the same response (or back-to-back), and
@@ -323,6 +370,28 @@ async function postMCResponse(thread, response, session) {
     }
   }
 
+  if (close) {
+    const impactProblems = validateWorldImpact(close);
+    if (impactProblems.length) {
+      const retries = session._impactRetries || 0;
+      if (retries < NEW_CHAR_CLOSE_MAX_RETRIES) {
+        session._impactRetries = retries + 1;
+        await thread.send(
+          `⚠ Close block needs a valid world-impact declaration: ${impactProblems.join('; ')}. ` +
+          `Asking the MC to re-emit — retry ${session._impactRetries}/${NEW_CHAR_CLOSE_MAX_RETRIES}.`
+        );
+        session.messages.push({ role: 'user', content: buildImpactRetryPrompt(impactProblems) });
+        await thread.sendTyping();
+        const retryResp = await generate(session);
+        session.messages.push({ role: 'assistant', content: retryResp });
+        await postMCResponse(thread, retryResp, session);
+        return;
+      }
+      await thread.send(`⚠ World-impact declaration remained incomplete; saving with impact level personal and flagging the ledger.`);
+      close.world_impact = JSON.stringify({ level: 'personal', summary: 'Impact declaration recovery fallback.', affected_ids: [] });
+    }
+  }
+
   const stripped = close ? stripCloseBlock(response) : response;
   const { cleaned: visible, leakDetected } = sanitizePlayerFacingText(stripped);
   if (leakDetected) {
@@ -343,10 +412,14 @@ async function postMCResponse(thread, response, session) {
 
   if (close) {
     await thread.send('— *writing session close to GitHub (this usually takes 10–20 seconds)…* —');
-    await processSessionClose(thread, session, close);
-    sessions.delete(session.threadId);
-    if (typeof thread.setArchived === 'function') {
-      thread.setArchived(true).catch(() => {});
+    const result = await processSessionClose(thread, session, close);
+    if (result?.success) {
+      sessions.delete(session.threadId);
+      if (typeof thread.setArchived === 'function') {
+        thread.setArchived(true).catch(() => {});
+      }
+    } else {
+      await thread.send('The close was not fully persisted, so this session remains open. Ask me to close again after the write issue is resolved.');
     }
   }
 }
@@ -363,6 +436,16 @@ function buildCloseRetryPrompt(missing) {
     '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
     '',
     'You may repeat your closing narrative if you want, but the priority is a complete close block. Do not skip the sheet because the character is short-lived — the data you collected during onboarding has to land in the repo.',
+  ].join('\n');
+}
+
+function buildImpactRetryPrompt(problems) {
+  return [
+    `[SYSTEM] Your trailing <close_session> block has world-impact problems: ${problems.join('; ')}.`,
+    'Re-emit the closing narrative and complete trailing <close_session> block now.',
+    'Include <world_impact> containing JSON with level (none, personal, or shared), summary, affected_ids, and optional fiction_time.',
+    'If level is shared, include at least one matching events_append, npc_patch, location_patch, relationship_patch, debt_patch, arc_patch, hub_patch, or interaction_ops field.',
+    'Do not continue the scene.',
   ].join('\n');
 }
 
@@ -453,11 +536,93 @@ function parseCloseBlock(text) {
     location_patch: grabTag(body, 'location_patch'),
     relationship_patch: grabTag(body, 'relationship_patch'),
     debt_patch:    grabTag(body, 'debt_patch'),
+    hub_patch:     grabTag(body, 'hub_patch'),
     arc_patch:     grabTag(body, 'arc_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
+    interaction_ops: grabTag(body, 'interaction_ops'),
+    world_impact:  grabTag(body, 'world_impact'),
     world_event:   grabTag(body, 'world_event'),
     character_id:     grabTag(body, 'character_id'),
   };
+}
+
+const CHECKPOINT_BLOCK_RE = /<checkpoint>([\s\S]*?)<\/checkpoint>/;
+
+export function parseCheckpointBlock(text) {
+  if (typeof text !== 'string') return null;
+  const match = text.match(CHECKPOINT_BLOCK_RE);
+  if (!match) return null;
+  try {
+    const raw = JSON.parse(match[1].trim());
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const strings = (value, limit = 12) => Array.isArray(value)
+      ? [...new Set(value.map(String).map(item => item.trim()).filter(Boolean))].slice(0, limit)
+      : [];
+    const summary = typeof raw.summary === 'string' ? raw.summary.trim().slice(0, 1000) : '';
+    if (!summary) return null;
+    return {
+      summary,
+      location_id: typeof raw.location_id === 'string' ? raw.location_id.trim().slice(0, 120) : '',
+      present_entity_ids: strings(raw.present_entity_ids),
+      open_threads: strings(raw.open_threads),
+      pending_mechanics: strings(raw.pending_mechanics),
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function stripCheckpointBlock(text) {
+  return typeof text === 'string' ? text.replace(CHECKPOINT_BLOCK_RE, '').trim() : text;
+}
+
+async function writeCheckpoint(session, checkpoint, active = true) {
+  const characterId = session?.player?.id;
+  if (!characterId || characterId === '__new__') return;
+  await writeFile(
+    `players/${characterId}/checkpoint.json`,
+    JSON.stringify({
+      schema_version: 1,
+      active,
+      character_id: characterId,
+      world_revision: session.worldRevision || 0,
+      updated_at: new Date().toISOString(),
+      ...checkpoint,
+    }, null, 2) + '\n',
+    `[session] checkpoint for ${session.player.name}`
+  );
+}
+
+export function parseWorldImpact(close) {
+  if (!close?.world_impact) return null;
+  try {
+    const impact = JSON.parse(close.world_impact);
+    if (!impact || typeof impact !== 'object' || Array.isArray(impact)) return null;
+    return {
+      level: String(impact.level || '').toLowerCase(),
+      summary: typeof impact.summary === 'string' ? impact.summary.trim().slice(0, 500) : '',
+      affected_ids: Array.isArray(impact.affected_ids) ? [...new Set(impact.affected_ids.map(String))] : [],
+      fiction_time: typeof impact.fiction_time === 'string' ? impact.fiction_time.trim().slice(0, 120) : '',
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function validateWorldImpact(close) {
+  const impact = parseWorldImpact(close);
+  if (!impact) return ['missing or invalid <world_impact> JSON'];
+  if (!['none', 'personal', 'shared'].includes(impact.level)) return ['world_impact.level must be none, personal, or shared'];
+  if (!impact.summary) return ['world_impact.summary is required'];
+  if (impact.level === 'shared') {
+    const touches = [
+      close.events_append, close.npc_patch, close.location_patch,
+      close.relationship_patch, close.debt_patch, close.arc_patch,
+      close.hub_patch, close.interaction_ops, close.interactions_patch,
+    ];
+    if (!touches.some(Boolean)) return ['shared impact requires a world patch, interaction operation, or public event'];
+  }
+  return [];
 }
 
 // Unlike close_session, save_onboarding can appear mid-message — the MC will
@@ -494,13 +659,17 @@ const STRUCTURED_BARE_TAGS = [
   'location_patch',
   'relationship_patch',
   'debt_patch',
+  'hub_patch',
   'roll_request',
   'sheet',
   'handoff',
   'arc_patch',
   'events_append',
   'interactions_patch',
+  'interaction_ops',
+  'world_impact',
   'world_event',
+  'checkpoint',
 ];
 
 // Step-4 orphan cleanup considers container tags too — bare opens/closes of
@@ -789,6 +958,15 @@ export function applyPatch(current, patch) {
   return out;
 }
 
+export function prependPublicEvent(current, entry) {
+  const markdown = String(current || '');
+  const append = String(entry || '').trim();
+  if (!append) return markdown;
+  const firstEntry = markdown.search(/^## /m);
+  if (firstEntry < 0) return `${markdown.trimEnd()}\n\n${append}\n`;
+  return `${markdown.slice(0, firstEntry).trimEnd()}\n\n${append}\n\n${markdown.slice(firstEntry).trimStart()}`;
+}
+
 // Full default state.json shape for a brand-new character. Mirrors
 // players/_template/state.json — kept in sync by convention. Used as the seed
 // before applying the MC's state_patch so any field the MC omits keeps its
@@ -906,7 +1084,7 @@ async function processSaveOnboarding(thread, session, save) {
     const append = save.events_append.trim();
     writes.push(['events-log', updateFile(
       'game/events-log.md',
-      (current) => (current || '').replace(/\s*$/, '\n\n') + append + '\n',
+      (current) => prependPublicEvent(current, append),
       `[onboarding] events log (${stamp})`
     )]);
   }
@@ -990,6 +1168,9 @@ async function processSessionClose(thread, session, close) {
   const warnings = [];
   const okNames = [];
   const failNames = [];
+  const recordedConflicts = [];
+  const worldImpact = parseWorldImpact(close) || { level: 'personal', summary: 'Missing impact declaration.', affected_ids: [] };
+  const baseWorldRevision = session.worldRevision || 0;
   const stateBeforeClose = await readJSON(`players/${id}/state.json`) || freshCharacterState(id);
   const logicalSessionId = `${id}:${nextSessionId(stateBeforeClose.last_session)}`;
 
@@ -1051,6 +1232,7 @@ async function processSessionClose(thread, session, close) {
           characterId: id,
           sessionId: logicalSessionId,
           stamp,
+          conflicts: recordedConflicts,
         });
         return currentArcs;
       }, `[session] arcs (${stamp})`);
@@ -1088,7 +1270,7 @@ async function processSessionClose(thread, session, close) {
     const append = close.events_append.trim();
     writes.push(['events-log', updateFile(
       'game/events-log.md',
-      (current) => (current || '').replace(/\s*$/, '\n\n') + append + '\n',
+      (current) => prependPublicEvent(current, append),
       `[session] events log (${stamp})`
     )]);
   }
@@ -1099,6 +1281,7 @@ async function processSessionClose(thread, session, close) {
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
         return result.doc;
       }, `[session] npcs (${stamp})`)]);
     } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
@@ -1110,6 +1293,7 @@ async function processSessionClose(thread, session, close) {
       writes.push(['locations', updateJSON('game/locations.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
         return result.doc;
       }, `[session] locations (${stamp})`)]);
     } catch (e) { warnings.push(`location_patch: ${e.message}`); }
@@ -1121,6 +1305,7 @@ async function processSessionClose(thread, session, close) {
       writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: logicalSessionId, stamp, publicOnly: true });
         warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
         return result.doc;
       }, `[session] relationships (${stamp})`)]);
     } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
@@ -1137,12 +1322,33 @@ async function processSessionClose(thread, session, close) {
     } catch (e) { warnings.push(`debt_patch: ${e.message}`); }
   }
 
-  if (close.interactions_patch || session.openingEchoId) {
+  if (close.hub_patch) {
     try {
-      const emitted = close.interactions_patch ? JSON.parse(close.interactions_patch) : null;
+      const patches = JSON.parse(close.hub_patch);
+      writes.push(['hub-state', updateJSON('game/hub-state.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'hubs', idPrefix: 'hub_', sessionId: logicalSessionId, stamp });
+        warnings.push(...result.rejected.map(message => `hub_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
+        return result.doc;
+      }, `[session] hub state (${stamp})`)]);
+    } catch (e) { warnings.push(`hub_patch: ${e.message}`); }
+  }
+
+  if (close.interaction_ops || close.interactions_patch || session.openingEchoId) {
+    try {
+      const operations = close.interaction_ops ? JSON.parse(close.interaction_ops) : null;
+      const emitted = !operations && close.interactions_patch ? JSON.parse(close.interactions_patch) : null;
       writes.push(['interactions', updateJSON(
         'game/interactions.json',
         (current) => {
+          if (operations) {
+            const withOpeningConsume = session.openingEchoId
+              ? [...operations, { op: 'consume', id: session.openingEchoId }]
+              : operations;
+            const result = applyInteractionOperations(current, withOpeningConsume, { stamp, sessionId: logicalSessionId });
+            warnings.push(...result.rejected.map(message => `interaction_ops: ${message}`));
+            return result.doc;
+          }
           const next = emitted || current || { interactions: [] };
           const list = Array.isArray(next.interactions) ? next.interactions : [];
           return {
@@ -1214,6 +1420,84 @@ async function processSessionClose(thread, session, close) {
     }
   });
 
+  if (recordedConflicts.length) {
+    try {
+      await updateJSON('game/conflicts.json', (current) => {
+        const list = Array.isArray(current?.conflicts) ? [...current.conflicts] : [];
+        for (const conflict of recordedConflicts) {
+          const suffix = `${logicalSessionId}_${conflict.entity_id}_${conflict.fields.join('_')}`.replace(/[^a-zA-Z0-9_]+/g, '_').toLowerCase();
+          const id = `conflict_${suffix}`;
+          if (list.some(item => item.id === id && item.status === 'pending')) continue;
+          list.push({
+            id,
+            status: 'pending',
+            entity_id: conflict.entity_id,
+            expected_revision: conflict.expected_revision,
+            actual_revision: conflict.actual_revision,
+            fields: conflict.fields,
+            proposed_changes: conflict.proposed_changes,
+            evidence_session_ids: [logicalSessionId],
+            created_at: new Date().toISOString(),
+          });
+        }
+        return { ...(current || {}), schema_version: 1, last_updated: stamp, conflicts: list };
+      }, `[session] record continuity conflicts (${stamp})`);
+      okNames.push('conflicts');
+    } catch (e) {
+      failNames.push(`conflicts: ${e.message}`);
+    }
+  }
+
+  const sharedTouchKeys = [
+    'events_append', 'npc_patch', 'location_patch', 'relationship_patch',
+    'debt_patch', 'arc_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
+  ];
+  const hasSharedTouches = worldImpact.level === 'shared' || sharedTouchKeys.some(key => Boolean(close[key]));
+  let resultingWorldRevision = session.worldRevision || 0;
+  if (hasSharedTouches) {
+    try {
+      await updateJSON('game/world-meta.json', (current) => {
+        resultingWorldRevision = (Number.isInteger(current?.revision) ? current.revision : 0) + 1;
+        return {
+          ...(current || {}),
+          schema_version: 1,
+          revision: resultingWorldRevision,
+          last_player_update: new Date().toISOString(),
+          maintenance_status: 'open',
+        };
+      }, `[session] world revision ${logicalSessionId} (${stamp})`);
+      session.worldRevision = resultingWorldRevision;
+      okNames.push('world-meta');
+    } catch (e) {
+      failNames.push(`world-meta: ${e.message}`);
+    }
+  }
+
+  try {
+    const ledgerName = `${id}-${nextSessionId(stateBeforeClose.last_session)}`;
+    const ledger = {
+      schema_version: 1,
+      session_id: logicalSessionId,
+      character_id: id,
+      closed_at: new Date().toISOString(),
+      base_world_revision: baseWorldRevision,
+      resulting_world_revision: resultingWorldRevision,
+      world_impact: worldImpact,
+      touched: sharedTouchKeys.filter(key => Boolean(close[key])),
+      public_event: close.events_append || null,
+      conflicts: recordedConflicts.map(item => ({ entity_id: item.entity_id, fields: item.fields })),
+      warnings: [...warnings],
+    };
+    await writeFile(
+      `game/session-ledger/${ledgerName}.json`,
+      JSON.stringify(ledger, null, 2) + '\n',
+      `[session] public ledger ${logicalSessionId} (${stamp})`
+    );
+    okNames.push('session-ledger');
+  } catch (e) {
+    failNames.push(`session-ledger: ${e.message}`);
+  }
+
   if (reconciledState?.last_session) {
     const publicRolls = (session.rolls || []).map(roll => ({
       move: roll.move,
@@ -1246,6 +1530,21 @@ async function processSessionClose(thread, session, close) {
     } catch (e) {
       failNames.push(`receipt: ${e.message}`);
       console.error(`[session-close] receipt write failed for ${id}: ${e.message}`);
+    }
+  }
+
+  if (!failNames.length) {
+    try {
+      await writeCheckpoint(session, {
+        summary: 'Session closed successfully.',
+        location_id: '',
+        present_entity_ids: [],
+        open_threads: [],
+        pending_mechanics: [],
+      }, false);
+      okNames.push('checkpoint');
+    } catch (e) {
+      failNames.push(`checkpoint: ${e.message}`);
     }
   }
 
@@ -1347,6 +1646,7 @@ async function processSessionClose(thread, session, close) {
       console.warn('world event post failed:', e.message);
     }
   }
+  return { success: failNames.length === 0, failures: failNames };
 }
 
 // Display name for a freshly-onboarded character. Preference order:

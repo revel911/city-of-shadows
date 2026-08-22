@@ -248,24 +248,34 @@ export function reconcileArcs(doc, patches = [], {
   characterId,
   sessionId,
   stamp,
+  conflicts = [],
 } = {}) {
   const next = { ...(doc || {}), arcs: [...(doc?.arcs || [])] };
   const touched = new Set();
   for (const raw of Array.isArray(patches) ? patches : []) {
-    if (!raw?.id || !String(raw.id).startsWith('arc-')) {
+    const body = raw?.changes && typeof raw.changes === 'object' && !Array.isArray(raw.changes) ? raw.changes : raw;
+    const id = raw?.id || body?.id;
+    if (!id || !String(id).startsWith('arc-')) {
       throw new Error(`${raw?.id || '(missing id)'} must start with arc-`);
     }
-    const index = next.arcs.findIndex(arc => arc.id === raw.id);
-    const existing = index >= 0 ? next.arcs[index] : { id: raw.id, character_ids: [] };
-    const arc = { ...existing, ...raw };
+    const index = next.arcs.findIndex(arc => arc.id === id);
+    const existing = index >= 0 ? next.arcs[index] : { id, character_ids: [], revision: 0 };
+    const currentRevision = Number.isInteger(existing.revision) ? existing.revision : 0;
+    if (index >= 0 && Number.isInteger(raw.expected_revision) && raw.expected_revision !== currentRevision) {
+      const fields = Object.keys(body || {}).filter(key => key !== 'id' && JSON.stringify(existing[key]) !== JSON.stringify(body[key]));
+      conflicts.push({ entity_id: id, expected_revision: raw.expected_revision, actual_revision: currentRevision, fields, proposed_changes: Object.fromEntries(fields.map(key => [key, body[key]])), session_id: sessionId });
+      continue;
+    }
+    const arc = { ...existing, ...body, id };
     arc.character_ids = [...new Set(Array.isArray(arc.character_ids) ? arc.character_ids : [])];
     arc.escalation = clamp(arc.escalation, 0, 4, integer(existing.escalation, 0));
     arc.ignored_sessions = 0;
     arc.last_touched_session = sessionId;
     arc.last_updated = stamp;
+    arc.revision = currentRevision + 1;
     if (index >= 0) next.arcs[index] = arc;
     else next.arcs.push(arc);
-    touched.add(raw.id);
+    touched.add(id);
   }
   for (let i = 0; i < next.arcs.length; i += 1) {
     const arc = next.arcs[i];
@@ -279,6 +289,7 @@ export function reconcileArcs(doc, patches = [], {
       escalation: escalates ? Math.min(4, integer(arc.escalation) + 1) : integer(arc.escalation),
       status: escalates && arc.status === 'active' ? 'escalating' : arc.status,
       last_updated: stamp,
+      revision: (Number.isInteger(arc.revision) ? arc.revision : 0) + 1,
     };
   }
   next.last_updated = stamp;
@@ -289,32 +300,41 @@ export function mergeDebtPatches(doc, patches = [], { sessionId, stamp } = {}) {
   const next = { ...(doc || {}), debts: [...(doc?.debts || [])] };
   const rejected = [];
   for (const raw of Array.isArray(patches) ? patches : []) {
-    if (!raw || typeof raw !== 'object' || !String(raw.id || '').startsWith('debt_')) {
+    const body = raw?.changes && typeof raw.changes === 'object' && !Array.isArray(raw.changes) ? raw.changes : raw;
+    const id = raw?.id || body?.id;
+    if (!raw || typeof raw !== 'object' || !String(id || '').startsWith('debt_')) {
       rejected.push(`${raw?.id || '(missing id)'} must start with debt_`);
       continue;
     }
-    const index = next.debts.findIndex(debt => debt.id === raw.id);
-    const candidate = { ...(index >= 0 ? next.debts[index] : {}), ...raw };
-    if (!candidate.creditor_id || !candidate.debtor_id || candidate.creditor_id === candidate.debtor_id) {
-      rejected.push(`${raw.id} needs distinct creditor_id and debtor_id`);
+    const index = next.debts.findIndex(debt => debt.id === id);
+    const existing = index >= 0 ? next.debts[index] : { revision: 0 };
+    const currentRevision = Number.isInteger(existing.revision) ? existing.revision : 0;
+    if (index >= 0 && Number.isInteger(raw.expected_revision) && raw.expected_revision !== currentRevision) {
+      rejected.push(`${id} revision conflict: expected ${raw.expected_revision}, found ${currentRevision}`);
       continue;
     }
-    if (raw.visibility && raw.visibility !== 'public') {
-      rejected.push(`${raw.id} is not public and cannot be written here`);
+    const candidate = { ...existing, ...body, id };
+    if (!candidate.creditor_id || !candidate.debtor_id || candidate.creditor_id === candidate.debtor_id) {
+      rejected.push(`${id} needs distinct creditor_id and debtor_id`);
+      continue;
+    }
+    if (body.visibility && body.visibility !== 'public') {
+      rejected.push(`${id} is not public and cannot be written here`);
       continue;
     }
     if (!Number.isInteger(candidate.amount) || candidate.amount < 0) {
-      rejected.push(`${raw.id}.amount must be a non-negative integer`);
+      rejected.push(`${id}.amount must be a non-negative integer`);
       continue;
     }
     const amount = Math.min(99, candidate.amount);
     const debt = {
       ...candidate,
       amount,
-      status: amount === 0 ? 'settled' : (raw.status || 'open'),
+      status: amount === 0 ? 'settled' : (body.status || 'open'),
       visibility: 'public',
       last_updated: stamp,
       updated_by_session: sessionId,
+      revision: currentRevision + 1,
     };
     if (index >= 0) next.debts[index] = debt;
     else next.debts.push(debt);
@@ -328,7 +348,7 @@ export function auditSession({ messages = [], rolls = [], close = {} } = {}) {
     .filter(message => message.role === 'assistant')
     .map(message => String(message.content || ''))
     .join('\n');
-  const worldTouches = ['events_append', 'npc_patch', 'location_patch', 'relationship_patch', 'arc_patch', 'debt_patch']
+  const worldTouches = ['events_append', 'npc_patch', 'location_patch', 'relationship_patch', 'arc_patch', 'debt_patch', 'hub_patch', 'interaction_ops']
     .filter(key => Boolean(close[key])).length;
   return {
     meaningful_choice_prompted: /\?|choose|what do you do|which do you/i.test(assistantText),

@@ -5,6 +5,9 @@
   "scripts": {
     "build:graph": "node scripts/build-graph.mjs",
     "validate": "node scripts/validate-world.mjs",
+    "keeper:reconcile": "node scripts/city-keeper.mjs --phase reconcile",
+    "keeper:city-turn": "node scripts/city-keeper.mjs --phase city-turn",
+    "keeper:publish": "node scripts/city-keeper.mjs --phase publish",
     "test": "npm --prefix bot test && npm run validate"
   },
   "engines": {

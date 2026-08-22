@@ -27,7 +27,7 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 
 **Player flow**
 
-1. Player runs `/play` in Discord. The bot replies with a menu listing every character plus a `+ New character` entry.
+1. Player runs `/play` in Discord. The bot replies with characters they own, explicitly shared characters, legacy unowned characters, plus a `+ New character` entry. Operator IDs can override this.
 2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks the MC model (`deepseek-chat`) for the opening scene.
 3. Player and the MC trade messages in the thread.
 4. When the session ends, the MC emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, locations, public relationships, and arcs.
@@ -41,7 +41,7 @@ The first time a Discord user runs `/play character:new`, the bot detects no `pl
 
 After each session close, the bot checks the player's `mechanics_depth_set` flag. If it's `false` (player has never set their mechanics-depth level), the bot posts a one-shot calibration prompt in the thread: "Pick 1 (more mechanics) – 5 (more story) via `/prefs mechanics N`." Once answered, the flag flips to `true` and the prompt never fires again. Default level is 3.
 
-Discord identity isn't bound to characters — anyone in the guild can pick any character. If an existing character is currently in an open session thread, `/play` blocks a second attempt until that thread is archived. New characters are never blocked: each `+ New character` launch opens a fresh thread titled `<username> — new character`, which the bot renames to `<character name> — session` once onboarding saves the character. This keeps every character a player creates in its own distinct, reviewable thread instead of collapsing them all under the player's username.
+Discord identity is bound through each roster entry's `owner_id`. A character may opt into group control with `shared: true`; legacy unowned entries remain playable until assigned. If an existing character is already in an open session, `/play` blocks a second attempt until that thread is archived. New characters remain independent and are linked to their creator when saved.
 
 ---
 
@@ -116,6 +116,7 @@ fly secrets set \
   DEEPSEEK_API_KEY=... \
   GITHUB_TOKEN=... \
   GITHUB_OWNER=YOUR_GITHUB_USERNAME \
+  OPERATOR_DISCORD_IDS=YOUR_DISCORD_ID \
   WORLD_EVENTS_CHANNEL_ID=...
 fly deploy
 ```
@@ -136,7 +137,7 @@ In your Discord server, run:
 /play
 ```
 
-The bot replies (ephemerally) with a select menu listing every character in [players/index.json](../players/index.json) plus a `+ New character` entry. Pick one and the bot opens a private session thread. Reply in the thread to play. When you're ready to stop, tell the MC you're ending the session — the MC will write its final beat and emit a close block. The bot writes the handoff, state, events log, and any NPC/arc updates back to GitHub as separate commits, then archives the thread.
+The bot replies (ephemerally) with the characters you are allowed to play plus a `+ New character` entry. Pick one and the bot opens a private session thread. During play it refreshes shared context when the world revision advances and writes compact recovery checkpoints. At close it performs revision-aware updates; stale scalar edits become continuity alerts instead of silently overwriting newer play. The thread archives only when all close writes succeed.
 
 To skip the menu, pass `character:<id>` directly (e.g. `/play character:alex-chen`). Use `character:new` to jump straight into onboarding — the MC walks through playbook → stats → moves → gear → debts/circles → first scene, and on close writes a new `players/<id>/` folder.
 
@@ -144,13 +145,39 @@ If someone is already in a session for the character you picked, `/play` blocks 
 
 ---
 
+## Shared-world upkeep
+
+Session closes declare `world_impact`, increment `game/world-meta.json` when the
+city changes, write a public-safe session ledger, and record stale entity edits
+in `game/conflicts.json`. Open sessions check the world revision before each turn
+and receive relevant updates automatically.
+
+The City Keeper workflow runs three timezone-aware phases in America/New_York:
+
+- 6:30 AM: deterministic freshness, validation, and graph publish.
+- 12:30 PM: low-temperature reconciliation of facts established by recent play.
+- 3:15 PM: bounded city turn (at most one arc, two NPCs, one location/hub, and one public event).
+
+The two model phases require a repository Actions secret named
+`DEEPSEEK_API_KEY`. An optional Actions variable `KEEPER_MODEL` overrides
+`deepseek-chat`. The request is built by `scripts/keeper-projection.mjs`,
+which whitelists public hub state, public entity fields, public events, continuity
+metadata, and impact-only ledger evidence. It excludes player files, Discord
+identifiers, profiles and safety data, transcripts, NPC personality/notes, arc
+`mc_notes`, private relationships, and conflict proposal payloads.
+
+Each phase validates the complete world and rebuilds the graph before committing.
+If validation fails or a concurrent player update creates a Git rebase conflict,
+the workflow fails without pushing its proposed changes. The next run reprocesses
+the still-pending evidence.
+
 ## Discord commands
 
 **Session commands**
 
 | Command | Reply visibility | Behavior |
 |---------|------------------|----------|
-| `/play [character]` | ephemeral | Replies with a menu of all characters plus `+ New character`. Pick one to open a private session thread with the MC. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding directly. |
+| `/play [character]` | ephemeral | Lists owned and explicitly shared characters plus `+ New character`. Operators may override ownership. |
 | `/roll` | public | Resolves the pending move inside an active session and injects the authoritative result back into the MC conversation. |
 
 ### Narrator regression evaluation

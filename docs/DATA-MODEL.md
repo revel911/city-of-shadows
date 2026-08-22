@@ -54,14 +54,20 @@ must reuse the canonical ID shown in the opening world index.
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |
 | `game/arcs.json` | Bot/MC | Partial records merged by ID |
 | `game/debts.json` | Bot/MC | Public Debt records merged by stable ID |
-| `game/events-log.md` | Bot/MC | Append-only public chronology |
-| `game/interactions.json` | Bot/MC | Full queue replacement |
+| `game/events-log.md` | Bot/MC | Public chronology, newest entry first |
+| `game/interactions.json` | Bot/MC | ID-based add/update/consume operations |
+| `game/world-meta.json` | Bot/Keeper | Monotonic shared-world revision and freshness |
+| `game/hub-state.json` | Bot/MC/Keeper | Mutable neighborhood conditions and pressure |
+| `game/conflicts.json` | Bot/Keeper | Public-safe same-day continuity conflicts |
+| `game/keeper-state.json` | Keeper | Overnight run cursor, cooldowns, and audit history |
+| `game/session-ledger/*.json` | Bot | Append-only public-safe world-impact evidence |
 | `hubs/index.json` | Human operator | Canonical hub registry |
 | `hubs/*.md` | Human operator | Neighborhood prose and MC-facing lore |
 | `players/index.json` | Bot | Character registry |
 | `players/<id>/handoff.md` | Bot/MC | Full replacement at session close |
 | `players/<id>/state.json` | Bot/MC | Partial mechanical merge |
 | `players/<id>/sheet.md` | Bot/MC | Full replacement when changed |
+| `players/<id>/checkpoint.json` | Bot/MC | Public-safe interrupted-session recovery; retired on successful close |
 | `players/<id>/sessions/session_NNN.json` | Bot | Append-only public-safe mechanical receipt |
 
 ## References
@@ -82,9 +88,15 @@ An NPC can distinguish:
 
 ## Patch rules
 
-`npc_patch`, `location_patch`, `relationship_patch`, `debt_patch`, and `arc_patch` are arrays of partial
-records. Shared-file writes use read-modify-write with conflict retries. The bot
-adds `last_updated` and `updated_by_session` to patched records.
+`npc_patch`, `location_patch`, `relationship_patch`, `debt_patch`, `arc_patch`,
+and `hub_patch` are arrays of partial records. Existing entities should use
+`expected_revision` plus a nested `changes` object. Matching changes increment
+the entity revision. A stale scalar change becomes a continuity conflict instead
+of silently overwriting newer play; additive ID collections merge as sets.
+
+`interaction_ops` is an operation list (`add`, `update`, or `consume`) and never
+replaces the full queue. Every close declares `world_impact` as `none`, `personal`,
+or `shared`. Shared impact requires a matching world mutation or public event.
 
 At session close the bot, rather than the narrator, increments `last_session`,
 validates mechanical ranges, derives `active_arc_ids`, reconciles arc pressure,

@@ -37,6 +37,10 @@ export async function execute(interaction) {
       await interaction.editReply(`No character "${requested}" found.`);
       return;
     }
+    if (!canPlayCharacter(chosen, interaction.user.id)) {
+      await interaction.editReply(`**${chosen.name}** belongs to another player.`);
+      return;
+    }
     chosen.discord_id = interaction.user.id;
     await openSession(interaction, channel, chosen);
     return;
@@ -48,7 +52,7 @@ export async function execute(interaction) {
       description: 'Start onboarding for a new character.',
       value: NEW_CHARACTER_VALUE,
     },
-    ...players.slice(0, 24).map(p => ({
+    ...players.filter(p => canPlayCharacter(p, interaction.user.id)).slice(0, 24).map(p => ({
       label: p.name,
       value: p.id,
     })),
@@ -81,6 +85,10 @@ export async function handleSelect(interaction) {
     await interaction.editReply({ content: `No character "${value}" found.`, components: [] });
     return;
   }
+  if (!canPlayCharacter(chosen, interaction.user.id)) {
+    await interaction.editReply({ content: `**${chosen.name}** belongs to another player.`, components: [] });
+    return;
+  }
   chosen.discord_id = interaction.user.id;
   await openSession(interaction, channel, chosen);
 }
@@ -90,6 +98,14 @@ function resolveCharacter(value, players, fallbackName) {
     return { id: NEW_CHARACTER_VALUE, name: fallbackName };
   }
   return resolveCharacterFromList(value, fallbackName, players);
+}
+
+export function canPlayCharacter(character, discordId, operatorIds = process.env.OPERATOR_DISCORD_IDS || '') {
+  if (!character || character.id === NEW_CHARACTER_VALUE) return true;
+  if (character.shared === true || !character.owner_id) return true;
+  if (String(character.owner_id) === String(discordId)) return true;
+  const operators = String(operatorIds).split(',').map(value => value.trim()).filter(Boolean);
+  return operators.includes(String(discordId));
 }
 
 async function openSession(interaction, channel, chosen) {

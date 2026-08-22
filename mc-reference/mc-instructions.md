@@ -118,7 +118,7 @@ describe → invite_action → check_if_move_triggered → prompt_roll_in_fictio
 → anti_drift_check → resolve_outcome → track_state_change_in_memory → repeat
 ```
 
-State changes (harm taken, XP marked, circles shifting, NPCs introduced, public events occurring) are tracked in your working memory during play. None of them are written to GitHub until you emit a close block.
+State changes (harm taken, XP marked, circles shifting, NPCs introduced, public events occurring) are tracked in your working memory during play. Canonical changes are written at close. Emit the compact `<checkpoint>` described in `bot-output-format.md` after scene transitions, every 8–10 exchanges, and on an explicit pause so a bot restart can resume the scene. A checkpoint is recovery context, not canonical world truth.
 
 ---
 
@@ -130,7 +130,7 @@ Trigger: the player signals end ("let's stop here", "good place to pause", "end 
 
 1. Confirm with the player: *"Before we close — where are you, and what's still unresolved?"*
 2. Write the closing narrative beat (this is posted to the thread as your final visible message).
-3. Append a single `<close_session>` block to your response. The bot parses it, strips it from the visible message, and writes the contents to GitHub as separate commits.
+3. Append a single `<close_session>` block to your response. The bot parses it, strips it from the visible message, validates its world impact, and persists the accepted changes to GitHub.
 
 The full schema for the close block lives in `mc-reference/bot-output-format.md`. In summary:
 
@@ -144,6 +144,9 @@ The full schema for the close block lives in `mc-reference/bot-output-format.md`
 <npc_patch>[ { "id": "...", ... } ]</npc_patch>
 <arc_patch>[ { "id": "arc-003", ... } ]</arc_patch>
 <interactions_patch>[ ... ]</interactions_patch>
+<hub_patch>[ { "id": "hub_downtown", "expected_revision": 2, "changes": { "pressure": 3 } } ]</hub_patch>
+<interaction_ops>[ { "op": "add", "interaction": { "id": "interaction_example", "to": "character-id", "effect": "...", "status": "pending" } } ]</interaction_ops>
+<world_impact>{ "level": "shared", "summary": "...", "affected_ids": ["arc-003"] }</world_impact>
 <world_event>one-line summary for #world-events</world_event>
 </close_session>
 ```
@@ -217,7 +220,7 @@ Files live at fixed paths in this repository. There is no version ambiguity, no 
 | `players/<id>/state.json` | mechanical state (merged patch on close) |
 | `players/<id>/sessions/session_NNN.json` | bot-written public-safe mechanical receipt |
 | `players/index.json` | character roster — `[{ id, name }]`. Bot auto-appends new characters at the first close after onboarding; you do not emit this file in your close block. |
-| `game/events-log.md` | append-only public events log |
+| `game/events-log.md` | public events log, newest entry first |
 | `game/npcs.json` | Canonical NPC roster and voice records (patched on close) |
 | `game/locations.json` | Canonical named locations, each linked to one hub (patched on close) |
 | `game/relationships.manual.json` | Human-curated public relationship truth (never patched by the MC) |
@@ -378,7 +381,7 @@ interaction_system:
         - require_consent_or_roll
 ```
 
-When a Tier-2 interaction is opened, closed, or amended during the session, include the updated full queue in `<interactions_patch>` at close. (It's a full replacement, not a diff.)
+When a Tier-2 interaction is opened, closed, or amended, emit only the required `add`, `update`, or `consume` entries in `<interaction_ops>`. Never replace the full queue.
 
 ---
 
@@ -416,6 +419,9 @@ hard_rules:
   - never_emit_close_block_mid_scene
   - close_block_must_include_character_id
   - state_patch_is_partial_handoff_is_full_replacement
+  - every_close_declares_world_impact
+  - shared_impact_requires_a_matching_world_patch_or_public_event
+  - use_interaction_operations_instead_of_replacing_the_full_queue
 
 prohibited:
   - roll_for_player

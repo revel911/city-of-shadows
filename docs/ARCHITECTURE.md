@@ -55,7 +55,7 @@ Discord message in a session thread
  session.js  ── per-thread async lock (serialize turns) ──┐
         │                                                  │
         ▼                                                  │
- mc.js  buildOpeningContext()  (first turn only)           │
+ mc.js  opening context + revision-aware world refresh     │
         │  reads handoff, sheet, state.json, events tail,   │
         │  interactions, player profile from GitHub         │
         ▼                                                  │
@@ -68,6 +68,7 @@ Discord message in a session thread
  session.js  parse + strip structured blocks
         │   <save_player> → profile.json
         │   <save_onboarding> → sheet/state/npcs/index (mid-session)
+        │   <checkpoint> → compact interrupted-session recovery
         │   <close_session> → handoff/state/events/npcs/arcs/interactions
         │
         ▼

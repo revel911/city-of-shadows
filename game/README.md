@@ -13,6 +13,12 @@ Machine-readable shared-world state lives here. See
 | `debts.json` | Canonical public Debt ledger (creditor, debtor, amount, status) |
 | `events-log.md` | Append-only public chronology |
 | `interactions.json` | Pending asynchronous PC-to-PC effects |
+| `world-meta.json` | Shared revision, player-update, and keeper freshness |
+| `hub-state.json` | Mutable neighborhood conditions, rumors, and pressure |
+| `conflicts.json` | Same-day continuity conflicts awaiting safe resolution |
+| `keeper-state.json` | Overnight automation cursor and audit history |
+| `session-ledger/` | Public-safe evidence envelopes from completed sessions |
+| `city-pulse.md` | Latest overnight city-turn summary |
 | `world-bible.md` | Setting-wide prose and faction truth |
 
 Run `npm run validate` after editing structured data. Do not store secrets in

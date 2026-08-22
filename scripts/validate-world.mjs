@@ -1,6 +1,6 @@
 import { readJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
@@ -9,7 +9,11 @@ const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc, debtDo
   readJSON('game/relationships.manual.json'),
   readJSON('game/relationships.derived.json'),
   readJSON('game/debts.json'),
-  readJSON('game/interactions.json')
+  readJSON('game/interactions.json'),
+  readJSON('game/world-meta.json'),
+  readJSON('game/hub-state.json'),
+  readJSON('game/conflicts.json'),
+  readJSON('game/keeper-state.json')
 ]);
 
 const errors = [];
@@ -22,6 +26,31 @@ const ids = {
   pc: new Set(players.map(x => x.id))
 };
 const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.pc]);
+const conflictEntityIds = new Set([
+  ...entityIds,
+  ...(manualDoc.relationships || []).map(item => item.id),
+  ...(derivedDoc.relationships || []).map(item => item.id),
+  ...(debtDoc.debts || []).map(item => item.id),
+]);
+
+if (!Number.isInteger(worldMeta.revision) || worldMeta.revision < 0) errors.push('game/world-meta.json revision must be a non-negative integer');
+if (!['open', 'running', 'failed'].includes(worldMeta.maintenance_status)) errors.push('game/world-meta.json maintenance_status must be open, running, or failed');
+if (!Array.isArray(hubState.hubs)) errors.push('game/hub-state.json hubs must be an array');
+if (!Array.isArray(conflictDoc.conflicts)) errors.push('game/conflicts.json conflicts must be an array');
+if (!keeperState.arc_cooldowns || typeof keeperState.arc_cooldowns !== 'object' || Array.isArray(keeperState.arc_cooldowns)) errors.push('game/keeper-state.json arc_cooldowns must be an object');
+
+for (const hub of hubState.hubs || []) {
+  if (!ids.hub.has(hub.id)) errors.push(`hub state references missing hub ${hub.id}`);
+  if (!Number.isInteger(hub.revision) || hub.revision < 0) errors.push(`${hub.id}.revision must be a non-negative integer`);
+  if (hub.conditions != null && !Array.isArray(hub.conditions)) errors.push(`${hub.id}.conditions must be an array`);
+  if (hub.rumors != null && !Array.isArray(hub.rumors)) errors.push(`${hub.id}.rumors must be an array`);
+}
+
+for (const conflict of conflictDoc.conflicts || []) {
+  if (!conflict.id?.startsWith('conflict_')) errors.push(`${conflict.id || '(missing conflict id)'} must start with conflict_`);
+  if (!['pending', 'resolved', 'dismissed'].includes(conflict.status)) errors.push(`${conflict.id}.status must be pending, resolved, or dismissed`);
+  if (!conflict.entity_id || !conflictEntityIds.has(conflict.entity_id)) errors.push(`${conflict.id} references missing entity ${conflict.entity_id || '(missing)'}`);
+}
 
 function duplicateValues(items, key, label) {
   const seen = new Set();

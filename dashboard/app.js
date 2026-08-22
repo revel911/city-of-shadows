@@ -40,6 +40,13 @@ async function ghJSON(path) {
   return JSON.parse(text);
 }
 
+async function deployedJSON(path) {
+  const source = new URL(path, window.location.href).href;
+  const res = await fetch(`${source}?v=${_fetchToken}`, { cache: 'no-cache' });
+  if (!res.ok) throw new Error(`Could not load deployed asset ${path} (${res.status})`);
+  return res.json();
+}
+
 // ── Data fetchers ─────────────────────────────────────────────────────
 
 async function getPlayers() {
@@ -113,7 +120,15 @@ async function getLocations() {
 }
 
 async function getWorldGraph() {
-  return cached('world-graph', () => ghJSON('dashboard/data/world-graph.json'));
+  return cached('world-graph', () => deployedJSON('data/world-graph.json'));
+}
+
+async function getWorldMeta() {
+  return cached('world-meta', () => ghJSON('game/world-meta.json').then(value => value || {}));
+}
+
+async function getConflicts() {
+  return cached('conflicts', () => ghJSON('game/conflicts.json').then(value => value?.conflicts || []));
 }
 
 async function getThreatsDoc() {
@@ -342,10 +357,10 @@ async function renderSummary() {
   setSideNav([]);
   showLoading('Reading the city&hellip;');
 
-  let players = [], events = '', hubs = [], npcs = [], graph = null, err = '';
+  let players = [], events = '', hubs = [], npcs = [], graph = null, worldMeta = {}, conflicts = [], err = '';
   try {
-    [players, events, hubs, npcs, graph] = await Promise.all([
-      getPlayers(), getEventsLog(), getHubDocs(), getAllNPCRoster(), getWorldGraph(),
+    [players, events, hubs, npcs, graph, worldMeta, conflicts] = await Promise.all([
+      getPlayers(), getEventsLog(), getHubDocs(), getAllNPCRoster(), getWorldGraph(), getWorldMeta(), getConflicts(),
     ]);
   } catch (e) { err = e.message; }
 
@@ -396,6 +411,7 @@ async function renderSummary() {
     : '<p class="empty-note">Events log not loaded.</p>';
 
   const edgeCount = graph?.edges?.length || 0;
+  const pendingConflicts = conflicts.filter(item => item.status === 'pending').length;
   $content.innerHTML = `
     ${errorHtml}
     <header class="page-header summary-hero">
@@ -409,6 +425,8 @@ async function renderSummary() {
       <div class="world-vital"><strong>${npcs.length}</strong><span>Known faces</span></div>
       <div class="world-vital"><strong>${hubs.length}</strong><span>City hubs</span></div>
       <div class="world-vital"><strong>${edgeCount}</strong><span>Visible ties</span></div>
+      <div class="world-vital"><strong>${worldMeta.revision ?? 0}</strong><span>World revision</span></div>
+      <div class="world-vital"><strong>${pendingConflicts}</strong><span>Continuity alerts</span></div>
     </div>
     ${recentCharSection}
     <section class="atlas-callout" role="link" tabindex="0" data-nav="/relationships" aria-labelledby="atlas-callout-title">
@@ -813,7 +831,6 @@ function parseThreats(text) {
       hubs:        Array.isArray(arc.hub_ids)  ? arc.hub_ids  : (Array.isArray(arc.hubs)    ? arc.hubs    : []),
       players:     Array.isArray(arc.character_ids) ? arc.character_ids : (Array.isArray(arc.players) ? arc.players : []),
       keyNpcs:     Array.isArray(arc.npc_ids)  ? arc.npc_ids  : (Array.isArray(arc.key_npcs) ? arc.key_npcs : []),
-      mcNotes:     arc.mc_notes || '',
     }));
   } catch (e) {
     console.warn('parseThreats: JSON parse failed', e);
@@ -865,7 +882,6 @@ function renderThreats(arcs) {
       ${meta ? `<div class="threat-meta">${meta}</div>` : ''}
       ${arc.description ? `<div class="threat-desc">${esc(arc.description)}</div>` : ''}
       ${tags ? `<div class="threat-tags">${tags}</div>` : ''}
-      ${arc.mcNotes ? `<details class="threat-mc-notes"><summary>MC Notes</summary><div class="threat-mc-body">${esc(arc.mcNotes)}</div></details>` : ''}
     </div>`;
   };
 
@@ -894,8 +910,7 @@ async function renderEvents() {
   } else {
     const { preamble, sections } = splitMarkdownSections(log);
     if (sections.length > 1) {
-      const reversed = [...sections].reverse();
-      const parts = preamble ? [preamble, ...reversed] : reversed;
+      const parts = preamble ? [preamble, ...sections] : sections;
       body = `<div class="prose events-prose">${md(parts.join('\n\n---\n\n'))}</div>`;
     } else {
       const normalized = log.replace(/\r\n/g, '\n').replace(/([^\n])\n(?!\n)/g, '$1\n\n').trim();

@@ -121,7 +121,9 @@ export function resetSystemCache() {
 function tail(text, n) {
   if (!text) return '';
   const lines = text.split('\n');
-  return lines.slice(-n).join('\n');
+  // Public events are stored newest-first so opening context must read from
+  // the beginning, not the historical tail.
+  return lines.slice(0, n).join('\n');
 }
 
 export function selectInteractionEcho(document, characterId) {
@@ -187,10 +189,11 @@ export async function buildOpeningContext(player) {
     ].join('\n');
   }
 
-  const [handoff, sheet, state, events, interactions] = await Promise.all([
+  const [handoff, sheet, state, checkpoint, events, interactions] = await Promise.all([
     readFile(`players/${player.id}/handoff.md`),
     readFile(`players/${player.id}/sheet.md`),
     readJSON(`players/${player.id}/state.json`),
+    readJSON(`players/${player.id}/checkpoint.json`),
     readFile('game/events-log.md'),
     readJSON('game/interactions.json'),
   ]);
@@ -215,6 +218,9 @@ export async function buildOpeningContext(player) {
     '',
     '--- STATE (state.json) ---',
     state ? JSON.stringify(state, null, 2) : '(none)',
+    '',
+    '--- INTERRUPTED SESSION CHECKPOINT ---',
+    checkpoint?.active ? JSON.stringify(checkpoint, null, 2) : '(none)',
     '',
     '--- RECENT WORLD EVENTS (tail) ---',
     tail(events, EVENT_TAIL_LINES) || '(empty)',

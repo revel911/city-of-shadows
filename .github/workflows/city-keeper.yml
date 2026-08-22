@@ -1,0 +1,78 @@
+name: City Keeper
+
+on:
+  schedule:
+    - cron: '30 6 * * *'
+      timezone: America/New_York
+    - cron: '30 12 * * *'
+      timezone: America/New_York
+    - cron: '15 15 * * *'
+      timezone: America/New_York
+  workflow_dispatch:
+    inputs:
+      phase:
+        description: Keeper phase to run
+        required: true
+        default: publish
+        type: choice
+        options:
+          - reconcile
+          - city-turn
+          - publish
+
+permissions:
+  contents: write
+
+concurrency:
+  group: city-keeper
+  cancel-in-progress: false
+
+jobs:
+  upkeep:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: bot/package-lock.json
+      - run: npm ci --prefix bot
+      - name: Select keeper phase
+        id: keeper
+        shell: bash
+        run: |
+          phase="${{ inputs.phase }}"
+          if [[ -z "$phase" ]]; then
+            case "${{ github.event.schedule }}" in
+              "30 12 * * *") phase="reconcile" ;;
+              "15 15 * * *") phase="city-turn" ;;
+              *) phase="publish" ;;
+            esac
+          fi
+          echo "phase=$phase" >> "$GITHUB_OUTPUT"
+      - name: Run bounded keeper phase
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          KEEPER_MODEL: ${{ vars.KEEPER_MODEL }}
+        run: node scripts/city-keeper.mjs --phase "${{ steps.keeper.outputs.phase }}"
+      - name: Verify world
+        run: npm test
+      - name: Build current graph
+        run: npm run build:graph
+      - name: Commit one validated upkeep revision
+        shell: bash
+        run: |
+          if git diff --quiet; then
+            echo "No upkeep changes."
+            exit 0
+          fi
+          git config user.name "city-of-shadows-keeper[bot]"
+          git config user.email "city-of-shadows-keeper[bot]@users.noreply.github.com"
+          git add game dashboard/data/world-graph.json
+          git diff --cached --check
+          git commit -m "chore(city): keeper ${{ steps.keeper.outputs.phase }}"
+          git pull --rebase origin main
+          git push origin HEAD:main
