@@ -2,7 +2,13 @@ import { generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
 import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
-import { applyInteractionOperations, buildRelevantWorldContext, mergeCanonicalPatches } from './world-state.js';
+import {
+  applyInteractionOperations,
+  buildRelevantWorldContext,
+  findMentionedNpcs,
+  formatNpcHydrationContext,
+  mergeCanonicalPatches,
+} from './world-state.js';
 import {
   auditSession,
   createRollRecord,
@@ -54,6 +60,8 @@ export async function startSession(thread, player) {
     },
     openingEchoId: selectInteractionEcho(openingInteractions, player.id)?.id || null,
     worldRevision: Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0,
+    hydratedNpcIds: new Set(),
+    npcCatalog: null,
   };
   sessions.set(thread.id, session);
 
@@ -138,6 +146,12 @@ export async function handleMessage(message) {
 
   await lock(session, async () => {
     await refreshSessionWorld(session);
+    const lastAssistant = [...session.messages].reverse()
+      .find(entry => entry.role === 'assistant')?.content || '';
+    const npcHydration = await buildNpcMentionHydration(
+      session,
+      `${lastAssistant}\n${message.content}`
+    );
     const { content: userContent, exhausted } = applySaveLeakNudge(session, message.content);
     if (exhausted) {
       await message.channel.send(
@@ -146,12 +160,29 @@ export async function handleMessage(message) {
       );
       console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
     }
-    session.messages.push({ role: 'user', content: userContent });
+    session.messages.push({
+      role: 'user',
+      content: npcHydration
+        ? `${npcHydration}\n\n[PLAYER MESSAGE]\n${userContent}`
+        : userContent,
+    });
     await message.channel.sendTyping();
     const response = await generateSafeResponse(session);
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });
+}
+
+async function buildNpcMentionHydration(session, text) {
+  if (!session?.player?.id || session.player.id === '__new__') return '';
+  if (!session.npcCatalog) {
+    const npcDoc = await readJSON('game/npcs.json');
+    session.npcCatalog = npcDoc?.npcs || [];
+  }
+  if (!(session.hydratedNpcIds instanceof Set)) session.hydratedNpcIds = new Set();
+  const mentioned = findMentionedNpcs(text, session.npcCatalog, session.hydratedNpcIds);
+  for (const npc of mentioned) session.hydratedNpcIds.add(npc.id);
+  return mentioned.length ? formatNpcHydrationContext(mentioned) : '';
 }
 
 async function refreshSessionWorld(session) {
@@ -180,6 +211,7 @@ async function refreshSessionWorld(session) {
     ].join('\n\n'),
   });
   session.worldRevision = nextRevision;
+  session.npcCatalog = null;
 }
 
 export async function resolveSessionRoll(interaction) {

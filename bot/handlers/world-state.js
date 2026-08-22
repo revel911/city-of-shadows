@@ -19,6 +19,55 @@ function compactNpc(npc) {
   };
 }
 
+export function npcBehaviorCard(npc) {
+  const p = npc?.personality || {};
+  const moral = {
+    1: 'No ethical constraint; will cross any line that serves the moment.',
+    2: 'Situational ethics; rationalizes compromise easily.',
+    3: 'Has real but movable lines.',
+    4: 'Follows a binding personal code and explains decisions through it.',
+    5: 'Will sacrifice the desired outcome rather than violate a rigid code.',
+  };
+  const order = {
+    1: 'Breaks systems and treats structure as theater.',
+    2: 'Uses rules as cover, then ignores them when inconvenient.',
+    3: 'Uses or subverts systems pragmatically.',
+    4: 'Prefers legitimate channels and bends them only under pressure.',
+    5: 'Believes in hierarchy, jurisdiction, and process.',
+  };
+  const manner = {
+    1: 'One to three words; hostile or dismissive; posture carries the rest.',
+    2: 'Short transactional sentences; no cushioning or pleasantries.',
+    3: 'Professional cadence; says enough to complete the transaction.',
+    4: 'Conversational; uses names and may volunteer useful context.',
+    5: 'Warm and disarming without becoming automatically verbose.',
+  };
+  const violence = {
+    1: 'Violence-first: closes distance or attacks early; no third warning.',
+    2: 'Comfortable with violence: positions, threatens, and follows through quickly.',
+    3: 'Threatens when useful and acts if pushed.',
+    4: 'Avoids violence until other routes fail; actively de-escalates.',
+    5: 'Violence is off the table: retreats, shields others, folds, or seeks help first.',
+  };
+  return {
+    id: npc.id,
+    voice_note: p.voice_note || '',
+    ethics: moral[p.moral] || 'Uncalibrated ethics.',
+    institutional_instinct: order[p.order] || 'Uncalibrated relationship to systems.',
+    dialogue_register: manner[p.manner] || 'Uncalibrated dialogue register.',
+    conflict_instinct: violence[p.violence] || 'Uncalibrated conflict instinct.',
+  };
+}
+
+export function formatNpcHydrationContext(npcs = []) {
+  return [
+    '--- NPC PERSONALITY HYDRATION ---',
+    'These full records are authoritative for any NPC newly named in play.',
+    'The voice_note is primary; the behavior card is binding for dialogue, choices, and escalation.',
+    JSON.stringify(npcs.map(npc => ({ ...compactNpc(npc), behavior: npcBehaviorCard(npc) }))),
+  ].join('\n');
+}
+
 function compactLocation(location) {
   return {
     id: location.id,
@@ -73,6 +122,7 @@ export function formatCanonicalWorldContext({
   debts = [],
   hubState = [],
   directory = null,
+  includeBehaviorCards = true,
 }) {
   return [
     '--- CANONICAL WORLD INDEX ---',
@@ -85,6 +135,11 @@ export function formatCanonicalWorldContext({
     '',
     'NPCS:',
     JSON.stringify(npcs.map(compactNpc)),
+    ...(includeBehaviorCards ? [
+      '',
+      'NPC BEHAVIOR CARDS (binding portrayal; voice_note remains primary):',
+      JSON.stringify(npcs.map(npcBehaviorCard)),
+    ] : []),
     '',
     'LOCATIONS:',
     JSON.stringify(locations.map(compactLocation)),
@@ -137,11 +192,37 @@ export async function buildCanonicalWorldContext() {
   const world = await loadWorldDocuments();
   return formatCanonicalWorldContext({
     ...world,
+    includeBehaviorCards: false,
   });
 }
 
 function referencedIds(text) {
   return new Set(String(text || '').match(/(?:npc_|loc_|hub_)[a-z0-9_]+|arc-\d+/gi) || []);
+}
+
+export function findMentionedNpcs(text, npcs = [], excludeIds = []) {
+  const source = String(text || '').toLowerCase();
+  if (!source.trim()) return [];
+  const excluded = new Set(excludeIds);
+  const ignoredTitles = new Set(['det', 'sgt', 'dr', 'prof', 'father', 'sister', 'judge', 'councilor', 'the']);
+  const tokenCounts = new Map();
+  const tokensById = new Map();
+  for (const npc of npcs) {
+    const tokens = String(npc.name || '').toLowerCase().match(/[a-z0-9]+/g) || [];
+    const aliases = tokens.filter(token => token.length >= 4 && !ignoredTitles.has(token));
+    tokensById.set(npc.id, aliases);
+    for (const token of aliases) tokenCounts.set(token, (tokenCounts.get(token) || 0) + 1);
+  }
+  return npcs.filter(npc => {
+    if (!npc?.id || excluded.has(npc.id)) return false;
+    const idMatch = source.includes(String(npc.id).toLowerCase());
+    const name = String(npc.name || '').toLowerCase().trim();
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const fullNameMatch = name && new RegExp(`\\b${escapedName}\\b`, 'i').test(source);
+    const uniqueAliasMatch = (tokensById.get(npc.id) || [])
+      .some(alias => tokenCounts.get(alias) === 1 && new RegExp(`\\b${alias}\\b`, 'i').test(source));
+    return idMatch || fullNameMatch || uniqueAliasMatch;
+  }).slice(0, 3);
 }
 
 export function selectRelevantWorld(world, { characterId, state = {}, handoff = '' } = {}) {

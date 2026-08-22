@@ -22,5 +22,17 @@
     "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Turn to Violence\",\"modifier_key\":\"Blood\",\"instinct_die\":1,\"other_die\":2,\"modifier\":3,\"total\":6,\"result\":\"miss\",\"extreme_failure\":true}\nJacob is The Veteran. Resolve the Extreme Failure without changing the result.",
     "must_include": [],
     "must_not_include": ["weak hit", "7-9", "<roll_request>"]
+  },
+  {
+    "id": "violence_one_means_violence_first",
+    "prompt": "EVALUATION ONLY. An NPC has Violence 1. Classify their default conflict instinct using exactly one label: VIOLENCE_FIRST or VIOLENCE_AVERSE.",
+    "must_include": ["VIOLENCE_FIRST"],
+    "must_not_include": ["VIOLENCE_AVERSE"]
+  },
+  {
+    "id": "violence_five_means_violence_averse",
+    "prompt": "EVALUATION ONLY. An NPC has Violence 5. Classify their default conflict instinct using exactly one label: VIOLENCE_FIRST or VIOLENCE_AVERSE.",
+    "must_include": ["VIOLENCE_AVERSE"],
+    "must_not_include": ["VIOLENCE_FIRST"]
   }
 ]

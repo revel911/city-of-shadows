@@ -40,15 +40,16 @@ How do they come across in interaction?
 | 5 | Magnetic. Disarming. Seems to genuinely care — whether or not they do. |
 
 ### Violence (1–5)
-How quickly do they reach for it?
+How strongly do they resist reaching for it? This axis is intentionally
+**violence-first at the low end and violence-averse at the high end**.
 
 | Score | What It Means |
 |-------|--------------|
-| 1 | Violence is off the table. They will flee or fold first. |
-| 2 | Avoids violence; uses it only as absolute last resort. |
+| 1 | Violence is a primary tool. Uses it early and without guilt. |
+| 2 | Comfortable with violence. Doesn't prefer it but doesn't flinch. |
 | 3 | Willing to threaten; carries through if pushed. |
-| 4 | Comfortable with violence. Doesn't prefer it but doesn't flinch. |
-| 5 | Violence is a primary tool. Uses it early and without guilt. |
+| 4 | Avoids violence; uses it only as an absolute last resort. |
+| 5 | Violence is off the table. They will flee, fold, shield others, or seek another route first. |
 
 ---
 
@@ -86,9 +87,9 @@ Use `voice_note` in the personality block as the most specific guidance. The axi
 
 **Low Manner (1–2):** Minimal words. Doesn't cushion anything. May seem rude by accident — this is just how they operate.
 
-**High Violence (4–5):** Makes physical space in the scene. Positions themselves. Refers to past incidents without emotion. Their calm is the warning.
+**Violence 1–2:** Makes physical space in the scene. Positions themselves. Refers to past incidents without emotion. Their calm is the warning.
 
-**Low Violence (1–2):** De-escalates actively. Puts furniture between themselves and conflict. Changes the subject.
+**Violence 4–5:** De-escalates actively. Puts furniture between themselves and conflict. Changes the subject, retreats, calls for help, or protects bystanders.
 
 ---
 
@@ -116,10 +117,10 @@ When you introduce a new named NPC, add them to `game/npcs.json` by emitting an 
   "role": "Brief description of who they are",
   "player_interaction": "",
   "personality": {
-    "moral": 0,
-    "order": 0,
-    "manner": 0,
-    "violence": 0,
+    "moral": 3,
+    "order": 3,
+    "manner": 3,
+    "violence": 3,
     "voice_note": "One or two sentences on how they sound and move in a scene."
   },
   "last_seen": "session_NNN",

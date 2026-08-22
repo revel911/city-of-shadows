@@ -8,15 +8,16 @@ if (!process.env.DEEPSEEK_API_KEY) {
 
 const root = new URL('../../', import.meta.url);
 const read = path => readFile(new URL(path, root), 'utf8');
-const [contract, instructions, moves, output, scenariosText] = await Promise.all([
+const [contract, instructions, moves, personality, output, scenariosText] = await Promise.all([
   read('mc-reference/MECHANICS-CONTRACT.md'),
   read('mc-reference/mc-instructions.md'),
   read('mc-reference/reference/basic-moves.md'),
+  read('mc-reference/npc-personality-engine.md'),
   read('mc-reference/bot-output-format.md'),
   read('bot/eval/narrator-scenarios.json'),
 ]);
 const scenarios = JSON.parse(scenariosText);
-const system = [contract, instructions, moves, output].join('\n\n---\n\n');
+const system = [contract, instructions, moves, personality, output].join('\n\n---\n\n');
 const client = new OpenAI({
   baseURL: 'https://api.deepseek.com',
   apiKey: process.env.DEEPSEEK_API_KEY,

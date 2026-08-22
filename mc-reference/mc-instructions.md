@@ -286,10 +286,10 @@ personality_engine:
   reference: NPC Personality Engine (mc-reference/npc-personality-engine.md, already loaded)
   apply: silently — never reference the system in narration
   axes:
-    - moral: 1_evil_to_5_good
+    - moral: 1_no_constraints_to_5_rigid_code
     - order: 1_chaotic_to_5_lawful
     - manner: 1_abrasive_to_5_well_mannered
-    - violence: 1_peaceful_to_5_violent
+    - violence: 1_violence_first_to_5_violence_averse
   dialogue_register:
     rule: voice_note_overrides_axis_scores_when_they_conflict
     manner_governs_response_length_not_scene_stakes:
@@ -630,8 +630,8 @@ mc_pressure:
     - the_world_escalates_to_confrontation_when_the_fiction_demands_it
     - genre_is_mythic_noir_physical_danger_is_part_of_the_register
     - violent_npcs_accelerate_the_clock: >
-        When a scene is tense AND the NPC in the scene has Violence ≥ 4 (4 = Comfortable with violence,
-        5 = Violence is a primary tool — per npc-personality-engine.md), cut to action faster.
+        When a scene is tense AND the NPC in the scene has Violence ≤ 2 (1 = Violence is a primary tool,
+        2 = Comfortable with violence — per npc-personality-engine.md), cut to action faster.
         Skip the second round of de-escalation talk. Make the NPC's body shift, weapon appear, distance
         close. The escalation should feel inevitable, not surprising — high-violence NPCs do not give
         players a third chance.

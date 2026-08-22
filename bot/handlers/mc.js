@@ -54,6 +54,7 @@ async function loadCoreSystemPrompt() {
     ['Rules — Fundamentals of Play', 'mc-reference/reference/rules.md'],
     ['Basic Moves', 'mc-reference/reference/basic-moves.md'],
     ['MC Moves', 'mc-reference/reference/mc-moves.md'],
+    ['NPC Personality Engine', 'mc-reference/npc-personality-engine.md'],
     ['state.json Schema', 'mc-reference/state-schema.md'],
     ['Bot Output Format', 'mc-reference/bot-output-format.md'],
   ]);
@@ -79,7 +80,6 @@ async function loadReferencePack(profile = {}) {
   if (profile.isNew) {
     return labeledFiles([
       ['Character Creation Wizard', 'mc-reference/character-creation.md'],
-      ['NPC Personality Engine', 'mc-reference/npc-personality-engine.md'],
       ['All Playbooks — creation only', 'mc-reference/reference/playbooks.md'],
       ['WoD — Changeling', 'mc-reference/reference/world-of-darkness/changeling.md'],
       ['WoD — Demon', 'mc-reference/reference/world-of-darkness/demon.md'],

@@ -25,10 +25,12 @@ test('output contract includes roll and Debt patches in machine-only blocks', as
   assert.match(output, /Do not emit bot-owned `last_session`/);
 });
 
-test('opt-in narrator eval fixtures cover roll, Debt, and Extreme Failure behavior', async () => {
+test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
   const raw = await readFile(new URL('../eval/narrator-scenarios.json', import.meta.url), 'utf8');
   const scenarios = JSON.parse(raw);
   assert.ok(scenarios.some(item => item.id.includes('move_trigger')));
   assert.ok(scenarios.some(item => item.id.includes('debt')));
   assert.ok(scenarios.some(item => item.id.includes('extreme_failure')));
+  assert.ok(scenarios.some(item => item.id === 'violence_one_means_violence_first'));
+  assert.ok(scenarios.some(item => item.id === 'violence_five_means_violence_averse'));
 });
