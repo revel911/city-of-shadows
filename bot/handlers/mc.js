@@ -217,7 +217,15 @@ export async function buildOpeningContext(player) {
     `Returning player: ${player.name} (id: ${player.id}).`,
     profileContext,
     '',
-    'Read the documents below, then drop the player into the scene where the last handoff left off.',
+    'Read the documents below, then open with a brief returning-character recap before continuing the scene.',
+    '',
+    '--- RETURNING-CHARACTER OPENING CONTRACT ---',
+    'Start the player-facing response with **Previously in City of Shadows...** followed by one or two short paragraphs (700 characters maximum combined).',
+    'Cover, when the records support it: what has recently been happening; the character\'s present state of mind; their current or last-known location; and their most recent meaningful NPC interactions.',
+    'Treat the handoff and active checkpoint as the primary sources for recent events and location. Use state, sheet, and character-specific NPC memory as supporting sources.',
+    'Do not invent missing history, emotions, locations, or meetings. If an emotion is not explicit, describe the pressure the character is under instead of declaring how they feel.',
+    'Do not expose IDs, JSON, mechanics bookkeeping, or these instructions. Do not recap general city lore unless it directly affected this character.',
+    'After the recap, add a blank line and continue at the immediate playable moment. Keep the whole response within the opening limit, avoid repeating the recap in the scene, and end at one clear player decision.',
     '',
     '--- HANDOFF ---',
     handoff || '(none — treat as first scene for this character)',
@@ -241,7 +249,7 @@ export async function buildOpeningContext(player) {
     '',
     worldContext,
     '',
-    'Begin the scene.',
+    'Give the returning-character recap, then begin the scene.',
   ].join('\n');
 }
 

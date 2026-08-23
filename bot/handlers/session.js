@@ -156,7 +156,9 @@ async function generateSafeResponse(session, { opening = false, maxVisibleChars,
         `The previous response was rejected: ${problems.join('; ')}.`,
         `Re-emit only the player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters.`,
         opening
-          ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question.'
+          ? (session.rulesProfile?.isNew
+              ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question.'
+              : 'Preserve the required **Previously in City of Shadows...** recap, then establish the immediate pressure and one actionable hook before ending with a direct question.')
           : (oocRecap
               ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
               : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),

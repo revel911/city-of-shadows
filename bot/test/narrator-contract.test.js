@@ -46,6 +46,21 @@ test('top-level Discord handlers never expose raw exception messages to players'
   assert.doesNotMatch(index, /channel\.send\(`[^`]*\$\{err\.message\}/);
 });
 
+test('returning-character openings recap personal continuity before play', async () => {
+  const mc = await readFile(new URL('../handlers/mc.js', import.meta.url), 'utf8');
+  assert.match(mc, /Previously in City of Shadows/);
+  assert.match(mc, /one or two short paragraphs \(700 characters maximum combined\)/i);
+  assert.match(mc, /present state of mind/i);
+  assert.match(mc, /current or last-known location/i);
+  assert.match(mc, /most recent meaningful NPC interactions/i);
+  assert.match(mc, /character-specific NPC memory/i);
+  assert.match(mc, /Do not invent missing history, emotions, locations, or meetings/i);
+  assert.match(mc, /continue at the immediate playable moment/i);
+
+  const session = await readFile(new URL('../handlers/session.js', import.meta.url), 'utf8');
+  assert.match(session, /Preserve the required \*\*Previously in City of Shadows/);
+});
+
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
   const raw = await readFile(new URL('../eval/narrator-scenarios.json', import.meta.url), 'utf8');
   const scenarios = JSON.parse(raw);
