@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f26d7761adab12b91d3c435e06ead374b370bd8f",
-  "last_successful_run": "2026-08-23T16:40:02.461Z",
-  "last_city_turn": null,
+  "last_processed_commit": "e3b5561fe96b2d7b04add8818e7d15be76e3e3b9",
+  "last_successful_run": "2026-08-23T19:24:18.343Z",
+  "last_city_turn": "2026-08-23",
   "arc_cooldowns": {},
   "runs": [
     {
@@ -36,6 +36,19 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no session evidence provided; no changes made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260823192418",
+      "phase": "city-turn",
+      "completed_at": "2026-08-23T19:24:18.343Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-012"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advances the escalating Overwrite arc: the ley line under Monroe Park runs off-tempo a fourth time, and a minor public event reflects the city's continued self-rewriting.",
       "dry_run": false
     }
   ],

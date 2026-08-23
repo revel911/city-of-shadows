@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-21",
+  "as_of": "2026-08-23",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -2049,7 +2049,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "escalating",
         "subtype": "city",
-        "escalation": 3,
+        "escalation": 4,
         "details": "A city-wide supernatural phenomenon rewriting physical and historical reality across all of Richmond's hubs. Shockoe Bottom: buildings appear/disappear, street signs shift. Downtown: legal records rewrite themselves. Creighton Court: temporal displacement, different eras coexist. The University: impossible research results, contradictory academic records. Oregon Hill: industrial echoes, phantom work shifts."
       },
       "position": {

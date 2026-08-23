@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-23] The Ley Line Runs Off-Tempo Again
+
+**Hubs:** The University | **Circles:** Power
+
+The ley line under Monroe Park ran measurably off-tempo for the fourth time in seven weeks. The previous three instances were logged and filed by junior Consilium members who were subsequently not invited to Dr. Sebastian Olave's closed faculty meetings in Harris Hall. This time, the anomaly was picked up by a different set of instruments—ones that are not part of the official Consilium monitoring network. Whoever set them up has not come forward. The park itself shows no visible change: the grass is still green, the benches are still in place, and the students crossing it on their way to class notice nothing. But the people who track such things have begun to wonder whether the Overwrite is not just rewriting the city's history—but its physics.
+
 ## [2026-04-24] Something Moved in Shockoe Bottom
 
 **Hubs:** Shockoe Bottom / The Fan / The University | **Circles:** Night · Wild · Power
