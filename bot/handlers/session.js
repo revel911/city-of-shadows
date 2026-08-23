@@ -24,8 +24,11 @@ import {
 
 const sessions = new Map();
 const GENERATION_RETRIES = 2;
-const OPENING_MAX_CHARS = 1800;
-const OPENING_MAX_TOKENS = 550;
+const OPENING_MAX_CHARS = 1400;
+const OPENING_MAX_TOKENS = 450;
+const TURN_MAX_CHARS = 1400;
+const SHORT_TURN_MAX_CHARS = 900;
+const SHORT_PLAYER_INPUT_CHARS = 120;
 
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
@@ -84,45 +87,66 @@ export async function startSession(thread, player) {
   });
 }
 
-export function responseSafetyProblems(response, { opening = false } = {}) {
+export function playerFacingTurnLimit(playerContent) {
+  return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS
+    ? SHORT_TURN_MAX_CHARS
+    : TURN_MAX_CHARS;
+}
+
+function visibleResponseText(response) {
+  let visible = typeof response === 'string' ? response : '';
+  visible = stripRollRequest(visible);
+  visible = stripCheckpointBlock(visible);
+  visible = stripSavePlayerBlock(visible);
+  visible = stripSaveOnboardingBlock(visible);
+  visible = stripCloseBlock(visible);
+  return sanitizePlayerFacingText(visible).cleaned.trim();
+}
+
+export function responseSafetyProblems(response, { opening = false, maxVisibleChars } = {}) {
   const text = typeof response === 'string' ? response.trim() : '';
   const problems = [];
   if (!text) problems.push('empty response');
   if (/<\/?think(?:ing)?>/i.test(text)) problems.push('internal thinking tag');
   if (/THOUGHTS APPLIED|OPENING ANGLES TO NOTE/i.test(text)) problems.push('internal planning marker');
-  if (opening && text.length > OPENING_MAX_CHARS) {
-    problems.push(`opening exceeds ${OPENING_MAX_CHARS} characters`);
+  const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
+  const visibleLength = visibleResponseText(text).length;
+  if (visibleLength > visibleLimit) {
+    problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
   }
   return problems;
 }
 
-async function generateSafeResponse(session, { opening = false } = {}) {
+async function generateSafeResponse(session, { opening = false, maxVisibleChars } = {}) {
   let response = await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
     : {});
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
-    const problems = responseSafetyProblems(response, { opening });
+    const problems = responseSafetyProblems(response, { opening, maxVisibleChars });
     if (!problems.length) return response;
     console.warn(`[generation-safety] rejected response: ${problems.join('; ')}`);
     if (attempt === GENERATION_RETRIES) {
       throw new Error(`unsafe response after ${GENERATION_RETRIES + 1} attempts: ${problems.join('; ')}`);
     }
-    session.messages.push({ role: 'assistant', content: response });
+    const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
+    session.messages.push({ role: 'assistant', content: '[Rejected draft omitted.]' });
     session.messages.push({
       role: 'user',
       content: [
         '[SYSTEM — RESPONSE CORRECTION]',
         `The previous response was rejected: ${problems.join('; ')}.`,
+        `Re-emit only the player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters.`,
         opening
-          ? 'Re-emit only the player-facing opening scene: 2–5 clear, concrete paragraphs, at most 1800 characters. Establish the location, immediate pressure, and one actionable hook, then end with a direct question. No fragmented or stream-of-consciousness prose.'
-          : 'Re-emit only the player-facing response.',
+          ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question.'
+          : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.',
+        'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
         'Never output analysis, planning, chain-of-thought, <think>, or <thinking> tags.',
       ].join('\n'),
     });
     try {
       response = await generate(session, opening
         ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.5 }
-        : {});
+        : { temperature: 0.5 });
     } finally {
       session.messages.splice(-2, 2);
     }
@@ -167,7 +191,9 @@ export async function handleMessage(message) {
         : userContent,
     });
     await message.channel.sendTyping();
-    const response = await generateSafeResponse(session);
+    const response = await generateSafeResponse(session, {
+      maxVisibleChars: playerFacingTurnLimit(message.content),
+    });
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });

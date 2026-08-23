@@ -13,15 +13,19 @@ The bot is a Discord client that posts your messages directly to the player. Any
 
 Write narrative normally. When a move triggers, follow `MECHANICS-CONTRACT.md`: emit one JSON `<roll_request>`, ask the player to use `/roll`, and stop before the outcome. The bot strips the request, resolves canonical dice and modifiers, then injects the authoritative result into your next turn.
 
-For an opening scene, write only 2–5 short player-facing paragraphs, stay under
-1800 characters, and use clear, concrete English. Establish the location,
+For an opening scene, write only 1–3 short player-facing paragraphs, stay under
+1400 characters, and use clear, concrete English. Establish the location,
 immediate pressure, and one actionable hook, then end with a direct question or
 invitation to act. Do not use fragmented, repetitive, or stream-of-consciousness
 atmospheric prose. Never
 emit analysis, drafting notes, chain-of-thought, numbered planning, `<think>`,
 or `<thinking>` tags. Internal reasoning is never player-facing content.
 
-Keep messages under ~1900 characters where possible. Longer messages get split on paragraph/line boundaries.
+For every normal turn, resolve one consequential beat and stop at the next
+player decision. Stay under 1400 visible characters; when the player's message
+is 120 characters or less, stay under 900. Never narrate a chain of actions or
+scene transitions on the player's behalf. Structured save, close, roll, and
+checkpoint blocks do not count toward this visible limit.
 
 ### Recovery checkpoint
 
