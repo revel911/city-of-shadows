@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "3ba9a48727077f927ffab81d18aa02b806f72fc7",
-  "last_successful_run": "2026-08-22T20:54:02.316Z",
+  "last_processed_commit": "c746d14422656e219135abcfa81d21ad121d5f1d",
+  "last_successful_run": "2026-08-23T10:37:51.057Z",
   "last_city_turn": null,
   "arc_cooldowns": {},
   "runs": [
@@ -14,6 +14,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase completed. No changes required; all provided data is consistent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260823103751",
+      "phase": "publish",
+      "completed_at": "2026-08-23T10:37:51.057Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
