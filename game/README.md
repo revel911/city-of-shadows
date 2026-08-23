@@ -6,6 +6,7 @@ Machine-readable shared-world state lives here. See
 | File | Purpose |
 |---|---|
 | `npcs.json` | Canonical NPC identity, voice, status, and location ties |
+| `npc-character-memory.json` | Character-specific NPC trust, fear, respect, promises, grievances, boundaries, beliefs, and callbacks |
 | `locations.json` | Canonical named places grouped by hub |
 | `relationships.manual.json` | Human-curated public relationship truth |
 | `relationships.derived.json` | Public relationships discovered in play |

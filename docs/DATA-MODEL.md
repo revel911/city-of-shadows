@@ -18,6 +18,8 @@ and relationships; Markdown carries prose, rules, and narrative handoffs.
 There must be one authoritative definition for each fact. In particular:
 
 - NPC identity, status, personality, and voice live in `game/npcs.json`.
+- How one NPC specifically remembers and treats one player character lives in
+  `game/npc-character-memory.json`; it never replaces the universal NPC record.
 - Named places live in `game/locations.json`.
 - Neighborhood lore lives in `hubs/*.md`; the indexed hub identity lives in
   `hubs/index.json`.
@@ -41,6 +43,7 @@ Reference documents may describe schemas, but must not duplicate named NPC facts
 | Arc | `arc-NNN` | `arc-012` |
 | Debt | `debt_<slug>` | `debt_jacob_priest` |
 | Mystery | `mystery_<slug>` | `mystery_missing_courier` |
+| NPC–character memory | `memory_<npc-slug>__<character-slug>` | `memory_celestine_morrow__jacob_boone` |
 | Player character | kebab-case | `jacob-boone` |
 
 IDs are permanent. Rename display names without changing IDs. A close-block patch
@@ -51,6 +54,7 @@ must reuse the canonical ID shown in the opening world index.
 | Path | Owner | Update mode |
 |---|---|---|
 | `game/npcs.json` | Bot/MC | Partial records merged by canonical ID; exact-name fallback prevents duplicates |
+| `game/npc-character-memory.json` | Bot/MC; Keeper reconcile-only | One revisioned relationship-memory record per NPC/character pair |
 | `game/locations.json` | Bot/MC | Partial records merged by canonical ID |
 | `game/relationships.manual.json` | Human operator | Hand-curated; never changed by the MC |
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |
@@ -78,6 +82,8 @@ must reuse the canonical ID shown in the opening world index.
 - Every `hub_id` must exist in `hubs/index.json`.
 - Every location belongs to exactly one hub.
 - NPC location IDs must exist in `game/locations.json`.
+- Every NPC–character memory must resolve both its `npc_id` and `character_id`,
+  and its deterministic ID must match that exact pair.
 - Arc NPC, hub, and character IDs must resolve.
 - Mystery arc, NPC, hub, character, revelation, clue, and clue-source IDs must resolve.
 - Every required mystery revelation must have at least three linked clues.
@@ -94,12 +100,19 @@ An NPC can distinguish:
 ## Patch rules
 
 `npc_patch`, `location_patch`, `relationship_patch`, `debt_patch`, `arc_patch`,
-`mystery_patch`, and `hub_patch` are arrays of partial records. Existing entities should use
+`mystery_patch`, `npc_memory_patch`, and `hub_patch` are arrays of partial records. Existing entities should use
 `expected_revision` plus a nested `changes` object. Matching changes increment
 the entity revision. A stale scalar change becomes a continuity conflict instead
 of silently overwriting newer play; additive ID collections merge as sets.
 Concurrent clue discoveries merge monotonically by clue ID (including each
 discovering character); contradictory clue states remain reviewable conflicts.
+NPC-memory promises, grievances, boundaries, beliefs, and key moments also merge
+additively. Conflicting stale changes to disposition, trust, fear, respect, or
+relationship state become reviewable conflicts rather than overwrites.
+
+NPC-memory scores are deliberately small and bounded: disposition is -5 through
++5, while trust, fear, and respect are 0 through 5. Formal Debts remain exclusively
+in `game/debts.json`. Historical romance never constitutes current consent.
 
 `interaction_ops` is an operation list (`add`, `update`, or `consume`) and never
 replaces the full queue. Every close declares `world_impact` as `none`, `personal`,

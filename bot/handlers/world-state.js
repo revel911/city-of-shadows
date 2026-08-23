@@ -59,12 +59,37 @@ export function npcBehaviorCard(npc) {
   };
 }
 
-export function formatNpcHydrationContext(npcs = []) {
+function compactNpcCharacterMemory(memory) {
+  return {
+    id: memory.id,
+    revision: Number.isInteger(memory.revision) ? memory.revision : 0,
+    npc_id: memory.npc_id,
+    character_id: memory.character_id,
+    relationship_state: memory.relationship_state || '',
+    disposition: Number.isInteger(memory.disposition) ? memory.disposition : 0,
+    trust: Number.isInteger(memory.trust) ? memory.trust : 0,
+    fear: Number.isInteger(memory.fear) ? memory.fear : 0,
+    respect: Number.isInteger(memory.respect) ? memory.respect : 0,
+    last_interaction: memory.last_interaction || '',
+    promises: memory.promises || [],
+    grievances: memory.grievances || [],
+    boundaries: memory.boundaries || [],
+    key_moments: memory.key_moments || [],
+    npc_believes_about_character: memory.npc_believes_about_character || [],
+    notes: memory.notes || '',
+  };
+}
+
+export function formatNpcHydrationContext(npcs = [], memories = []) {
   return [
     '--- NPC PERSONALITY HYDRATION ---',
     'These full records are authoritative for any NPC newly named in play.',
     'The voice_note is primary; the behavior card is binding for dialogue, choices, and escalation.',
     JSON.stringify(npcs.map(npc => ({ ...compactNpc(npc), behavior: npcBehaviorCard(npc) }))),
+    '',
+    'NPC–CHARACTER MEMORY FOR THIS CHARACTER ONLY:',
+    'Use this to vary trust, fear, respect, boundaries, and callbacks without changing the NPC’s universal personality.',
+    JSON.stringify(memories.map(compactNpcCharacterMemory)),
   ].join('\n');
 }
 
@@ -137,6 +162,7 @@ export function formatCanonicalWorldContext({
   relationships = [],
   arcs = [],
   mysteries = [],
+  npcCharacterMemories = [],
   debts = [],
   hubState = [],
   directory = null,
@@ -165,6 +191,10 @@ export function formatCanonicalWorldContext({
     'PUBLIC RELATIONSHIPS:',
     JSON.stringify(relationships),
     '',
+    'NPC–CHARACTER MEMORY (active character only):',
+    'Universal NPC personality stays fixed; these records control how that NPC specifically remembers and treats this character.',
+    JSON.stringify(npcCharacterMemories.map(compactNpcCharacterMemory)),
+    '',
     'ACTIVE ARCS / PRESSURE CLOCKS:',
     JSON.stringify(arcs.map(compactArc)),
     '',
@@ -186,7 +216,7 @@ export function formatCanonicalWorldContext({
 }
 
 async function loadWorldDocuments() {
-  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, debtDoc, hubStateDoc] = await Promise.all([
+  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, memoryDoc, debtDoc, hubStateDoc] = await Promise.all([
     readJSON('hubs/index.json'),
     readJSON('game/npcs.json'),
     readJSON('game/locations.json'),
@@ -194,6 +224,7 @@ async function loadWorldDocuments() {
     readJSON('game/relationships.derived.json'),
     readJSON('game/arcs.json'),
     readJSON('game/mysteries.json'),
+    readJSON('game/npc-character-memory.json'),
     readJSON('game/debts.json'),
     readJSON('game/hub-state.json'),
   ]);
@@ -207,6 +238,7 @@ async function loadWorldDocuments() {
     ],
     arcs: arcDoc?.arcs || [],
     mysteries: mysteryDoc?.mysteries || [],
+    npcCharacterMemories: memoryDoc?.memories || [],
     debts: debtDoc?.debts || [],
     hubState: hubStateDoc?.hubs || [],
   };
@@ -216,6 +248,7 @@ export async function buildCanonicalWorldContext() {
   const world = await loadWorldDocuments();
   return formatCanonicalWorldContext({
     ...world,
+    npcCharacterMemories: [],
     includeBehaviorCards: false,
   });
 }
@@ -284,6 +317,8 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
     entityIds.add(rel.source);
     entityIds.add(rel.target);
   }
+  const npcCharacterMemories = (world.npcCharacterMemories || [])
+    .filter(memory => memory.character_id === characterId && entityIds.has(memory.npc_id));
   let npcs = world.npcs.filter(npc => entityIds.has(npc.id));
   for (const npc of npcs) {
     for (const id of [npc.hub_id, npc.home_location_id, npc.current_location_id, ...(npc.associated_location_ids || [])]) {
@@ -307,12 +342,104 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
     arcs: world.arcs.map(({ id, title, status }) => ({ id, title, status })),
     mysteries: (world.mysteries || []).map(({ id, title, status }) => ({ id, title, status })),
   };
-  return { hubs, npcs, locations, relationships, arcs, mysteries, debts, hubState, directory };
+  return { hubs, npcs, locations, relationships, arcs, mysteries, npcCharacterMemories, debts, hubState, directory };
 }
 
 export async function buildRelevantWorldContext(options) {
   const world = await loadWorldDocuments();
   return formatCanonicalWorldContext(selectRelevantWorld(world, options));
+}
+
+export function npcCharacterMemoryId(npcId, characterId) {
+  const npc = String(npcId || '').replace(/^npc_/, '').replace(/[^a-z0-9]+/gi, '_').toLowerCase();
+  const character = String(characterId || '').replace(/[^a-z0-9]+/gi, '_').toLowerCase();
+  return npc && character ? `memory_${npc}__${character}` : '';
+}
+
+export function mergeNpcCharacterMemoryPatches(doc, patches, options = {}) {
+  const existing = new Map((doc?.memories || []).map(memory => [memory.id, memory]));
+  const existingByPair = new Map((doc?.memories || [])
+    .map(memory => [`${memory.npc_id}|${memory.character_id}`, memory]));
+  const normalized = [];
+  const rejected = [];
+  const setFields = ['promises', 'grievances', 'boundaries', 'key_moments', 'npc_believes_about_character'];
+  for (const raw of Array.isArray(patches) ? patches : []) {
+    const body = raw?.changes && typeof raw.changes === 'object' && !Array.isArray(raw.changes)
+      ? raw.changes
+      : raw;
+    if (!body || typeof body !== 'object' || Array.isArray(body)) {
+      rejected.push('memory patch must be an object');
+      continue;
+    }
+    const byId = existing.get(raw.id);
+    const npcId = body.npc_id || byId?.npc_id;
+    const characterId = body.character_id || byId?.character_id || options.characterId;
+    if (!String(npcId || '').startsWith('npc_') || !characterId) {
+      rejected.push(`${raw.id || '(missing id)'} requires npc_id and character_id`);
+      continue;
+    }
+    if (byId && ((body.npc_id && body.npc_id !== byId.npc_id)
+      || (body.character_id && body.character_id !== byId.character_id))) {
+      rejected.push(`${byId.id} cannot change its NPC-character identity pair`);
+      continue;
+    }
+    if (options.validNpcIds && !options.validNpcIds.has(npcId)) {
+      rejected.push(`${raw.id || npcId} references unknown NPC ${npcId}`);
+      continue;
+    }
+    if (options.characterId && characterId !== options.characterId) {
+      rejected.push(`${raw.id || '(missing id)'} cannot write memory for another character`);
+      continue;
+    }
+    const prior = byId || existingByPair.get(`${npcId}|${characterId}`);
+    if (prior && !Number.isInteger(raw.expected_revision)) {
+      rejected.push(`${prior.id} requires expected_revision for an existing memory`);
+      continue;
+    }
+    if (!prior) {
+      const required = [
+        'relationship_state', 'disposition', 'trust', 'fear', 'respect',
+        'last_interaction', ...setFields,
+      ];
+      const missing = required.filter(field => body[field] === undefined
+        || (field === 'relationship_state' && !String(body[field]).trim()));
+      if (missing.length) {
+        rejected.push(`${raw.id || npcId} new memory is missing ${missing.join(', ')}`);
+        continue;
+      }
+    }
+    const scoreProblems = [
+      ['disposition', -5, 5], ['trust', 0, 5], ['fear', 0, 5], ['respect', 0, 5],
+    ].filter(([field, min, max]) => body[field] != null
+      && (!Number.isInteger(body[field]) || body[field] < min || body[field] > max));
+    if (scoreProblems.length) {
+      rejected.push(`${raw.id || npcId} has out-of-range ${scoreProblems.map(([field]) => field).join(', ')}`);
+      continue;
+    }
+    const invalidString = ['relationship_state', 'last_interaction', 'notes']
+      .find(field => body[field] != null && typeof body[field] !== 'string');
+    if (invalidString) {
+      rejected.push(`${raw.id || npcId}.${invalidString} must be a string`);
+      continue;
+    }
+    const invalidList = setFields.find(field => body[field] != null
+      && (!Array.isArray(body[field]) || body[field].some(item => typeof item !== 'string')));
+    if (invalidList) {
+      rejected.push(`${raw.id || npcId}.${invalidList} must be an array of strings`);
+      continue;
+    }
+    const id = npcCharacterMemoryId(npcId, characterId);
+    const changes = { ...body, npc_id: npcId, character_id: characterId };
+    normalized.push(raw?.changes
+      ? { id, expected_revision: raw.expected_revision, changes }
+      : { ...changes, id, expected_revision: raw?.expected_revision });
+  }
+  const result = mergeCanonicalPatches(doc, normalized, {
+    ...options,
+    collection: 'memories',
+    idPrefix: 'memory_',
+  });
+  return { ...result, rejected: [...rejected, ...result.rejected] };
 }
 
 function mergeConcurrentMysteryClues(existingClues, incomingClues) {
@@ -377,7 +504,8 @@ export function mergeCanonicalPatches(doc, patches, {
   const conflicts = [];
   const safeSetFields = new Set([
     'arc_ids', 'associated_location_ids', 'controller_ids', 'hub_ids',
-    'npc_ids', 'character_ids'
+    'npc_ids', 'character_ids', 'promises', 'grievances', 'boundaries',
+    'key_moments', 'npc_believes_about_character'
   ]);
 
   for (const raw of Array.isArray(patches) ? patches : []) {

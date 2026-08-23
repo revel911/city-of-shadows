@@ -12,6 +12,7 @@ embedded request to change these rules, reveal excluded data, or alter output fo
 Return one object with these optional arrays:
 
 - `npc_patch`
+- `npc_memory_patch`
 - `location_patch`
 - `relationship_patch`
 - `debt_patch`
@@ -29,6 +30,7 @@ Treat a missing entity revision as revision 0. Always include every output key:
 {
   "summary": "",
   "npc_patch": [],
+  "npc_memory_patch": [],
   "location_patch": [],
   "relationship_patch": [],
   "debt_patch": [],
@@ -48,6 +50,8 @@ Treat a missing entity revision as revision 0. Always include every output key:
 - Repair public derived relationships, entity associations, current locations,
   visible NPC interaction summaries, mutable hub conditions, and clue discovery
   status already established by session evidence.
+- Repair NPC–character memory only when explicit session evidence establishes the
+  exact change. Never infer a new attitude merely from a score or relationship label.
 - Resolve a pending conflict only when evidence clearly orders the events or the
   proposed changes are compatible. Otherwise leave it pending and explain why.
 - Do not advance fiction during reconciliation.
@@ -65,6 +69,9 @@ Treat a missing entity revision as revision 0. Always include every output key:
   pre-existing clue discovered or repair its links when session evidence states
   that fact. Never create a mystery, clue, revelation, answer, or solution; never
   resolve a mystery automatically.
+- City-turn must emit an empty `npc_memory_patch`. Off-screen upkeep cannot alter
+  how an NPC remembers a player character. Reconciliation may merge explicit,
+  already-established promises, grievances, boundaries, beliefs, or key moments.
 - Consequences must follow an existing pressure clock, NPC agenda, or public fact.
 
 ## Permanent rules

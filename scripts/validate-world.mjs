@@ -1,11 +1,13 @@
 import { readJSON } from './world-utils.mjs';
+import { npcCharacterMemoryId } from '../bot/handlers/world-state.js';
 
-const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
+const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, memoryDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
   readJSON('game/arcs.json'),
   readJSON('game/mysteries.json'),
+  readJSON('game/npc-character-memory.json'),
   readJSON('players/index.json'),
   readJSON('game/relationships.manual.json'),
   readJSON('game/relationships.derived.json'),
@@ -30,6 +32,7 @@ const ids = {
 const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.mystery, ...ids.pc]);
 const conflictEntityIds = new Set([
   ...entityIds,
+  ...(memoryDoc.memories || []).map(item => item.id),
   ...(manualDoc.relationships || []).map(item => item.id),
   ...(derivedDoc.relationships || []).map(item => item.id),
   ...(debtDoc.debts || []).map(item => item.id),
@@ -69,6 +72,7 @@ duplicateValues(npcDoc.npcs || [], 'id', 'NPC');
 duplicateValues(locationDoc.locations || [], 'id', 'location');
 duplicateValues(arcDoc.arcs || [], 'id', 'arc');
 duplicateValues(mysteryDoc.mysteries || [], 'id', 'mystery');
+duplicateValues(memoryDoc.memories || [], 'id', 'NPC-character memory');
 duplicateValues(players, 'id', 'PC');
 
 for (const npc of npcDoc.npcs || []) {
@@ -133,6 +137,27 @@ for (const mystery of mysteryDoc.mysteries || []) {
   }
 }
 
+if (!Array.isArray(memoryDoc.memories)) errors.push('game/npc-character-memory.json memories must be an array');
+const memoryPairs = new Set();
+for (const memory of memoryDoc.memories || []) {
+  if (!ids.npc.has(memory.npc_id)) errors.push(`${memory.id} references missing NPC ${memory.npc_id}`);
+  if (!ids.pc.has(memory.character_id)) errors.push(`${memory.id} references missing PC ${memory.character_id}`);
+  const expectedId = npcCharacterMemoryId(memory.npc_id, memory.character_id);
+  if (memory.id !== expectedId) errors.push(`${memory.id} must use deterministic pair ID ${expectedId}`);
+  const pair = `${memory.npc_id}|${memory.character_id}`;
+  if (memoryPairs.has(pair)) errors.push(`duplicate NPC-character memory pair ${pair}`);
+  memoryPairs.add(pair);
+  if (!Number.isInteger(memory.revision) || memory.revision < 0) errors.push(`${memory.id}.revision must be a non-negative integer`);
+  for (const [field, min, max] of [['disposition', -5, 5], ['trust', 0, 5], ['fear', 0, 5], ['respect', 0, 5]]) {
+    if (!Number.isInteger(memory[field]) || memory[field] < min || memory[field] > max) errors.push(`${memory.id}.${field} must be ${min}-${max}`);
+  }
+  for (const field of ['promises', 'grievances', 'boundaries', 'key_moments', 'npc_believes_about_character']) {
+    if (!Array.isArray(memory[field]) || memory[field].some(item => typeof item !== 'string')) errors.push(`${memory.id}.${field} must be an array of strings`);
+  }
+  if (typeof memory.relationship_state !== 'string' || !memory.relationship_state.trim()) errors.push(`${memory.id}.relationship_state is required`);
+  if (typeof memory.last_interaction !== 'string') errors.push(`${memory.id}.last_interaction must be a string`);
+}
+
 const relationships = [...(manualDoc.relationships || []), ...(derivedDoc.relationships || [])];
 duplicateValues(relationships, 'id', 'relationship');
 for (const rel of relationships) {
@@ -168,5 +193,5 @@ if (errors.length) {
   for (const error of errors) console.error(`ERROR: ${error}`);
   process.exitCode = 1;
 } else {
-  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships, ${debts.length} Debts, ${ids.mystery.size} mysteries.`);
+  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships, ${debts.length} Debts, ${ids.mystery.size} mysteries, ${memoryPairs.size} NPC-character memories.`);
 }

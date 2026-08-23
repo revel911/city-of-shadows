@@ -5,7 +5,10 @@ import {
   formatCanonicalWorldContext,
   formatNpcHydrationContext,
   mergeCanonicalPatches,
+  mergeNpcCharacterMemoryPatches,
+  npcCharacterMemoryId,
   npcBehaviorCard,
+  selectRelevantWorld,
 } from '../handlers/world-state.js';
 
 test('canonical world context includes IDs and NPC voice guidance', () => {
@@ -82,12 +85,17 @@ test('NPC hydration carries the complete authoritative record and binding behavi
       violence: 2,
       voice_note: 'Answers questions with prices.',
     },
+  }], [{
+    id: 'memory_dara__jacob', npc_id: 'npc_dara', character_id: 'jacob',
+    relationship_state: 'Wary ally', trust: 2, fear: 1, respect: 3,
   }]);
 
   assert.match(result, /NPC PERSONALITY HYDRATION/);
   assert.match(result, /Answers questions with prices/);
   assert.match(result, /Short transactional sentences/);
   assert.match(result, /follows through quickly/);
+  assert.match(result, /NPC–CHARACTER MEMORY FOR THIS CHARACTER ONLY/);
+  assert.match(result, /Wary ally/);
 });
 
 test('canonical patch merge resolves duplicate NPC names to the existing ID', () => {
@@ -157,4 +165,90 @@ test('contradictory concurrent mystery clue edits remain reviewable conflicts', 
   );
   assert.equal(result.doc.mysteries[0].clues[0].status, 'lost');
   assert.deepEqual(result.conflicts[0].fields, ['clues']);
+});
+
+function completeMemory(overrides = {}) {
+  return {
+    npc_id: 'npc_dara',
+    character_id: 'jacob-boone',
+    relationship_state: 'Wary ally',
+    disposition: 1,
+    trust: 2,
+    fear: 1,
+    respect: 3,
+    last_interaction: 'Jacob kept Dara alive during the raid.',
+    promises: ['Dara will call when the buyer surfaces.'],
+    grievances: [],
+    boundaries: ['No police involvement.'],
+    key_moments: ['Jacob returned Dara’s weapon.'],
+    npc_believes_about_character: ['Jacob protects people under his command.'],
+    ...overrides,
+  };
+}
+
+test('NPC-character memory uses one deterministic ID per pair', () => {
+  assert.equal(npcCharacterMemoryId('npc_dara', 'jacob-boone'), 'memory_dara__jacob_boone');
+  const result = mergeNpcCharacterMemoryPatches(
+    { memories: [] },
+    [completeMemory()],
+    { characterId: 'jacob-boone', sessionId: 'session_1', stamp: '2026-08-23' },
+  );
+  assert.equal(result.rejected.length, 0);
+  assert.equal(result.doc.memories[0].id, 'memory_dara__jacob_boone');
+});
+
+test('NPC-character memory rejects incomplete records and cross-character writes', () => {
+  const incomplete = mergeNpcCharacterMemoryPatches(
+    { memories: [] },
+    [{ npc_id: 'npc_dara', character_id: 'jacob-boone', trust: 2 }],
+    { characterId: 'jacob-boone' },
+  );
+  const wrongCharacter = mergeNpcCharacterMemoryPatches(
+    { memories: [] },
+    [completeMemory({ character_id: 'alice' })],
+    { characterId: 'jacob-boone' },
+  );
+  assert.match(incomplete.rejected[0], /new memory is missing/);
+  assert.match(wrongCharacter.rejected[0], /cannot write memory for another character/);
+});
+
+test('NPC-character memory rejects unknown NPCs and identity-pair rewrites', () => {
+  const unknown = mergeNpcCharacterMemoryPatches(
+    { memories: [] }, [completeMemory({ npc_id: 'npc_unknown' })],
+    { characterId: 'jacob-boone', validNpcIds: new Set(['npc_dara']) },
+  );
+  const rewrite = mergeNpcCharacterMemoryPatches(
+    { memories: [{ id: 'memory_dara__jacob_boone', revision: 1, ...completeMemory() }] },
+    [{ id: 'memory_dara__jacob_boone', expected_revision: 1, changes: { npc_id: 'npc_other' } }],
+    { characterId: 'jacob-boone' },
+  );
+  assert.match(unknown.rejected[0], /references unknown NPC/);
+  assert.match(rewrite.rejected[0], /cannot change its NPC-character identity pair/);
+});
+
+test('stale NPC memory merges additive history but conflicts on changed attitudes', () => {
+  const current = { memories: [{
+    id: 'memory_dara__jacob_boone', revision: 2, ...completeMemory(),
+  }] };
+  const result = mergeNpcCharacterMemoryPatches(current, [{
+    id: 'memory_dara__jacob_boone', expected_revision: 1,
+    changes: { trust: 4, promises: ['Dara will hide Jacob’s car.'] },
+  }], { characterId: 'jacob-boone', sessionId: 'session_2', stamp: '2026-08-23' });
+  assert.equal(result.doc.memories[0].trust, 2);
+  assert.deepEqual(result.doc.memories[0].promises, [
+    'Dara will call when the buyer surfaces.', 'Dara will hide Jacob’s car.',
+  ]);
+  assert.deepEqual(result.conflicts[0].fields, ['trust']);
+});
+
+test('relevance routing keeps only this character’s memory for an already relevant NPC', () => {
+  const selected = selectRelevantWorld({
+    hubs: [], npcs: [{ id: 'npc_dara', name: 'Dara' }], locations: [],
+    relationships: [], arcs: [], mysteries: [], debts: [], hubState: [],
+    npcCharacterMemories: [
+      { id: 'memory_dara__jacob', npc_id: 'npc_dara', character_id: 'jacob' },
+      { id: 'memory_dara__alice', npc_id: 'npc_dara', character_id: 'alice' },
+    ],
+  }, { characterId: 'jacob', handoff: 'Last seen with npc_dara.' });
+  assert.deepEqual(selected.npcCharacterMemories.map(item => item.id), ['memory_dara__jacob']);
 });

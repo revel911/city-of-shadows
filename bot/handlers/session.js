@@ -14,6 +14,7 @@ import {
   findMentionedNpcs,
   formatNpcHydrationContext,
   mergeCanonicalPatches,
+  mergeNpcCharacterMemoryPatches,
 } from './world-state.js';
 import {
   auditSession,
@@ -72,6 +73,7 @@ export async function startSession(thread, player) {
     worldRevision: Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0,
     hydratedNpcIds: new Set(),
     npcCatalog: null,
+    npcMemoryCatalog: null,
     playstyleBaseline: initialPlaystyleSignals,
     playstyleSignals: initialPlaystyleSignals,
   };
@@ -220,10 +222,17 @@ async function buildNpcMentionHydration(session, text) {
     const npcDoc = await readJSON('game/npcs.json');
     session.npcCatalog = npcDoc?.npcs || [];
   }
+  if (!session.npcMemoryCatalog) {
+    const memoryDoc = await readJSON('game/npc-character-memory.json');
+    session.npcMemoryCatalog = (memoryDoc?.memories || [])
+      .filter(memory => memory.character_id === session.player.id);
+  }
   if (!(session.hydratedNpcIds instanceof Set)) session.hydratedNpcIds = new Set();
   const mentioned = findMentionedNpcs(text, session.npcCatalog, session.hydratedNpcIds);
   for (const npc of mentioned) session.hydratedNpcIds.add(npc.id);
-  return mentioned.length ? formatNpcHydrationContext(mentioned) : '';
+  const memories = session.npcMemoryCatalog
+    .filter(memory => mentioned.some(npc => npc.id === memory.npc_id));
+  return mentioned.length ? formatNpcHydrationContext(mentioned, memories) : '';
 }
 
 async function refreshSessionWorld(session) {
@@ -253,6 +262,7 @@ async function refreshSessionWorld(session) {
   });
   session.worldRevision = nextRevision;
   session.npcCatalog = null;
+  session.npcMemoryCatalog = null;
 }
 
 export async function resolveSessionRoll(interaction) {
@@ -577,7 +587,7 @@ function buildImpactRetryPrompt(problems) {
     `[SYSTEM] Your trailing <close_session> block has world-impact problems: ${problems.join('; ')}.`,
     'Re-emit the closing narrative and complete trailing <close_session> block now.',
     'Include <world_impact> containing JSON with level (none, personal, or shared), summary, affected_ids, and optional fiction_time.',
-    'If level is shared, include at least one matching events_append, npc_patch, location_patch, relationship_patch, debt_patch, arc_patch, mystery_patch, hub_patch, or interaction_ops field.',
+    'If level is shared, include at least one matching events_append, npc_patch, npc_memory_patch, location_patch, relationship_patch, debt_patch, arc_patch, mystery_patch, hub_patch, or interaction_ops field.',
     'Do not continue the scene.',
   ].join('\n');
 }
@@ -672,6 +682,7 @@ function parseCloseBlock(text) {
     hub_patch:     grabTag(body, 'hub_patch'),
     arc_patch:     grabTag(body, 'arc_patch'),
     mystery_patch: grabTag(body, 'mystery_patch'),
+    npc_memory_patch: grabTag(body, 'npc_memory_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
     interaction_ops: grabTag(body, 'interaction_ops'),
     world_impact:  grabTag(body, 'world_impact'),
@@ -752,7 +763,7 @@ export function validateWorldImpact(close) {
     const touches = [
       close.events_append, close.npc_patch, close.location_patch,
       close.relationship_patch, close.debt_patch, close.arc_patch,
-      close.mystery_patch, close.hub_patch, close.interaction_ops, close.interactions_patch,
+      close.mystery_patch, close.npc_memory_patch, close.hub_patch, close.interaction_ops, close.interactions_patch,
     ];
     if (!touches.some(Boolean)) return ['shared impact requires a world patch, interaction operation, or public event'];
   }
@@ -799,6 +810,7 @@ const STRUCTURED_BARE_TAGS = [
   'handoff',
   'arc_patch',
   'mystery_patch',
+  'npc_memory_patch',
   'events_append',
   'interactions_patch',
   'interaction_ops',
@@ -1446,6 +1458,25 @@ async function processSessionClose(thread, session, close) {
     } catch (e) { warnings.push(`mystery_patch: ${e.message}`); }
   }
 
+  if (close.npc_memory_patch) {
+    try {
+      const patches = JSON.parse(close.npc_memory_patch);
+      const npcDocForMemory = await readJSON('game/npcs.json');
+      const validNpcIds = new Set((npcDocForMemory?.npcs || []).map(npc => npc.id));
+      writes.push(['npc-character-memory', updateJSON('game/npc-character-memory.json', (doc) => {
+        const result = mergeNpcCharacterMemoryPatches(doc, patches, {
+          characterId: id,
+          validNpcIds,
+          sessionId: logicalSessionId,
+          stamp,
+        });
+        warnings.push(...result.rejected.map(message => `npc_memory_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
+        return result.doc;
+      }, `[session] NPC-character memory (${stamp})`)]);
+    } catch (e) { warnings.push(`npc_memory_patch: ${e.message}`); }
+  }
+
   if (close.relationship_patch) {
     try {
       const patches = JSON.parse(close.relationship_patch);
@@ -1597,7 +1628,7 @@ async function processSessionClose(thread, session, close) {
 
   const sharedTouchKeys = [
     'events_append', 'npc_patch', 'location_patch', 'relationship_patch',
-    'debt_patch', 'arc_patch', 'mystery_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
+    'debt_patch', 'arc_patch', 'mystery_patch', 'npc_memory_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
   ];
   const hasSharedTouches = worldImpact.level === 'shared' || sharedTouchKeys.some(key => Boolean(close[key]));
   let resultingWorldRevision = session.worldRevision || 0;

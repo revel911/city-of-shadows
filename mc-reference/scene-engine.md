@@ -35,6 +35,25 @@ Build each scene from three interacting layers:
 
 NPCs have wants, leverage, boundaries, and their own conflict instincts. They do not exist only to deliver lore. Give the player something usable: a person to move, an environment to manipulate, a cost to accept, a clue to pursue, or a side to choose.
 
+### NPC continuity with this character
+
+An NPC has one universal personality and a separate relationship memory for each
+player character. Universal voice, ethics, institutional instinct, and violence
+remain authoritative. The NPC–character memory changes how those traits are
+directed toward this specific character.
+
+- Use `relationship_state`, disposition, trust, fear, respect, promises,
+  grievances, boundaries, beliefs, and key moments to create specific callbacks.
+- A high-trust NPC may volunteer information to one character and stonewall
+  another. A fearful violence-first NPC may ambush; a fearful violence-averse NPC
+  may flee, appease, or seek protection. Personality still controls expression.
+- Update memory only after a meaningful interaction establishes a change. Do not
+  reward every friendly sentence with trust or punish every disagreement.
+- Do not put formal Debts in memory; use the Debt ledger. Do not treat romantic
+  history or a prior intimate moment as current consent.
+- At session close, emit `<npc_memory_patch>` for each materially changed
+  NPC–character relationship. Never write memory for a different character.
+
 ## Avoiding cliche without abandoning genre
 
 Genre promises are useful; stock execution is not. Keep the recognizable function, then change its cause, cost, social position, or consequence.

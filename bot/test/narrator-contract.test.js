@@ -24,6 +24,7 @@ test('output contract includes roll and Debt patches in machine-only blocks', as
   assert.match(output, /<debt_patch>/);
   assert.match(output, /Do not emit bot-owned `last_session`/);
   assert.match(output, /<mystery_patch>/);
+  assert.match(output, /<npc_memory_patch>/);
 });
 
 test('scene engine protects agency while varying action, mystery, urban fantasy, and romance', async () => {
@@ -35,6 +36,8 @@ test('scene engine protects agency while varying action, mystery, urban fantasy,
   assert.match(engine, /recognizable city life/i);
   assert.match(engine, /consent as ongoing and reversible/i);
   assert.match(engine, /do not name or apply a playbook-specific intimacy move/i);
+  assert.match(engine, /one universal personality and a separate relationship memory for each/i);
+  assert.match(engine, /do not put formal Debts in memory/i);
 });
 
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {

@@ -2,7 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { ROOT, readJSON, writeJSON, unique } from './world-utils.mjs';
-import { mergeCanonicalPatches, applyInteractionOperations } from '../bot/handlers/world-state.js';
+import { mergeCanonicalPatches, mergeNpcCharacterMemoryPatches, applyInteractionOperations } from '../bot/handlers/world-state.js';
 import { mergeDebtPatches, reconcileArcs } from '../bot/handlers/mechanics.js';
 import { buildKeeperProjection } from './keeper-projection.mjs';
 
@@ -50,6 +50,7 @@ function keeperLimits(output) {
   return {
     ...output,
     npc_patch: boundedArray(output.npc_patch, city ? 2 : 20),
+    npc_memory_patch: boundedArray(output.npc_memory_patch, city ? 0 : 20),
     location_patch: boundedArray(output.location_patch, city ? 1 : 20),
     relationship_patch: boundedArray(output.relationship_patch, city ? 4 : 30),
     debt_patch: boundedArray(output.debt_patch, city ? 2 : 20),
@@ -77,17 +78,17 @@ async function loadLedger(limit = 20) {
 }
 
 async function loadContext() {
-  const [prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger] = await Promise.all([
+  const [prompt, meta, keeper, hubs, hubState, npcs, memories, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger] = await Promise.all([
     readFile(resolve(ROOT, 'mc-reference/city-keeper.md'), 'utf8'),
     readJSON('game/world-meta.json'), readJSON('game/keeper-state.json'), readJSON('hubs/index.json'),
-    readJSON('game/hub-state.json'), readJSON('game/npcs.json'), readJSON('game/locations.json'),
+    readJSON('game/hub-state.json'), readJSON('game/npcs.json'), readJSON('game/npc-character-memory.json'), readJSON('game/locations.json'),
     readJSON('game/relationships.derived.json'), readJSON('game/arcs.json'), readJSON('game/mysteries.json'), readJSON('game/debts.json'),
     readJSON('game/interactions.json'), readJSON('game/conflicts.json'),
     readFile(resolve(ROOT, 'game/events-log.md'), 'utf8'), loadLedger(),
   ]);
   const cursor = ledger.findIndex(entry => entry.name === keeper?.last_processed_session);
   const evidence = phase === 'reconcile' && cursor >= 0 ? ledger.slice(cursor + 1) : ledger;
-  return { phase, prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger: evidence, latestLedger: ledger.at(-1)?.name || null };
+  return { phase, prompt, meta, keeper, hubs, hubState, npcs, memories, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger: evidence, latestLedger: ledger.at(-1)?.name || null };
 }
 
 function parseModelJSON(text) {
@@ -181,11 +182,15 @@ async function applyOutput(context, rawOutput) {
   const rejected = [];
   const options = { sessionId: runId, stamp };
   const npcResult = mergeCanonicalPatches(context.npcs, output.npc_patch, { ...options, collection: 'npcs', idPrefix: 'npc_', allowNameMatch: true });
+  const memoryResult = mergeNpcCharacterMemoryPatches(context.memories, output.npc_memory_patch, {
+    ...options,
+    validNpcIds: new Set(listFor(context.npcs, 'npcs').map(npc => npc.id)),
+  });
   const locationResult = mergeCanonicalPatches(context.locations, output.location_patch, { ...options, collection: 'locations', idPrefix: 'loc_', allowNameMatch: true });
   const relationshipResult = mergeCanonicalPatches(context.relationships, output.relationship_patch, { ...options, collection: 'relationships', idPrefix: 'rel_', publicOnly: true });
   const mysteryResult = mergeCanonicalPatches(context.mysteries, output.mystery_patch, { ...options, collection: 'mysteries', idPrefix: 'mystery_' });
   const hubResult = mergeCanonicalPatches(context.hubState, output.hub_patch, { ...options, collection: 'hubs', idPrefix: 'hub_' });
-  for (const result of [npcResult, locationResult, relationshipResult, mysteryResult, hubResult]) {
+  for (const result of [npcResult, memoryResult, locationResult, relationshipResult, mysteryResult, hubResult]) {
     conflictItems.push(...result.conflicts);
     rejected.push(...result.rejected);
   }
@@ -199,6 +204,7 @@ async function applyOutput(context, rawOutput) {
   const conflictDoc = applyResolutions(appendConflicts(context.conflicts, conflictItems), output.conflict_resolutions);
   const touched = unique([
     ...changedIds(context.npcs, npcResult.doc, 'npcs'),
+    ...changedIds(context.memories, memoryResult.doc, 'memories'),
     ...changedIds(context.locations, locationResult.doc, 'locations'),
     ...changedIds(context.relationships, relationshipResult.doc, 'relationships'),
     ...changedIds(context.debts, debtResult.doc, 'debts'),
@@ -212,6 +218,7 @@ async function applyOutput(context, rawOutput) {
   if (!dryRun && changed) {
     await Promise.all([
       writeJSON('game/npcs.json', npcResult.doc),
+      writeJSON('game/npc-character-memory.json', memoryResult.doc),
       writeJSON('game/locations.json', locationResult.doc),
       writeJSON('game/relationships.derived.json', relationshipResult.doc),
       writeJSON('game/hub-state.json', hubResult.doc),

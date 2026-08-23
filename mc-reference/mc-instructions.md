@@ -155,6 +155,7 @@ The full schema for the close block lives in `mc-reference/bot-output-format.md`
 <state_patch>{ "harm": 1, "xp": 2, ... }</state_patch>
 <events_append>... markdown appended to events-log.md ...</events_append>
 <npc_patch>[ { "id": "...", ... } ]</npc_patch>
+<npc_memory_patch>[ { "npc_id": "npc_example", "character_id": "kebab-case-id", ... } ]</npc_memory_patch>
 <arc_patch>[ { "id": "arc-003", ... } ]</arc_patch>
 <mystery_patch>[ { "id": "mystery_example", "expected_revision": 1, "changes": { ... } } ]</mystery_patch>
 <interactions_patch>[ ... ]</interactions_patch>
@@ -282,6 +283,7 @@ two_write_rule:
       - npc_patch (if a named NPC was affected)
     new_npc:
       - npc_patch (new entry, full personality scores)
+      - npc_memory_patch (only if the NPC already formed a meaningful impression of this character)
       - location_patch (if a new named place was established)
       - relationship_patch (only city-visible ties; never secrets)
     new_arc_or_threat:
@@ -290,6 +292,9 @@ two_write_rule:
     clue_discovered:
       - mystery_patch (mark the established clue discovered; preserve the full clue map)
       - handoff (name the clue and open inference)
+    npc_relationship_change:
+      - npc_memory_patch (specific trust, fear, respect, promise, grievance, boundary, belief, or key moment)
+      - relationship_patch (only when a durable city-visible relationship edge also changed)
     arc_status_change:
       - arc_patch (escalation/status update)
 ```

@@ -19,6 +19,8 @@ export function buildKeeperProjection(context, { eventLines = 160 } = {}) {
       .map(item => pick(item, ['id', 'revision', 'status', 'pressure', 'conditions', 'clock', 'last_updated'])),
     npcs: list(context.npcs, 'npcs')
       .map(item => pick(item, ['id', 'revision', 'name', 'status', 'role', 'hub_id', 'home_location_id', 'current_location_id', 'associated_location_ids'])),
+    npc_character_memories: list(context.memories, 'memories')
+      .map(item => pick(item, ['id', 'revision', 'npc_id', 'character_id', 'relationship_state', 'disposition', 'trust', 'fear', 'respect', 'last_interaction', 'promises', 'grievances', 'boundaries', 'key_moments', 'npc_believes_about_character'])),
     locations: list(context.locations, 'locations')
       .map(item => pick(item, ['id', 'revision', 'name', 'hub_id', 'type', 'status', 'description', 'atmosphere', 'controller_ids'])),
     relationships: list(context.relationships, 'relationships')

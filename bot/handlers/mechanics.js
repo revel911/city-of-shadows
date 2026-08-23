@@ -348,7 +348,7 @@ export function auditSession({ messages = [], rolls = [], close = {} } = {}) {
     .filter(message => message.role === 'assistant')
     .map(message => String(message.content || ''))
     .join('\n');
-  const worldTouches = ['events_append', 'npc_patch', 'location_patch', 'relationship_patch', 'arc_patch', 'mystery_patch', 'debt_patch', 'hub_patch', 'interaction_ops']
+  const worldTouches = ['events_append', 'npc_patch', 'npc_memory_patch', 'location_patch', 'relationship_patch', 'arc_patch', 'mystery_patch', 'debt_patch', 'hub_patch', 'interaction_ops']
     .filter(key => Boolean(close[key])).length;
   return {
     meaningful_choice_prompted: /\?|choose|what do you do|which do you/i.test(assistantText),

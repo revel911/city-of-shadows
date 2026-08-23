@@ -13,7 +13,7 @@ test('onboarding parser extracts location and relationship patches', () => {
 });
 
 test('sanitizer strips bare world patches from player-facing output', () => {
-  const input = 'Visible.\n<location_patch>[{"id":"loc_archive"}]</location_patch>\n<relationship_patch>[{"id":"rel_1"}]</relationship_patch>\n<mystery_patch>[{"id":"mystery_one"}]</mystery_patch>';
+  const input = 'Visible.\n<location_patch>[{"id":"loc_archive"}]</location_patch>\n<relationship_patch>[{"id":"rel_1"}]</relationship_patch>\n<mystery_patch>[{"id":"mystery_one"}]</mystery_patch>\n<npc_memory_patch>[{"npc_id":"npc_one"}]</npc_memory_patch>';
   const { cleaned } = sanitizePlayerFacingText(input);
   assert.equal(cleaned, 'Visible.');
 });

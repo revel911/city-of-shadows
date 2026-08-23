@@ -32,6 +32,9 @@ DeepSeek does not browse GitHub. The bot is the retrieval layer:
    play tendencies learned from prior actions, handoff/sheet/state, recent events,
    one relevant interaction echo, detailed relevant world entities (including
    relevant clue maps), and an identity-only directory that prevents duplicates.
+   Relevant NPCs also carry only the active character's NPC–character memory.
+   If another canonical NPC is named later, the bot hydrates that NPC and the
+   matching character-specific memory before generation.
 4. The bot sends that material to the configured DeepSeek chat model.
 5. For moves, the model emits a hidden `roll_request`; the bot resolves canonical
    dice and modifiers and injects the authoritative result back into the session.
@@ -86,6 +89,8 @@ Do not treat dated files in `docs/superpowers/` as current contracts.
 - Does every new entity have one canonical ID?
 - Does every reference resolve?
 - Is an NPC's voice sourced from `game/npcs.json`, not duplicated prose?
+- Is NPC-specific history attached to the correct NPC/character pair in
+  `game/npc-character-memory.json`?
 - Are hub and location treated as different concepts?
 - Is the change public-safe for this repository?
 - Does the session close patch only fields that changed?

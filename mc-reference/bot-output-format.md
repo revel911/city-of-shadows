@@ -192,6 +192,27 @@ Everything inside the block is parsed by the bot, validated against the current 
 ]
 </npc_patch>
 
+<npc_memory_patch>
+[
+  {
+    "npc_id": "npc_ada_thorne",
+    "character_id": "alex-chen",
+    "relationship_state": "Wary professional respect",
+    "disposition": 1,
+    "trust": 2,
+    "fear": 1,
+    "respect": 3,
+    "last_interaction": "Alex protected Ada's source but refused her demand for the ledger.",
+    "promises": ["Ada will identify the ledger's courier."],
+    "grievances": ["Alex withheld the original ledger."],
+    "boundaries": ["Ada will not expose her source."],
+    "key_moments": ["Alex took the blame when the meeting was raided."],
+    "npc_believes_about_character": ["Alex keeps promises when civilians are at risk."],
+    "notes": ""
+  }
+]
+</npc_memory_patch>
+
 <location_patch>
 [
   { "id": "loc_new_site", "name": "New Site", "hub_id": "hub_downtown", "status": "active" }
@@ -256,6 +277,7 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<state_patch>`** — partial JSON for fiction-driven changes. Do not emit bot-owned `last_session` or `active_arc_ids`; the close reconciler writes those. Use `effects` and namespaced `playbook_state` for mechanical carryover.
 - **`<events_append>`** — text appended to the end of `events-log.md`. Use markdown. Include a date/session header.
 - **`<npc_patch>`** — array. Each entry must have a canonical `npc_*` ID. The bot also resolves an exact canonical name match so a mistaken new ID cannot duplicate an existing NPC. Include only changed fields for an existing NPC.
+- **`<npc_memory_patch>`** — array of material relationship-memory changes between an NPC and the active character. New records require `npc_id`, `character_id`, `relationship_state`, `disposition` (-5 hostile to +5 devoted), `trust`, `fear`, and `respect` (each 0–5), `last_interaction`, and string arrays for `promises`, `grievances`, `boundaries`, `key_moments`, and `npc_believes_about_character`. The bot creates the deterministic `memory_*` pair ID. Existing records use that ID with `expected_revision` and `changes`. Additive history lists merge during simultaneous play; stale contradictory scores become continuity conflicts. This is not the formal Debt ledger and never implies romantic consent.
 - **`<location_patch>`** — array of partial location records keyed by canonical `loc_*` IDs. Use this when a named place is introduced or its controller, status, atmosphere, or notes change. A location belongs to exactly one canonical `hub_id`.
 - **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.
 - **`<debt_patch>`** — array of public Debt changes keyed by `debt_*` ID. Setting `amount` to zero settles a Debt.

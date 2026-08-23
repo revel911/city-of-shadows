@@ -71,7 +71,7 @@ This is a read-only window into the world. Sessions update it at close, and the 
 
 ## How It Works
 
-The city's state — every NPC, arc, character sheet, handoff — lives as plain text files in this repository. A Discord bot routes player messages to a language model (DeepSeek `deepseek-chat`) with the relevant context loaded, and writes session results back to the repo when the session closes. The dashboard reads those same files and renders them.
+The city's state — every NPC, NPC-to-character memory, arc, character sheet, and handoff — lives as plain text files in this repository. A Discord bot routes player messages to a language model (DeepSeek `deepseek-chat`) with the relevant context loaded, and writes session results back to the repo when the session closes. The dashboard reads those same files and renders them.
 
 No live GM. No prep. The world persists between sessions because the documents do.
 
