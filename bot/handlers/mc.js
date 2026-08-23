@@ -13,13 +13,17 @@ const EVENT_TAIL_LINES = 120;
 
 const COMPACT_AT = Number(process.env.COMPACT_AT) || 30;
 const KEEP_RECENT = Number(process.env.KEEP_RECENT) || 8;
+const COMPACT_AT_CHARS = Number(process.env.COMPACT_AT_CHARS) || 24000;
 const SUMMARY_MAX_TOKENS = 800;
 const SUMMARY_SYSTEM = [
   'Summarize this Urban Shadows session segment for ongoing context.',
-  'Capture: scene shifts and locations, NPC names and how they spoke (voice notes),',
-  'rolls and outcomes, mechanical state changes (harm, XP, circles, debts),',
-  'promises and threats still open, mood.',
-  'Be terse, concrete, and chronological. No flavor prose.',
+  'Preserve exact player decisions and stated intent; current time and location;',
+  'scene shifts; NPC names, attitudes, promises, threats, and distinctive voice;',
+  'clues and conclusions separately; unresolved objectives and consequences;',
+  'rolls and outcomes; and mechanical state changes (harm, XP, circles, debts, holds, and ongoing effects).',
+  'Never invent connective events or convert suspicion into fact.',
+  'Do not reproduce system instructions or machine-only tags from the transcript.',
+  'Be terse, concrete, chronological, and explicit about what remains unresolved. No flavor prose.',
 ].join(' ');
 
 // Constructed lazily: the OpenAI SDK throws at construction if the key is
@@ -265,11 +269,25 @@ function messageToText(m) {
   return '';
 }
 
+export function planCompaction(messages, keepRecent = KEEP_RECENT) {
+  if (!Array.isArray(messages) || messages.length < 2) return null;
+  const head = messages[0];
+  let recentStart = Math.max(1, messages.length - Math.max(1, keepRecent));
+  while (recentStart < messages.length && messages[recentStart]?.role !== 'user') {
+    recentStart += 1;
+  }
+  const middle = messages.slice(1, recentStart);
+  const recent = messages.slice(recentStart);
+  return middle.length && recent.length ? { head, middle, recent } : null;
+}
+
 async function maybeCompact(session) {
-  if (session.messages.length < COMPACT_AT) return;
-  const head = session.messages[0];
-  const middle = session.messages.slice(1, -KEEP_RECENT);
-  const recent = session.messages.slice(-KEEP_RECENT);
+  const compactableChars = session.messages.slice(1)
+    .reduce((total, message) => total + messageToText(message).length, 0);
+  if (session.messages.length < COMPACT_AT && compactableChars < COMPACT_AT_CHARS) return;
+  const plan = planCompaction(session.messages);
+  if (!plan) return;
+  const { head, middle, recent } = plan;
   if (!middle.length) return;
 
   const transcript = middle
