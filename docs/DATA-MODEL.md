@@ -25,6 +25,7 @@ There must be one authoritative definition for each fact. In particular:
   `relationships.derived.json`.
 - Public Debt amounts live only in `game/debts.json`; relationship labels may
   describe a social tie but are not a Debt ledger.
+- Mystery questions, revelations, and clue availability live in `game/mysteries.json`.
 - Character mechanics live under `players/<character-id>/`.
 
 Reference documents may describe schemas, but must not duplicate named NPC facts.
@@ -39,6 +40,7 @@ Reference documents may describe schemas, but must not duplicate named NPC facts
 | Relationship | `rel_<slug>` | `rel_celestine_morrows_books` |
 | Arc | `arc-NNN` | `arc-012` |
 | Debt | `debt_<slug>` | `debt_jacob_priest` |
+| Mystery | `mystery_<slug>` | `mystery_missing_courier` |
 | Player character | kebab-case | `jacob-boone` |
 
 IDs are permanent. Rename display names without changing IDs. A close-block patch
@@ -53,6 +55,7 @@ must reuse the canonical ID shown in the opening world index.
 | `game/relationships.manual.json` | Human operator | Hand-curated; never changed by the MC |
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |
 | `game/arcs.json` | Bot/MC | Partial records merged by ID |
+| `game/mysteries.json` | Bot/MC; Keeper reconcile-only | Revisioned revelation and clue maps |
 | `game/debts.json` | Bot/MC | Public Debt records merged by stable ID |
 | `game/events-log.md` | Bot/MC | Public chronology, newest entry first |
 | `game/interactions.json` | Bot/MC | ID-based add/update/consume operations |
@@ -76,6 +79,8 @@ must reuse the canonical ID shown in the opening world index.
 - Every location belongs to exactly one hub.
 - NPC location IDs must exist in `game/locations.json`.
 - Arc NPC, hub, and character IDs must resolve.
+- Mystery arc, NPC, hub, character, revelation, clue, and clue-source IDs must resolve.
+- Every required mystery revelation must have at least three linked clues.
 - Relationship `source` and `target` may point to a hub, location, NPC, arc, or PC,
   but both endpoints must exist.
 - Debt `creditor_id` and `debtor_id` must resolve to an NPC or PC and must differ.
@@ -89,10 +94,12 @@ An NPC can distinguish:
 ## Patch rules
 
 `npc_patch`, `location_patch`, `relationship_patch`, `debt_patch`, `arc_patch`,
-and `hub_patch` are arrays of partial records. Existing entities should use
+`mystery_patch`, and `hub_patch` are arrays of partial records. Existing entities should use
 `expected_revision` plus a nested `changes` object. Matching changes increment
 the entity revision. A stale scalar change becomes a continuity conflict instead
 of silently overwriting newer play; additive ID collections merge as sets.
+Concurrent clue discoveries merge monotonically by clue ID (including each
+discovering character); contradictory clue states remain reviewable conflicts.
 
 `interaction_ops` is an operation list (`add`, `update`, or `consume`) and never
 replaces the full queue. Every close declares `world_impact` as `none`, `personal`,
@@ -114,6 +121,10 @@ does not make it secret: anyone can fetch the JSON.
 Therefore relationship files accept only `visibility: "public"`. Secrets belong
 in a private deployment or a future private store; they must not be serialized to
 the public relationship graph.
+
+The same warning applies to mystery files: this repository is not a secure GM
+vault. Store only truths that may safely exist in the public repository. A future
+private store is required for genuinely player-hidden solutions.
 
 ## Validation and graph generation
 

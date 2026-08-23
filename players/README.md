@@ -1,7 +1,8 @@
 # Player and character state
 
 - `index.json` registers fictional player characters.
-- `by-id/<discord-id>/profile.json` stores human-player preferences and safety
+- `by-id/<discord-id>/profile.json` stores human-player safety, mechanics depth,
+  and broad play tendencies learned automatically from concrete in-session actions
   settings across all of that person's characters.
 - `<character-id>/` stores one fictional character's sheet, mechanical state, and
   restart handoff.

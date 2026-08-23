@@ -1,10 +1,11 @@
 import { readJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, arcDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
+const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
   readJSON('game/arcs.json'),
+  readJSON('game/mysteries.json'),
   readJSON('players/index.json'),
   readJSON('game/relationships.manual.json'),
   readJSON('game/relationships.derived.json'),
@@ -23,9 +24,10 @@ const ids = {
   npc: new Set((npcDoc.npcs || []).map(x => x.id)),
   loc: new Set((locationDoc.locations || []).map(x => x.id)),
   arc: new Set((arcDoc.arcs || []).map(x => x.id)),
+  mystery: new Set((mysteryDoc.mysteries || []).map(x => x.id)),
   pc: new Set(players.map(x => x.id))
 };
-const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.pc]);
+const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.mystery, ...ids.pc]);
 const conflictEntityIds = new Set([
   ...entityIds,
   ...(manualDoc.relationships || []).map(item => item.id),
@@ -66,6 +68,7 @@ duplicateValues(hubs, 'id', 'hub');
 duplicateValues(npcDoc.npcs || [], 'id', 'NPC');
 duplicateValues(locationDoc.locations || [], 'id', 'location');
 duplicateValues(arcDoc.arcs || [], 'id', 'arc');
+duplicateValues(mysteryDoc.mysteries || [], 'id', 'mystery');
 duplicateValues(players, 'id', 'PC');
 
 for (const npc of npcDoc.npcs || []) {
@@ -96,6 +99,38 @@ for (const arc of arcDoc.arcs || []) {
   for (const id of arc.character_ids || []) if (!ids.pc.has(id)) errors.push(`${arc.id} references missing PC ${id}`);
   if (!Number.isInteger(arc.escalation) || arc.escalation < 0 || arc.escalation > 4) errors.push(`${arc.id}.escalation must be 0-4`);
   if (arc.ignored_sessions != null && (!Number.isInteger(arc.ignored_sessions) || arc.ignored_sessions < 0 || arc.ignored_sessions > 1)) errors.push(`${arc.id}.ignored_sessions must be 0-1`);
+}
+
+if (!Array.isArray(mysteryDoc.mysteries)) errors.push('game/mysteries.json mysteries must be an array');
+for (const mystery of mysteryDoc.mysteries || []) {
+  if (!mystery.id?.startsWith('mystery_')) errors.push(`${mystery.id || '(missing mystery id)'} must start with mystery_`);
+  if (!['active', 'dormant', 'resolved'].includes(mystery.status)) errors.push(`${mystery.id}.status must be active, dormant, or resolved`);
+  if (!mystery.title || !mystery.question) errors.push(`${mystery.id} requires title and question`);
+  if (mystery.arc_id && !ids.arc.has(mystery.arc_id)) errors.push(`${mystery.id} references missing arc ${mystery.arc_id}`);
+  for (const id of mystery.hub_ids || []) if (!ids.hub.has(id)) errors.push(`${mystery.id} references missing hub ${id}`);
+  for (const id of mystery.npc_ids || []) if (!ids.npc.has(id)) errors.push(`${mystery.id} references missing NPC ${id}`);
+  for (const id of mystery.character_ids || []) if (!ids.pc.has(id)) errors.push(`${mystery.id} references missing PC ${id}`);
+  const clues = Array.isArray(mystery.clues) ? mystery.clues : [];
+  const revelations = Array.isArray(mystery.revelations) ? mystery.revelations : [];
+  if (!Array.isArray(mystery.clues)) errors.push(`${mystery.id}.clues must be an array`);
+  if (!Array.isArray(mystery.revelations)) errors.push(`${mystery.id}.revelations must be an array`);
+  duplicateValues(clues, 'id', `${mystery.id} clue`);
+  duplicateValues(revelations, 'id', `${mystery.id} revelation`);
+  const clueIds = new Set(clues.map(clue => clue.id));
+  const revelationIds = new Set(revelations.map(revelation => revelation.id));
+  for (const revelation of revelations) {
+    const links = [...new Set(revelation.clue_ids || [])];
+    if (!revelation.text) errors.push(`${mystery.id}.${revelation.id} requires text`);
+    if (revelation.required && links.length < 3) errors.push(`${mystery.id}.${revelation.id} requires at least three independent clues`);
+    for (const id of links) if (!clueIds.has(id)) errors.push(`${mystery.id}.${revelation.id} references missing clue ${id}`);
+  }
+  for (const clue of clues) {
+    if (!clue.description) errors.push(`${mystery.id}.${clue.id} requires description`);
+    if (!['available', 'discovered', 'lost'].includes(clue.status)) errors.push(`${mystery.id}.${clue.id}.status must be available, discovered, or lost`);
+    for (const id of clue.revelation_ids || []) if (!revelationIds.has(id)) errors.push(`${mystery.id}.${clue.id} references missing revelation ${id}`);
+    for (const id of clue.discovered_by || []) if (!ids.pc.has(id)) errors.push(`${mystery.id}.${clue.id} references missing discovering PC ${id}`);
+    if (clue.source_id && !entityIds.has(clue.source_id)) errors.push(`${mystery.id}.${clue.id} references missing source ${clue.source_id}`);
+  }
 }
 
 const relationships = [...(manualDoc.relationships || []), ...(derivedDoc.relationships || [])];
@@ -133,5 +168,5 @@ if (errors.length) {
   for (const error of errors) console.error(`ERROR: ${error}`);
   process.exitCode = 1;
 } else {
-  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships, ${debts.length} Debts.`);
+  console.log(`World state valid: ${ids.npc.size} NPCs, ${ids.loc.size} locations, ${relationships.length} relationships, ${debts.length} Debts, ${ids.mystery.size} mysteries.`);
 }

@@ -156,6 +156,7 @@ The full schema for the close block lives in `mc-reference/bot-output-format.md`
 <events_append>... markdown appended to events-log.md ...</events_append>
 <npc_patch>[ { "id": "...", ... } ]</npc_patch>
 <arc_patch>[ { "id": "arc-003", ... } ]</arc_patch>
+<mystery_patch>[ { "id": "mystery_example", "expected_revision": 1, "changes": { ... } } ]</mystery_patch>
 <interactions_patch>[ ... ]</interactions_patch>
 <hub_patch>[ { "id": "hub_downtown", "expected_revision": 2, "changes": { "pressure": 3 } } ]</hub_patch>
 <interaction_ops>[ { "op": "add", "interaction": { "id": "interaction_example", "to": "character-id", "effect": "...", "status": "pending" } } ]</interaction_ops>
@@ -286,6 +287,9 @@ two_write_rule:
     new_arc_or_threat:
       - arc_patch (new entry)
       - handoff (tension_threads referencing the arc id)
+    clue_discovered:
+      - mystery_patch (mark the established clue discovered; preserve the full clue map)
+      - handoff (name the clue and open inference)
     arc_status_change:
       - arc_patch (escalation/status update)
 ```

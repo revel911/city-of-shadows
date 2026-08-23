@@ -51,6 +51,7 @@ async function loadCoreSystemPrompt() {
   return labeledFiles([
     ['Mechanics Contract', 'mc-reference/MECHANICS-CONTRACT.md'],
     ['MC Instructions', 'mc-reference/mc-instructions.md'],
+    ['Scene Engine', 'mc-reference/scene-engine.md'],
     ['Rules — Fundamentals of Play', 'mc-reference/reference/rules.md'],
     ['Basic Moves', 'mc-reference/reference/basic-moves.md'],
     ['MC Moves', 'mc-reference/reference/mc-moves.md'],
@@ -139,6 +140,13 @@ async function buildProfileContext(player) {
   if (profile) {
     const hard = (profile.safety?.hard_limits || []).join('; ') || '(none)';
     const soft = (profile.safety?.soft_limits || []).join('; ') || '(none)';
+    const playstyle = profile.inferred_playstyle?.scores || {};
+    const observed = Object.entries(playstyle)
+      .filter(([, score]) => Number(score) > 0)
+      .sort(([, a], [, b]) => Number(b) - Number(a))
+      .slice(0, 3)
+      .map(([mode, score]) => `${mode}:${score}`)
+      .join(', ') || '(not enough evidence yet)';
     return [
       '--- PLAYER PROFILE ---',
       `Discord ID: ${profile.discord_id}`,
@@ -147,6 +155,7 @@ async function buildProfileContext(player) {
       `  Hard limits: ${hard}`,
       `  Soft limits: ${soft}`,
       `Mechanics depth: ${profile.mechanics_depth} (apply the 5-level rubric from mc-instructions.md)`,
+      `Observed play tendencies: ${observed}. These are soft steering signals learned from play; the current action overrides them. Never treat them as consent or as permission to introduce romance.`,
     ].join('\n');
   }
   return [

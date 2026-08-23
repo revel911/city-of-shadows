@@ -3,6 +3,12 @@ import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.
 import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
 import {
+  buildSceneDirectorContext,
+  mergePlaystyleObservations,
+  normalizePlaystyleSignals,
+  updatePlaystyleSignals,
+} from './scene-director.js';
+import {
   applyInteractionOperations,
   buildRelevantWorldContext,
   findMentionedNpcs,
@@ -48,6 +54,7 @@ export async function startSession(thread, player) {
     player.id !== '__new__' ? readJSON('game/interactions.json') : null,
     readJSON('game/world-meta.json'),
   ]);
+  const initialPlaystyleSignals = normalizePlaystyleSignals(profile?.inferred_playstyle);
   const session = {
     player,
     threadId: thread.id,
@@ -65,6 +72,8 @@ export async function startSession(thread, player) {
     worldRevision: Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0,
     hydratedNpcIds: new Set(),
     npcCatalog: null,
+    playstyleBaseline: initialPlaystyleSignals,
+    playstyleSignals: initialPlaystyleSignals,
   };
   sessions.set(thread.id, session);
 
@@ -184,11 +193,17 @@ export async function handleMessage(message) {
       );
       console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
     }
+    session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
+    const sceneDirection = buildSceneDirectorContext({
+      playerText: message.content,
+      playstyleSignals: session.playstyleSignals,
+      lastAssistant,
+    });
     session.messages.push({
       role: 'user',
-      content: npcHydration
-        ? `${npcHydration}\n\n[PLAYER MESSAGE]\n${userContent}`
-        : userContent,
+      content: [npcHydration, sceneDirection, `[PLAYER MESSAGE]\n${userContent}`]
+        .filter(Boolean)
+        .join('\n\n'),
     });
     await message.channel.sendTyping();
     const response = await generateSafeResponse(session, {
@@ -562,7 +577,7 @@ function buildImpactRetryPrompt(problems) {
     `[SYSTEM] Your trailing <close_session> block has world-impact problems: ${problems.join('; ')}.`,
     'Re-emit the closing narrative and complete trailing <close_session> block now.',
     'Include <world_impact> containing JSON with level (none, personal, or shared), summary, affected_ids, and optional fiction_time.',
-    'If level is shared, include at least one matching events_append, npc_patch, location_patch, relationship_patch, debt_patch, arc_patch, hub_patch, or interaction_ops field.',
+    'If level is shared, include at least one matching events_append, npc_patch, location_patch, relationship_patch, debt_patch, arc_patch, mystery_patch, hub_patch, or interaction_ops field.',
     'Do not continue the scene.',
   ].join('\n');
 }
@@ -656,6 +671,7 @@ function parseCloseBlock(text) {
     debt_patch:    grabTag(body, 'debt_patch'),
     hub_patch:     grabTag(body, 'hub_patch'),
     arc_patch:     grabTag(body, 'arc_patch'),
+    mystery_patch: grabTag(body, 'mystery_patch'),
     interactions_patch: grabTag(body, 'interactions_patch'),
     interaction_ops: grabTag(body, 'interaction_ops'),
     world_impact:  grabTag(body, 'world_impact'),
@@ -736,7 +752,7 @@ export function validateWorldImpact(close) {
     const touches = [
       close.events_append, close.npc_patch, close.location_patch,
       close.relationship_patch, close.debt_patch, close.arc_patch,
-      close.hub_patch, close.interaction_ops, close.interactions_patch,
+      close.mystery_patch, close.hub_patch, close.interaction_ops, close.interactions_patch,
     ];
     if (!touches.some(Boolean)) return ['shared impact requires a world patch, interaction operation, or public event'];
   }
@@ -782,6 +798,7 @@ const STRUCTURED_BARE_TAGS = [
   'sheet',
   'handoff',
   'arc_patch',
+  'mystery_patch',
   'events_append',
   'interactions_patch',
   'interaction_ops',
@@ -1417,6 +1434,18 @@ async function processSessionClose(thread, session, close) {
     } catch (e) { warnings.push(`location_patch: ${e.message}`); }
   }
 
+  if (close.mystery_patch) {
+    try {
+      const patches = JSON.parse(close.mystery_patch);
+      writes.push(['mysteries', updateJSON('game/mysteries.json', (doc) => {
+        const result = mergeCanonicalPatches(doc, patches, { collection: 'mysteries', idPrefix: 'mystery_', sessionId: logicalSessionId, stamp });
+        warnings.push(...result.rejected.map(message => `mystery_patch: ${message}`));
+        recordedConflicts.push(...result.conflicts);
+        return result.doc;
+      }, `[session] mysteries (${stamp})`)]);
+    } catch (e) { warnings.push(`mystery_patch: ${e.message}`); }
+  }
+
   if (close.relationship_patch) {
     try {
       const patches = JSON.parse(close.relationship_patch);
@@ -1568,7 +1597,7 @@ async function processSessionClose(thread, session, close) {
 
   const sharedTouchKeys = [
     'events_append', 'npc_patch', 'location_patch', 'relationship_patch',
-    'debt_patch', 'arc_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
+    'debt_patch', 'arc_patch', 'mystery_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
   ];
   const hasSharedTouches = worldImpact.level === 'shared' || sharedTouchKeys.some(key => Boolean(close[key]));
   let resultingWorldRevision = session.worldRevision || 0;
@@ -1681,6 +1710,25 @@ async function processSessionClose(thread, session, close) {
   // are ignored, and out-of-range mechanics_depth values are dropped silently.
   const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
   if (discordId) {
+    // Broad play tendencies are learned from concrete player actions. They are
+    // deliberately soft signals, and contain no romance or safety inference.
+    try {
+      await updateProfile(
+        discordId,
+        (current) => current ? {
+          ...current,
+          inferred_playstyle: mergePlaystyleObservations(
+            current.inferred_playstyle,
+            session.playstyleBaseline,
+            session.playstyleSignals,
+          ),
+        } : null,
+        `[session] observed playstyle for ${discordId} (${stamp})`
+      );
+    } catch (err) {
+      console.error(`[session] failed to persist inferred playstyle for ${discordId}: ${err.message}`);
+    }
+
     // Apply profile_patch via RMW so a /prefs invocation racing this close
     // doesn't lose its update. The transform reads the latest profile from
     // GitHub each retry attempt.

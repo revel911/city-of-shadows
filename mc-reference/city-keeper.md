@@ -16,6 +16,7 @@ Return one object with these optional arrays:
 - `relationship_patch`
 - `debt_patch`
 - `arc_patch`
+- `mystery_patch`
 - `hub_patch`
 - `interaction_ops`
 - `conflict_resolutions`
@@ -32,6 +33,7 @@ Treat a missing entity revision as revision 0. Always include every output key:
   "relationship_patch": [],
   "debt_patch": [],
   "arc_patch": [],
+  "mystery_patch": [],
   "hub_patch": [],
   "interaction_ops": [],
   "conflict_resolutions": [],
@@ -44,7 +46,8 @@ Treat a missing entity revision as revision 0. Always include every output key:
 
 - Derive only facts already established by the evidence.
 - Repair public derived relationships, entity associations, current locations,
-  visible NPC interaction summaries, and mutable hub conditions.
+  visible NPC interaction summaries, mutable hub conditions, and clue discovery
+  status already established by session evidence.
 - Resolve a pending conflict only when evidence clearly orders the events or the
   proposed changes are compatible. Otherwise leave it pending and explain why.
 - Do not advance fiction during reconciliation.
@@ -58,6 +61,10 @@ Treat a missing entity revision as revision 0. Always include every output key:
 - Never harm, move, speak for, or make a choice for a player character off-screen.
 - Never resolve a major arc, kill or resurrect an NPC, rewrite identity, reveal a
   secret, or rewrite foundational lore.
+- City-turn must emit an empty `mystery_patch`. Reconciliation may only mark a
+  pre-existing clue discovered or repair its links when session evidence states
+  that fact. Never create a mystery, clue, revelation, answer, or solution; never
+  resolve a mystery automatically.
 - Consequences must follow an existing pressure clock, NPC agenda, or public fact.
 
 ## Permanent rules

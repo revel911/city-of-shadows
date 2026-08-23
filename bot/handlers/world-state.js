@@ -100,6 +100,23 @@ function compactArc(arc) {
   };
 }
 
+function compactMystery(mystery) {
+  return {
+    id: mystery.id,
+    revision: Number.isInteger(mystery.revision) ? mystery.revision : 0,
+    title: mystery.title,
+    status: mystery.status || 'active',
+    arc_id: mystery.arc_id || '',
+    question: mystery.question || '',
+    hub_ids: mystery.hub_ids || [],
+    npc_ids: mystery.npc_ids || [],
+    character_ids: mystery.character_ids || [],
+    revelations: mystery.revelations || [],
+    clues: mystery.clues || [],
+    notes: mystery.notes || '',
+  };
+}
+
 function compactHubState(hub) {
   return {
     id: hub.id,
@@ -119,6 +136,7 @@ export function formatCanonicalWorldContext({
   locations = [],
   relationships = [],
   arcs = [],
+  mysteries = [],
   debts = [],
   hubState = [],
   directory = null,
@@ -150,6 +168,10 @@ export function formatCanonicalWorldContext({
     'ACTIVE ARCS / PRESSURE CLOCKS:',
     JSON.stringify(arcs.map(compactArc)),
     '',
+    'ACTIVE MYSTERIES / CLUE MAPS:',
+    'Clues are discoverable evidence, not a required scene order. A credible approach may reveal any available clue.',
+    JSON.stringify(mysteries.map(compactMystery)),
+    '',
     'PUBLIC DEBT LEDGER:',
     JSON.stringify(debts),
     '',
@@ -164,13 +186,14 @@ export function formatCanonicalWorldContext({
 }
 
 async function loadWorldDocuments() {
-  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, debtDoc, hubStateDoc] = await Promise.all([
+  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, debtDoc, hubStateDoc] = await Promise.all([
     readJSON('hubs/index.json'),
     readJSON('game/npcs.json'),
     readJSON('game/locations.json'),
     readJSON('game/relationships.manual.json'),
     readJSON('game/relationships.derived.json'),
     readJSON('game/arcs.json'),
+    readJSON('game/mysteries.json'),
     readJSON('game/debts.json'),
     readJSON('game/hub-state.json'),
   ]);
@@ -183,6 +206,7 @@ async function loadWorldDocuments() {
       ...(derivedDoc?.relationships || []),
     ],
     arcs: arcDoc?.arcs || [],
+    mysteries: mysteryDoc?.mysteries || [],
     debts: debtDoc?.debts || [],
     hubState: hubStateDoc?.hubs || [],
   };
@@ -197,7 +221,7 @@ export async function buildCanonicalWorldContext() {
 }
 
 function referencedIds(text) {
-  return new Set(String(text || '').match(/(?:npc_|loc_|hub_)[a-z0-9_]+|arc-\d+/gi) || []);
+  return new Set(String(text || '').match(/(?:npc_|loc_|hub_|mystery_)[a-z0-9_]+|arc-\d+/gi) || []);
 }
 
 export function findMentionedNpcs(text, npcs = [], excludeIds = []) {
@@ -242,6 +266,19 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
   for (const arc of arcs) {
     for (const id of [...(arc.npc_ids || []), ...(arc.hub_ids || [])]) entityIds.add(id);
   }
+  const mysteries = (world.mysteries || []).filter(mystery =>
+    mystery.status !== 'resolved' && (
+      seeds.has(mystery.id)
+      || mystery.character_ids?.includes(characterId)
+      || (mystery.arc_id && activeArcIds.has(mystery.arc_id))
+      || mystery.hub_ids?.some(id => entityIds.has(id))
+      || mystery.npc_ids?.some(id => entityIds.has(id))
+    )
+  );
+  for (const mystery of mysteries) {
+    entityIds.add(mystery.id);
+    for (const id of [...(mystery.hub_ids || []), ...(mystery.npc_ids || [])]) entityIds.add(id);
+  }
   const related = world.relationships.filter(rel => rel.source === characterId || rel.target === characterId);
   for (const rel of related) {
     entityIds.add(rel.source);
@@ -268,13 +305,62 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
     npcs: world.npcs.map(({ id, name }) => ({ id, name })),
     locations: world.locations.map(({ id, name, hub_id }) => ({ id, name, hub_id })),
     arcs: world.arcs.map(({ id, title, status }) => ({ id, title, status })),
+    mysteries: (world.mysteries || []).map(({ id, title, status }) => ({ id, title, status })),
   };
-  return { hubs, npcs, locations, relationships, arcs, debts, hubState, directory };
+  return { hubs, npcs, locations, relationships, arcs, mysteries, debts, hubState, directory };
 }
 
 export async function buildRelevantWorldContext(options) {
   const world = await loadWorldDocuments();
   return formatCanonicalWorldContext(selectRelevantWorld(world, options));
+}
+
+function mergeConcurrentMysteryClues(existingClues, incomingClues) {
+  if (!Array.isArray(existingClues) || !Array.isArray(incomingClues)) return null;
+  const merged = existingClues.map(clue => ({ ...clue }));
+  const byId = new Map(merged.map((clue, index) => [clue.id, index]));
+  for (const incoming of incomingClues) {
+    const index = byId.get(incoming?.id);
+    if (index === undefined) return null;
+    const current = merged[index];
+    for (const [key, value] of Object.entries(incoming)) {
+      if (['status', 'discovered_by'].includes(key)) continue;
+      if (JSON.stringify(current[key]) !== JSON.stringify(value)) return null;
+    }
+    const statuses = new Set([current.status, incoming.status].filter(Boolean));
+    if (statuses.has('lost') && statuses.has('discovered')) return null;
+    const status = statuses.has('discovered')
+      ? 'discovered'
+      : (statuses.has('lost') ? 'lost' : (current.status || incoming.status || 'available'));
+    merged[index] = {
+      ...current,
+      status,
+      discovered_by: [...new Set([...(current.discovered_by || []), ...(incoming.discovered_by || [])])],
+    };
+  }
+  return merged;
+}
+
+function mergeKeyedRecords(existingRecords, incomingRecords) {
+  const merged = Array.isArray(existingRecords) ? existingRecords.map(item => ({ ...item })) : [];
+  const byId = new Map(merged.map((item, index) => [item.id, index]));
+  for (const incoming of Array.isArray(incomingRecords) ? incomingRecords : []) {
+    const index = byId.get(incoming?.id);
+    if (index === undefined) {
+      byId.set(incoming?.id, merged.length);
+      merged.push({ ...incoming });
+    } else {
+      const current = merged[index];
+      merged[index] = {
+        ...current,
+        ...incoming,
+        ...(Array.isArray(current.discovered_by) || Array.isArray(incoming.discovered_by)
+          ? { discovered_by: [...new Set([...(current.discovered_by || []), ...(incoming.discovered_by || [])])] }
+          : {}),
+      };
+    }
+  }
+  return merged;
 }
 
 export function mergeCanonicalPatches(doc, patches, {
@@ -321,6 +407,13 @@ export function mergeCanonicalPatches(doc, patches, {
     }
     const existing = index >= 0 ? list[index] : null;
     const currentRevision = Number.isInteger(existing?.revision) ? existing.revision : 0;
+    // Mystery clue/revelation maps are keyed collections. A close block may
+    // safely emit only the clue it discovered without deleting every other
+    // clue from the canonical map.
+    if (existing && collection === 'mysteries') {
+      if (Array.isArray(patch.clues)) patch.clues = mergeKeyedRecords(existing.clues, patch.clues);
+      if (Array.isArray(patch.revelations)) patch.revelations = mergeKeyedRecords(existing.revelations, patch.revelations);
+    }
     if (existing && expectedRevision !== null && expectedRevision !== currentRevision) {
       const safePatch = { id: patch.id };
       const conflictingFields = [];
@@ -328,6 +421,10 @@ export function mergeCanonicalPatches(doc, patches, {
         if (key === 'id') continue;
         if (safeSetFields.has(key) && Array.isArray(value)) {
           safePatch[key] = [...new Set([...(existing[key] || []), ...value])];
+        } else if (collection === 'mysteries' && key === 'clues') {
+          const mergedClues = mergeConcurrentMysteryClues(existing.clues, value);
+          if (mergedClues) safePatch.clues = mergedClues;
+          else conflictingFields.push(key);
         } else if (JSON.stringify(existing[key]) !== JSON.stringify(value)) {
           conflictingFields.push(key);
         }

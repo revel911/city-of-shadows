@@ -18,6 +18,7 @@ test('keeper projection excludes private and unapproved fields', () => {
       { id: 'rel_private', source: 'npc_one', target: 'loc_one', visibility: 'private' },
     ] },
     arcs: { arcs: [{ id: 'arc-001', summary: 'Public', mc_notes: 'no', character_ids: ['private-pc'] }] },
+    mysteries: { mysteries: [{ id: 'mystery_one', title: 'Question', question: 'What happened?', status: 'active', notes: 'no' }] },
     debts: { debts: [] },
     interactions: { interactions: [] },
     conflicts: { conflicts: [{
@@ -38,6 +39,8 @@ test('keeper projection excludes private and unapproved fields', () => {
     assert.equal(serialized.includes(forbidden), false, forbidden);
   }
   assert.equal(projection.npcs[0].role, 'Witness');
+  assert.equal(projection.mysteries[0].question, 'What happened?');
+  assert.equal(projection.mysteries[0].notes, undefined);
   assert.equal(projection.conflicts[0].actual_revision, undefined);
   assert.equal(projection.session_evidence[0].world_impact.summary, 'Public');
 });

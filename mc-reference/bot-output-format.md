@@ -216,6 +216,14 @@ Everything inside the block is parsed by the bot, validated against the current 
 ]
 </arc_patch>
 
+<mystery_patch>
+[
+  { "id": "mystery_missing_courier", "expected_revision": 1, "changes": { "clues": [
+    { "id": "clue_transit_log", "description": "The courier's pass entered but never exited the station.", "source_type": "document", "source_id": "loc_union_station", "revelation_ids": ["revelation_courier_diverted"], "status": "discovered", "discovered_by": ["alex-chen"] }
+  ] } }
+]
+</mystery_patch>
+
 <interactions_patch>
 { "interactions": [
   { "id": "interaction_alex_robert_letter", "from": "alex-chen", "to": "robert-lagrange", "effect": "left a sealed letter at the bar", "status": "pending" }
@@ -252,6 +260,7 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.
 - **`<debt_patch>`** — array of public Debt changes keyed by `debt_*` ID. Setting `amount` to zero settles a Debt.
 - **`<arc_patch>`** — array. Each entry must have `id`. Including an arc marks it touched and resets its ignored-session pressure counter.
+- **`<mystery_patch>`** — array of `mystery_*` records. Use it to create a clue map or mark established clues discovered. Each required revelation needs at least three linked clues. Existing mysteries require `expected_revision`; clue and revelation entries merge by their nested IDs, so emit only entries that changed. Never rewrite a revelation to fit a player's guess.
 - **`<interactions_patch>`** — legacy compatibility only. New output must use `<interaction_ops>` so simultaneous sessions cannot erase one another's entries.
 - **`<world_event>`** — single short line. Posted to the configured `#world-events` channel if one is set. Omit for purely private scenes.
 

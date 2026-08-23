@@ -14,12 +14,15 @@ test('canonical world context includes IDs and NPC voice guidance', () => {
     npcs: [{ id: 'npc_ada', name: 'Ada', personality: { voice_note: 'Never wastes a word.' } }],
     locations: [{ id: 'loc_archive', name: 'Archive', hub_id: 'hub_test' }],
     relationships: [{ id: 'rel_1', source: 'npc_ada', target: 'loc_archive', label: 'Works at' }]
+    ,mysteries: [{ id: 'mystery_archive', title: 'The Missing File', question: 'Who removed it?', clues: [] }]
   });
   assert.match(result, /CANONICAL WORLD INDEX/);
   assert.match(result, /Never wastes a word/);
   assert.match(result, /NPC BEHAVIOR CARDS/);
   assert.match(result, /loc_archive/);
   assert.match(result, /rel_1/);
+  assert.match(result, /ACTIVE MYSTERIES \/ CLUE MAPS/);
+  assert.match(result, /mystery_archive/);
 });
 
 test('NPC behavior cards preserve voice while producing distinct speech and conflict instincts', () => {
@@ -106,4 +109,52 @@ test('private relationships are rejected from public relationship files', () => 
   );
   assert.equal(result.doc.relationships.length, 0);
   assert.equal(result.rejected.length, 1);
+});
+
+test('concurrent mystery discoveries merge monotonically without losing either player', () => {
+  const existing = {
+    mysteries: [{ id: 'mystery_archive', revision: 2, clues: [
+      { id: 'clue_a', description: 'A', status: 'available', discovered_by: [] },
+      { id: 'clue_b', description: 'B', status: 'discovered', discovered_by: ['ada'] },
+    ] }],
+  };
+  const result = mergeCanonicalPatches(existing, [{
+    id: 'mystery_archive',
+    expected_revision: 1,
+    changes: { clues: [
+      { id: 'clue_a', description: 'A', status: 'discovered', discovered_by: ['jacob'] },
+      { id: 'clue_b', description: 'B', status: 'available', discovered_by: [] },
+    ] },
+  }], { collection: 'mysteries', idPrefix: 'mystery_', sessionId: 'session_9', stamp: '2026-08-23' });
+  assert.equal(result.doc.mysteries[0].clues[0].status, 'discovered');
+  assert.deepEqual(result.doc.mysteries[0].clues[0].discovered_by, ['jacob']);
+  assert.equal(result.doc.mysteries[0].clues[1].status, 'discovered');
+  assert.deepEqual(result.doc.mysteries[0].clues[1].discovered_by, ['ada']);
+  assert.equal(result.conflicts.length, 0);
+});
+
+test('a current mystery patch can update one clue without deleting the clue map', () => {
+  const result = mergeCanonicalPatches(
+    { mysteries: [{ id: 'mystery_archive', revision: 2, clues: [
+      { id: 'clue_a', description: 'A', status: 'available', discovered_by: [] },
+      { id: 'clue_b', description: 'B', status: 'available', discovered_by: [] },
+    ] }] },
+    [{ id: 'mystery_archive', expected_revision: 2, changes: {
+      clues: [{ id: 'clue_a', status: 'discovered', discovered_by: ['jacob'] }],
+    } }],
+    { collection: 'mysteries', idPrefix: 'mystery_', sessionId: 'session_9', stamp: '2026-08-23' },
+  );
+  assert.equal(result.doc.mysteries[0].clues.length, 2);
+  assert.equal(result.doc.mysteries[0].clues[0].status, 'discovered');
+  assert.equal(result.doc.mysteries[0].clues[1].status, 'available');
+});
+
+test('contradictory concurrent mystery clue edits remain reviewable conflicts', () => {
+  const result = mergeCanonicalPatches(
+    { mysteries: [{ id: 'mystery_archive', revision: 2, clues: [{ id: 'clue_a', description: 'A', status: 'lost' }] }] },
+    [{ id: 'mystery_archive', expected_revision: 1, changes: { clues: [{ id: 'clue_a', description: 'A', status: 'discovered' }] } }],
+    { collection: 'mysteries', idPrefix: 'mystery_', sessionId: 'session_9', stamp: '2026-08-23' },
+  );
+  assert.equal(result.doc.mysteries[0].clues[0].status, 'lost');
+  assert.deepEqual(result.conflicts[0].fields, ['clues']);
 });

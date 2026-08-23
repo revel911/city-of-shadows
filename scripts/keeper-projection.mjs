@@ -26,6 +26,8 @@ export function buildKeeperProjection(context, { eventLines = 160 } = {}) {
       .map(item => pick(item, ['id', 'revision', 'source', 'target', 'type', 'label', 'direction', 'visibility'])),
     arcs: list(context.arcs, 'arcs')
       .map(item => pick(item, ['id', 'revision', 'title', 'type', 'summary', 'status', 'clock', 'pressure', 'escalation', 'ignored_sessions'])),
+    mysteries: list(context.mysteries, 'mysteries')
+      .map(item => pick(item, ['id', 'revision', 'title', 'status', 'arc_id', 'question', 'hub_ids', 'npc_ids', 'character_ids', 'revelations', 'clues'])),
     debts: list(context.debts, 'debts')
       .filter(item => !item.visibility || item.visibility === 'public')
       .map(item => pick(item, ['id', 'revision', 'creditor_id', 'debtor_id', 'amount', 'status', 'visibility', 'source_session', 'note'])),

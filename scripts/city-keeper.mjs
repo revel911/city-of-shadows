@@ -54,6 +54,7 @@ function keeperLimits(output) {
     relationship_patch: boundedArray(output.relationship_patch, city ? 4 : 30),
     debt_patch: boundedArray(output.debt_patch, city ? 2 : 20),
     arc_patch: boundedArray(output.arc_patch, city ? 1 : 20),
+    mystery_patch: boundedArray(output.mystery_patch, city ? 0 : 20),
     hub_patch: boundedArray(output.hub_patch, city ? 1 : 20),
     interaction_ops: boundedArray(output.interaction_ops, city ? 2 : 30),
     conflict_resolutions: boundedArray(output.conflict_resolutions, 20),
@@ -76,17 +77,17 @@ async function loadLedger(limit = 20) {
 }
 
 async function loadContext() {
-  const [prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, debts, interactions, conflicts, events, ledger] = await Promise.all([
+  const [prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger] = await Promise.all([
     readFile(resolve(ROOT, 'mc-reference/city-keeper.md'), 'utf8'),
     readJSON('game/world-meta.json'), readJSON('game/keeper-state.json'), readJSON('hubs/index.json'),
     readJSON('game/hub-state.json'), readJSON('game/npcs.json'), readJSON('game/locations.json'),
-    readJSON('game/relationships.derived.json'), readJSON('game/arcs.json'), readJSON('game/debts.json'),
+    readJSON('game/relationships.derived.json'), readJSON('game/arcs.json'), readJSON('game/mysteries.json'), readJSON('game/debts.json'),
     readJSON('game/interactions.json'), readJSON('game/conflicts.json'),
     readFile(resolve(ROOT, 'game/events-log.md'), 'utf8'), loadLedger(),
   ]);
   const cursor = ledger.findIndex(entry => entry.name === keeper?.last_processed_session);
   const evidence = phase === 'reconcile' && cursor >= 0 ? ledger.slice(cursor + 1) : ledger;
-  return { phase, prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, debts, interactions, conflicts, events, ledger: evidence, latestLedger: ledger.at(-1)?.name || null };
+  return { phase, prompt, meta, keeper, hubs, hubState, npcs, locations, relationships, arcs, mysteries, debts, interactions, conflicts, events, ledger: evidence, latestLedger: ledger.at(-1)?.name || null };
 }
 
 function parseModelJSON(text) {
@@ -182,8 +183,9 @@ async function applyOutput(context, rawOutput) {
   const npcResult = mergeCanonicalPatches(context.npcs, output.npc_patch, { ...options, collection: 'npcs', idPrefix: 'npc_', allowNameMatch: true });
   const locationResult = mergeCanonicalPatches(context.locations, output.location_patch, { ...options, collection: 'locations', idPrefix: 'loc_', allowNameMatch: true });
   const relationshipResult = mergeCanonicalPatches(context.relationships, output.relationship_patch, { ...options, collection: 'relationships', idPrefix: 'rel_', publicOnly: true });
+  const mysteryResult = mergeCanonicalPatches(context.mysteries, output.mystery_patch, { ...options, collection: 'mysteries', idPrefix: 'mystery_' });
   const hubResult = mergeCanonicalPatches(context.hubState, output.hub_patch, { ...options, collection: 'hubs', idPrefix: 'hub_' });
-  for (const result of [npcResult, locationResult, relationshipResult, hubResult]) {
+  for (const result of [npcResult, locationResult, relationshipResult, mysteryResult, hubResult]) {
     conflictItems.push(...result.conflicts);
     rejected.push(...result.rejected);
   }
@@ -201,6 +203,7 @@ async function applyOutput(context, rawOutput) {
     ...changedIds(context.relationships, relationshipResult.doc, 'relationships'),
     ...changedIds(context.debts, debtResult.doc, 'debts'),
     ...changedIds(context.arcs, arcDoc, 'arcs'),
+    ...changedIds(context.mysteries, mysteryResult.doc, 'mysteries'),
     ...changedIds(context.hubState, hubResult.doc, 'hubs'),
     ...changedIds(context.interactions, interactionResult.doc, 'interactions'),
   ]);
@@ -215,6 +218,7 @@ async function applyOutput(context, rawOutput) {
       writeJSON('game/debts.json', debtResult.doc),
       writeJSON('game/interactions.json', interactionResult.doc),
       writeJSON('game/arcs.json', arcDoc),
+      writeJSON('game/mysteries.json', mysteryResult.doc),
       writeJSON('game/conflicts.json', conflictDoc),
     ]);
     if (output.events_append) {

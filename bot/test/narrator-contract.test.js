@@ -23,6 +23,18 @@ test('output contract includes roll and Debt patches in machine-only blocks', as
   assert.match(output, /<roll_request>/);
   assert.match(output, /<debt_patch>/);
   assert.match(output, /Do not emit bot-owned `last_session`/);
+  assert.match(output, /<mystery_patch>/);
+});
+
+test('scene engine protects agency while varying action, mystery, urban fantasy, and romance', async () => {
+  const engine = await readFile(new URL('../../mc-reference/scene-engine.md', import.meta.url), 'utf8');
+  assert.match(engine, /player's current declared action always overrides history/i);
+  assert.match(engine, /three independently discoverable clues/i);
+  assert.match(engine, /weak roll or risky method adds cost/i);
+  assert.match(engine, /contest of objectives/i);
+  assert.match(engine, /recognizable city life/i);
+  assert.match(engine, /consent as ongoing and reversible/i);
+  assert.match(engine, /do not name or apply a playbook-specific intimacy move/i);
 });
 
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
@@ -33,4 +45,7 @@ test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violenc
   assert.ok(scenarios.some(item => item.id.includes('extreme_failure')));
   assert.ok(scenarios.some(item => item.id === 'violence_one_means_violence_first'));
   assert.ok(scenarios.some(item => item.id === 'violence_five_means_violence_averse'));
+  assert.ok(scenarios.some(item => item.id === 'mystery_failure_preserves_core_clue'));
+  assert.ok(scenarios.some(item => item.id === 'romance_history_is_not_consent'));
+  assert.ok(scenarios.some(item => item.id === 'action_is_objective_driven'));
 });

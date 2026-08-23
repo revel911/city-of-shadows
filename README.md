@@ -79,7 +79,7 @@ No live GM. No prep. The world persists between sessions because the documents d
 
 The repo separates two things that look alike but aren't:
 
-- A **player** is a Discord user. You have content-safety preferences and a mechanics-depth preference (how visible the rules engine is in MC narration). One person, one profile. Lives at `players/by-id/<your-discord-snowflake>/profile.json`.
+- A **player** is a Discord user. You have content-safety preferences, a mechanics-depth preference, and broad play tendencies learned from your in-session choices. Tendencies softly vary scenes; current actions override them, and romance/consent is never inferred. One person, one profile. Lives at `players/by-id/<your-discord-snowflake>/profile.json`.
 - A **character** is a fictional PC you run — stats, sheet, gear, advances. One person can own multiple characters. Lives at `players/<character-slug>/`.
 
 Player-scoped data (safety, mechanics depth) carries forward across every character you create. During player-onboarding the first time the MC meets you, you set safety and either pick a mechanics depth (1–5) or defer the choice. If you defer, the bot uses a balanced default (3) for the first session and asks you to calibrate once at session close. From there `/prefs mechanics N` is the way to change it at any time.

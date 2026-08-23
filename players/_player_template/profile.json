@@ -7,5 +7,17 @@
   },
   "mechanics_depth": 3,
   "mechanics_depth_set": false,
+  "inferred_playstyle": {
+    "schema_version": 1,
+    "scores": {
+      "action": 0,
+      "investigation": 0,
+      "social": 0,
+      "exploration": 0,
+      "reflection": 0
+    },
+    "observed_choices": 0,
+    "recent_modes": []
+  },
   "characters": []
 }
