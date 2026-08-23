@@ -4,6 +4,7 @@ import {
   buildSceneDirectorContext,
   detectRepeatedDevices,
   inferPlaySignals,
+  isCharacterRecapRequest,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
   updatePlaystyleSignals,
@@ -60,4 +61,15 @@ test('simultaneous sessions merge only their newly observed choices', () => {
   assert.equal(merged.scores.social, 2);
   assert.equal(merged.observed_choices, 3);
   assert.deepEqual(merged.recent_modes, ['action', 'social', 'investigation']);
+});
+
+test('character refresher pauses fiction and concise retry inherits that mode', () => {
+  const original = 'OOO … it’s been awhile since I played Jacob, tell me a little about him';
+  assert.equal(isCharacterRecapRequest(original), true);
+  assert.equal(isCharacterRecapRequest('Break it up', original), true);
+  const direction = buildSceneDirectorContext({ playerText: original });
+  assert.match(direction, /OUT-OF-CHARACTER CHARACTER RECAP/);
+  assert.match(direction, /Pause the fiction/);
+  assert.match(direction, /at most five compact bullets/);
+  assert.match(direction, /Do not advance time/);
 });

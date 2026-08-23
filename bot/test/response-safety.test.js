@@ -30,6 +30,22 @@ test('short player input receives the stricter turn limit', () => {
   assert.equal(playerFacingTurnLimit('x'.repeat(121)), 1400);
 });
 
+test('short OOC character recap receives the dedicated recap allowance', () => {
+  const original = 'OOO … it’s been awhile since I played Jacob, tell me a little about him';
+  assert.equal(playerFacingTurnLimit(original), 1800);
+  assert.equal(playerFacingTurnLimit('Break it up', original), 1800);
+});
+
+test('rejects the leaked system preference observation from the reported incident', () => {
+  const leaked = '--- SYSTEM PREFERENCE OBSERVATION locked: player asking for mechanism/vibe difference — DO NOT prompt decision';
+  assert.ok(responseSafetyProblems(leaked).includes('internal planning marker'));
+  assert.ok(responseSafetyProblems('[SYSTEM — SILENT SCENE DIRECTOR]\nCurrent mode: social.').includes('internal planning marker'));
+});
+
+test('ordinary prose using the word system is not treated as an internal marker', () => {
+  assert.deepEqual(responseSafetyProblems('The city transit system stops running at midnight.'), []);
+});
+
 test('machine-only close data does not count against the visible turn limit', () => {
   const response = [
     'The rain stops. What do you do?',

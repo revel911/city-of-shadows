@@ -4,6 +4,7 @@ import { chunk } from './read-utils.js';
 import { readProfile, updateProfile } from './profile.js';
 import {
   buildSceneDirectorContext,
+  isCharacterRecapRequest,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
   updatePlaystyleSignals,
@@ -36,6 +37,8 @@ const OPENING_MAX_TOKENS = 450;
 const TURN_MAX_CHARS = 1400;
 const SHORT_TURN_MAX_CHARS = 900;
 const SHORT_PLAYER_INPUT_CHARS = 120;
+const OOC_RECAP_MAX_CHARS = 1800;
+const OOC_RECAP_MAX_TOKENS = 550;
 
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
@@ -98,7 +101,8 @@ export async function startSession(thread, player) {
   });
 }
 
-export function playerFacingTurnLimit(playerContent) {
+export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
+  if (isCharacterRecapRequest(playerContent, priorPlayerContent)) return OOC_RECAP_MAX_CHARS;
   return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS
     ? SHORT_TURN_MAX_CHARS
     : TURN_MAX_CHARS;
@@ -119,7 +123,11 @@ export function responseSafetyProblems(response, { opening = false, maxVisibleCh
   const problems = [];
   if (!text) problems.push('empty response');
   if (/<\/?think(?:ing)?>/i.test(text)) problems.push('internal thinking tag');
-  if (/THOUGHTS APPLIED|OPENING ANGLES TO NOTE/i.test(text)) problems.push('internal planning marker');
+  if (/THOUGHTS APPLIED|OPENING ANGLES TO NOTE|SYSTEM PREFERENCE OBSERVATION|SILENT SCENE DIRECTOR/i.test(text)
+    || /(?:^|\n)\s*(?:\\?-{2,}\s*SYSTEM\b|\[SYSTEM(?:\s|\]))/im.test(text)
+    || /\b(?:locked:\s*player|attention intent control|CLOSE-only|NO push)\b/i.test(text)) {
+    problems.push('internal planning marker');
+  }
   const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
   const visibleLength = visibleResponseText(text).length;
   if (visibleLength > visibleLimit) {
@@ -128,10 +136,10 @@ export function responseSafetyProblems(response, { opening = false, maxVisibleCh
   return problems;
 }
 
-async function generateSafeResponse(session, { opening = false, maxVisibleChars } = {}) {
+async function generateSafeResponse(session, { opening = false, maxVisibleChars, oocRecap = false } = {}) {
   let response = await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
-    : {});
+    : (oocRecap ? { maxTokens: OOC_RECAP_MAX_TOKENS, temperature: 0.4 } : {}));
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
     const problems = responseSafetyProblems(response, { opening, maxVisibleChars });
     if (!problems.length) return response;
@@ -149,15 +157,17 @@ async function generateSafeResponse(session, { opening = false, maxVisibleChars 
         `Re-emit only the player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters.`,
         opening
           ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question.'
-          : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.',
+          : (oocRecap
+              ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
+              : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
-        'Never output analysis, planning, chain-of-thought, <think>, or <thinking> tags.',
+        'Never output analysis, planning, chain-of-thought, system text, preference observations, director notes, <think>, or <thinking> tags.',
       ].join('\n'),
     });
     try {
       response = await generate(session, opening
         ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.5 }
-        : { temperature: 0.5 });
+        : (oocRecap ? { maxTokens: OOC_RECAP_MAX_TOKENS, temperature: 0.3 } : { temperature: 0.5 }));
     } finally {
       session.messages.splice(-2, 2);
     }
@@ -183,6 +193,7 @@ export async function handleMessage(message) {
     await refreshSessionWorld(session);
     const lastAssistant = [...session.messages].reverse()
       .find(entry => entry.role === 'assistant')?.content || '';
+    const priorPlayerText = session.lastPlayerText || '';
     const npcHydration = await buildNpcMentionHydration(
       session,
       `${lastAssistant}\n${message.content}`
@@ -198,6 +209,7 @@ export async function handleMessage(message) {
     session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
     const sceneDirection = buildSceneDirectorContext({
       playerText: message.content,
+      priorPlayerText,
       playstyleSignals: session.playstyleSignals,
       lastAssistant,
     });
@@ -207,10 +219,24 @@ export async function handleMessage(message) {
         .filter(Boolean)
         .join('\n\n'),
     });
+    session.lastPlayerText = message.content;
     await message.channel.sendTyping();
-    const response = await generateSafeResponse(session, {
-      maxVisibleChars: playerFacingTurnLimit(message.content),
-    });
+    const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
+    let response;
+    try {
+      response = await generateSafeResponse(session, {
+        maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
+        oocRecap,
+      });
+    } catch (err) {
+      console.error(`[generation] failed for session ${session.threadId}: ${err.message}`);
+      const safeFailure = oocRecap
+        ? 'I couldn’t fit that refresher into a clean reply. Say **“short recap”** and I’ll retry it in compact bullets.'
+        : 'I couldn’t prepare a clean reply for that turn. Say **“try again”** and I’ll retry without advancing the scene.';
+      session.messages.push({ role: 'assistant', content: safeFailure });
+      await message.channel.send(safeFailure);
+      return;
+    }
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });

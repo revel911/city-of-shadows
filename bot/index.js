@@ -45,7 +45,7 @@ client.on(Events.InteractionCreate, async interaction => {
   } catch (err) {
     const label = interaction.isChatInputCommand() ? interaction.commandName : interaction.customId;
     console.error(`[${label}]`, err);
-    const reply = { content: `Error: ${err.message}`, ephemeral: true };
+    const reply = { content: 'Something went wrong while handling that command. Please try it once more.', ephemeral: true };
     if (interaction.replied || interaction.deferred) await interaction.followUp(reply).catch(() => {});
     else await interaction.reply(reply).catch(() => {});
   }
@@ -58,7 +58,7 @@ client.on(Events.MessageCreate, async message => {
     await handleMessage(message);
   } catch (err) {
     console.error('[message]', err);
-    await message.channel.send(`⚠️ ${err.message}`).catch(() => {});
+    await message.channel.send('⚠️ Something went wrong while preparing that reply. Please try once more.').catch(() => {});
   }
 });
 

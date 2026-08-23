@@ -40,6 +40,12 @@ test('scene engine protects agency while varying action, mystery, urban fantasy,
   assert.match(engine, /do not put formal Debts in memory/i);
 });
 
+test('top-level Discord handlers never expose raw exception messages to players', async () => {
+  const index = await readFile(new URL('../index.js', import.meta.url), 'utf8');
+  assert.doesNotMatch(index, /content:\s*`Error:\s*\$\{err\.message\}/);
+  assert.doesNotMatch(index, /channel\.send\(`[^`]*\$\{err\.message\}/);
+});
+
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
   const raw = await readFile(new URL('../eval/narrator-scenarios.json', import.meta.url), 'utf8');
   const scenarios = JSON.parse(raw);
