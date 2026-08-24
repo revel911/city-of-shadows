@@ -13,14 +13,22 @@ platform behaves, not API compatibility.
 - **MC engine migrated from Anthropic Claude (`claude-sonnet-4-6`) to DeepSeek (`deepseek-chat`).**
   The bot now talks to the DeepSeek API through the OpenAI-compatible SDK
   (`openai` npm package pointed at `https://api.deepseek.com`). Generation runs at
-  DeepSeek's recommended creative temperature (1.3); the mid-session summarizer
-  runs at 0 for faithful recaps.
+  a controlled creative temperature (1.0); the mid-session summarizer runs at 0
+  for faithful recaps.
 - Prompt caching is now handled by DeepSeek's automatic disk-based context cache
   (keyed on the longest shared prefix) instead of explicit Anthropic cache
   breakpoints — no code-side cache markers needed. Per-turn logs report
   `cache_hit` / `cache_miss` token counts.
 - Configuration: `ANTHROPIC_API_KEY` replaced by `DEEPSEEK_API_KEY` in
   `bot/.env.example` and the Fly.io secrets.
+- Player actions that clearly trigger a basic move now pass through a
+  deterministic mechanics gate. The narrator must request `/roll`, stop before
+  the outcome, and use the canonical modifier. Skipped, malformed, mismatched,
+  continued, or prematurely resolved move requests are regenerated, with a
+  bot-authored fallback and `/roll` recovery if the model still fails.
+- Normal turns now receive lightweight prose-quality checks for accidental word
+  repetition, broken pronoun clauses, and contradictory physical details.
+  Rejected prose is regenerated before it reaches Discord.
 
 > **Note:** this migration currently lives in the working tree and is not yet
 > committed. README and OPERATOR docs have been updated to match it.

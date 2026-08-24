@@ -5,10 +5,11 @@ import { buildCanonicalWorldContext, buildRelevantWorldContext } from './world-s
 
 const MODEL = 'deepseek-chat';
 const MAX_TOKENS = 4096;
-// DeepSeek's recommended temperature for creative/roleplay output (their docs
-// map 1.3 to general conversation/creative writing); the summarizer overrides
+// Keep regular narration creative but controlled; the summarizer overrides
 // this with 0 for faithful, low-variance recaps.
-const GENERATE_TEMPERATURE = 1.3;
+// A slightly restrained creative temperature keeps NPC voices varied while
+// reducing malformed clauses and contradictory physical details in live play.
+const GENERATE_TEMPERATURE = 1.0;
 const EVENT_TAIL_LINES = 120;
 
 const COMPACT_AT = Number(process.env.COMPACT_AT) || 30;

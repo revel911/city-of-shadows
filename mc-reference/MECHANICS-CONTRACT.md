@@ -20,6 +20,10 @@ and the active World of Darkness extension.
 
 When a player action triggers uncertainty:
 
+0. Read the player's words as **intent and method**, not permission to declare
+   success. If one message contains several actions, stop at the first move
+   trigger. Resolve only that move before advancing to any later intended action.
+
 1. Name the fictional pressure and identify the canonical move.
 2. Emit exactly one hidden structured request in the same response:
 
@@ -33,6 +37,12 @@ When a player action triggers uncertainty:
    modifier, records the Instinct Die, and injects the result into the session.
 6. Narrate the result tier from that injected record. Never change its total,
    tier, or Extreme Failure flag.
+
+An unopposed action with no meaningful risk can happen without a roll. Active
+resistance, dangerous uncertainty, or consequential opposition cannot be waived
+merely because the player described a confident or detailed method. In
+particular, grabbing, striking, restraining, dragging, or forcibly removing a
+capable NPC triggers Turn to Violence before the force succeeds.
 
 For Circle moves, use `modifier_type: "circle"` and provide `circle`. For Refuse
 to Honor a Debt, use `modifier_type: "status_difference"`, `circle`, and

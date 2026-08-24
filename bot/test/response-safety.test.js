@@ -1,6 +1,11 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { playerFacingTurnLimit, responseSafetyProblems } from '../handlers/session.js';
+import {
+  playerFacingTurnLimit,
+  proseQualityProblems,
+  recoverPendingRoll,
+  responseSafetyProblems,
+} from '../handlers/session.js';
 
 test('accepts a concise player-facing opening', () => {
   const response = 'Rain ticks against the warehouse windows.\n\nSomeone knocks three times. What do you do?';
@@ -55,4 +60,31 @@ test('machine-only close data does not count against the visible turn limit', ()
     '</close_session>',
   ].join('\n');
   assert.deepEqual(responseSafetyProblems(response), []);
+});
+
+test('rejects repeated words and contradictory physical details', () => {
+  assert.ok(proseQualityProblems('They, they know the way inside.').includes('accidental adjacent word repetition'));
+  assert.ok(proseQualityProblems(
+    'The windows are up. You circle the truck and reach through the open window.'
+  ).includes('contradictory window state'));
+});
+
+test('rejects plainly broken pronoun clauses while allowing clean prose', () => {
+  assert.ok(proseQualityProblems('He is his right and they are they waiting.').includes('broken pronoun clause'));
+  assert.deepEqual(proseQualityProblems(
+    'You reach the truck’s blind side. The driver shifts before you touch the door.'
+  ), []);
+});
+
+test('/roll recovery restores an obvious missed move but does not invent one', () => {
+  const session = {
+    pendingRoll: null,
+    lastPlayerText: 'I sneak behind the truck and then pull him out to question him.',
+  };
+  assert.equal(recoverPendingRoll(session)?.move, 'Turn to Violence');
+  assert.equal(session.pendingRoll.modifier_key, 'Blood');
+
+  const quietSession = { pendingRoll: null, lastPlayerText: 'I watch the truck and wait.' };
+  assert.equal(recoverPendingRoll(quietSession), null);
+  assert.equal(quietSession.pendingRoll, null);
 });

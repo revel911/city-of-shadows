@@ -13,6 +13,11 @@ The bot is a Discord client that posts your messages directly to the player. Any
 
 Write narrative normally. When a move triggers, follow `MECHANICS-CONTRACT.md`: emit one JSON `<roll_request>`, ask the player to use `/roll`, and stop before the outcome. The bot strips the request, resolves canonical dice and modifiers, then injects the authoritative result into your next turn.
 
+Treat a declared action as an attempt whenever opposition, danger, or meaningful
+uncertainty remains. Do not use completed-action narration to grant the move's
+result before `/roll`. If the player declares a chain of actions, stop at the
+first triggered move.
+
 For an opening scene, write only 1–3 short player-facing paragraphs, stay under
 1400 characters, and use clear, concrete English. Establish the location,
 immediate pressure, and one actionable hook, then end with a direct question or

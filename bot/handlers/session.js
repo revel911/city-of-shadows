@@ -20,10 +20,14 @@ import {
 } from './world-state.js';
 import {
   auditSession,
+  buildMechanicsFallback,
+  buildMechanicsGateContext,
   createRollRecord,
+  detectMechanicsExpectation,
   deriveActiveArcIds,
   formatRoll,
   mergeDebtPatches,
+  mechanicsResponseProblems,
   nextSessionId,
   parseRollRequest,
   reconcileArcs,
@@ -67,6 +71,7 @@ export async function startSession(thread, player) {
     startedAt: Date.now(),
     rolls: [],
     pendingRoll: null,
+    mechanicsGateTriggers: 0,
     mechanicsDepth: profile?.mechanics_depth || 3,
     rulesProfile: {
       isNew: player.id === '__new__',
@@ -119,7 +124,26 @@ function visibleResponseText(response) {
   return sanitizePlayerFacingText(visible).cleaned.trim();
 }
 
-export function responseSafetyProblems(response, { opening = false, maxVisibleChars } = {}) {
+export function proseQualityProblems(response) {
+  const visible = visibleResponseText(response);
+  const problems = [];
+  if (/\b([A-Za-z]{2,})\s*,?\s+\1\b/i.test(visible)) {
+    problems.push('accidental adjacent word repetition');
+  }
+  if (/\bwindows? (?:are|is|were|was) (?:all )?(?:up|closed)\b[\s\S]{0,500}\b(?:through|into) (?:an?|the) open window\b/i.test(visible)) {
+    problems.push('contradictory window state');
+  }
+  if (/\b(?:he|she|they|you)\s+(?:is|are|was|were)\s+(?:he|she|they|you|his|her|their|your)\b/i.test(visible)) {
+    problems.push('broken pronoun clause');
+  }
+  return problems;
+}
+
+export function responseSafetyProblems(response, {
+  opening = false,
+  maxVisibleChars,
+  mechanicsExpectation = null,
+} = {}) {
   const text = typeof response === 'string' ? response.trim() : '';
   const problems = [];
   if (!text) problems.push('empty response');
@@ -134,18 +158,33 @@ export function responseSafetyProblems(response, { opening = false, maxVisibleCh
   if (visibleLength > visibleLimit) {
     problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
   }
+  problems.push(...proseQualityProblems(text));
+  problems.push(...mechanicsResponseProblems(text, mechanicsExpectation));
   return problems;
 }
 
-async function generateSafeResponse(session, { opening = false, maxVisibleChars, oocRecap = false } = {}) {
+async function generateSafeResponse(session, {
+  opening = false,
+  maxVisibleChars,
+  oocRecap = false,
+  mechanicsExpectation = null,
+} = {}) {
   let response = await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
     : (oocRecap ? { maxTokens: OOC_RECAP_MAX_TOKENS, temperature: 0.4 } : {}));
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
-    const problems = responseSafetyProblems(response, { opening, maxVisibleChars });
+    const problems = responseSafetyProblems(response, {
+      opening,
+      maxVisibleChars,
+      mechanicsExpectation,
+    });
     if (!problems.length) return response;
     console.warn(`[generation-safety] rejected response: ${problems.join('; ')}`);
     if (attempt === GENERATION_RETRIES) {
+      if (mechanicsExpectation) {
+        console.warn(`[generation-safety] using deterministic ${mechanicsExpectation.move} fallback`);
+        return buildMechanicsFallback(mechanicsExpectation, session.mechanicsDepth);
+      }
       throw new Error(`unsafe response after ${GENERATION_RETRIES + 1} attempts: ${problems.join('; ')}`);
     }
     const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
@@ -164,9 +203,13 @@ async function generateSafeResponse(session, { opening = false, maxVisibleChars,
               ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
               : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
+        'Reread every sentence for missing words, duplicated words, contradictory physical details, and unclear pronouns before answering.',
+        mechanicsExpectation
+          ? `This turn is mechanically gated: ${mechanicsExpectation.move} must be requested. Treat the player action as intent, emit one valid <roll_request>, visibly end with /roll, and do not narrate the outcome.`
+          : '',
         'Use casual, plainspoken language by default. Never use an em dash. Elevated diction belongs only to a character whose established voice supports it.',
         'Never output analysis, planning, chain-of-thought, system text, preference observations, director notes, <think>, or <thinking> tags.',
-      ].join('\n'),
+      ].filter(Boolean).join('\n'),
     });
     try {
       response = await generate(session, opening
@@ -211,6 +254,12 @@ export async function handleMessage(message) {
       console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
     }
     session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
+    const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
+    const mechanicsExpectation = oocRecap ? null : detectMechanicsExpectation(message.content);
+    if (mechanicsExpectation) {
+      session.mechanicsGateTriggers += 1;
+      console.log(`[mechanics-gate] session=${session.threadId} move=${mechanicsExpectation.move}`);
+    }
     const sceneDirection = buildSceneDirectorContext({
       playerText: message.content,
       priorPlayerText,
@@ -219,18 +268,23 @@ export async function handleMessage(message) {
     });
     session.messages.push({
       role: 'user',
-      content: [npcHydration, sceneDirection, `[PLAYER MESSAGE]\n${userContent}`]
+      content: [
+        npcHydration,
+        sceneDirection,
+        buildMechanicsGateContext(mechanicsExpectation, session.mechanicsDepth),
+        `[PLAYER MESSAGE]\n${userContent}`,
+      ]
         .filter(Boolean)
         .join('\n\n'),
     });
     session.lastPlayerText = message.content;
     await message.channel.sendTyping();
-    const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
     let response;
     try {
       response = await generateSafeResponse(session, {
         maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
         oocRecap,
+        mechanicsExpectation,
       });
     } catch (err) {
       console.error(`[generation] failed for session ${session.threadId}: ${err.message}`);
@@ -295,6 +349,14 @@ async function refreshSessionWorld(session) {
   session.npcMemoryCatalog = null;
 }
 
+export function recoverPendingRoll(session) {
+  if (!session || session.pendingRoll) return session?.pendingRoll || null;
+  const expectation = detectMechanicsExpectation(session.lastPlayerText);
+  if (!expectation) return null;
+  session.pendingRoll = expectation;
+  return expectation;
+}
+
 export async function resolveSessionRoll(interaction) {
   const session = sessions.get(interaction.channelId);
   if (!session) {
@@ -310,6 +372,12 @@ export async function resolveSessionRoll(interaction) {
       ephemeral: true,
     });
     return;
+  }
+  if (!session.pendingRoll) {
+    const recovered = recoverPendingRoll(session);
+    if (recovered) {
+      console.warn(`[mechanics-recovery] restored ${recovered.move} for session ${session.threadId}`);
+    }
   }
   if (!session.pendingRoll) {
     await interaction.reply({
@@ -1741,7 +1809,12 @@ async function processSessionClose(thread, session, close) {
       rolls: publicRolls,
       active_arc_ids: reconciledState.active_arc_ids || [],
       touched_arc_ids: arcPatches.map(item => item.id).filter(Boolean),
-      pacing_audit: auditSession({ messages: session.messages, rolls: session.rolls, close }),
+      pacing_audit: auditSession({
+        messages: session.messages,
+        rolls: session.rolls,
+        close,
+        mechanicsGateTriggers: session.mechanicsGateTriggers,
+      }),
     };
     try {
       await writeFile(

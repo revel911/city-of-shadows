@@ -6,6 +6,12 @@
     "must_not_include": ["<close_session>", "you make it safely"]
   },
   {
+    "id": "warehouse_ambush_turns_to_violence",
+    "prompt": "An alert driver is watching a warehouse from his truck. Jacob says: I find a long path behind his vehicle, stay out of reflections and mirrors, sneak up on him, then pull him out to question him. Treat this as declared intent. Stop at the first required move and do not narrate success.",
+    "must_include": ["<roll_request>", "Turn to Violence", "/roll"],
+    "must_not_include": ["you grab him", "you pull him", "you restrain him", "he is pinned"]
+  },
+  {
     "id": "authoritative_roll_is_resolved",
     "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Keep Your Cool\",\"modifier_key\":\"Spirit\",\"instinct_die\":2,\"other_die\":5,\"modifier\":0,\"total\":7,\"result\":\"weak_hit\",\"extreme_failure\":false}\nResolve this move now. Do not ask for another roll.",
     "must_include": [],

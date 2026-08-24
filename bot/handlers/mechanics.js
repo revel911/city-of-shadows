@@ -16,8 +16,163 @@ export const BASIC_MOVE_MODIFIERS = Object.freeze({
   'refuse to honor a debt': { type: 'status_difference' },
 });
 
+const PERSON_TARGET = String.raw`(?:him|her|them|the\s+(?:driver|guard|man|woman|guy|person|cop|officer|stranger|attacker|hunter|vampire|werewolf))`;
+const FIRST_PERSON = String.raw`(?:i|we)(?:\s+(?:try|attempt|want|mean|plan|intend|am going|are going|will|'ll))?(?:\s+to)?`;
+
+// This gate intentionally covers only unmistakable basic-move declarations.
+// Ambiguous fictional triggers remain the MC's responsibility.
+const HIGH_CONFIDENCE_MOVE_PATTERNS = [
+  {
+    move: 'Turn to Violence',
+    reason: 'Use force against someone who can resist or retaliate',
+    patterns: [
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:punch|kick|stab|shoot|tackle|choke|strangle|ambush|attack|kill)\\b`, 'i'),
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:grab|hit|fight|hurt|restrain|pin|overpower)\\s+${PERSON_TARGET}\\b`, 'i'),
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:pull|drag|yank|throw)\\s+${PERSON_TARGET}\\s+(?:out|away|down|aside|from|into|onto)\\b`, 'i'),
+      new RegExp(`\\b(?:and\\s+then|then|and)\\s+(?:grab|restrain|pin|attack|pull|drag|yank)\\s+${PERSON_TARGET}\\b`, 'i'),
+      /\b(?:grab|seize)\s+(?:his|her|their)\s+(?:collar|throat|arm|wrist|jacket|weapon)\b/i,
+      /\bI\s+turn\s+to\s+violence\b/i,
+    ],
+  },
+  {
+    move: 'Escape a Situation',
+    reason: 'Take an opening to get away from immediate danger',
+    patterns: [
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:escape|flee|bolt|run)\\s+(?:from|away|out|for the (?:door|exit))\\b`, 'i'),
+      /\bI\s+(?:make|dash|sprint)\s+for\s+the\s+(?:door|exit|window|stairs|car)\b/i,
+    ],
+  },
+  {
+    move: 'Persuade an NPC',
+    reason: 'Press an NPC with a threat, promise, bribe, or seduction',
+    patterns: [
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:threaten|bribe|blackmail|seduce)\\b`, 'i'),
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:promise|offer)\\b[^.!?]{0,80}\\b(?:if|in exchange|to get)\\b`, 'i'),
+    ],
+  },
+  {
+    move: 'Mislead, Distract, or Trick',
+    reason: 'Deliberately fool or distract someone',
+    patterns: [
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:lie to|trick|mislead|distract|deceive)\\s+${PERSON_TARGET}\\b`, 'i'),
+      /\bI\s+(?:create|make|cause)\s+(?:a\s+)?distraction\b/i,
+    ],
+  },
+  {
+    move: 'Figure Someone Out',
+    reason: 'Closely read someone for their motives or pressure points',
+    patterns: [
+      new RegExp(`\\b${FIRST_PERSON}\\s+(?:figure out|read|size up)\\s+${PERSON_TARGET}\\b`, 'i'),
+    ],
+  },
+  {
+    move: 'Let It Out',
+    reason: 'Release supernatural power under pressure',
+    patterns: [/\bI\s+(?:let it out|release|unleash)\s+(?:my\s+)?(?:power|magic|rage|beast|gift|ability)\b/i],
+  },
+  {
+    move: 'Keep Your Cool',
+    reason: 'Keep control while immediate danger closes in',
+    patterns: [/\bI\s+(?:try|need|want)?\s*(?:to\s+)?keep\s+my\s+cool\b/i],
+  },
+];
+
 function normalizedMove(move) {
   return String(move || '').trim().toLowerCase();
+}
+
+function actionableText(text) {
+  if (/^\s*(?:what if|would it|could I|can I|if I were to)\b/i.test(text)) return '';
+  return text.replace(
+    /\b(?:I|we)\s+(?:do not|don't|won't|wouldn't)\s+(?:attack|grab|hit|hurt|kill|threaten|flee|escape)(?:\s+(?:him|her|them))?\b/gi,
+    ''
+  );
+}
+
+export function detectMechanicsExpectation(playerText) {
+  const text = actionableText(String(playerText || '').trim());
+  if (!text) return null;
+  for (const candidate of HIGH_CONFIDENCE_MOVE_PATTERNS) {
+    if (!candidate.patterns.some(pattern => pattern.test(text))) continue;
+    const canonical = BASIC_MOVE_MODIFIERS[normalizedMove(candidate.move)];
+    return {
+      move: candidate.move,
+      modifier_type: canonical.type,
+      modifier_key: canonical.key || null,
+      circle: null,
+      forward: 0,
+      reason: candidate.reason,
+      confidence: 'high',
+    };
+  }
+  return null;
+}
+
+export function buildMechanicsGateContext(expectation, depth = 3) {
+  if (!expectation) return '';
+  return [
+    '[SYSTEM — REQUIRED MECHANICS GATE]',
+    `The player’s declared action clearly triggers ${expectation.move}: ${expectation.reason}.`,
+    'Treat their words as intent and method, not as a successful outcome.',
+    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly ask the player to use /roll, and stop before resolving the triggered action.',
+    depth <= 3
+      ? 'The player’s mechanics depth allows you to name the move.'
+      : 'Keep the move name and modifier behind the curtain. The visible prose must still ask for /roll.',
+    'Do not substitute a different move unless newly supplied canonical fiction makes this trigger impossible.',
+  ].join('\n');
+}
+
+function expectedRequest(expectation) {
+  return {
+    move: expectation.move,
+    modifier_type: expectation.modifier_type,
+    modifier_key: expectation.modifier_key,
+    circle: expectation.circle || null,
+    forward: Number.isInteger(expectation.forward) ? expectation.forward : 0,
+    reason: expectation.reason || '',
+  };
+}
+
+export function buildMechanicsFallback(expectation, depth = 3) {
+  const visible = depth <= 3
+    ? `That triggers **${expectation.move}**. Use \`/roll\`.`
+    : 'The outcome is uncertain. Use `/roll`.';
+  return `${visible}\n\n<roll_request>${JSON.stringify(expectedRequest(expectation))}</roll_request>`;
+}
+
+const PREMATURE_OUTCOME_PATTERNS = Object.freeze({
+  'turn to violence': [
+    /\byou\s+(?:successfully\s+)?(?:grab|seize|hit|punch|kick|stab|shoot|tackle|choke|restrain|pin|overpower|drag|yank|pull)\b/i,
+    /\b(?:your grip locks|your hand closes|he is pinned|she is pinned|they are pinned)\b/i,
+  ],
+  'escape a situation': [/\byou\s+(?:escape|get away|make it out|reach safety)\b/i],
+  'persuade an npc': [/\b(?:they|he|she)\s+(?:agree|agrees|relent|relents|accept|accepts|do as you ask|does as you ask)\b/i],
+  'mislead, distract, or trick': [/\b(?:they|he|she)\s+(?:is|are)\s+(?:fooled|distracted|deceived)\b/i],
+  'figure someone out': [/\byou\s+(?:realize|know|understand)\s+(?:that|what|why|who)\b/i],
+  'keep your cool': [/\byou\s+(?:make it safely|stay calm|avoid the danger)\b/i],
+});
+
+export function mechanicsResponseProblems(text, expectation) {
+  if (!expectation) return [];
+  const problems = [];
+  const request = parseRollRequest(text);
+  if (!request) {
+    problems.push(/<roll_request>/i.test(String(text || ''))
+      ? 'malformed required roll_request'
+      : `missing required ${expectation.move} roll_request`);
+    return problems;
+  }
+  if (normalizedMove(request.move) !== normalizedMove(expectation.move)) {
+    problems.push(`required ${expectation.move} but requested ${request.move}`);
+  }
+  const visible = stripRollRequest(text).trim();
+  if (!/\/roll\b/i.test(visible)) problems.push('required roll prompt is not visible');
+  if (!/\/roll[`.!*_\s]*$/i.test(visible)) problems.push('response continues after the required roll prompt');
+  const premature = PREMATURE_OUTCOME_PATTERNS[normalizedMove(expectation.move)] || [];
+  if (premature.some(pattern => pattern.test(visible))) {
+    problems.push(`resolved ${expectation.move} before the roll`);
+  }
+  return problems;
 }
 
 function integer(value, fallback = 0) {
@@ -343,7 +498,12 @@ export function mergeDebtPatches(doc, patches = [], { sessionId, stamp } = {}) {
   return { doc: next, rejected };
 }
 
-export function auditSession({ messages = [], rolls = [], close = {} } = {}) {
+export function auditSession({
+  messages = [],
+  rolls = [],
+  close = {},
+  mechanicsGateTriggers = 0,
+} = {}) {
   const assistantText = messages
     .filter(message => message.role === 'assistant')
     .map(message => String(message.content || ''))
@@ -352,6 +512,7 @@ export function auditSession({ messages = [], rolls = [], close = {} } = {}) {
     .filter(key => Boolean(close[key])).length;
   return {
     meaningful_choice_prompted: /\?|choose|what do you do|which do you/i.test(assistantText),
+    mechanics_gate_triggers: Math.max(0, integer(mechanicsGateTriggers)),
     consequential_rolls: rolls.length,
     world_state_touches: worldTouches,
     handoff_written: Boolean(close.handoff),

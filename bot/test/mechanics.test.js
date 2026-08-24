@@ -1,15 +1,21 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  auditSession,
   BASIC_MOVE_MODIFIERS,
+  buildMechanicsFallback,
+  buildMechanicsGateContext,
   classifyRoll,
   createRollRecord,
+  detectMechanicsExpectation,
   deriveActiveArcIds,
   formatRoll,
   mergeDebtPatches,
+  mechanicsResponseProblems,
   parseRollRequest,
   reconcileArcs,
   reconcileCharacterState,
+  stripRollRequest,
 } from '../handlers/mechanics.js';
 
 const state = {
@@ -19,6 +25,82 @@ const state = {
   circle_status: { Mortalis: 1, Night: 2, Power: 0, Wild: 0 },
   last_session: 'session_009',
 };
+
+const warehouseAction = 'I find a long path to behind his vehicle, staying out of reflections and mirrors. I want to sneak up on him and then pull him out to question.';
+
+test('warehouse ambush is mechanically gated as Turn to Violence', () => {
+  const expected = detectMechanicsExpectation(warehouseAction);
+  assert.equal(expected?.move, 'Turn to Violence');
+  assert.equal(expected?.modifier_key, 'Blood');
+  assert.match(buildMechanicsGateContext(expected), /intent and method/i);
+  assert.match(buildMechanicsGateContext(expected), /stop before resolving/i);
+  assert.match(buildMechanicsGateContext(expected, 5), /behind the curtain/i);
+});
+
+test('mechanics gate catches other explicit basic move declarations', () => {
+  assert.equal(detectMechanicsExpectation('I flee from the gunman through the back door.')?.move, 'Escape a Situation');
+  assert.equal(detectMechanicsExpectation('I threaten him until he gives me the key.')?.move, 'Persuade an NPC');
+  assert.equal(detectMechanicsExpectation('I lie to her about who sent me.')?.move, 'Mislead, Distract, or Trick');
+  assert.equal(detectMechanicsExpectation('I size up the guard and read him.')?.move, 'Figure Someone Out');
+  assert.equal(detectMechanicsExpectation('I unleash my power and let the shadows in.')?.move, 'Let It Out');
+});
+
+test('mechanics gate avoids object handling, negation, and hypothetical questions', () => {
+  assert.equal(detectMechanicsExpectation('I grab my coat and leave.'), null);
+  assert.equal(detectMechanicsExpectation('I do not attack him.'), null);
+  assert.equal(detectMechanicsExpectation('What if I attack him?'), null);
+  assert.equal(detectMechanicsExpectation('I hit the streets to find a gun dealer.'), null);
+  assert.equal(detectMechanicsExpectation('I fight the urge to answer him.'), null);
+  assert.equal(detectMechanicsExpectation('I do not attack him. I restrain him.')?.move, 'Turn to Violence');
+  assert.equal(detectMechanicsExpectation('I attack Priest before he reaches the door.')?.move, 'Turn to Violence');
+});
+
+function requested(text, request) {
+  return text + '\n<roll_request>' + JSON.stringify(request) + '</roll_request>';
+}
+
+test('required move response cannot skip, change, continue past, or pre-resolve the roll', () => {
+  const expected = detectMechanicsExpectation(warehouseAction);
+  assert.match(mechanicsResponseProblems('You pull him from the truck.', expected)[0], /missing required/i);
+
+  const wrong = requested('Pressure builds. Use /roll.', {
+    move: 'Keep Your Cool', modifier_type: 'stat', modifier_key: 'Spirit',
+  });
+  assert.ok(mechanicsResponseProblems(wrong, expected).some(problem => /required Turn to Violence/i.test(problem)));
+
+  const continued = requested('Your hand reaches the door. Use /roll. Then he spots you.', {
+    move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
+  });
+  assert.ok(mechanicsResponseProblems(continued, expected).includes('response continues after the required roll prompt'));
+
+  const premature = requested('You grab him and pull him halfway out. Use /roll.', {
+    move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
+  });
+  assert.ok(mechanicsResponseProblems(premature, expected).some(problem => /resolved Turn to Violence/i.test(problem)));
+});
+
+test('valid gated response and deterministic fallback create a canonical pending request', () => {
+  const expected = detectMechanicsExpectation(warehouseAction);
+  const valid = requested('You reach the truck’s blind side as the driver shifts. That triggers Turn to Violence. Use /roll.', {
+    move: 'Turn to Violence',
+    modifier_type: 'stat',
+    modifier_key: 'Blood',
+    reason: 'Restrain the alert driver',
+  });
+  assert.deepEqual(mechanicsResponseProblems(valid, expected), []);
+
+  const fallback = buildMechanicsFallback(expected, 3);
+  assert.match(fallback, /Turn to Violence/);
+  assert.match(fallback, /\/roll/);
+  assert.equal(parseRollRequest(fallback)?.modifier_key, 'Blood');
+  assert.doesNotMatch(stripRollRequest(buildMechanicsFallback(expected, 5)), /Turn to Violence/);
+});
+
+test('session pacing audit records mechanics-gate activity', () => {
+  const audit = auditSession({ mechanicsGateTriggers: 2, rolls: [{}] });
+  assert.equal(audit.mechanics_gate_triggers, 2);
+  assert.equal(audit.consequential_rolls, 1);
+});
 
 test('every canonical basic move has a deterministic modifier source', () => {
   const expected = [
