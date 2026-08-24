@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-25] The Ley Line Runs Off-Tempo Again — Unofficial Detection
+
+**Hubs:** The University | **Circles:** Power
+
+The ley line under Monroe Park ran measurably off-tempo for the fourth time in seven weeks. This time, the anomaly was detected by a set of instruments that are not part of the official Consilium monitoring network. Whoever set them up has not come forward. The previous three instances were logged and filed by junior Consilium members who were subsequently not invited to Dr. Sebastian Olave's closed faculty meetings in Harris Hall. The park itself shows no visible change, but those who track such things are increasingly concerned that the Overwrite is not just rewriting the city's history—but its physics.
+
 ## [2026-08-23] The Ley Line Runs Off-Tempo Again
 
 **Hubs:** The University | **Circles:** Power

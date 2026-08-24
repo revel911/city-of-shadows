@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-23",
+  "last_updated": "2026-08-24",
   "arcs": [
     {
       "id": "arc-001",
@@ -23,8 +23,8 @@
       "id": "arc-002",
       "title": "The Fae-Adjacent Specimen",
       "type": "personal",
-      "escalation": 2,
-      "status": "active",
+      "escalation": 3,
+      "status": "escalating",
       "hub_ids": [
         "hub_shockoe_bottom"
       ],
@@ -33,8 +33,12 @@
         "npc_maren_voss"
       ],
       "character_ids": [],
-      "summary": "A fae-adjacent creature — old, a things-that-remember entity — slipped into temporal displacement inside an Overwrite pocket in a Shockoe Bottom warehouse. It was sheltered there by Maren Voss's ritual circle because it asked for help; it was hiding from The Collector. Weakness: cannot tolerate unresolved questions. Five-day retrieval deadline active from 2026-04-24.",
-      "mc_notes": "Fae/court/monarch lore integration with WoD Supplement v2 still pending — do not proceed with fae contact establishment until lore is confirmed. Specimen carries an unresolved-questions weakness usable against it. 5-day deadline is from 2026-04-24."
+      "summary": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals may now take direct action.",
+      "mc_notes": "Fae/court/monarch lore integration with WoD Supplement v2 still pending — do not proceed with fae contact establishment until lore is confirmed. Specimen carries an unresolved-questions weakness usable against it. 5-day deadline is from 2026-04-24.",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260824192607",
+      "last_updated": "2026-08-24",
+      "revision": 1
     },
     {
       "id": "arc-003",

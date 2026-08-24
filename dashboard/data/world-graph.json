@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-23",
+  "as_of": "2026-08-24",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1887,10 +1887,10 @@
         "label": "The Fae-Adjacent Specimen",
         "kind": "arc",
         "hub_id": "hub_shockoe_bottom",
-        "status": "active",
+        "status": "escalating",
         "subtype": "personal",
-        "escalation": 2,
-        "details": "A fae-adjacent creature — old, a things-that-remember entity — slipped into temporal displacement inside an Overwrite pocket in a Shockoe Bottom warehouse. It was sheltered there by Maren Voss's ritual circle because it asked for help; it was hiding from The Collector. Weakness: cannot tolerate unresolved questions. Five-day retrieval deadline active from 2026-04-24."
+        "escalation": 3,
+        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals may now take direct action."
       },
       "position": {
         "x": -784,

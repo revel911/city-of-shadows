@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "8bc95ad45e5d8e9695164fd3732603bea0821cbb",
-  "last_successful_run": "2026-08-24T16:44:26.401Z",
-  "last_city_turn": "2026-08-23",
+  "last_processed_commit": "814ebbc97b2f4bcc517e85428008e692118694da",
+  "last_successful_run": "2026-08-24T19:26:07.273Z",
+  "last_city_turn": "2026-08-24",
   "arc_cooldowns": {},
   "runs": [
     {
@@ -71,6 +71,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no session evidence provided; no changes made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260824192607",
+      "phase": "city-turn",
+      "completed_at": "2026-08-24T19:26:07.273Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_petra_holt",
+        "arc-002",
+        "hub_university"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "The Overwrite continues to escalate city-wide. The ley line under Monroe Park ran off-tempo again, now detected by unofficial instruments. In Shockoe Bottom, the fae-adjacent specimen's five-day retrieval deadline from April 24th has passed, escalating the situation with Petra Holt's principals. The Collector remains active and may have noticed warehouse activity. The compromised hunter network investigation continues, with the sealed field-research case potentially containing the traitor's name",
       "dry_run": false
     }
   ],
