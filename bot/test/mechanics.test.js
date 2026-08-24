@@ -5,6 +5,7 @@ import {
   BASIC_MOVE_MODIFIERS,
   buildMechanicsFallback,
   buildMechanicsGateContext,
+  buildMoveAuditContext,
   classifyRoll,
   createRollRecord,
   detectMechanicsExpectation,
@@ -27,6 +28,7 @@ const state = {
 };
 
 const warehouseAction = 'I find a long path to behind his vehicle, staying out of reflections and mirrors. I want to sneak up on him and then pull him out to question.';
+const canalRopeAction = 'I throw the rope hoping to loop it. The rope is 100-120 feet. The objective is to loop it and use the rope to pull the thing to us.';
 
 test('warehouse ambush is mechanically gated as Turn to Violence', () => {
   const expected = detectMechanicsExpectation(warehouseAction);
@@ -35,6 +37,44 @@ test('warehouse ambush is mechanically gated as Turn to Violence', () => {
   assert.match(buildMechanicsGateContext(expected), /intent and method/i);
   assert.match(buildMechanicsGateContext(expected), /stop before resolving/i);
   assert.match(buildMechanicsGateContext(expected, 5), /behind the curtain/i);
+});
+
+test('canal transcript gates the hazardous rope cast as Keep Your Cool', () => {
+  const expected = detectMechanicsExpectation(canalRopeAction, {
+    lastAssistant: 'The wet concrete ends at the canal. A pale hand is held against the lock gate by the current.',
+  });
+  assert.equal(expected?.move, 'Keep Your Cool');
+  assert.equal(expected?.modifier_key, 'Spirit');
+
+  const skipped = 'The rope lands short. You pull it back and throw again. This time the loop catches.';
+  assert.match(mechanicsResponseProblems(skipped, expected)[0], /missing required/i);
+
+  const premature = requested('The rope catches around the shape. Use /roll.', {
+    move: 'Keep Your Cool', modifier_type: 'stat', modifier_key: 'Spirit',
+  });
+  assert.ok(mechanicsResponseProblems(premature, expected).some(problem => /resolved Keep Your Cool/i.test(problem)));
+});
+
+test('contextual danger triggers Keep Your Cool without rolling routine transcript beats', () => {
+  assert.equal(detectMechanicsExpectation('I climb the fire escape.', {
+    lastAssistant: 'The rusted ladder hangs over a three-story drop.',
+  })?.move, 'Keep Your Cool');
+  assert.equal(detectMechanicsExpectation('I drive there quickly but stay cautious.', {
+    lastAssistant: 'The streets are empty and the canal is only a few minutes away.',
+  }), null);
+  assert.equal(detectMechanicsExpectation('Know anything about this?'), null);
+  assert.equal(detectMechanicsExpectation('He can wait. They all think they are important.'), null);
+  assert.equal(detectMechanicsExpectation('I run down to Tommy and tell him to help me throw this.', {
+    lastAssistant: 'Tommy crouches at the water’s edge beside the lock gate.',
+  }), null);
+  assert.equal(detectMechanicsExpectation('I pause and try to get a sense of what this is.'), null);
+});
+
+test('move audit surfaces a roll drought without forcing routine actions', () => {
+  assert.match(buildMoveAuditContext(0), /0 player turns? since the last move request/i);
+  assert.match(buildMoveAuditContext(3), /Roll drought: 3 player turns/i);
+  assert.match(buildMoveAuditContext(3), /Do not manufacture a roll/i);
+  assert.match(buildMoveAuditContext(3), /supernatural sense/i);
 });
 
 test('mechanics gate catches other explicit basic move declarations', () => {

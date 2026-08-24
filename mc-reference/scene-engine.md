@@ -117,3 +117,20 @@ Relationship scenes work through competing wants, vulnerability, boundaries, and
 ## Failure and forward motion
 
 Failure changes the situation. It can expose the character, advance another faction, consume time, create a debt, separate allies, worsen position, reveal an ugly truth, or offer success at a cost. It must not erase a reasonable action or stall play until the player guesses the MC's preferred solution.
+
+## Mechanical cadence
+
+Fiction-first does not mean mechanics-last. On every player turn, compare the
+declared action with all basic moves and the active character's exact moves
+before narrating an uncertain outcome.
+
+- Routine travel, ordinary questions, passive observation, retrieving gear, and
+  unopposed actions do not need rolls.
+- A precarious physical task under immediate danger or pressure can trigger Keep
+  Your Cool when failure would materially change the situation.
+- If three player turns pass without a move, audit the scene. Bring existing
+  danger, opposition, or cost onstage so meaningful choices can engage the
+  rules. Never manufacture a roll for a routine action merely to satisfy cadence.
+- If a player asks to “sense” or “feel out” an object or place and it is unclear
+  whether they mean ordinary observation or supernatural power, ask which they
+  mean. Do not silently grant supernatural insight or misuse Figure Someone Out.

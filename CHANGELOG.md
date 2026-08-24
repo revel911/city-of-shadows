@@ -26,12 +26,14 @@ platform behaves, not API compatibility.
   the outcome, and use the canonical modifier. Skipped, malformed, mismatched,
   continued, or prematurely resolved move requests are regenerated, with a
   bot-authored fallback and `/roll` recovery if the model still fails.
+- Contextual danger now participates in move detection, including precarious
+  physical tasks that trigger Keep Your Cool. Every active-play turn receives a
+  move audit, and a three-turn roll drought tells the MC to bring existing
+  pressure onstage without manufacturing checks for routine actions. Pending
+  rolls must be resolved or explicitly canceled before narration continues.
 - Normal turns now receive lightweight prose-quality checks for accidental word
   repetition, broken pronoun clauses, and contradictory physical details.
   Rejected prose is regenerated before it reaches Discord.
-
-> **Note:** this migration currently lives in the working tree and is not yet
-> committed. README and OPERATOR docs have been updated to match it.
 
 ## [0.1.0] — 2026-05-16
 

@@ -18,6 +18,9 @@ export const BASIC_MOVE_MODIFIERS = Object.freeze({
 
 const PERSON_TARGET = String.raw`(?:him|her|them|the\s+(?:driver|guard|man|woman|guy|person|cop|officer|stranger|attacker|hunter|vampire|werewolf))`;
 const FIRST_PERSON = String.raw`(?:i|we)(?:\s+(?:try|attempt|want|mean|plan|intend|am going|are going|will|'ll))?(?:\s+to)?`;
+const IMMEDIATE_DANGER = /\b(?:alert|armed|aiming|watching|scanning|chasing|pursuing|attack|attacker|gun|knife|fire|flames|collapsing|buckling|unstable|rusted|slick|slippery|edge|ledge|roof|current|deep water|canal|river|traffic|moving vehicle|trap|explosive|fall)\b/i;
+const PRESSURED_PHYSICAL_ACTION = /\b(?:I|we)\s+(?:(?:try|attempt|want|need|mean|plan|am going|will)\s+to\s+)?(?:climb|jump|cross|balance|swim|wade|haul|lift|force|break|catch|swing|leap|crawl|sneak|creep)\b/i;
+const STEALTH_PRESSURE = /\b(?:unnoticed|unseen|quietly|silently|out of (?:sight|view)|behind (?:him|her|them)|blind side|reflections?|mirrors?|shadows?)\b/i;
 
 // This gate intentionally covers only unmistakable basic-move declarations.
 // Ambiguous fictional triggers remain the MC's responsibility.
@@ -73,7 +76,10 @@ const HIGH_CONFIDENCE_MOVE_PATTERNS = [
   {
     move: 'Keep Your Cool',
     reason: 'Keep control while immediate danger closes in',
-    patterns: [/\bI\s+(?:try|need|want)?\s*(?:to\s+)?keep\s+my\s+cool\b/i],
+    patterns: [
+      /\bI\s+(?:try|need|want)?\s*(?:to\s+)?keep\s+my\s+cool\b/i,
+      /\b(?:I|we)\s+(?:throw|cast|toss)\b[^.!?]{0,100}\brope\b[^.!?]{0,100}\b(?:loop|hook|catch|snag|haul|pull)\b/i,
+    ],
   },
 ];
 
@@ -89,7 +95,7 @@ function actionableText(text) {
   );
 }
 
-export function detectMechanicsExpectation(playerText) {
+export function detectMechanicsExpectation(playerText, { lastAssistant = '' } = {}) {
   const text = actionableText(String(playerText || '').trim());
   if (!text) return null;
   for (const candidate of HIGH_CONFIDENCE_MOVE_PATTERNS) {
@@ -105,7 +111,37 @@ export function detectMechanicsExpectation(playerText) {
       confidence: 'high',
     };
   }
+  const prior = String(lastAssistant || '');
+  if (
+    PRESSURED_PHYSICAL_ACTION.test(text)
+    && (IMMEDIATE_DANGER.test(text) || IMMEDIATE_DANGER.test(prior) || STEALTH_PRESSURE.test(text))
+  ) {
+    return {
+      move: 'Keep Your Cool',
+      modifier_type: 'stat',
+      modifier_key: 'Spirit',
+      circle: null,
+      forward: 0,
+      reason: 'Attempt a consequential physical action under immediate pressure',
+      confidence: 'contextual',
+    };
+  }
   return null;
+}
+
+export function buildMoveAuditContext(turnsWithoutRoll = 0) {
+  const drought = Math.max(0, Number.isInteger(turnsWithoutRoll) ? turnsWithoutRoll : 0);
+  return [
+    '[SYSTEM — REQUIRED MOVE AUDIT]',
+    'Before narrating any outcome, compare the player’s present action against every basic move and every exact move on the active character sheet.',
+    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, visibly ask for /roll, and stop before the outcome.',
+    'Do not demand a roll for routine travel, ordinary questions, passive observation, retrieving gear, or unopposed actions with no meaningful consequence.',
+    'Keep Your Cool applies when immediate pressure or danger makes a physical attempt consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
+    'If the player might mean ordinary observation or a supernatural sense, ask one concise clarification instead of silently granting supernatural insight.',
+    drought >= 3
+      ? `Roll drought: ${drought} player turns have passed without a move. Bring existing danger, opposition, or cost onstage now so the next meaningful action can engage the rules. Do not manufacture a roll for a routine action.`
+      : `Roll cadence: ${drought} player turn${drought === 1 ? '' : 's'} since the last move request.`,
+  ].join('\n');
 }
 
 export function buildMechanicsGateContext(expectation, depth = 3) {
@@ -149,7 +185,10 @@ const PREMATURE_OUTCOME_PATTERNS = Object.freeze({
   'persuade an npc': [/\b(?:they|he|she)\s+(?:agree|agrees|relent|relents|accept|accepts|do as you ask|does as you ask)\b/i],
   'mislead, distract, or trick': [/\b(?:they|he|she)\s+(?:is|are)\s+(?:fooled|distracted|deceived)\b/i],
   'figure someone out': [/\byou\s+(?:realize|know|understand)\s+(?:that|what|why|who)\b/i],
-  'keep your cool': [/\byou\s+(?:make it safely|stay calm|avoid the danger)\b/i],
+  'keep your cool': [
+    /\byou\s+(?:make it safely|stay calm|avoid the danger)\b/i,
+    /\b(?:the rope (?:lands|falls|catches|hooks|snags|holds)|the loop settles|you (?:make the throw|complete the crossing|reach the other side|clear the gap))\b/i,
+  ],
 });
 
 export function mechanicsResponseProblems(text, expectation) {

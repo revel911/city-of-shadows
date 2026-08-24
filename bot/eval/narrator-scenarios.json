@@ -12,6 +12,12 @@
     "must_not_include": ["you grab him", "you pull him", "you restrain him", "he is pinned"]
   },
   {
+    "id": "canal_rope_hazard_keeps_cool",
+    "prompt": "Jacob stands on wet concrete beside a dark canal with a strong current. A pale hand-shaped object is caught 100 feet away in a lock gate. He says: I throw the rope hoping to loop it so we can pull the thing to us. Stop at the first required move and do not narrate whether the rope catches.",
+    "must_include": ["<roll_request>", "Keep Your Cool", "/roll"],
+    "must_not_include": ["rope catches", "loop settles", "lands short", "throw again"]
+  },
+  {
     "id": "authoritative_roll_is_resolved",
     "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Keep Your Cool\",\"modifier_key\":\"Spirit\",\"instinct_die\":2,\"other_die\":5,\"modifier\":0,\"total\":7,\"result\":\"weak_hit\",\"extreme_failure\":false}\nResolve this move now. Do not ask for another roll.",
     "must_include": [],

@@ -22,6 +22,7 @@ import {
   auditSession,
   buildMechanicsFallback,
   buildMechanicsGateContext,
+  buildMoveAuditContext,
   createRollRecord,
   detectMechanicsExpectation,
   deriveActiveArcIds,
@@ -72,6 +73,7 @@ export async function startSession(thread, player) {
     rolls: [],
     pendingRoll: null,
     mechanicsGateTriggers: 0,
+    turnsWithoutRoll: 0,
     mechanicsDepth: profile?.mechanics_depth || 3,
     rulesProfile: {
       isNew: player.id === '__new__',
@@ -112,6 +114,17 @@ export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
   return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS
     ? SHORT_TURN_MAX_CHARS
     : TURN_MAX_CHARS;
+}
+
+export function pendingRollGuard(session, playerContent) {
+  if (!session?.pendingRoll) return null;
+  if (/^\s*(?:cancel(?: that)?|never mind|nevermind|I (?:do not|don't) do that|change of plan)\s*[.!]?\s*$/i.test(playerContent)) {
+    session.pendingRoll = null;
+    session.turnsWithoutRoll = 0;
+    return 'That action is canceled. Tell me what you do instead.';
+  }
+  const move = session.mechanicsDepth <= 3 ? ` for **${session.pendingRoll.move}**` : '';
+  return `A move is still waiting${move}. Use \`/roll\`, or say **cancel that** to choose a different action.`;
 }
 
 function visibleResponseText(response) {
@@ -238,6 +251,19 @@ export async function handleMessage(message) {
 
   await lock(session, async () => {
     await refreshSessionWorld(session);
+    const hadPendingRoll = Boolean(session.pendingRoll);
+    const pendingGuard = pendingRollGuard(session, message.content);
+    if (pendingGuard) {
+      if (hadPendingRoll && !session.pendingRoll) {
+        session.messages.push({
+          role: 'user',
+          content: '[SYSTEM — PENDING ACTION CANCELED]\nThe player withdrew the action before rolling. Do not resolve it or apply consequences.',
+        });
+        session.messages.push({ role: 'assistant', content: pendingGuard });
+      }
+      await message.channel.send(pendingGuard);
+      return;
+    }
     const lastAssistant = [...session.messages].reverse()
       .find(entry => entry.role === 'assistant')?.content || '';
     const priorPlayerText = session.lastPlayerText || '';
@@ -255,10 +281,16 @@ export async function handleMessage(message) {
     }
     session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
     const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
-    const mechanicsExpectation = oocRecap ? null : detectMechanicsExpectation(message.content);
+    const mechanicsActive = !oocRecap && session.player.id !== '__new__';
+    const mechanicsExpectation = mechanicsActive
+      ? detectMechanicsExpectation(message.content, { lastAssistant })
+      : null;
     if (mechanicsExpectation) {
       session.mechanicsGateTriggers += 1;
+      session.turnsWithoutRoll = 0;
       console.log(`[mechanics-gate] session=${session.threadId} move=${mechanicsExpectation.move}`);
+    } else if (mechanicsActive) {
+      session.turnsWithoutRoll += 1;
     }
     const sceneDirection = buildSceneDirectorContext({
       playerText: message.content,
@@ -271,6 +303,7 @@ export async function handleMessage(message) {
       content: [
         npcHydration,
         sceneDirection,
+        mechanicsActive ? buildMoveAuditContext(session.turnsWithoutRoll) : '',
         buildMechanicsGateContext(mechanicsExpectation, session.mechanicsDepth),
         `[PLAYER MESSAGE]\n${userContent}`,
       ]
@@ -351,9 +384,12 @@ async function refreshSessionWorld(session) {
 
 export function recoverPendingRoll(session) {
   if (!session || session.pendingRoll) return session?.pendingRoll || null;
-  const expectation = detectMechanicsExpectation(session.lastPlayerText);
+  const lastAssistant = [...(session.messages || [])].reverse()
+    .find(entry => entry.role === 'assistant')?.content || '';
+  const expectation = detectMechanicsExpectation(session.lastPlayerText, { lastAssistant });
   if (!expectation) return null;
   session.pendingRoll = expectation;
+  session.turnsWithoutRoll = 0;
   return expectation;
 }
 
@@ -402,6 +438,7 @@ export async function resolveSessionRoll(interaction) {
       characterId: session.player.id,
     });
     session.pendingRoll = null;
+    session.turnsWithoutRoll = 0;
     session.rolls.push(record);
     session.messages.push({
       role: 'user',
@@ -426,6 +463,7 @@ async function postMCResponse(thread, response, session) {
   const rollRequest = parseRollRequest(response);
   if (rollRequest) {
     session.pendingRoll = rollRequest;
+    session.turnsWithoutRoll = 0;
     response = stripRollRequest(response);
   } else if (/<roll_request>/.test(response)) {
     console.warn(`[session ${session.threadId}] ignored malformed roll_request`);

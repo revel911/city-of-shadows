@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   playerFacingTurnLimit,
+  pendingRollGuard,
   proseQualityProblems,
   recoverPendingRoll,
   responseSafetyProblems,
@@ -87,4 +88,24 @@ test('/roll recovery restores an obvious missed move but does not invent one', (
   const quietSession = { pendingRoll: null, lastPlayerText: 'I watch the truck and wait.' };
   assert.equal(recoverPendingRoll(quietSession), null);
   assert.equal(quietSession.pendingRoll, null);
+});
+
+test('pending move blocks narrative bypass while allowing explicit cancellation', () => {
+  const visibleSession = {
+    mechanicsDepth: 2,
+    pendingRoll: { move: 'Keep Your Cool' },
+  };
+  assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /Keep Your Cool/);
+  assert.ok(visibleSession.pendingRoll);
+
+  const hiddenSession = {
+    mechanicsDepth: 5,
+    pendingRoll: { move: 'Turn to Violence' },
+  };
+  assert.doesNotMatch(pendingRollGuard(hiddenSession, 'What happens?'), /Turn to Violence/);
+
+  assert.match(pendingRollGuard(visibleSession, 'cancel that'), /canceled/i);
+  assert.equal(visibleSession.pendingRoll, null);
+  assert.equal(visibleSession.turnsWithoutRoll, 0);
+  assert.equal(pendingRollGuard(visibleSession, 'I leave.'), null);
 });
