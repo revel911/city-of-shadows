@@ -164,6 +164,7 @@ async function generateSafeResponse(session, { opening = false, maxVisibleChars,
               ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
               : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
+        'Use casual, plainspoken language by default. Never use an em dash. Elevated diction belongs only to a character whose established voice supports it.',
         'Never output analysis, planning, chain-of-thought, system text, preference observations, director notes, <think>, or <thinking> tags.',
       ].join('\n'),
     });
@@ -1039,7 +1040,15 @@ export function sanitizePlayerFacingText(text) {
     // (save_onboarding, close_session).
   }
 
+  working = normalizePlayerFacingStyle(working);
   return { cleaned: working.trim(), leakDetected };
+}
+
+export function normalizePlayerFacingStyle(text) {
+  return String(text || '')
+    .replace(/[ \t]*\u2014[ \t]*/g, ', ')
+    .replace(/(^|\n),\s*/g, '$1')
+    .replace(/,\s*(?=[.!?,:;])/g, '');
 }
 
 // Player-onboarding persistence block. Parallel to <save_onboarding> but for

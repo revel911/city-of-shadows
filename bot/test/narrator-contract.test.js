@@ -76,6 +76,12 @@ test('character creation uses a consistent guided flow and canonical save', asyn
 });
 
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
+  const instructions = await readFile(new URL('../../mc-reference/mc-instructions.md', import.meta.url), 'utf8');
+  assert.match(instructions, /casual, plainspoken, and natural/i);
+  assert.match(instructions, /Never use an em dash in player-facing narration or dialogue/i);
+  assert.match(instructions, /canonical background, personality scores, or voice note/i);
+  assert.match(instructions, /not the narrator's default voice/i);
+
   const raw = await readFile(new URL('../eval/narrator-scenarios.json', import.meta.url), 'utf8');
   const scenarios = JSON.parse(raw);
   assert.ok(scenarios.some(item => item.id.includes('move_trigger')));
