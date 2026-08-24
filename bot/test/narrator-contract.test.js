@@ -61,6 +61,20 @@ test('returning-character openings recap personal continuity before play', async
   assert.match(session, /Preserve the required \*\*Previously in City of Shadows/);
 });
 
+test('character creation uses a consistent guided flow and canonical save', async () => {
+  const creation = await readFile(new URL('../../mc-reference/character-creation.md', import.meta.url), 'utf8');
+  assert.match(creation, /Character Creation - Phase X\/12: Name/);
+  assert.match(creation, /one primary decision per reply/i);
+  assert.match(creation, /Confirm newly locked choices/i);
+  assert.match(creation, /compact final preview/i);
+  assert.match(creation, /every remaining TBD/i);
+  assert.match(creation, /Do not add new facts during serialization/i);
+
+  const session = await readFile(new URL('../handlers/session.js', import.meta.url), 'utf8');
+  assert.match(session, /characterSheetProblems\(save\.sheet\)/);
+  assert.match(session, /characterSheetProblems\(close\.sheet\)/);
+});
+
 test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violence', async () => {
   const raw = await readFile(new URL('../eval/narrator-scenarios.json', import.meta.url), 'utf8');
   const scenarios = JSON.parse(raw);

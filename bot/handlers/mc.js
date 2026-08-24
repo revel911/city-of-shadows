@@ -85,6 +85,7 @@ async function loadReferencePack(profile = {}) {
   if (profile.isNew) {
     return labeledFiles([
       ['Character Creation Wizard', 'mc-reference/character-creation.md'],
+      ['Canonical Character Sheet Template', 'mc-reference/character-sheet-template.md'],
       ['All Playbooks — creation only', 'mc-reference/reference/playbooks.md'],
       ['WoD — Changeling', 'mc-reference/reference/world-of-darkness/changeling.md'],
       ['WoD — Demon', 'mc-reference/reference/world-of-darkness/demon.md'],

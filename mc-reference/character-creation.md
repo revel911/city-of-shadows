@@ -4,6 +4,22 @@ A script the MC follows when the opening message starts with `New player:`. Phas
 
 ---
 
+## Consistent Creation Experience
+
+For every player, use the same guided rhythm:
+
+1. Begin each creation reply with `**Character Creation - Phase X/12: Name**`.
+2. Ask for one primary decision per reply unless the player voluntarily answers several at once.
+3. Confirm newly locked choices in one compact line before asking the next question.
+4. Present only options relevant to the current phase and chosen playbook or extension.
+5. Never choose identity, powers, relationships, debts, or anchors for the player.
+6. If a choice conflicts with a rule, explain the conflict briefly and offer legal alternatives.
+7. Before Phase 12.5, show a compact final preview: identity, playbook/extension,
+   stats, moves, Circles/Status, Debts, Anchors, gear/resources, advances, and
+   every remaining TBD. Ask the player to approve or revise it before saving.
+8. After approval, serialize the same choices into the canonical sheet and state.
+   Do not add new facts during serialization.
+
 ## Player-Facing Onboarding Rule
 
 Assume the player is new to both Urban Shadows and the World of Darkness. **Define every game term inline the first time it comes up** — Circles, Debts, Status, Corruption, Harm, moves, triggers, stats, hard hit / weak hit, the Instinct Die, Embrace, Clan, Auspice, Kith, Awakening Path, Shade, Compact. One sentence is enough. Never use a term you haven't already defined. If the player asks for more depth, give it; otherwise keep moving.
@@ -225,11 +241,17 @@ When the player confirms — or at any earlier trigger below — emit a `<save_o
 
 - `<character_id>` — required
 - `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
+  Copy the exact H1/H2 headings and section order from `character-sheet-template.md`.
+  Never rename or omit a section; write `TBD` inside unfinished sections.
 - `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `circle_marks`, `gear`, `effects`, `playbook_state`, and `notes`. Omit bot-owned `active_arc_ids` and `last_session`. (Safety is **not** part of state.json — it lives on the player profile.)
 - `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
 - `<location_patch>` — any new named place established during onboarding
 - `<relationship_patch>` — public Debts, Anchors, family, mentor, employer, and location ties
 - `<events_append>` — only if the character's arrival is publicly visible
+
+The `<sheet>` content must copy the exact H1/H2 headings and section order from
+`character-sheet-template.md`. Never rename or omit a section; write `TBD`
+inside unfinished sections when an early save occurs.
 
 ### Early-save triggers (override phase order)
 

@@ -20,6 +20,7 @@ test('loadSystemPrompt reads the canonical new-layout paths', async () => {
     'mc-reference/reference/world-of-darkness/vampire.md',
     'mc-reference/reference/world-of-darkness/werewolf.md',
     'mc-reference/character-creation.md',
+    'mc-reference/character-sheet-template.md',
     'mc-reference/npc-personality-engine.md',
     'mc-reference/state-schema.md',
     'mc-reference/bot-output-format.md',

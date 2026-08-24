@@ -1,6 +1,7 @@
 import { SlashCommandBuilder } from 'discord.js';
-import { readFile, listPlayers } from '../handlers/github.js';
+import { readFile, readJSON, listPlayers } from '../handlers/github.js';
 import { resolveCharacterFromList, sendChunked } from '../handlers/read-utils.js';
+import { formatCharacterSheetForDiscord } from '../handlers/character-sheet.js';
 
 export const data = new SlashCommandBuilder()
   .setName('sheet')
@@ -21,12 +22,15 @@ export async function execute(interaction) {
       await interaction.editReply(`No character found. Try \`character:<id>\` — known: ${known}`);
       return;
     }
-    const content = await readFile(`players/${player.id}/sheet.md`);
+    const [content, state] = await Promise.all([
+      readFile(`players/${player.id}/sheet.md`),
+      readJSON(`players/${player.id}/state.json`),
+    ]);
     if (!content) {
       await interaction.editReply(`No sheet found for **${player.name}**.`);
       return;
     }
-    await sendChunked(interaction, content);
+    await sendChunked(interaction, formatCharacterSheetForDiscord(content, state || {}, player.name));
   } catch (err) {
     console.error('/sheet failed:', err);
     const msg = err.message?.startsWith('GitHub')

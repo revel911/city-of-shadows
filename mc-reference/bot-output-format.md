@@ -129,6 +129,11 @@ The `<save_onboarding>` block MUST be the **first content** in your response, be
 
 ### Save field rules
 
+The `<sheet>` must copy the exact H1/H2 structure and section order from
+`character-sheet-template.md`. The bot rejects missing, renamed, or out-of-order
+canonical sections and asks the MC for a corrected save. Early saves keep every
+section and use `TBD` for unfinished values.
+
 - **Position** — emit this block as the very first content of your response. Open with `<save_onboarding>`, close with `</save_onboarding>`, then write your scene narrative. Do not interleave.
 - **`<character_id>`** — required. Kebab-case folder name (e.g. `joe-nakama`). The bot uses this to create the player's folder, write the sheet, and register the character in `players/index.json`.
 - **`<sheet>`** — required. Full sheet content. If save is triggered early (case 2 or 3), include every section but use "TBD" for fields the player hasn't filled in yet.

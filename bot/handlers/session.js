@@ -1,6 +1,7 @@
 import { generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
 import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
+import { characterSheetProblems } from './character-sheet.js';
 import { readProfile, updateProfile } from './profile.js';
 import {
   buildSceneDirectorContext,
@@ -480,6 +481,9 @@ async function postMCResponse(thread, response, session) {
   const save = parseSaveOnboardingBlock(response);
   if (save) {
     const missing = missingSaveOnboardingFields(save);
+    if (save.sheet?.trim()) {
+      missing.push(...characterSheetProblems(save.sheet).map(problem => `sheet ${problem}`));
+    }
     if (missing.length) {
       const retries = session._saveRetries || 0;
       if (retries < SAVE_ONBOARDING_MAX_RETRIES) {
@@ -518,6 +522,9 @@ async function postMCResponse(thread, response, session) {
   //    is now the real character and a normal close is enough.
   if (close && session.player.id === '__new__') {
     const missing = missingNewCharCloseFields(close);
+    if (close.sheet?.trim()) {
+      missing.push(...characterSheetProblems(close.sheet).map(problem => `sheet ${problem}`));
+    }
     if (missing.length) {
       const retries = session._closeRetries || 0;
       if (retries < NEW_CHAR_CLOSE_MAX_RETRIES) {
@@ -601,7 +608,7 @@ function buildCloseRetryPrompt(missing) {
     'This is a new-character session — character creation must persist a full sheet and full initial state.',
     'Re-emit your closing message now with a COMPLETE <close_session> block, including:',
     '- <character_id>: kebab-case id (firstname-lastname)',
-    '- <sheet>: the full sheet you built across onboarding (Identity, Playbook, Stats, Moves, Circle Ratings & Status, Debts, Anchors, Gear, Experience Tier)',
+    '- <sheet>: copy the exact H1/H2 structure and section order from character-sheet-template.md; use TBD for unfinished values',
     '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, circle_marks, effects, playbook_state, notes. Omit bot-owned active_arc_ids and last_session.',
     '- <handoff>: full first handoff',
     '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
@@ -624,7 +631,8 @@ function buildSaveRetryPrompt(missing) {
   return [
     `Your <save_onboarding> block is missing required fields: ${missing.join(', ')}.`,
     'Re-emit the block now. At minimum it needs <character_id> (kebab-case, e.g. "joe-nakama").',
-    'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced. Partial is fine — better to persist what we have than lose it.',
+    'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced.',
+    'The sheet must copy the exact H1/H2 structure and section order from character-sheet-template.md. Keep every section and write TBD for unfinished values.',
   ].join('\n');
 }
 
