@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-25] Newcomer Seen Near the Warehouse
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+A figure matching the description of an associate of Petra Holt was observed near the converted tobacco warehouse on the eastern edge of Shockoe Bottom. The individual did not approach the building but appeared to be conducting surveillance from a nearby vantage point. This follows the expiration of the retrieval deadline for the specimen believed to be housed there. Residents and local trackers report an increased sense of unease in the area, though no overt action has been taken. The Consilium has not commented.
+
 ## [2026-08-25] The Ley Line Runs Off-Tempo Again — Unofficial Detection
 
 **Hubs:** The University | **Circles:** Power

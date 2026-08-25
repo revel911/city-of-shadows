@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-24",
+  "last_updated": "2026-08-25",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -766,7 +766,7 @@
         "arc-004"
       ],
       "status": "active",
-      "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse",
+      "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -778,10 +778,10 @@
       "last_seen": "session_001",
       "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260824192607",
+      "updated_by_session": "keeper_city_turn_20260825192623",
       "note": "Deadline for specimen retrieval has passed; principals likely becoming more active.",
-      "revision": 1,
-      "last_updated": "2026-08-24"
+      "revision": 2,
+      "last_updated": "2026-08-25"
     },
     {
       "id": "npc_nadia_vasek",

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-08-24",
+  "last_updated": "2026-08-25",
   "hubs": [
     {
       "state": "The ley line under Monroe Park ran off-tempo for the fourth time in seven weeks, now detected by unofficial instruments. Dr. Olave's closed meetings continue, and the engineered Awakening program remains secret.",
@@ -8,6 +8,13 @@
       "revision": 1,
       "last_updated": "2026-08-24",
       "updated_by_session": "keeper_city_turn_20260824192607"
+    },
+    {
+      "last_updated": "2026-08-25",
+      "note": "Increased supernatural activity near the warehouse; Petra Holt's principals are now active in the area.",
+      "id": "hub_shockoe_bottom",
+      "revision": 1,
+      "updated_by_session": "keeper_city_turn_20260825192623"
     }
   ]
 }
