@@ -1,0 +1,47 @@
+{
+  "character_id": "cristoff-lepierre",
+  "character_name": "Cristoff LePierre",
+  "playbook": "",
+  "wod_extension": "",
+  "stats": {
+    "Blood": 1,
+    "Heart": 0,
+    "Mind": 2,
+    "Spirit": -1
+  },
+  "harm": 0,
+  "corrupt": 0,
+  "xp": 0,
+  "advances": 0,
+  "circle_ratings": {
+    "Mortalis": 0,
+    "Night": 0,
+    "Power": 0,
+    "Wild": 0
+  },
+  "circle_status": {
+    "Mortalis": 1,
+    "Night": 0,
+    "Power": 0,
+    "Wild": 0
+  },
+  "circle_marks": {
+    "Mortalis": false,
+    "Night": false,
+    "Power": false,
+    "Wild": false
+  },
+  "gear": [
+    "Grandfather's pocket watch",
+    "Gym locker at Cutler's"
+  ],
+  "active_arc_ids": [],
+  "last_session": "session_000",
+  "effects": {
+    "holds": [],
+    "forward": [],
+    "ongoing": []
+  },
+  "playbook_state": {},
+  "notes": "Newcomer. Lucifuge (Hunter: The Vigil). Owe Marcus Voss 1 Debt. Roz Czerny owes me 1 Debt. Anchors: pocket watch, Cutler's Gym. Benefactor identity unknown."
+}
