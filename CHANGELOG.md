@@ -31,6 +31,26 @@ platform behaves, not API compatibility.
   move audit, and a three-turn roll drought tells the MC to bring existing
   pressure onstage without manufacturing checks for routine actions. Pending
   rolls must be resolved or explicitly canceled before narration continues.
+- Ambiguous turns now pass through a strict pre-narration move adjudicator after
+  the fast deterministic gate. It checks every basic move plus rollable moves on
+  the active character sheet, validates move names and modifiers, and retries one
+  malformed decision before falling back to the narrator audit. Mechanics depths
+  1-3 must visibly name a triggered move before `/roll`.
+- Put a Name to a Face is restricted to connecting a person’s name and face;
+  recalling or recognizing symbols is not this move. Longer roll droughts
+  hard-frame existing threats and costs instead of continuing setup or lore
+  delivery.
+- Added a layered narrative/rules/world engine: structured trigger, non-trigger,
+  and prerequisite definitions for all twelve basic moves; move-specific
+  post-roll resolution contracts; fail-forward investigation depth; derived
+  mystery stage and character knowledge; pressure-intersection scene ranking;
+  deterministic City Keeper candidates and cooldowns; and public mystery
+  dashboard/graph projections. Mandatory weak-hit Let It Out corruption is now
+  reconciled automatically, and 12+ outcomes require an actually advanced move.
+- Documentation now has validated knowledge maps with linked titles, descriptions,
+  authority, and runtime-load classifications for every file under docs/ and
+  mc-reference/. Local bot, dashboard, and script maps describe the remaining
+  implementation structure; the MC loads the reference authority map before rules.
 - Normal turns now receive lightweight prose-quality checks for accidental word
   repetition, broken pronoun clauses, and contradictory physical details.
   Rejected prose is regenerated before it reaches Discord.

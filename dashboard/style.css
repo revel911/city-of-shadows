@@ -1516,3 +1516,17 @@ body.nav-open #nav-overlay { display: block; }
 .location-type { margin-top: 0.15rem; color: var(--shadow); font: 0.5rem 'JetBrains Mono', monospace; letter-spacing: 0.09em; text-transform: uppercase; }
 .location-atmosphere { margin-top: 0.45rem; color: var(--blood-light); font-size: 0.66rem; font-style: italic; }
 .location-card p { margin: 0.45rem 0 0; color: var(--faded); font-size: 0.68rem; line-height: 1.5; }
+.knowledge-list {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+}
+
+.knowledge-item {
+  padding: 0.55rem 0.7rem;
+  border-left: 2px solid var(--gold-dim);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.45;
+}

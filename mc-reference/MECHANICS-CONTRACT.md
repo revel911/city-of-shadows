@@ -7,7 +7,8 @@ and the active World of Darkness extension.
 
 ## Authority
 
-- The MC decides when fiction triggers a move and narrates its consequences.
+- A pre-narration rules adjudicator checks every returning-character turn against all basic moves and the active sheet's rollable moves. The MC remains the fallback when the adjudicator cannot return a valid decision, and narrates consequences only after the bot resolves required dice.
+- Put a Name to a Face requires connecting a person’s name and face. Recognizing or recalling symbols, sigils, emblems, logos, objects, places, or writing does not trigger it.
 - The bot owns dice, canonical modifiers, result tiers, session numbering, state
   ranges, arc membership, and mechanical receipts.
 - `state.json` is authoritative for character numbers.
@@ -35,8 +36,8 @@ When a player action triggers uncertainty:
 4. Stop. Do not narrate an outcome until the bot returns an authoritative result.
 5. The bot reads the modifier from `state.json`, rolls 2d6, applies the capped
    modifier, records the Instinct Die, and injects the result into the session.
-6. Narrate the result tier from that injected record. Never change its total,
-   tier, or Extreme Failure flag.
+6. The bot injects a move-specific resolution contract. Narrate that exact tier, preserve every player-owned choice, and never change the total, tier, or Extreme Failure flag.
+7. A 12+ uses the advanced outcome only when `state.playbook_state.advanced_moves` contains that move.
 
 An unopposed action with no meaningful risk can happen without a roll. Active
 resistance, dangerous uncertainty, or consequential opposition cannot be waived
@@ -60,7 +61,7 @@ Mechanics depth changes presentation, never whether rules are executed:
 
 1. Move, stat/Circle, dice, modifier, total, and tier are visible.
 2. Dice, modifier, total, and tier are visible.
-3. Compact dice, total, and tier are visible.
+3. The move name is stated once; compact dice, total, and tier are visible.
 4. Only a low-fiction "Fate check" tier is visible.
 5. The command acknowledgement is private and minimal; consequences are
    presented entirely through fiction.
@@ -76,6 +77,7 @@ On every real close, even if `state_patch` is omitted, the bot:
 - validates fixed stat and Circle keys and clamps documented ranges;
 - derives `active_arc_ids` from `game/arcs.json`;
 - records Circle marks associated with authoritative rolls;
+- automatically marks mandatory corruption for a weak-hit Let It Out without double-counting an equivalent close patch;
 - clears all four Circle marks and grants the resulting advance;
 - retains structured holds, forward, ongoing effects, and `playbook_state`;
 - advances ignored involved arcs after two untouched sessions;

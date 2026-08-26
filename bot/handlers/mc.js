@@ -1,4 +1,8 @@
 import OpenAI from 'openai';
+import {
+  buildMoveAdjudicationPrompt,
+  parseMoveAdjudication,
+} from './move-adjudicator.js';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
 import { buildCanonicalWorldContext, buildRelevantWorldContext } from './world-state.js';
@@ -11,6 +15,8 @@ const MAX_TOKENS = 4096;
 // reducing malformed clauses and contradictory physical details in live play.
 const GENERATE_TEMPERATURE = 1.0;
 const EVENT_TAIL_LINES = 120;
+const MOVE_ADJUDICATION_MAX_TOKENS = 240;
+const MOVE_ADJUDICATION_RETRIES = 1;
 
 const COMPACT_AT = Number(process.env.COMPACT_AT) || 30;
 const KEEP_RECENT = Number(process.env.KEEP_RECENT) || 8;
@@ -41,6 +47,49 @@ function client() {
   return _deepseek;
 }
 
+export async function adjudicateMove({
+  playerText,
+  lastAssistant = '',
+  sheet = '',
+} = {}) {
+  const messages = [
+    {
+      role: 'system',
+      content: 'You are a strict rules router. Output exactly the requested JSON decision and never narrate.',
+    },
+    {
+      role: 'user',
+      content: buildMoveAdjudicationPrompt({ playerText, lastAssistant, sheet }),
+    },
+  ];
+  for (let attempt = 0; attempt <= MOVE_ADJUDICATION_RETRIES; attempt += 1) {
+    const resp = await client().chat.completions.create({
+      model: MODEL,
+      messages,
+      max_tokens: MOVE_ADJUDICATION_MAX_TOKENS,
+      temperature: 0,
+    });
+    const raw = resp.choices[0]?.message?.content || '';
+    const decision = parseMoveAdjudication(raw, { sheet });
+    if (decision) {
+      const usage = resp.usage || {};
+      console.log(
+        `[move-adjudicator] decision=${decision.decision} attempt=${attempt + 1} ` +
+        `in=${usage.prompt_tokens || 0} out=${usage.completion_tokens || 0}`
+      );
+      return decision;
+    }
+    if (attempt < MOVE_ADJUDICATION_RETRIES) {
+      messages.push({ role: 'assistant', content: raw || '[empty response]' });
+      messages.push({
+        role: 'user',
+        content: 'Invalid decision. Return one supported JSON object using only a listed move and all required Circle data.',
+      });
+    }
+  }
+  throw new Error('move adjudicator returned an invalid or unsupported decision');
+}
+
 let _coreSystemCache = null;
 const _referenceCache = new Map();
 
@@ -54,6 +103,7 @@ async function labeledFiles(entries) {
 
 async function loadCoreSystemPrompt() {
   return labeledFiles([
+    ['Reference Routing and Authority', 'mc-reference/README.md'],
     ['Mechanics Contract', 'mc-reference/MECHANICS-CONTRACT.md'],
     ['MC Instructions', 'mc-reference/mc-instructions.md'],
     ['Scene Engine', 'mc-reference/scene-engine.md'],

@@ -1,0 +1,155 @@
+[
+  {
+    "id": "turn_to_violence",
+    "last_assistant": "The armed guard blocks the only door and reaches for Jacob.",
+    "player_text": "I smash him across the jaw with the pipe.",
+    "expected": {
+      "decision": "roll",
+      "move": "Turn to Violence"
+    }
+  },
+  {
+    "id": "escape_a_situation",
+    "last_assistant": "The burning stairwell is closing behind Jacob, but a side window is open.",
+    "player_text": "I dive through the open window to get away from the fire.",
+    "expected": {
+      "decision": "roll",
+      "move": "Escape a Situation"
+    }
+  },
+  {
+    "id": "persuade_an_npc",
+    "last_assistant": "The mortal clerk refuses to hand over the records.",
+    "player_text": "I promise her protection if she gives me the file tonight.",
+    "expected": {
+      "decision": "roll",
+      "move": "Persuade an NPC"
+    }
+  },
+  {
+    "id": "figure_someone_out",
+    "last_assistant": "The Night courier smiles while hiding one hand inside his coat.",
+    "player_text": "I study his face and posture to figure out what he is afraid will happen.",
+    "expected": {
+      "decision": "roll",
+      "move": "Figure Someone Out"
+    }
+  },
+  {
+    "id": "mislead_distract_or_trick",
+    "last_assistant": "The Power sentry asks why Jacob is inside the archive.",
+    "player_text": "I lie and tell her Dara sent me to inspect the wards.",
+    "expected": {
+      "decision": "roll",
+      "move": "Mislead, Distract, or Trick"
+    }
+  },
+  {
+    "id": "keep_your_cool",
+    "last_assistant": "The stranger lays a switchblade on the bar and watches Jacob without blinking.",
+    "player_text": "I grip the pipe inside my coat, hold steady, and wait for his next move.",
+    "expected": {
+      "decision": "roll",
+      "move": "Keep Your Cool"
+    }
+  },
+  {
+    "id": "let_it_out",
+    "last_assistant": "The locked room is filling with choking supernatural fog.",
+    "player_text": "I unleash the wolf's supernatural senses to find the hidden exit.",
+    "expected": {
+      "decision": "roll",
+      "move": "Let It Out"
+    }
+  },
+  {
+    "id": "lend_a_hand",
+    "last_assistant": "A Night ally just rolled to escape the hunters and came up short.",
+    "player_text": "I use my truck to block the hunters and lend my ally a hand.",
+    "expected": {
+      "decision": "roll",
+      "move": "Lend a Hand or Get in the Way",
+      "circle": "Night"
+    }
+  },
+{
+    "id": "put_a_name_to_a_face",
+    "last_assistant": "A woman Jacob has never met steps under the light. Someone nearby whispers that her name is Mirela Voss, a Power broker.",
+    "player_text": "Now that I can see Mirela, do I recognize who she is?",
+    "expected": {
+      "decision": "roll",
+      "move": "Put a Name to a Face",
+      "circle": "Power"
+    }
+  },  {
+    "id": "symbol_recognition_is_not_put_a_name_to_a_face",
+    "last_assistant": "The unknown serpent mark glows with chaotic otherworldly magic beside the canal.",
+    "player_text": "Do I recognize that occult symbol or who uses it?",
+    "expected": {
+      "decision": "none"
+    }
+  },
+  {
+    "id": "hit_the_streets",
+    "last_assistant": "Jacob needs silver ammunition before midnight.",
+    "player_text": "I go to Dara, my Night contact, to get the silver rounds I need.",
+    "expected": {
+      "decision": "roll",
+      "move": "Hit the Streets",
+      "circle": "Night"
+    }
+  },
+  {
+    "id": "study_a_place_of_power",
+    "last_assistant": "The abandoned chapel is a known gathering place controlled by Power.",
+    "player_text": "I study the chapel's wards and layout to see what is hidden beneath the surface.",
+    "expected": {
+      "decision": "roll",
+      "move": "Study a Place of Power",
+      "circle": "Power"
+    }
+  },
+  {
+    "id": "refuse_a_debt",
+    "last_assistant": "Dara, a Status-2 Night creditor, calls in the Debt Jacob owes her and orders him to surrender Tommy.",
+    "player_text": "I refuse to honor that Debt.",
+    "expected": {
+      "decision": "roll",
+      "move": "Refuse to Honor a Debt",
+      "circle": "Night"
+    }
+  },
+  {
+    "id": "voice_of_command",
+    "last_assistant": "The armed courier ignores Jacob's first warning and keeps advancing.",
+    "player_text": "I order him to back away from the bar right now.",
+    "expected": {
+      "decision": "roll",
+      "move": "Voice of Command"
+    }
+  },
+  {
+    "id": "mundane_logo_is_not_a_move",
+    "last_assistant": "A delivery van has a common grocery-store logo on its door.",
+    "player_text": "Do I recognize the store logo?",
+    "expected": {
+      "decision": "none"
+    }
+  },
+  {
+    "id": "routine_travel_is_not_a_move",
+    "last_assistant": "The streets are clear and there is no pursuit.",
+    "player_text": "I drive to The Nail and park out back.",
+    "expected": {
+      "decision": "none"
+    }
+  },
+  {
+    "id": "ambiguous_supernatural_sense_clarifies",
+    "last_assistant": "An unfamiliar locked box rests on the workbench.",
+    "player_text": "I try to get a sense of what this is.",
+    "expected": {
+      "decision": "clarify"
+    }
+  }
+]

@@ -1,4 +1,8 @@
-import { generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
+import { adjudicateMove, generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
+import {
+  buildMoveResolutionContext,
+  withDerivedMysteryState,
+} from './narrative-state.js';
 import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.js';
 import { chunk } from './read-utils.js';
 import { characterSheetProblems } from './character-sheet.js';
@@ -57,12 +61,20 @@ function lock(session, fn) {
 }
 
 export async function startSession(thread, player) {
-  const [opening, profile, openingState, openingInteractions, worldMeta] = await Promise.all([
+  const [
+    opening,
+    profile,
+    openingState,
+    openingInteractions,
+    worldMeta,
+    mechanicsSheet,
+  ] = await Promise.all([
     buildOpeningContext(player),
     player.discord_id ? readProfile(player.discord_id) : null,
     player.id !== '__new__' ? readJSON(`players/${player.id}/state.json`) : null,
     player.id !== '__new__' ? readJSON('game/interactions.json') : null,
     readJSON('game/world-meta.json'),
+    player.id !== '__new__' ? readFile(`players/${player.id}/sheet.md`) : null,
   ]);
   const initialPlaystyleSignals = normalizePlaystyleSignals(profile?.inferred_playstyle);
   const session = {
@@ -73,8 +85,10 @@ export async function startSession(thread, player) {
     rolls: [],
     pendingRoll: null,
     mechanicsGateTriggers: 0,
+    mechanicsAdjudications: 0,
     turnsWithoutRoll: 0,
     mechanicsDepth: profile?.mechanics_depth || 3,
+    mechanicsSheet: mechanicsSheet || '',
     rulesProfile: {
       isNew: player.id === '__new__',
       playbook: openingState?.playbook || '',
@@ -156,6 +170,7 @@ export function responseSafetyProblems(response, {
   opening = false,
   maxVisibleChars,
   mechanicsExpectation = null,
+  mechanicsDepth = 3,
 } = {}) {
   const text = typeof response === 'string' ? response.trim() : '';
   const problems = [];
@@ -172,7 +187,7 @@ export function responseSafetyProblems(response, {
     problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
   }
   problems.push(...proseQualityProblems(text));
-  problems.push(...mechanicsResponseProblems(text, mechanicsExpectation));
+  problems.push(...mechanicsResponseProblems(text, mechanicsExpectation, mechanicsDepth));
   return problems;
 }
 
@@ -190,6 +205,7 @@ async function generateSafeResponse(session, {
       opening,
       maxVisibleChars,
       mechanicsExpectation,
+      mechanicsDepth: session.mechanicsDepth,
     });
     if (!problems.length) return response;
     console.warn(`[generation-safety] rejected response: ${problems.join('; ')}`);
@@ -282,9 +298,41 @@ export async function handleMessage(message) {
     session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
     const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
     const mechanicsActive = !oocRecap && session.player.id !== '__new__';
-    const mechanicsExpectation = mechanicsActive
+    let mechanicsExpectation = mechanicsActive
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
+    let mechanicsClarification = null;
+    if (mechanicsActive && !mechanicsExpectation) {
+      await message.channel.sendTyping();
+      try {
+        const adjudication = await adjudicateMove({
+          playerText: message.content,
+          lastAssistant,
+          sheet: session.mechanicsSheet,
+        });
+        session.mechanicsAdjudications += 1;
+        if (adjudication.decision === 'roll') {
+          mechanicsExpectation = adjudication.expectation;
+        } else if (adjudication.decision === 'clarify') {
+          mechanicsClarification = adjudication.question;
+        }
+      } catch (err) {
+        console.warn(`[move-adjudicator] falling back to narrator audit: ${err.message}`);
+      }
+    }
+    if (mechanicsClarification) {
+      session.turnsWithoutRoll += 1;
+      session.messages.push({
+        role: 'user',
+        content: [npcHydration, `[PLAYER MESSAGE]\n${userContent}`]
+          .filter(Boolean)
+          .join('\n\n'),
+      });
+      session.lastPlayerText = message.content;
+      session.messages.push({ role: 'assistant', content: mechanicsClarification });
+      await message.channel.send(mechanicsClarification);
+      return;
+    }
     if (mechanicsExpectation) {
       session.mechanicsGateTriggers += 1;
       session.turnsWithoutRoll = 0;
@@ -446,6 +494,7 @@ export async function resolveSessionRoll(interaction) {
         '[SYSTEM — AUTHORITATIVE ROLL RESULT]',
         JSON.stringify(record),
         'Resolve this move now. Do not ask the player to repeat the dice and do not alter the total or result tier.',
+        buildMoveResolutionContext(record),
       ].join('\n'),
     });
     await interaction.editReply(formatRoll(record, session.mechanicsDepth));
@@ -1604,7 +1653,7 @@ async function processSessionClose(thread, session, close) {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'mysteries', idPrefix: 'mystery_', sessionId: logicalSessionId, stamp });
         warnings.push(...result.rejected.map(message => `mystery_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
-        return result.doc;
+        return withDerivedMysteryState(result.doc);
       }, `[session] mysteries (${stamp})`)]);
     } catch (e) { warnings.push(`mystery_patch: ${e.message}`); }
   }
@@ -1837,6 +1886,7 @@ async function processSessionClose(thread, session, close) {
       modifier: roll.modifier,
       total: roll.total,
       result: roll.result,
+      advanced_move: roll.advanced_move,
       extreme_failure: roll.extreme_failure,
     }));
     const receipt = {
@@ -1852,6 +1902,7 @@ async function processSessionClose(thread, session, close) {
         rolls: session.rolls,
         close,
         mechanicsGateTriggers: session.mechanicsGateTriggers,
+        mechanicsAdjudications: session.mechanicsAdjudications,
       }),
     };
     try {

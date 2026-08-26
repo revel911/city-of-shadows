@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "build:graph": "node scripts/build-graph.mjs",
-    "validate": "node scripts/validate-world.mjs",
+    "validate": "node scripts/validate-world.mjs && npm run validate:content",
+    "validate:content": "node scripts/validate-content-map.mjs",
     "keeper:reconcile": "node scripts/city-keeper.mjs --phase reconcile",
     "keeper:city-turn": "node scripts/city-keeper.mjs --phase city-turn",
     "keeper:publish": "node scripts/city-keeper.mjs --phase publish",

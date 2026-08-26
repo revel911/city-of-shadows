@@ -135,6 +135,9 @@ async function getThreatsDoc() {
   // Returns the raw JSON text so parseThreats() can JSON.parse it (same API as before)
   return cached('threats', () => ghText('game/arcs.json').then(t => t || ''));
 }
+async function getMysteries() {
+  return cached('mysteries', () => ghJSON('game/mysteries.json').then(value => value?.mysteries || []));
+}
 
 // ── Parse helpers ─────────────────────────────────────────────────────
 
@@ -831,6 +834,10 @@ function parseThreats(text) {
       hubs:        Array.isArray(arc.hub_ids)  ? arc.hub_ids  : (Array.isArray(arc.hubs)    ? arc.hubs    : []),
       players:     Array.isArray(arc.character_ids) ? arc.character_ids : (Array.isArray(arc.players) ? arc.players : []),
       keyNpcs:     Array.isArray(arc.npc_ids)  ? arc.npc_ids  : (Array.isArray(arc.key_npcs) ? arc.key_npcs : []),
+      agenda:      arc.agenda || '',
+      impulse:     arc.impulse || '',
+      nextPressure: arc.next_pressure || '',
+      clock:       arc.clock || { current: Number(arc.escalation) || 0, max: 4 },
     }));
   } catch (e) {
     console.warn('parseThreats: JSON parse failed', e);
@@ -881,6 +888,8 @@ function renderThreats(arcs) {
       </div>
       ${meta ? `<div class="threat-meta">${meta}</div>` : ''}
       ${arc.description ? `<div class="threat-desc">${esc(arc.description)}</div>` : ''}
+      ${arc.agenda ? `<div class="threat-desc"><strong>Agenda:</strong> ${esc(arc.agenda)}</div>` : ''}
+      ${arc.nextPressure ? `<div class="threat-desc"><strong>Next pressure:</strong> ${esc(arc.nextPressure)}</div>` : ''}
       ${tags ? `<div class="threat-tags">${tags}</div>` : ''}
     </div>`;
   };
@@ -900,8 +909,8 @@ async function renderEvents() {
   ]}]);
   showLoading('Unrolling the chronicle…');
 
-  let log = '', threatsDoc = '';
-  try { [log, threatsDoc] = await Promise.all([getEventsLog(), getThreatsDoc()]); }
+  let log = '', threatsDoc = '', mysteries = [];
+  try { [log, threatsDoc, mysteries] = await Promise.all([getEventsLog(), getThreatsDoc(), getMysteries()]); }
   catch (e) { showError('Could not load events', e.message); return; }
 
   let body = '';
@@ -934,6 +943,19 @@ async function renderEvents() {
   }
 
   const arcs = parseThreats(threatsDoc);
+  const mysteryHtml = mysteries.length ? mysteries.map(mystery => {
+    const progress = mystery.progress || {};
+    const discovered = (mystery.clues || []).filter(clue => clue.status === 'discovered');
+    return `<div class="threat-card">
+      <div class="threat-header">
+        <span class="threat-name">${esc(mystery.title || mystery.id)}</span>
+        <span class="threat-badge">${esc(progress.stage || mystery.stage || 'hook')}</span>
+      </div>
+      ${mystery.question ? `<div class="threat-desc">${esc(mystery.question)}</div>` : ''}
+      <div class="threat-meta">${esc(String(progress.discovered_clues ?? discovered.length))} / ${esc(String(progress.total_clues ?? (mystery.clues || []).length))} clues discovered</div>
+      ${discovered.length ? `<div class="knowledge-list">${discovered.map(clue => `<div class="knowledge-item">${esc(clue.player_summary || clue.description || clue.id)}</div>`).join('')}</div>` : ''}
+    </div>`;
+  }).join('') : '<p class="empty-note">No active mysteries recorded.</p>';
 
   $content.innerHTML = `
     <div class="page-header">
@@ -945,6 +967,10 @@ async function renderEvents() {
       <div class="card" id="events-threats">
         <h2>Active Threats &amp; Story Arcs</h2>
         ${renderThreats(arcs)}
+      </div>
+      <div class="card" id="events-mysteries">
+        <h2>Active Mysteries</h2>
+        ${mysteryHtml}
       </div>
       <div class="card" id="events-log">
         <h2>Public Events Log</h2>
@@ -985,7 +1011,7 @@ async function renderRelationships() {
       <label class="graph-view-label"><span>View</span><select id="graph-scope"><option value="story">Story ties</option><option value="city">Whole city</option></select></label>
       <label><span>Find</span><input id="graph-search" type="search" placeholder="NPC, character, or place&hellip;"></label>
       <label><span>Hub</span><select id="graph-hub"><option value="">All hubs</option>${hubs.map(h => `<option value="${esc(h.data.id)}">${esc(h.data.label)}</option>`).join('')}</select></label>
-      <label><span>Show</span><select id="graph-kind"><option value="">Everyone</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option><option value="arc">Story arcs</option></select></label>
+      <label><span>Show</span><select id="graph-kind"><option value="">Everyone</option><option value="npc">NPCs</option><option value="location">Locations</option><option value="pc">Player characters</option><option value="arc">Story arcs</option><option value="mystery">Mysteries</option></select></label>
       <button id="graph-reset" type="button">Reset view</button>
     </div>
     <p class="graph-mode-note" id="graph-mode-note"><strong>Story ties</strong> shows the ${storyNodeCount} people and places with authored relationships. Choose Whole city for every known record.</p>
@@ -1026,8 +1052,8 @@ async function renderRelationships() {
   function nodeVisual(data) {
     if (data.portrait) return data.portrait;
     const initials = data.label.split(/\s+/).filter(Boolean).slice(0, 2).map(word => word[0]).join('').toUpperCase();
-    const ring = data.kind === 'pc' ? '#b8924a' : data.kind === 'location' ? '#527f91' : data.kind === 'arc' ? '#7b4ac2' : '#a81616';
-    const fill = data.kind === 'pc' ? '#3b0a13' : data.kind === 'location' ? '#09131a' : data.kind === 'arc' ? '#170d29' : '#10091e';
+    const ring = data.kind === 'pc' ? '#b8924a' : data.kind === 'location' ? '#527f91' : data.kind === 'arc' ? '#7b4ac2' : data.kind === 'mystery' ? '#3c8d7b' : '#a81616';
+    const fill = data.kind === 'pc' ? '#3b0a13' : data.kind === 'location' ? '#09131a' : data.kind === 'arc' ? '#170d29' : data.kind === 'mystery' ? '#071b18' : '#10091e';
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96"><rect width="96" height="96" fill="${fill}"/><circle cx="48" cy="48" r="43" fill="none" stroke="${ring}" stroke-width="2" opacity=".55"/><text x="48" y="55" text-anchor="middle" fill="#d8d4cf" font-family="Arial,sans-serif" font-size="25" letter-spacing="2">${initials}</text></svg>`;
     return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
   }
@@ -1099,6 +1125,7 @@ async function renderRelationships() {
       { selector: 'node[kind="location"]', style: { 'shape': 'round-rectangle', 'width': 60, 'height': 48, 'background-color': '#0d1720', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#527f91' } },
       { selector: 'node[kind="hub"]', style: { 'shape': 'diamond', 'width': 72, 'height': 72, 'background-color': '#0d0b18', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#8c7238', 'font-size': 13 } },
       { selector: 'node[kind="arc"]', style: { 'shape': 'hexagon', 'width': 68, 'height': 60, 'background-color': '#170d29', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#7b4ac2', 'font-size': 11 } },
+      { selector: 'node[kind="mystery"]', style: { 'shape': 'round-diamond', 'width': 64, 'height': 58, 'background-color': '#071b18', 'background-image': 'data(visual)', 'background-fit': 'cover', 'border-color': '#3c8d7b', 'font-size': 11 } },
       { selector: 'node[status="deceased"]', style: { 'opacity': 0.42, 'border-style': 'dashed' } },
       { selector: 'edge', style: { 'width': 2, 'line-color': 'data(color)', 'curve-style': 'unbundled-bezier', 'control-point-distances': 32, 'control-point-weights': 0.5, 'target-arrow-shape': 'triangle', 'target-arrow-color': 'data(color)', 'arrow-scale': 0.72, 'label': 'data(label)', 'font-family': 'JetBrains Mono', 'font-size': 7, 'color': '#9a9490', 'text-background-color': '#030305', 'text-background-opacity': 0.92, 'text-background-padding': 3, 'text-rotation': 'autorotate', 'opacity': 0.88 } },
       { selector: 'edge[layer="structural"]', style: { 'width': 1, 'line-style': 'dotted', 'target-arrow-shape': 'none', 'line-color': '#5834a0', 'opacity': 0.22, 'label': '' } },
@@ -1449,7 +1476,7 @@ render();
     }).filter(r => r.score > 0).sort((a, b) => b.score - a.score).slice(0, 14).map(r => r.item);
   }
 
-  const TYPE_LABELS = { npc: 'NPC', arc: 'Arc', hub: 'Hub', location: 'Place', character: 'PC' };
+  const TYPE_LABELS = { npc: 'NPC', arc: 'Arc', mystery: 'Mystery', hub: 'Hub', location: 'Place', character: 'PC' };
 
   function renderResults(results, query) {
     if (results === null) { $results.innerHTML = `<div class="search-loading">Indexing…</div>`; return; }

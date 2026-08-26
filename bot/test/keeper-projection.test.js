@@ -22,7 +22,7 @@ test('keeper projection excludes private and unapproved fields', () => {
       { id: 'rel_public', source: 'npc_one', target: 'loc_one', visibility: 'public' },
       { id: 'rel_private', source: 'npc_one', target: 'loc_one', visibility: 'private' },
     ] },
-    arcs: { arcs: [{ id: 'arc-001', summary: 'Public', mc_notes: 'no', character_ids: ['private-pc'] }] },
+    arcs: { arcs: [{ id: 'arc-001', summary: 'Public', agenda: 'Advance the threat', impulse: 'Apply pressure', next_pressure: 'A door closes', mc_notes: 'no', character_ids: ['private-pc'] }] },
     mysteries: { mysteries: [{ id: 'mystery_one', title: 'Question', question: 'What happened?', status: 'active', notes: 'no' }] },
     debts: { debts: [] },
     interactions: { interactions: [] },
@@ -46,6 +46,8 @@ test('keeper projection excludes private and unapproved fields', () => {
   assert.equal(projection.npcs[0].role, 'Witness');
   assert.equal(projection.npc_character_memories[0].relationship_state, 'Uneasy alliance');
   assert.equal(projection.npc_character_memories[0].notes, undefined);
+  assert.equal(projection.arcs[0].agenda, 'Advance the threat');
+  assert.equal(projection.arcs[0].next_pressure, 'A door closes');
   assert.equal(projection.mysteries[0].question, 'What happened?');
   assert.equal(projection.mysteries[0].notes, undefined);
   assert.equal(projection.conflicts[0].actual_revision, undefined);

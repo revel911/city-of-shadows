@@ -6,6 +6,7 @@ test('loadSystemPrompt reads the canonical new-layout paths', async () => {
   const src = await fsReadFile(new URL('../handlers/mc.js', import.meta.url), 'utf8');
 
   const expectedPaths = [
+    'mc-reference/README.md',
     'mc-reference/mc-instructions.md',
     'mc-reference/reference/rules.md',
     'mc-reference/reference/basic-moves.md',

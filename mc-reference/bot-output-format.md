@@ -292,7 +292,7 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.
 - **`<debt_patch>`** — array of public Debt changes keyed by `debt_*` ID. Setting `amount` to zero settles a Debt.
 - **`<arc_patch>`** — array. Each entry must have `id`. Including an arc marks it touched and resets its ignored-session pressure counter.
-- **`<mystery_patch>`** — array of `mystery_*` records. Use it to create a clue map or mark established clues discovered. Each required revelation needs at least three linked clues. Existing mysteries require `expected_revision`; clue and revelation entries merge by their nested IDs, so emit only entries that changed. Never rewrite a revelation to fit a player's guess.
+- **`<mystery_patch>`** — array of `mystery_*` records. Use it to create a clue map or mark established clues discovered, including the discovering character in `discovered_by`. Each required revelation needs at least three linked clues. Existing mysteries require `expected_revision`; clue and revelation entries merge by nested ID, so emit only changes. The bot derives stage, totals, and revelation support. Never rewrite a revelation to fit a player's guess.
 - **`<interactions_patch>`** — legacy compatibility only. New output must use `<interaction_ops>` so simultaneous sessions cannot erase one another's entries.
 - **`<world_event>`** — single short line. Posted to the configured `#world-events` channel if one is set. Omit for purely private scenes.
 

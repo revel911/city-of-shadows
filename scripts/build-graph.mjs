@@ -1,6 +1,6 @@
 import { hashNumber, readJSON, writeJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDoc, hubStateDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, mysteryDoc, debtDoc, hubStateDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
@@ -8,6 +8,7 @@ const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, debtDo
   readJSON('game/relationships.manual.json'),
   readJSON('game/relationships.derived.json'),
   readJSON('game/arcs.json'),
+  readJSON('game/mysteries.json'),
   readJSON('game/debts.json'),
   readJSON('game/hub-state.json')
 ]);
@@ -72,6 +73,21 @@ for (const arc of arcDoc.arcs || []) {
   });
 }
 
+for (const mystery of mysteryDoc.mysteries || []) {
+  if (mystery.status === 'resolved') continue;
+  const hubId = mystery.hub_ids?.[0] || '';
+  const progress = mystery.progress || {};
+  nodes.push({
+    data: {
+      id: mystery.id, label: mystery.title, kind: 'mystery', hub_id: hubId,
+      status: mystery.status || 'active', subtype: progress.stage || mystery.stage || 'hook',
+      details: mystery.question || '',
+      discovered_clues: progress.discovered_clues || 0,
+      total_clues: progress.total_clues || (mystery.clues || []).length,
+    },
+    position: positionNear(hubId, mystery.id, 650, 160),
+  });
+}
 const edges = [];
 for (const location of locationDoc.locations || []) edges.push({
   data: { id: `edge_${location.id}_${location.hub_id}`, source: location.id, target: location.hub_id, type: 'in_hub', label: 'In', layer: 'structural' }
@@ -94,6 +110,12 @@ for (const arc of arcDoc.arcs || []) {
   });
 }
 
+for (const mystery of mysteryDoc.mysteries || []) {
+  if (mystery.status === 'resolved') continue;
+  for (const target of [mystery.arc_id, ...(mystery.hub_ids || []), ...(mystery.npc_ids || []), ...(mystery.character_ids || [])].filter(Boolean)) edges.push({
+    data: { id: `edge_${mystery.id}_${target}`, source: mystery.id, target, type: 'mystery_link', label: 'Connected', layer: 'mystery' }
+  });
+}
 for (const debt of (debtDoc.debts || []).filter(item => item.visibility === 'public' && item.amount > 0)) edges.push({
   data: {
     id: debt.id, source: debt.debtor_id, target: debt.creditor_id, type: 'debt',
@@ -102,7 +124,7 @@ for (const debt of (debtDoc.debts || []).filter(item => item.visibility === 'pub
 });
 
 await writeJSON('dashboard/data/world-graph.json', {
-  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, debtDoc.last_updated, hubStateDoc.last_updated].filter(Boolean).sort().at(-1),
+  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, mysteryDoc.last_updated, debtDoc.last_updated, hubStateDoc.last_updated].filter(Boolean).sort().at(-1),
   derived_through: derivedDoc.derived_through || null,
   nodes,
   edges

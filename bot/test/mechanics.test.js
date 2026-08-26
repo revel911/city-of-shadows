@@ -39,6 +39,21 @@ test('warehouse ambush is mechanically gated as Turn to Violence', () => {
   assert.match(buildMechanicsGateContext(expected, 5), /behind the curtain/i);
 });
 
+test('last-session armed standoff gates deliberate composure as Keep Your Cool', () => {
+  const expected = detectMechanicsExpectation(
+    'I prep for a fight, grabbing the lead pipe hidden in my coat, and wait for his next move.',
+    {
+      lastAssistant: 'The stranger lays a switchblade on the bar and watches you without hurry.',
+    }
+  );
+  assert.equal(expected?.move, 'Keep Your Cool');
+  assert.equal(expected?.modifier_key, 'Spirit');
+
+  assert.equal(detectMechanicsExpectation(
+    'I put a lead pipe in my coat in case I need it later.',
+    { lastAssistant: 'The empty garage is quiet.' }
+  ), null);
+});
 test('canal transcript gates the hazardous rope cast as Keep Your Cool', () => {
   const expected = detectMechanicsExpectation(canalRopeAction, {
     lastAssistant: 'The wet concrete ends at the canal. A pale hand is held against the lock gate by the current.',
@@ -75,6 +90,9 @@ test('move audit surfaces a roll drought without forcing routine actions', () =>
   assert.match(buildMoveAuditContext(3), /Roll drought: 3 player turns/i);
   assert.match(buildMoveAuditContext(3), /Do not manufacture a roll/i);
   assert.match(buildMoveAuditContext(3), /supernatural sense/i);
+  assert.match(buildMoveAuditContext(3), /Symbols, logos, objects, places, and writing are not this move/i);
+  assert.match(buildMoveAuditContext(5), /Severe roll drought: 5 player turns/i);
+  assert.match(buildMoveAuditContext(5), /Do not spend another response on travel, setup, lore delivery/i);
 });
 
 test('mechanics gate catches other explicit basic move declarations', () => {
@@ -119,6 +137,14 @@ test('required move response cannot skip, change, continue past, or pre-resolve 
   assert.ok(mechanicsResponseProblems(premature, expected).some(problem => /resolved Turn to Violence/i.test(problem)));
 });
 
+test('depths one through three visibly name a gated move', () => {
+  const expected = detectMechanicsExpectation(warehouseAction);
+  const unnamed = requested('The driver shifts in his seat. Use /roll.', {
+    move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
+  });
+  assert.ok(mechanicsResponseProblems(unnamed, expected, 3).includes('required move name is not visible'));
+  assert.deepEqual(mechanicsResponseProblems(unnamed, expected, 5), []);
+});
 test('valid gated response and deterministic fallback create a canonical pending request', () => {
   const expected = detectMechanicsExpectation(warehouseAction);
   const valid = requested('You reach the truck’s blind side as the driver shifts. That triggers Turn to Violence. Use /roll.', {
@@ -137,8 +163,9 @@ test('valid gated response and deterministic fallback create a canonical pending
 });
 
 test('session pacing audit records mechanics-gate activity', () => {
-  const audit = auditSession({ mechanicsGateTriggers: 2, rolls: [{}] });
+  const audit = auditSession({ mechanicsGateTriggers: 2, mechanicsAdjudications: 5, rolls: [{}] });
   assert.equal(audit.mechanics_gate_triggers, 2);
+  assert.equal(audit.move_adjudications, 5);
   assert.equal(audit.consequential_rolls, 1);
 });
 
@@ -167,6 +194,15 @@ test('every canonical basic move has a deterministic modifier source', () => {
   }
 });
 
+test('Debt refusal requests cannot silently default missing creditor Status to zero', () => {
+  assert.equal(parseRollRequest(
+    '<roll_request>{"move":"Refuse to Honor a Debt","circle":"Night"}</roll_request>'
+  ), null);
+  const valid = parseRollRequest(
+    '<roll_request>{"move":"Refuse to Honor a Debt","circle":"Night","creditor_status":2}</roll_request>'
+  );
+  assert.equal(valid?.creditor_status, 2);
+});
 test('canonical city move stat overrides a contradictory model request', () => {
   const request = parseRollRequest(
     '<roll_request>{"move":"Keep Your Cool","modifier_type":"stat","modifier_key":"Blood"}</roll_request>'
@@ -225,6 +261,18 @@ test('roll resolution calculates tiers, cap, and Instinct extreme failure', () =
   });
   assert.equal(capped.modifier, 4);
   assert.equal(capped.total, 16);
+  assert.equal(capped.advanced_move, false);
+
+  const advanced = createRollRecord({
+    request: { move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood' },
+    state: { ...state, playbook_state: { advanced_moves: ['Turn to Violence'] } },
+    instinct: 6,
+    other: 4,
+    sessionId: 'thread-test',
+    characterId: 'jacob-boone',
+  });
+  assert.equal(advanced.total >= 12, true);
+  assert.equal(advanced.advanced_move, true);
 });
 
 test('mechanics depth changes presentation without changing the record', () => {
@@ -259,6 +307,20 @@ test('state close increments session, clamps ranges, marks Circles, and derives 
   assert.ok(result.warnings.length >= 2);
 });
 
+test('Let It Out weak hits mark mandatory corruption exactly once at close', () => {
+  const result = reconcileCharacterState({ ...state, corrupt: 1 }, {}, {
+    characterId: 'jacob-boone',
+    rolls: [{ move: 'Let It Out', result: 'weak_hit' }],
+  });
+  assert.equal(result.state.corrupt, 2);
+  assert.match(result.warnings.join(' '), /marked 1 corruption automatically/);
+
+  const alreadyPatched = reconcileCharacterState({ ...state, corrupt: 1 }, { corrupt: 2 }, {
+    characterId: 'jacob-boone',
+    rolls: [{ move: 'Let It Out', result: 'weak_hit' }],
+  });
+  assert.equal(alreadyPatched.state.corrupt, 2);
+});
 test('involved untouched arcs gain pressure after two ignored sessions', () => {
   const initial = {
     arcs: [{
@@ -272,6 +334,7 @@ test('involved untouched arcs gain pressure after two ignored sessions', () => {
   assert.equal(next.arcs[0].escalation, 3);
   assert.equal(next.arcs[0].ignored_sessions, 0);
   assert.equal(next.arcs[0].status, 'escalating');
+  assert.deepEqual(next.arcs[0].clock, { current: 3, max: 4, warning_at: 3 });
   assert.deepEqual(deriveActiveArcIds(next, 'jacob-boone'), ['arc-001']);
 });
 

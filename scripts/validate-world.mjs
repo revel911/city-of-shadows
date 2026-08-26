@@ -102,6 +102,9 @@ for (const arc of arcDoc.arcs || []) {
   for (const id of arc.npc_ids || []) if (!ids.npc.has(id)) errors.push(`${arc.id} references missing NPC ${id}`);
   for (const id of arc.character_ids || []) if (!ids.pc.has(id)) errors.push(`${arc.id} references missing PC ${id}`);
   if (!Number.isInteger(arc.escalation) || arc.escalation < 0 || arc.escalation > 4) errors.push(`${arc.id}.escalation must be 0-4`);
+  if (!arc.agenda || typeof arc.agenda !== 'string') errors.push(`${arc.id}.agenda is required`);
+  if (!arc.impulse || typeof arc.impulse !== 'string') errors.push(`${arc.id}.impulse is required`);
+  if (!arc.clock || arc.clock.current !== arc.escalation || arc.clock.max !== 4) errors.push(`${arc.id}.clock must mirror escalation with max 4`);
   if (arc.ignored_sessions != null && (!Number.isInteger(arc.ignored_sessions) || arc.ignored_sessions < 0 || arc.ignored_sessions > 1)) errors.push(`${arc.id}.ignored_sessions must be 0-1`);
 }
 

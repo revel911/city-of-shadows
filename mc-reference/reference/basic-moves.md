@@ -148,7 +148,7 @@ Roll with their Circle.
 
 ## Put a Name to a Face
 
-**Trigger:** When you put a name to a face or vice versa.
+**Trigger:** When you put a name to a face or vice versa. This requires a person: recognizing or recalling a symbol, sigil, emblem, logo, object, place, or writing is not this move.
 **Roll:** Circle (their Circle rating)
 
 Roll with their Circle. On a hit, you know their reputation; the MC will tell you what most people know about them.

@@ -21,6 +21,8 @@ const FIRST_PERSON = String.raw`(?:i|we)(?:\s+(?:try|attempt|want|mean|plan|inte
 const IMMEDIATE_DANGER = /\b(?:alert|armed|aiming|watching|scanning|chasing|pursuing|attack|attacker|gun|knife|fire|flames|collapsing|buckling|unstable|rusted|slick|slippery|edge|ledge|roof|current|deep water|canal|river|traffic|moving vehicle|trap|explosive|fall)\b/i;
 const PRESSURED_PHYSICAL_ACTION = /\b(?:I|we)\s+(?:(?:try|attempt|want|need|mean|plan|am going|will)\s+to\s+)?(?:climb|jump|cross|balance|swim|wade|haul|lift|force|break|catch|swing|leap|crawl|sneak|creep)\b/i;
 const STEALTH_PRESSURE = /\b(?:unnoticed|unseen|quietly|silently|out of (?:sight|view)|behind (?:him|her|them)|blind side|reflections?|mirrors?|shadows?)\b/i;
+const ARMED_STANDOFF = /\b(?:armed|gun|pistol|revolver|rifle|shotgun|knife|switchblade|blade|machete|sword|weapon|pipe|bat|club|crowbar)\b/i;
+const HOLD_STEADY_UNDER_THREAT = /\b(?:I|we)\s+(?:(?:am|are|get|stay|stand|remain|keep|hold)\s+)?(?:ready|steady|calm|still|prepared|braced)|\b(?:I|we)\s+(?:wait|watch|hold|brace|prepare|prep|square up|stand my ground)|\b(?:hand|hands|grip)\s+(?:finds?|tightens?|closes?)\b/i;
 
 // This gate intentionally covers only unmistakable basic-move declarations.
 // Ambiguous fictional triggers remain the MC's responsibility.
@@ -126,6 +128,20 @@ export function detectMechanicsExpectation(playerText, { lastAssistant = '' } = 
       confidence: 'contextual',
     };
   }
+  if (
+    HOLD_STEADY_UNDER_THREAT.test(text)
+    && ARMED_STANDOFF.test(prior)
+  ) {
+    return {
+      move: 'Keep Your Cool',
+      modifier_type: 'stat',
+      modifier_key: 'Spirit',
+      circle: null,
+      forward: 0,
+      reason: 'Hold steady and avoid losing control in an armed confrontation',
+      confidence: 'contextual',
+    };
+  }
   return null;
 }
 
@@ -136,11 +152,14 @@ export function buildMoveAuditContext(turnsWithoutRoll = 0) {
     'Before narrating any outcome, compare the player’s present action against every basic move and every exact move on the active character sheet.',
     'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, visibly ask for /roll, and stop before the outcome.',
     'Do not demand a roll for routine travel, ordinary questions, passive observation, retrieving gear, or unopposed actions with no meaningful consequence.',
-    'Keep Your Cool applies when immediate pressure or danger makes a physical attempt consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
+    'Keep Your Cool applies when immediate pressure or danger makes an action or deliberate composure consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
+    'Put a Name to a Face requires a person: a name connected to a face or vice versa. Symbols, logos, objects, places, and writing are not this move.',
     'If the player might mean ordinary observation or a supernatural sense, ask one concise clarification instead of silently granting supernatural insight.',
-    drought >= 3
-      ? `Roll drought: ${drought} player turns have passed without a move. Bring existing danger, opposition, or cost onstage now so the next meaningful action can engage the rules. Do not manufacture a roll for a routine action.`
-      : `Roll cadence: ${drought} player turn${drought === 1 ? '' : 's'} since the last move request.`,
+    drought >= 5
+      ? `Severe roll drought: ${drought} player turns. Hard-frame an existing threat or cost now. Do not spend another response on travel, setup, lore delivery, or an NPC monologue. Put the character at an immediate decision where delay, refusal, or action each changes the situation. Do not manufacture a roll.`
+      : drought >= 3
+        ? `Roll drought: ${drought} player turns. Move an existing danger, opposition, obligation, or cost onstage this response and end at the edge of a consequential action. Do not manufacture a roll for a routine action.`
+        : `Roll cadence: ${drought} player turn${drought === 1 ? '' : 's'} since the last move request.`,
   ].join('\n');
 }
 
@@ -152,7 +171,7 @@ export function buildMechanicsGateContext(expectation, depth = 3) {
     'Treat their words as intent and method, not as a successful outcome.',
     'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly ask the player to use /roll, and stop before resolving the triggered action.',
     depth <= 3
-      ? 'The player’s mechanics depth allows you to name the move.'
+      ? 'The player’s mechanics depth requires you to name the move once in the visible roll prompt.'
       : 'Keep the move name and modifier behind the curtain. The visible prose must still ask for /roll.',
     'Do not substitute a different move unless newly supplied canonical fiction makes this trigger impossible.',
   ].join('\n');
@@ -164,6 +183,8 @@ function expectedRequest(expectation) {
     modifier_type: expectation.modifier_type,
     modifier_key: expectation.modifier_key,
     circle: expectation.circle || null,
+    actor_status: Number.isInteger(expectation.actor_status) ? expectation.actor_status : null,
+    creditor_status: Number.isInteger(expectation.creditor_status) ? expectation.creditor_status : null,
     forward: Number.isInteger(expectation.forward) ? expectation.forward : 0,
     reason: expectation.reason || '',
   };
@@ -191,7 +212,7 @@ const PREMATURE_OUTCOME_PATTERNS = Object.freeze({
   ],
 });
 
-export function mechanicsResponseProblems(text, expectation) {
+export function mechanicsResponseProblems(text, expectation, depth = 3) {
   if (!expectation) return [];
   const problems = [];
   const request = parseRollRequest(text);
@@ -206,6 +227,9 @@ export function mechanicsResponseProblems(text, expectation) {
   }
   const visible = stripRollRequest(text).trim();
   if (!/\/roll\b/i.test(visible)) problems.push('required roll prompt is not visible');
+  if (depth <= 3 && !visible.toLowerCase().includes(String(expectation.move).toLowerCase())) {
+    problems.push('required move name is not visible');
+  }
   if (!/\/roll[`.!*_\s]*$/i.test(visible)) problems.push('response continues after the required roll prompt');
   const premature = PREMATURE_OUTCOME_PATTERNS[normalizedMove(expectation.move)] || [];
   if (premature.some(pattern => pattern.test(visible))) {
@@ -231,6 +255,9 @@ export function parseRollRequest(text) {
     const modifierType = raw.modifier_type || canonical?.type || 'stat';
     const modifierKey = raw.modifier_key || canonical?.key || null;
     const circle = CIRCLE_NAMES.includes(raw.circle) ? raw.circle : null;
+    if (canonical?.type === 'status_difference'
+      && (!circle || !Number.isInteger(raw.creditor_status)
+        || raw.creditor_status < 0 || raw.creditor_status > 3)) return null;
     return {
       move,
       modifier_type: modifierType,
@@ -317,6 +344,7 @@ export function createRollRecord({
     modifier,
     total,
     result,
+    advanced_move: (state.playbook_state?.advanced_moves || []).some(move => normalizedMove(move) === normalizedMove(request.move)),
     extreme_failure: result === 'miss' && instinct === 1,
     rolled_at: rolledAt,
   };
@@ -374,6 +402,14 @@ export function reconcileCharacterState(current = {}, patch = {}, {
   );
   merged.harm = clamp(merged.harm, 0, 5, integer(current.harm));
   merged.corrupt = clamp(merged.corrupt, 0, 5, integer(current.corrupt));
+  const automaticCorruption = rolls.filter(roll =>
+    normalizedMove(roll.move) === 'let it out' && roll.result === 'weak_hit'
+  ).length;
+  const minimumCorruption = Math.min(5, integer(current.corrupt) + automaticCorruption);
+  if (merged.corrupt < minimumCorruption) {
+    merged.corrupt = minimumCorruption;
+    warnings.push(`Let It Out weak hit marked ${automaticCorruption} corruption automatically`);
+  }
   merged.xp = clamp(merged.xp, 0, 7, integer(current.xp));
   merged.advances = Math.max(0, integer(merged.advances, integer(current.advances)));
   merged.circle_ratings = validNumericMap(
@@ -463,6 +499,7 @@ export function reconcileArcs(doc, patches = [], {
     const arc = { ...existing, ...body, id };
     arc.character_ids = [...new Set(Array.isArray(arc.character_ids) ? arc.character_ids : [])];
     arc.escalation = clamp(arc.escalation, 0, 4, integer(existing.escalation, 0));
+    arc.clock = { ...(arc.clock || {}), current: arc.escalation, max: 4, warning_at: Number(arc.clock?.warning_at) || 3 };
     arc.ignored_sessions = 0;
     arc.last_touched_session = sessionId;
     arc.last_updated = stamp;
@@ -477,10 +514,12 @@ export function reconcileArcs(doc, patches = [], {
         || ['resolved', 'closed', 'failed'].includes(arc.status)) continue;
     const ignored = integer(arc.ignored_sessions) + 1;
     const escalates = ignored >= 2;
+    const escalation = escalates ? Math.min(4, integer(arc.escalation) + 1) : integer(arc.escalation);
     next.arcs[i] = {
       ...arc,
       ignored_sessions: escalates ? 0 : ignored,
-      escalation: escalates ? Math.min(4, integer(arc.escalation) + 1) : integer(arc.escalation),
+      escalation,
+      clock: { ...(arc.clock || {}), current: escalation, max: 4, warning_at: Number(arc.clock?.warning_at) || 3 },
       status: escalates && arc.status === 'active' ? 'escalating' : arc.status,
       last_updated: stamp,
       revision: (Number.isInteger(arc.revision) ? arc.revision : 0) + 1,
@@ -542,6 +581,7 @@ export function auditSession({
   rolls = [],
   close = {},
   mechanicsGateTriggers = 0,
+  mechanicsAdjudications = 0,
 } = {}) {
   const assistantText = messages
     .filter(message => message.role === 'assistant')
@@ -552,6 +592,7 @@ export function auditSession({
   return {
     meaningful_choice_prompted: /\?|choose|what do you do|which do you/i.test(assistantText),
     mechanics_gate_triggers: Math.max(0, integer(mechanicsGateTriggers)),
+    move_adjudications: Math.max(0, integer(mechanicsAdjudications)),
     consequential_rolls: rolls.length,
     world_state_touches: worldTouches,
     handoff_written: Boolean(close.handoff),

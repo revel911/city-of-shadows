@@ -554,7 +554,7 @@ The bot injects the current player's `mechanics_depth` integer (1-5) into your p
 |---|---|---|---|
 | **1** | Open table | Named moves, dice rolls with stat + modifiers, Circle ratings, Harm boxes, stat math, advance options spelled out | — |
 | **2** | Crunch-forward | Named moves, dice results, modifier totals | Detailed stat math (just the result) |
-| **3** | Balanced *(default)* | Move triggers narrated naturally; dice results mentioned without full math; stat references sparingly | Modifier breakdowns, stat math |
+| **3** | Balanced *(default)* | Move name stated once when a roll is requested; dice results mentioned without full math; stat references sparingly | Modifier breakdowns, stat math |
 | **4** | Story-forward | A minimal "Fate check" result and fictional outcome | Move names, individual dice, modifiers |
 | **5** | Pure narrative | A private acknowledgement that fate was checked, then story consequences | Move names, dice, modifiers, stat references |
 

@@ -1,6 +1,7 @@
 # AI contributor guide
 
-Read [`docs/AI-CONTEXT.md`](docs/AI-CONTEXT.md) and
+Start with the repository [knowledge map](docs/README.md), then load only the
+documents routed for the task. Read [`docs/AI-CONTEXT.md`](docs/AI-CONTEXT.md) and
 [`docs/DATA-MODEL.md`](docs/DATA-MODEL.md) before changing world persistence.
 
 ## Repository rules

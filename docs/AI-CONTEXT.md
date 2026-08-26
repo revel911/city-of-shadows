@@ -26,8 +26,10 @@ DeepSeek does not browse GitHub. The bot is the retrieval layer:
 
 1. `bot/handlers/github.js` reads files through GitHub's Contents API using
    `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`, and `GITHUB_TOKEN`.
-2. `bot/handlers/mc.js` assembles the stable MC reference prompt and a per-session
-   opening context.
+2. [bot/handlers/mc.js](../bot/handlers/mc.js) loads the
+   [MC reference index](../mc-reference/README.md) first as the authority and
+   retrieval map, then assembles the stable MC reference prompt, the active
+   character-specific reference pack, and a per-session opening context.
 3. The opening context includes player safety and mechanics preferences, broad
    play tendencies learned from prior actions, handoff/sheet/state, recent events,
    one relevant interaction echo, detailed relevant world entities (including

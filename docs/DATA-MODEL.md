@@ -27,7 +27,9 @@ There must be one authoritative definition for each fact. In particular:
   `relationships.derived.json`.
 - Public Debt amounts live only in `game/debts.json`; relationship labels may
   describe a social tie but are not a Debt ledger.
-- Mystery questions, revelations, and clue availability live in `game/mysteries.json`.
+- Mystery questions, revelations, clue availability, derived stage, and progress live in `game/mysteries.json`.
+- A character’s knowledge of a mystery is derived from clue `discovered_by` IDs; it is not duplicated into another public file.
+- Arc pressure lives in `game/arcs.json`: escalation is canonical, while agenda, impulse, next pressure, and clock metadata make behavior explicit when present.
 - Character mechanics live under `players/<character-id>/`.
 
 Reference documents may describe schemas, but must not duplicate named NPC facts.
@@ -58,8 +60,8 @@ must reuse the canonical ID shown in the opening world index.
 | `game/locations.json` | Bot/MC | Partial records merged by canonical ID |
 | `game/relationships.manual.json` | Human operator | Hand-curated; never changed by the MC |
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |
-| `game/arcs.json` | Bot/MC | Partial records merged by ID |
-| `game/mysteries.json` | Bot/MC; Keeper reconcile-only | Revisioned revelation and clue maps |
+| `game/arcs.json` | Bot/MC/Keeper | Revisioned pressure entities; deterministic City Keeper candidate and cooldown |
+| `game/mysteries.json` | Bot/MC; Keeper reconcile-only | Revisioned revelation/clue maps with bot-derived stage and progress |
 | `game/debts.json` | Bot/MC | Public Debt records merged by stable ID |
 | `game/events-log.md` | Bot/MC | Public chronology, newest entry first |
 | `game/interactions.json` | Bot/MC | ID-based add/update/consume operations |
@@ -87,6 +89,7 @@ must reuse the canonical ID shown in the opening world index.
 - Arc NPC, hub, and character IDs must resolve.
 - Mystery arc, NPC, hub, character, revelation, clue, and clue-source IDs must resolve.
 - Every required mystery revelation must have at least three linked clues.
+- Derived character knowledge contains only clues discovered by that character; global discovery does not imply personal knowledge.
 - Relationship `source` and `target` may point to a hub, location, NPC, arc, or PC,
   but both endpoints must exist.
 - Debt `creditor_id` and `debtor_id` must resolve to an NPC or PC and must differ.
@@ -105,7 +108,7 @@ An NPC can distinguish:
 the entity revision. A stale scalar change becomes a continuity conflict instead
 of silently overwriting newer play; additive ID collections merge as sets.
 Concurrent clue discoveries merge monotonically by clue ID (including each
-discovering character); contradictory clue states remain reviewable conflicts.
+discovering character); contradictory clue states remain reviewable conflicts. After a successful mystery merge, the bot derives mystery stage, clue totals, and supported revelations rather than trusting narrator bookkeeping.
 NPC-memory promises, grievances, boundaries, beliefs, and key moments also merge
 additively. Conflicting stale changes to disposition, trust, fear, respect, or
 relationship state become reviewable conflicts rather than overwrites.
@@ -136,8 +139,7 @@ in a private deployment or a future private store; they must not be serialized t
 the public relationship graph.
 
 The same warning applies to mystery files: this repository is not a secure GM
-vault. Store only truths that may safely exist in the public repository. A future
-private store is required for genuinely player-hidden solutions.
+vault. Store only truths that may safely exist in the public repository. Character knowledge is filtered for narration but remains a presentation boundary, not access control. A future private store is required for genuinely player-hidden solutions or private per-character knowledge.
 
 ## Validation and graph generation
 

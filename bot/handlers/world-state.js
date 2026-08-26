@@ -1,4 +1,10 @@
 import { readJSON } from './github.js';
+import {
+  deriveKnowledgeRecords,
+  formatCharacterKnowledge,
+  formatScenePressureContext,
+  withDerivedMysteryState,
+} from './narrative-state.js';
 
 function compactNpc(npc) {
   return {
@@ -121,6 +127,10 @@ function compactArc(arc) {
     npc_ids: arc.npc_ids || [],
     character_ids: arc.character_ids || [],
     summary: arc.summary || '',
+    agenda: arc.agenda || '',
+    impulse: arc.impulse || '',
+    next_pressure: arc.next_pressure || '',
+    clock: arc.clock || { current: Number.isInteger(arc.escalation) ? arc.escalation : 0, max: 4 },
     mc_notes: arc.mc_notes || '',
   };
 }
@@ -136,6 +146,13 @@ function compactMystery(mystery) {
     hub_ids: mystery.hub_ids || [],
     npc_ids: mystery.npc_ids || [],
     character_ids: mystery.character_ids || [],
+    stage: mystery.stage || 'hook',
+    progress: mystery.progress || {},
+    themes: mystery.themes || [],
+    motifs: mystery.motifs || [],
+    agenda: mystery.agenda || '',
+    next_pressure: mystery.next_pressure || '',
+    pressure: mystery.pressure || null,
     revelations: mystery.revelations || [],
     clues: mystery.clues || [],
     notes: mystery.notes || '',
@@ -165,6 +182,8 @@ export function formatCanonicalWorldContext({
   npcCharacterMemories = [],
   debts = [],
   hubState = [],
+  knowledge = [],
+  characterId = '',
   directory = null,
   includeBehaviorCards = true,
 }) {
@@ -207,6 +226,15 @@ export function formatCanonicalWorldContext({
     '',
     'MUTABLE HUB CONDITIONS:',
     JSON.stringify(hubState.map(compactHubState)),
+    '',
+    formatCharacterKnowledge(knowledge, characterId),
+    '',
+    formatScenePressureContext({
+      arcs,
+      mysteries,
+      characterId,
+      activeArcIds: arcs.map(arc => arc.id),
+    }),
     ...(directory ? [
       '',
       'ENTITY DIRECTORY (identity only; request/reuse these IDs rather than inventing duplicates):',
@@ -237,7 +265,7 @@ async function loadWorldDocuments() {
       ...(derivedDoc?.relationships || []),
     ],
     arcs: arcDoc?.arcs || [],
-    mysteries: mysteryDoc?.mysteries || [],
+    mysteries: withDerivedMysteryState(mysteryDoc || { mysteries: [] }).mysteries,
     npcCharacterMemories: memoryDoc?.memories || [],
     debts: debtDoc?.debts || [],
     hubState: hubStateDoc?.hubs || [],
@@ -336,13 +364,14 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
   const debts = world.debts.filter(debt =>
     debt.creditor_id === characterId || debt.debtor_id === characterId
   );
+  const knowledge = deriveKnowledgeRecords({ mysteries }, { characterId });
   const directory = {
     npcs: world.npcs.map(({ id, name }) => ({ id, name })),
     locations: world.locations.map(({ id, name, hub_id }) => ({ id, name, hub_id })),
     arcs: world.arcs.map(({ id, title, status }) => ({ id, title, status })),
     mysteries: (world.mysteries || []).map(({ id, title, status }) => ({ id, title, status })),
   };
-  return { hubs, npcs, locations, relationships, arcs, mysteries, npcCharacterMemories, debts, hubState, directory };
+  return { hubs, npcs, locations, relationships, arcs, mysteries, knowledge, characterId, npcCharacterMemories, debts, hubState, directory };
 }
 
 export async function buildRelevantWorldContext(options) {

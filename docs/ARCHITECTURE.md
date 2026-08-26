@@ -84,6 +84,18 @@ Discord message in a session thread
  archive thread; drop in-memory session
 ```
 
+### Rules and state orchestration
+
+Returning-character turns first pass through a deterministic fast move gate.
+Inconclusive turns use the semantic adjudicator, which has trigger, non-trigger,
+and prerequisite definitions for all basic moves plus exact rollable moves from
+the active sheet. After `/roll`, `narrative-state.js` provides the result-tier
+contract, derives mystery progress and character knowledge, ranks scene-pressure
+intersections, and selects the single eligible City Keeper pressure.
+
+The model interprets ambiguous fiction and narrates. The bot owns mechanics,
+derived state, revisions, and offscreen eligibility. See
+[`NARRATIVE-RULES-WORLD-ENGINE.md`](NARRATIVE-RULES-WORLD-ENGINE.md).
 ### Statelessness
 
 The bot keeps an in-memory `messages[]` array **only while a thread is live**.

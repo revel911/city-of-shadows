@@ -58,10 +58,10 @@ Treat a missing entity revision as revision 0. Always include every output key:
 
 ## City-turn phase
 
-- Advance at most one eligible unresolved arc.
+- The projection supplies one deterministic `city_turn_candidate`. Only that arc may receive `arc_patch` changes; if it is null, make no world advance.
+- The candidate selector excludes maxed, resolved, failed, closed, and cooling-down arcs. A touched candidate receives a two-turn cooldown.
 - Change at most two NPCs and one hub.
 - Emit at most one public event.
-- Prefer escalating or long-ignored arcs that were not recently player-touched.
 - Never harm, move, speak for, or make a choice for a player character off-screen.
 - Never resolve a major arc, kill or resurrect an NPC, rewrite identity, reveal a
   secret, or rewrite foundational lore.

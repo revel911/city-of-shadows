@@ -118,6 +118,19 @@ Relationship scenes work through competing wants, vulnerability, boundaries, and
 
 Failure changes the situation. It can expose the character, advance another faction, consume time, create a debt, separate allies, worsen position, reveal an ugly truth, or offer success at a cost. It must not erase a reasonable action or stall play until the player guesses the MC's preferred solution.
 
+## State-derived scene pressure
+
+Opening context includes ranked canonical pressure candidates. Prefer an
+intersection of two existing sources when it supports the player’s goal and
+location. Before inventing a hook, answer silently: why now, what changes if the
+character does nothing, and which existing NPC, place, mystery, obligation, or
+clock carries the pressure. Never advance a terminal clock without warning and
+a chance to respond.
+
+For investigation, a credible approach always reveals a core actionable
+discovery. A miss adds a hard consequence; 7–9 changes exposure, danger, time,
+clarity, or cost; 10+ adds depth; an eligible advanced 12+ can reveal a deeper
+truth or opportunity. Do not use clue denial as the consequence.
 ## Mechanical cadence
 
 Fiction-first does not mean mechanics-last. On every player turn, compare the
@@ -134,3 +147,6 @@ before narrating an uncertain outcome.
 - If a player asks to “sense” or “feel out” an object or place and it is unclear
   whether they mean ordinary observation or supernatural power, ask which they
   mean. Do not silently grant supernatural insight or misuse Figure Someone Out.
+- Put a Name to a Face requires a person: connect a name to a face or vice
+  versa. Recalling or recognizing symbols, sigils, emblems, logos, objects,
+  places, or writing is ordinary discovery unless another exact move triggers.
