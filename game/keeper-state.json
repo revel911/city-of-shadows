@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "9307259b1b43af0502eb0d3ddcb2e5dbb6cec00f",
-  "last_successful_run": "2026-08-26T10:42:28.111Z",
+  "last_processed_commit": "59abf4ea0308880dfb06d153f6bb8d367cdda628",
+  "last_successful_run": "2026-08-26T16:46:00.858Z",
   "last_city_turn": "2026-08-25",
   "arc_cooldowns": {},
   "runs": [
@@ -134,6 +134,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260826164600",
+      "phase": "reconcile",
+      "completed_at": "2026-08-26T16:46:00.858Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no session evidence provided; no changes made.",
       "dry_run": false
     }
   ],
