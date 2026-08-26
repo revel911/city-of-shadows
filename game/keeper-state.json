@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "bec4443f6c0b3e0f7009ca0c98088cb6e85119ac",
-  "last_successful_run": "2026-08-25T19:26:23.482Z",
+  "last_processed_commit": "9307259b1b43af0502eb0d3ddcb2e5dbb6cec00f",
+  "last_successful_run": "2026-08-26T10:42:28.111Z",
   "last_city_turn": "2026-08-25",
   "arc_cooldowns": {},
   "runs": [
@@ -123,6 +123,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advanced the escalating Fae-Adjacent Specimen arc. Petra Holt's principals, having exhausted the retrieval deadline, now move to direct action. A known associate of Petra Holt is seen near the warehouse, and the specimen's presence becomes a more active problem in Shockoe Bottom.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260826104228",
+      "phase": "publish",
+      "completed_at": "2026-08-26T10:42:28.111Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
