@@ -366,24 +366,26 @@
       "name": "Marcus Voss",
       "faction": "Power",
       "hub": "Downtown",
-      "hub_id": "hub_downtown",
+      "hub_id": "hub_shockoe_bottom",
       "arc_ids": [
         "arc-005"
       ],
       "status": "active",
-      "role": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand",
+      "role": "Benefactor's go-between; fixer who introduced Cristoff to the Lucifuge; wealthy, connected, dangerous",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 4,
+        "moral": 3,
         "order": 4,
-        "manner": 3,
-        "violence": 5,
-        "voice_note": "Smart enough to see the outline of the thing, not smart enough to stop looking."
+        "manner": 4,
+        "violence": 4,
+        "voice_note": "Measured, professional. Never raises his voice. Treats information like currency and people like investments."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Runs secretive program to engineer Awakenings in promising VCU students.",
+      "notes": "Cristoff owes him 1 Debt. Benefactor identity unknown; Marcus handles the handoffs.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "cristoff-lepierre:session_000",
+      "revision": 1,
+      "last_updated": "2026-08-26"
     },
     {
       "id": "npc_riley_hoffman",
