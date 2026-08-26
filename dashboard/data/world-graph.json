@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-25",
+  "as_of": "2026-08-26",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1890,7 +1890,7 @@
         "status": "escalating",
         "subtype": "personal",
         "escalation": 4,
-        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity."
+        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach."
       },
       "position": {
         "x": -784,

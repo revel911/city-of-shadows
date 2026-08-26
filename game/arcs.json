@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-25",
+  "last_updated": "2026-08-26",
   "arcs": [
     {
       "id": "arc-001",
@@ -33,12 +33,12 @@
         "npc_maren_voss"
       ],
       "character_ids": [],
-      "summary": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity.",
+      "summary": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach.",
       "mc_notes": "Fae/court/monarch lore integration with WoD Supplement v2 still pending — do not proceed with fae contact establishment until lore is confirmed. Specimen carries an unresolved-questions weakness usable against it. 5-day deadline is from 2026-04-24.",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260825192623",
-      "last_updated": "2026-08-25",
-      "revision": 2
+      "last_touched_session": "keeper_city_turn_20260826195521",
+      "last_updated": "2026-08-26",
+      "revision": 3
     },
     {
       "id": "arc-003",

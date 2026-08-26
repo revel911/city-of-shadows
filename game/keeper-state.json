@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "59abf4ea0308880dfb06d153f6bb8d367cdda628",
-  "last_successful_run": "2026-08-26T16:46:00.858Z",
-  "last_city_turn": "2026-08-25",
+  "last_processed_commit": "2cdf1db7deb8731304eb8847c20f1d310968fd48",
+  "last_successful_run": "2026-08-26T19:55:21.284Z",
+  "last_city_turn": "2026-08-26",
   "arc_cooldowns": {},
   "runs": [
     {
@@ -145,6 +145,19 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no session evidence provided; no changes made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260826195521",
+      "phase": "city-turn",
+      "completed_at": "2026-08-26T19:55:21.284Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-002"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "The city-turn advances the escalating Fae-Adjacent Specimen arc: Petra Holt's principals, having sent an associate to surveil the warehouse, now escalate to direct contact. The associate leaves a marked envelope at the warehouse entrance, signaling a shift from observation to action. No player characters are involved.",
       "dry_run": false
     }
   ],
