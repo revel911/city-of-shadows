@@ -10,6 +10,7 @@ import { readProfile, updateProfile } from './profile.js';
 import {
   buildSceneDirectorContext,
   isCharacterRecapRequest,
+  isOutOfCharacterMessage,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
   updatePlaystyleSignals,
@@ -47,8 +48,8 @@ const OPENING_MAX_TOKENS = 450;
 const TURN_MAX_CHARS = 1400;
 const SHORT_TURN_MAX_CHARS = 900;
 const SHORT_PLAYER_INPUT_CHARS = 120;
-const OOC_RECAP_MAX_CHARS = 1800;
-const OOC_RECAP_MAX_TOKENS = 550;
+const OOC_MAX_CHARS = 1800;
+const OOC_MAX_TOKENS = 550;
 
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
@@ -124,7 +125,7 @@ export async function startSession(thread, player) {
 }
 
 export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
-  if (isCharacterRecapRequest(playerContent, priorPlayerContent)) return OOC_RECAP_MAX_CHARS;
+  if (isOutOfCharacterMessage(playerContent, priorPlayerContent)) return OOC_MAX_CHARS;
   return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS
     ? SHORT_TURN_MAX_CHARS
     : TURN_MAX_CHARS;
@@ -151,6 +152,19 @@ function visibleResponseText(response) {
   return sanitizePlayerFacingText(visible).cleaned.trim();
 }
 
+function normalizedEchoText(value) {
+  return String(value || '')
+    .toLowerCase()
+    .replace(/[>*_#]/g, ' ')
+    .replace(/[^\p{L}\p{N}]+/gu, ' ')
+    .trim();
+}
+
+function isQuestionOnlyResponse(value) {
+  const sentences = String(value || '').match(/[^.!?]+[.!?]+|[^.!?]+$/g) || [];
+  return sentences.length > 0 && sentences.every(sentence => sentence.trim().endsWith('?'));
+}
+
 export function proseQualityProblems(response) {
   const visible = visibleResponseText(response);
   const problems = [];
@@ -163,12 +177,24 @@ export function proseQualityProblems(response) {
   if (/\b(?:he|she|they|you)\s+(?:is|are|was|were)\s+(?:he|she|they|you|his|her|their|your)\b/i.test(visible)) {
     problems.push('broken pronoun clause');
   }
+  if (/\b(?:envelope|package|letter|item|object|phone|weapon|car|body)\s+(?:is|was|has been)\s+(?:gone|missing|taken|removed)\b[\s\S]{0,300}\b(?:see|watch|catch)\s+who\s+(?:picks?|takes?|removes?)\s+it\b/i.test(visible)) {
+    problems.push('object is already gone but is also awaiting pickup');
+  }
   return problems;
+}
+
+function openingDeadlineLacksCurrentTime(value) {
+  const text = String(value || '');
+  const hasDeadline = /\b(?:before|by|until|no later than)\s+(?:midnight|noon|[01]?\d(?::[0-5]\d)?\s*(?:a\.?m\.?|p\.?m\.?))\b/i.test(text);
+  if (!hasDeadline) return false;
+  return !/\b(?:it(?:'|’)s|it is|currently|right now|the clock (?:reads|shows)|current time is)\s+(?:about|around|roughly|nearly|just (?:before|after)\s+)?(?:[01]?\d(?::[0-5]\d)?\s*(?:a\.?m\.?|p\.?m\.?)|\d{1,2}\s*o['’]?clock|noon|midnight)\b/i.test(text);
 }
 
 export function responseSafetyProblems(response, {
   opening = false,
   maxVisibleChars,
+  oocMode = false,
+  playerContent = '',
   mechanicsExpectation = null,
   mechanicsDepth = 3,
 } = {}) {
@@ -181,10 +207,24 @@ export function responseSafetyProblems(response, {
     || /\b(?:locked:\s*player|attention intent control|CLOSE-only|NO push)\b/i.test(text)) {
     problems.push('internal planning marker');
   }
+  if (oocMode && /<(?:roll_request|checkpoint|save_player|save_onboarding|close_session|state_patch|npc_patch|location_patch|relationship_patch|debt_patch|arc_patch|mystery_patch|interaction_ops)\b/i.test(text)) {
+    problems.push('out-of-character response attempts to advance or persist state');
+  }
+  const visible = visibleResponseText(text);
+  if (oocMode && playerContent) {
+    if (normalizedEchoText(visible) === normalizedEchoText(playerContent)) {
+      problems.push('out-of-character response merely repeats the player');
+    } else if (isQuestionOnlyResponse(visible)) {
+      problems.push('out-of-character response asks a question without answering');
+    }
+  }
   const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
-  const visibleLength = visibleResponseText(text).length;
+  const visibleLength = visible.length;
   if (visibleLength > visibleLimit) {
     problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
+  }
+  if (opening && openingDeadlineLacksCurrentTime(visible)) {
+    problems.push('opening deadline lacks the current in-fiction time');
   }
   problems.push(...proseQualityProblems(text));
   problems.push(...mechanicsResponseProblems(text, mechanicsExpectation, mechanicsDepth));
@@ -195,15 +235,19 @@ async function generateSafeResponse(session, {
   opening = false,
   maxVisibleChars,
   oocRecap = false,
+  oocMode = false,
+  playerContent = '',
   mechanicsExpectation = null,
 } = {}) {
   let response = await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
-    : (oocRecap ? { maxTokens: OOC_RECAP_MAX_TOKENS, temperature: 0.4 } : {}));
+    : (oocMode ? { maxTokens: OOC_MAX_TOKENS, temperature: 0.4 } : {}));
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
     const problems = responseSafetyProblems(response, {
       opening,
       maxVisibleChars,
+      oocMode,
+      playerContent,
       mechanicsExpectation,
       mechanicsDepth: session.mechanicsDepth,
     });
@@ -226,10 +270,12 @@ async function generateSafeResponse(session, {
         `Re-emit only the player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters.`,
         opening
           ? (session.rulesProfile?.isNew
-              ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question.'
-              : 'Preserve the required **Previously in City of Shadows...** recap, then establish the immediate pressure and one actionable hook before ending with a direct question.')
-          : (oocRecap
-              ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
+              ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question. If the hook has a deadline, state the current in-fiction time.'
+              : 'Preserve the required **Previously in City of Shadows...** recap, then establish the immediate pressure and one actionable hook before ending with a direct question. If the hook has a deadline, state the current in-fiction time.')
+          : (oocMode
+              ? (oocRecap
+                  ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
+                  : 'Answer the player out of character. Do not repeat or rephrase their question. If the exact answer is absent, say so and give the closest established answer. Do not advance the fiction or character-creation phase, infer a choice, request a roll, or change state.')
               : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
         'Reread every sentence for missing words, duplicated words, contradictory physical details, and unclear pronouns before answering.',
@@ -243,7 +289,7 @@ async function generateSafeResponse(session, {
     try {
       response = await generate(session, opening
         ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.5 }
-        : (oocRecap ? { maxTokens: OOC_RECAP_MAX_TOKENS, temperature: 0.3 } : { temperature: 0.5 }));
+        : (oocMode ? { maxTokens: OOC_MAX_TOKENS, temperature: 0.3 } : { temperature: 0.5 }));
     } finally {
       session.messages.splice(-2, 2);
     }
@@ -267,8 +313,10 @@ export async function handleMessage(message) {
 
   await lock(session, async () => {
     await refreshSessionWorld(session);
+    const priorPlayerText = session.lastPlayerText || '';
+    const oocMode = isOutOfCharacterMessage(message.content, priorPlayerText);
     const hadPendingRoll = Boolean(session.pendingRoll);
-    const pendingGuard = pendingRollGuard(session, message.content);
+    const pendingGuard = oocMode ? null : pendingRollGuard(session, message.content);
     if (pendingGuard) {
       if (hadPendingRoll && !session.pendingRoll) {
         session.messages.push({
@@ -282,12 +330,13 @@ export async function handleMessage(message) {
     }
     const lastAssistant = [...session.messages].reverse()
       .find(entry => entry.role === 'assistant')?.content || '';
-    const priorPlayerText = session.lastPlayerText || '';
     const npcHydration = await buildNpcMentionHydration(
       session,
       `${lastAssistant}\n${message.content}`
     );
-    const { content: userContent, exhausted } = applySaveLeakNudge(session, message.content);
+    const { content: userContent, exhausted } = oocMode
+      ? { content: message.content, exhausted: false }
+      : applySaveLeakNudge(session, message.content);
     if (exhausted) {
       await message.channel.send(
         `⚠ <save_onboarding> still leaking after ${SAVE_ONBOARDING_MAX_RETRIES} retries. ` +
@@ -295,9 +344,11 @@ export async function handleMessage(message) {
       );
       console.error(`[save-onboarding] leak retries exhausted for session ${session.threadId}`);
     }
-    session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
+    if (!oocMode) {
+      session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
+    }
     const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
-    const mechanicsActive = !oocRecap && session.player.id !== '__new__';
+    const mechanicsActive = !oocMode && session.player.id !== '__new__';
     let mechanicsExpectation = mechanicsActive
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
@@ -365,12 +416,16 @@ export async function handleMessage(message) {
       response = await generateSafeResponse(session, {
         maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
         oocRecap,
+        oocMode,
+        playerContent: message.content,
         mechanicsExpectation,
       });
     } catch (err) {
       console.error(`[generation] failed for session ${session.threadId}: ${err.message}`);
-      const safeFailure = oocRecap
-        ? 'I couldn’t fit that refresher into a clean reply. Say **“short recap”** and I’ll retry it in compact bullets.'
+      const safeFailure = oocMode
+        ? (oocRecap
+            ? 'I couldn’t fit that refresher into a clean reply. Say **“short recap”** and I’ll retry it in compact bullets.'
+            : 'I couldn’t prepare a clean out-of-character reply. Ask again with **OOC:** and I’ll retry without advancing anything.')
         : 'I couldn’t prepare a clean reply for that turn. Say **“try again”** and I’ll retry without advancing the scene.';
       session.messages.push({ role: 'assistant', content: safeFailure });
       await message.channel.send(safeFailure);

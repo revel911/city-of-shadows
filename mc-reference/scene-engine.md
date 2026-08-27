@@ -16,6 +16,12 @@ Before narrating, decide seven things in one sentence each:
 
 Resolve one consequential beat, show the changed situation, and stop at the exit. A short player action does not authorize a montage, a second location, several discoveries, or decisions for the player character.
 
+Time pressure must be usable, not decorative. Whenever a scene presents a
+deadline, expiring opportunity, scheduled meeting, or race against another
+actor, establish the current in-fiction time and the meaningful window or travel
+constraint. Never tell the player to arrive before midnight without also making
+clear roughly how long remains.
+
 ### Intent, uncertainty, and move triggers
 
 - A player states what their character attempts and how. They do not establish

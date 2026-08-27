@@ -54,6 +54,21 @@ platform behaves, not API compatibility.
 - Normal turns now receive lightweight prose-quality checks for accidental word
   repetition, broken pronoun clauses, and contradictory physical details.
   Rejected prose is regenerated before it reaches Discord.
+- Direct player questions and messages marked OOC now pause fiction and character
+  creation. They bypass mechanics adjudication and pending-roll blocking without
+  consuming the roll, and OOC replies cannot emit roll or persistence blocks.
+  OOC clarifications inherit the pause, while echoed or question-only non-answers
+  are rejected and regenerated.
+- Opening hooks with deadlines must include the current in-fiction time. The
+  response guard also rejects impossible object timelines such as declaring an
+  envelope gone and then inviting the player to watch it be collected.
+- Returning recaps may not infer character-specific ties from canonical NPC or
+  location records. Character creation checks new NPC names against the canonical
+  directory and cannot repurpose an existing identity, role, owner, or history.
+- Character creation now separates extension compatibility from concept fit.
+  Slasher is no longer suggested merely because a playbook is Mortalis; an
+  explicitly supernatural-hunter concept is offered Hunter: The Vigil first,
+  with any off-natural move cost explained.
 
 ## [0.1.0] — 2026-05-16
 

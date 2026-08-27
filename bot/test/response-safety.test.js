@@ -42,6 +42,38 @@ test('short OOC character recap receives the dedicated recap allowance', () => {
   assert.equal(playerFacingTurnLimit('Break it up', original), 1800);
 });
 
+test('ordinary OOC questions get the bounded OOC response budget', () => {
+  assert.equal(playerFacingTurnLimit('OOC: can we pause here?'), 1800);
+  assert.equal(playerFacingTurnLimit('What does this move mean?'), 1800);
+});
+
+test('OOC replies cannot emit roll or persistence blocks', () => {
+  const problems = responseSafetyProblems(
+    'Sure.\n<roll_request><move>Keep Your Cool</move></roll_request>',
+    { oocMode: true },
+  );
+  assert.ok(problems.includes('out-of-character response attempts to advance or persist state'));
+  assert.deepEqual(responseSafetyProblems('Spirit measures willpower.', { oocMode: true }), []);
+});
+
+test('OOC replies must answer instead of echoing or returning another bare question', () => {
+  const playerContent = 'What time is it now?';
+  assert.ok(responseSafetyProblems(playerContent, {
+    oocMode: true,
+    playerContent,
+  }).includes('out-of-character response merely repeats the player'));
+
+  assert.ok(responseSafetyProblems('What time is it now in the game?', {
+    oocMode: true,
+    playerContent: 'Yes, in game?',
+  }).includes('out-of-character response asks a question without answering'));
+
+  assert.deepEqual(responseSafetyProblems(
+    'The exact minute was not established. It is late evening, with roughly two hours before midnight.',
+    { oocMode: true, playerContent },
+  ), []);
+});
+
 test('rejects the leaked system preference observation from the reported incident', () => {
   const leaked = '--- SYSTEM PREFERENCE OBSERVATION locked: player asking for mechanism/vibe difference — DO NOT prompt decision';
   assert.ok(responseSafetyProblems(leaked).includes('internal planning marker'));
@@ -68,6 +100,18 @@ test('rejects repeated words and contradictory physical details', () => {
   assert.ok(proseQualityProblems(
     'The windows are up. You circle the truck and reach through the open window.'
   ).includes('contradictory window state'));
+  assert.ok(proseQualityProblems(
+    'The envelope is gone. Be there before midnight if you want to see who picks it up.'
+  ).includes('object is already gone but is also awaiting pickup'));
+});
+
+test('opening deadlines require current in-fiction time', () => {
+  const missingTime = 'The courier leaves at midnight. Get there before midnight. What do you do?';
+  assert.ok(responseSafetyProblems(missingTime, { opening: true })
+    .includes('opening deadline lacks the current in-fiction time'));
+
+  const usable = 'It is 10:15 PM. The courier leaves at midnight, so get there before midnight. What do you do?';
+  assert.deepEqual(responseSafetyProblems(usable, { opening: true }), []);
 });
 
 test('rejects plainly broken pronoun clauses while allowing clean prose', () => {

@@ -5,6 +5,7 @@ import {
   detectRepeatedDevices,
   inferPlaySignals,
   isCharacterRecapRequest,
+  isOutOfCharacterMessage,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
   updatePlaystyleSignals,
@@ -72,4 +73,31 @@ test('character refresher pauses fiction and concise retry inherits that mode', 
   assert.match(direction, /Pause the fiction/);
   assert.match(direction, /at most five compact bullets/);
   assert.match(direction, /Do not advance time/);
+});
+
+test('OOC markers and unframed player questions pause fiction', () => {
+  assert.equal(isOutOfCharacterMessage('OOC: why did that happen?'), true);
+  assert.equal(isOutOfCharacterMessage('/ooc I think the tone is too grim'), true);
+  assert.equal(isOutOfCharacterMessage('((please use less gore))'), true);
+  assert.equal(isOutOfCharacterMessage('What does Spirit do?'), true);
+  assert.equal(isOutOfCharacterMessage('I ask Roz what Spirit does.'), false);
+
+  const direction = buildSceneDirectorContext({ playerText: 'Can I ask a rules question?' });
+  assert.match(direction, /OUT-OF-CHARACTER PAUSE/);
+  assert.match(direction, /without advancing time/i);
+  assert.match(direction, /remain on the exact current phase/i);
+  assert.match(direction, /Do not request a move or roll/i);
+});
+
+test('short clarifications inherit OOC mode after a direct question', () => {
+  const original = 'What time is it now?';
+  const clarification = 'Yes, in game?';
+  assert.equal(isOutOfCharacterMessage(original), true);
+  assert.equal(isOutOfCharacterMessage(clarification, original), true);
+  assert.equal(isOutOfCharacterMessage('Yes', clarification), true);
+
+  const direction = buildSceneDirectorContext({ playerText: original });
+  assert.match(direction, /Do not repeat, rephrase, or bounce/i);
+  assert.match(direction, /closest established answer/i);
+  assert.match(direction, /current time/i);
 });

@@ -24,6 +24,12 @@ You only need a Discord account.
 
 Sessions are async — start, stop, come back tomorrow. When you close a session, the MC writes a handoff so the next session can pick up exactly where you left off.
 
+Inside a session, ask a direct question to pause the fiction. For an
+out-of-character comment, start the message with **OOC:** or **/ooc** (double
+parentheses and double brackets also work). The MC answers without advancing
+time, resolving an action, making a character-creation choice, or consuming a
+pending roll. State your next in-fiction action or explicit choice to resume.
+
 ### Commands
 
 **Play**

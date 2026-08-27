@@ -38,6 +38,8 @@ test('scene engine protects agency while varying action, mystery, urban fantasy,
   assert.match(engine, /do not name or apply a playbook-specific intimacy move/i);
   assert.match(engine, /one universal personality and a separate relationship memory for each/i);
   assert.match(engine, /do not put formal Debts in memory/i);
+  assert.match(engine, /deadline, expiring opportunity, scheduled meeting/i);
+  assert.match(engine, /current in-fiction time/i);
 });
 
 test('top-level Discord handlers never expose raw exception messages to players', async () => {
@@ -55,6 +57,8 @@ test('returning-character openings recap personal continuity before play', async
   assert.match(mc, /most recent meaningful NPC interactions/i);
   assert.match(mc, /character-specific NPC memory/i);
   assert.match(mc, /Do not invent missing history, emotions, locations, or meetings/i);
+  assert.match(mc, /Do not infer that a canonical NPC employs, funds, contacts, trains, or knows this character/i);
+  assert.match(mc, /verify its timeline and object state/i);
   assert.match(mc, /continue at the immediate playable moment/i);
 
   const session = await readFile(new URL('../handlers/session.js', import.meta.url), 'utf8');
@@ -69,6 +73,10 @@ test('character creation uses a consistent guided flow and canonical save', asyn
   assert.match(creation, /compact final preview/i);
   assert.match(creation, /every remaining TBD/i);
   assert.match(creation, /Do not add new facts during serialization/i);
+  assert.match(creation, /question or out-of-character comment is not a character choice/i);
+  assert.match(creation, /Never recommend \*\*Slasher\*\* merely because the playbook is Mortalis/i);
+  assert.match(creation, /Never reuse an existing NPC name for a new role/i);
+  assert.match(creation, /must not overwrite its established controller, owner, role, or history/i);
 
   const session = await readFile(new URL('../handlers/session.js', import.meta.url), 'utf8');
   assert.match(session, /characterSheetProblems\(save\.sheet\)/);

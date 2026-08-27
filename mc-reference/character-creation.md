@@ -19,6 +19,9 @@ For every player, use the same guided rhythm:
    every remaining TBD. Ask the player to approve or revise it before saving.
 8. After approval, serialize the same choices into the canonical sheet and state.
    Do not add new facts during serialization.
+9. A player question or out-of-character comment is not a character choice. Answer
+   it while remaining on the exact current phase; do not infer a choice, lock an
+   answer, or advance the phase until the player actually decides.
 
 ## Player-Facing Onboarding Rule
 
@@ -31,6 +34,10 @@ Assume the player is new to both Urban Shadows and the World of Darkness. **Defi
 ---
 
 ## Phase 1 — Frame
+
+Also tell the player that direct questions pause character creation, and that
+they can prefix a comment with **OOC:** or **/ooc**. Questions and OOC comments
+do not advance a phase; an explicit choice resumes creation.
 
 **Say:** "City of Shadows is a mythic-noir game set in the World of Darkness. The rules engine is Urban Shadows. Let's start with the kind of person you want to play."
 
@@ -116,6 +123,17 @@ Natural pairings:
 - Hunter: The Vigil → The Hunter (induction trades beginning move per hunter.md)
 - Slasher → any Mortalis playbook (induction trades beginning move per slasher.md)
 
+Natural pairing describes mechanical compatibility, not what the MC should recommend. Recommend from the player's stated concept first, then explain any off-natural cost.
+
+Never recommend **Slasher** merely because the playbook is Mortalis or the
+background uses the word hunter. Slasher is about a character becoming a
+murderer or serial-killer legend, so offer it only when the concept points
+toward murder, madness, or a Ripper Undertaking, or the player asks.
+
+A Veteran explicitly described as a professional supernatural hunter should hear
+**Hunter: The Vigil** as the strongest conceptual match, along with the fact that
+it is off-natural for the Veteran and consumes a move pick under that rule.
+
 You may also decline induction entirely on a natural pairing and keep your beginning archetype Move — but then you don't get the sub-type slot or its abilities.
 
 Want to take an extension? If so, which, and are you inducting?"
@@ -198,6 +216,14 @@ Apply rules:
 **Where it goes:** Sheet `DEBTS` and `ANCHORS` sections; `<npc_patch>` block at close.
 
 ---
+
+Before naming or describing an NPC in this phase, compare the proposed name with
+the canonical NPC directory. Never reuse an existing NPC name for a new role.
+When the player asks for an existing NPC, use that NPC’s canonical identity,
+role, voice, and relationships; do not repurpose them. When they ask for a new
+NPC, choose a non-colliding name. An existing NPC or location can gain a new
+relationship to this character only with player approval, and that relationship
+must not overwrite its established controller, owner, role, or history.
 
 ## Phase 10 — Resolve Advances (only if Established or Seasoned)
 

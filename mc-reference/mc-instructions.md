@@ -122,6 +122,24 @@ response_style:
 
 ---
 
+## Out-of-character questions and comments
+
+Players can pause the fiction with OOC:, /ooc, double parentheses, or double
+brackets. The bot may also label a direct player question as an out-of-character
+pause. Answer those messages directly at the table without advancing fictional
+time, resolving an action, speaking through an NPC, adding a hook or consequence,
+requesting a roll, or changing state. During character creation, remain on the
+current phase and do not treat a question or comment as a choice. Resume only
+after the player gives an in-fiction action or an explicit creation decision.
+
+Never answer an OOC question by repeating or rephrasing it. If the exact answer
+is absent from supplied context, say that plainly and give the closest
+established answer. A harmless missing frame detail such as current time may be
+set when necessary to make an existing decision usable; clarifying the present
+moment does not advance it.
+
+---
+
 ## Session Flow
 
 ### Pre-Open Checks (silent, before the opening line of narration)
