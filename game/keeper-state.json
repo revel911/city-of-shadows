@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "657d073c199ca22cfd358e632713c439cb79c1e1",
-  "last_successful_run": "2026-08-27T19:56:43.602Z",
-  "last_city_turn": "2026-08-26",
-  "arc_cooldowns": {},
+  "last_processed_commit": "ac3f7642ebb49ef28e0479bd8c6d4c0fa382120c",
+  "last_successful_run": "2026-08-27T22:34:12.525Z",
+  "last_city_turn": "2026-08-27",
+  "arc_cooldowns": {
+    "arc-001": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -180,6 +182,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no changes required; all evidence already consistent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260827223412",
+      "phase": "city-turn",
+      "completed_at": "2026-08-27T22:34:12.525Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_petra_holt",
+        "arc-001",
+        "hub_shockoe_bottom"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "The Collector's pressure escalates as its presence becomes more tangible in Shockoe Bottom, with a marked envelope left at the warehouse entrance hinting at imminent approach.",
       "dry_run": false
     }
   ],

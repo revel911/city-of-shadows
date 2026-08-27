@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-26",
+  "last_updated": "2026-08-27",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -780,10 +780,10 @@
       "last_seen": "session_001",
       "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260825192623",
+      "updated_by_session": "keeper_city_turn_20260827223412",
       "note": "Deadline for specimen retrieval has passed; principals likely becoming more active.",
-      "revision": 2,
-      "last_updated": "2026-08-25"
+      "revision": 3,
+      "last_updated": "2026-08-27"
     },
     {
       "id": "npc_nadia_vasek",

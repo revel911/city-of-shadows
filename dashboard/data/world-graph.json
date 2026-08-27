@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-26",
+  "as_of": "2026-08-27",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1887,7 +1887,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "escalating",
         "subtype": "threat",
-        "escalation": 3,
+        "escalation": 4,
         "details": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity."
       },
       "position": {

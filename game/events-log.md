@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-27] Marked Envelope Left at Warehouse Entrance
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+An associate of Petra Holt was observed approaching the converted tobacco warehouse on the eastern edge of Shockoe Bottom late last night. The individual did not enter the building but left a sealed envelope marked with an unfamiliar sigil at the main entrance before departing. The envelope has not been retrieved. Residents report a heightened sense of unease, and local trackers note that the area has become a focus of quiet surveillance. The Consilium has not commented.
+
 ## [2026-08-26] Associate Leaves Marked Envelope at Warehouse
 
 **Hubs:** Shockoe Bottom | **Circles:** Power
