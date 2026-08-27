@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "session_id": "session_001",
+  "character_id": "cristoff-lepierre",
+  "date": "2026-08-27",
+  "rolls": [],
+  "active_arc_ids": [],
+  "touched_arc_ids": [],
+  "pacing_audit": {
+    "meaningful_choice_prompted": true,
+    "mechanics_gate_triggers": 0,
+    "move_adjudications": 1,
+    "consequential_rolls": 0,
+    "world_state_touches": 0,
+    "handoff_written": true,
+    "healthy_short_session": false
+  }
+}
