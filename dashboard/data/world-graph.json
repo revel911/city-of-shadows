@@ -1244,16 +1244,16 @@
         "id": "npc_marcus_voss",
         "label": "Marcus Voss",
         "kind": "npc",
-        "hub_id": "hub_downtown",
+        "hub_id": "hub_shockoe_bottom",
         "faction": "Power",
         "status": "active",
-        "subtype": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand",
+        "subtype": "Benefactor's go-between; fixer who introduced Cristoff to the Lucifuge; wealthy, connected, dangerous",
         "portrait": "",
-        "details": "Assistant city attorney; Councilor Ingrid Voss's nephew; sees patterns he doesn't understand"
+        "details": "Benefactor's go-between; fixer who introduced Cristoff to the Lucifuge; wealthy, connected, dangerous"
       },
       "position": {
-        "x": 994,
-        "y": 529
+        "x": 214,
+        "y": -251
       }
     },
     {
@@ -1861,7 +1861,21 @@
         "details": "Player character"
       },
       "position": {
-        "x": 0,
+        "x": -90,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "cristoff-lepierre",
+        "label": "Cristoff LePierre",
+        "kind": "pc",
+        "hub_id": "",
+        "status": "active",
+        "details": "Player character"
+      },
+      "position": {
+        "x": 90,
         "y": 0
       }
     },
@@ -2823,9 +2837,9 @@
     },
     {
       "data": {
-        "id": "edge_npc_marcus_voss_hub_downtown",
+        "id": "edge_npc_marcus_voss_hub_shockoe_bottom",
         "source": "npc_marcus_voss",
-        "target": "hub_downtown",
+        "target": "hub_shockoe_bottom",
         "type": "based_in",
         "label": "Based in",
         "layer": "structural"

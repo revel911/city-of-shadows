@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "2cdf1db7deb8731304eb8847c20f1d310968fd48",
-  "last_successful_run": "2026-08-26T19:55:21.284Z",
+  "last_processed_commit": "e592f360df129de5f06214ff1a17093d9f4f18df",
+  "last_successful_run": "2026-08-27T14:06:55.385Z",
   "last_city_turn": "2026-08-26",
   "arc_cooldowns": {},
   "runs": [
@@ -158,6 +158,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "The city-turn advances the escalating Fae-Adjacent Specimen arc: Petra Holt's principals, having sent an associate to surveil the warehouse, now escalate to direct contact. The associate leaves a marked envelope at the warehouse entrance, signaling a shift from observation to action. No player characters are involved.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260827140655",
+      "phase": "publish",
+      "completed_at": "2026-08-27T14:06:55.385Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
