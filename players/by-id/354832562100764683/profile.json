@@ -8,7 +8,7 @@
     "soft_limits": []
   },
   "mechanics_depth": 3,
-  "mechanics_depth_set": false,
+  "mechanics_depth_set": true,
   "characters": [
     "jacob-boone",
     "cristoff-lepierre"
