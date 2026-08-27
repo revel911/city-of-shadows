@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "e592f360df129de5f06214ff1a17093d9f4f18df",
-  "last_successful_run": "2026-08-27T14:06:55.385Z",
+  "last_processed_commit": "657d073c199ca22cfd358e632713c439cb79c1e1",
+  "last_successful_run": "2026-08-27T19:56:43.602Z",
   "last_city_turn": "2026-08-26",
   "arc_cooldowns": {},
   "runs": [
@@ -170,7 +170,18 @@
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
       "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260827195643",
+      "phase": "reconcile",
+      "completed_at": "2026-08-27T19:56:43.602Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no changes required; all evidence already consistent.",
+      "dry_run": false
     }
   ],
-  "last_processed_session": null
+  "last_processed_session": "cristoff-lepierre-session_001.json"
 }
