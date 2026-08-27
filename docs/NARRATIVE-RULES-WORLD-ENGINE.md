@@ -67,10 +67,12 @@ face. Recalling or recognizing a symbol, sigil, emblem, logo, object, place, or
 writing is not that move.
 
 `bot/handlers/narrative-state.js` supplies a resolution contract after `/roll`
-for every basic move and every result tier. It preserves player-owned choices,
-prevents a second action from resolving before the first move, and requires
-consequences to be carried into checkpoint and close state. A 12+ result uses an
-advanced outcome only when the move is recorded in
+or a validated manual subtotal or individual-dice report for every basic move
+and result tier. Manual subtotals need an Instinct follow-up only on a modified
+miss. Resolution preserves player-owned choices, prevents a second action from
+resolving before the first move, and requires consequences to be carried into
+checkpoint and close state. A 12+ result uses an advanced outcome only when the
+move is recorded in
 `state.playbook_state.advanced_moves`.
 
 Automatic bookkeeping currently includes canonical dice/modifiers, roll

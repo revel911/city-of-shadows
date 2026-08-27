@@ -150,7 +150,7 @@ export function buildMoveAuditContext(turnsWithoutRoll = 0) {
   return [
     '[SYSTEM — REQUIRED MOVE AUDIT]',
     'Before narrating any outcome, compare the player’s present action against every basic move and every exact move on the active character sheet.',
-    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, visibly ask for /roll, and stop before the outcome.',
+    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, tell them they may report the 2d6 total, report both dice, or use /roll, and stop before the outcome.',
     'Do not demand a roll for routine travel, ordinary questions, passive observation, retrieving gear, or unopposed actions with no meaningful consequence.',
     'Keep Your Cool applies when immediate pressure or danger makes an action or deliberate composure consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
     'Put a Name to a Face requires a person: a name connected to a face or vice versa. Symbols, logos, objects, places, and writing are not this move.',
@@ -169,10 +169,10 @@ export function buildMechanicsGateContext(expectation, depth = 3) {
     '[SYSTEM — REQUIRED MECHANICS GATE]',
     `The player’s declared action clearly triggers ${expectation.move}: ${expectation.reason}.`,
     'Treat their words as intent and method, not as a successful outcome.',
-    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly ask the player to use /roll, and stop before resolving the triggered action.',
+    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly tell the player they may report the 2d6 total, report both dice, or use /roll, and stop before resolving the triggered action.',
     depth <= 3
       ? 'The player’s mechanics depth requires you to name the move once in the visible roll prompt.'
-      : 'Keep the move name and modifier behind the curtain. The visible prose must still ask for /roll.',
+      : 'Keep the move name and modifier behind the curtain. The visible prose must still offer a manual total or /roll.',
     'Do not substitute a different move unless newly supplied canonical fiction makes this trigger impossible.',
   ].join('\n');
 }
@@ -192,8 +192,8 @@ function expectedRequest(expectation) {
 
 export function buildMechanicsFallback(expectation, depth = 3) {
   const visible = depth <= 3
-    ? `That triggers **${expectation.move}**. Use \`/roll\`.`
-    : 'The outcome is uncertain. Use `/roll`.';
+    ? `That triggers **${expectation.move}**. Say \`I rolled an 8\`, report both dice, or use \`/roll\`.`
+    : 'The outcome is uncertain. Report the 2d6 total, report both dice, or use `/roll`.';
   return `${visible}\n\n<roll_request>${JSON.stringify(expectedRequest(expectation))}</roll_request>`;
 }
 
@@ -309,43 +309,156 @@ export function classifyRoll(total) {
   return 'miss';
 }
 
+export function parseManualRoll(text) {
+  const input = String(text || '').trim();
+  if (!input) return null;
+
+  const totalMatch = input.match(
+    /^(?:i\s+)?roll(?:ed)?\s+(?:(?:a|an)\s+)?(?:(?:dice\s+)?total(?:\s+of)?\s+)?(-?\d+)\s*(?:total)?[.!]?\s*$/i
+  );
+  if (totalMatch) {
+    const rawTotal = Number(totalMatch[1]);
+    if (!Number.isInteger(rawTotal) || rawTotal < 2 || rawTotal > 12) {
+      return { error: 'A two-dice total must be a whole number from 2 to 12.' };
+    }
+    return { rawTotal };
+  }
+
+  const instinctMatch = input.match(
+    /\binstinct(?:\s+(?:die|dice))?\s*(?:(?:was|is|rolled)\s*)?(?:a\s*)?(?:=|:)?\s*(-?\d+)\b/i
+  );
+  const labeledOtherMatch = input.match(
+    /\b(?:regular|normal|other)(?:\s+(?:die|dice))?\s*(?:(?:was|is|rolled)\s*)?(?:a\s*)?(?:=|:)?\s*(-?\d+)\b/i
+  );
+  const rolledOtherMatch = input.match(/\b(?:i\s+)?rolled\s+(?:a\s+)?(-?\d+)\b/i);
+  const looksLikeReport = Boolean(
+    instinctMatch
+    || labeledOtherMatch
+    || (rolledOtherMatch && /\b(?:die|dice|instinct)\b/i.test(input))
+  );
+  if (!looksLikeReport) return null;
+
+  if (!instinctMatch) {
+    return {
+      error: 'Manual move rolls need a two-dice total or both dice. Try I rolled an 8 or regular 3, instinct 1.',
+    };
+  }
+
+  const instinct = Number(instinctMatch[1]);
+  if (!Number.isInteger(instinct) || instinct < 1 || instinct > 6) {
+    return {
+      error: 'Each manual die must be a whole number from 1 to 6.',
+    };
+  }
+
+  const otherMatch = labeledOtherMatch || rolledOtherMatch;
+  if (!otherMatch) return { instinct };
+
+  const other = Number(otherMatch[1]);
+  if (!Number.isInteger(other) || other < 1 || other > 6) {
+    return {
+      error: 'Each manual die must be a whole number from 1 to 6.',
+    };
+  }
+  return { instinct, other };
+}
+
+function rollMath(request, state, rawTotal) {
+  const source = resolveModifier(request, state);
+  const baseModifier = source.value;
+  const forward = integer(request.forward);
+  const modifier = Math.max(-3, Math.min(4, baseModifier + forward));
+  const total = rawTotal + modifier;
+  return {
+    source,
+    baseModifier,
+    forward,
+    modifier,
+    total,
+    result: classifyRoll(total),
+  };
+}
+
+export function previewRollTotal({ request, state, rawTotal }) {
+  if (!Number.isInteger(rawTotal) || rawTotal < 2 || rawTotal > 12) {
+    throw new Error('A two-dice total must be an integer from 2 to 12.');
+  }
+  return { raw_total: rawTotal, ...rollMath(request, state, rawTotal) };
+}
+
 export function createRollRecord({
   request,
   state,
   instinct,
   other,
+  rawTotal: reportedRawTotal,
   sessionId,
   characterId,
+  diceSource = 'bot',
   rolledAt = new Date().toISOString(),
 }) {
-  if (![instinct, other].every(die => Number.isInteger(die) && die >= 1 && die <= 6)) {
-    throw new Error('Dice must be integers from 1 to 6.');
+  let resolvedInstinct = instinct;
+  let resolvedOther = other;
+  let rawTotal = reportedRawTotal;
+
+  const hasBothDice = [resolvedInstinct, resolvedOther]
+    .every(die => Number.isInteger(die) && die >= 1 && die <= 6);
+  if (hasBothDice) {
+    const diceTotal = resolvedInstinct + resolvedOther;
+    if (rawTotal !== undefined && rawTotal !== diceTotal) {
+      throw new Error('The individual dice do not match the reported total.');
+    }
+    rawTotal = diceTotal;
+  } else if (Number.isInteger(rawTotal) && rawTotal >= 2 && rawTotal <= 12) {
+    if (resolvedInstinct !== undefined && resolvedInstinct !== null) {
+      if (!Number.isInteger(resolvedInstinct) || resolvedInstinct < 1 || resolvedInstinct > 6) {
+        throw new Error('The Instinct Die must be an integer from 1 to 6.');
+      }
+      resolvedOther = rawTotal - resolvedInstinct;
+      if (!Number.isInteger(resolvedOther) || resolvedOther < 1 || resolvedOther > 6) {
+        throw new Error('The Instinct Die cannot combine with the reported total.');
+      }
+    } else {
+      resolvedInstinct = null;
+      resolvedOther = null;
+    }
+  } else {
+    throw new Error('Dice must be two integers from 1 to 6, or a total from 2 to 12.');
   }
-  const source = resolveModifier(request, state);
-  const baseModifier = source.value;
-  const forward = integer(request.forward);
-  const modifier = Math.max(-3, Math.min(4, baseModifier + forward));
-  const rawTotal = instinct + other;
-  const total = rawTotal + modifier;
-  const result = classifyRoll(total);
+
+  const {
+    source,
+    baseModifier,
+    forward,
+    modifier,
+    total,
+    result,
+  } = rollMath(request, state, rawTotal);
+  if (result === 'miss' && resolvedInstinct === null) {
+    throw new Error('A miss needs the Instinct Die result.');
+  }
+
   return {
-    id: `roll_${String(sessionId || 'session').replace(/[^a-zA-Z0-9_-]/g, '_')}_${Date.parse(rolledAt) || Date.now()}`,
+    id: 'roll_' + String(sessionId || 'session').replace(/[^a-zA-Z0-9_-]/g, '_')
+      + '_' + (Date.parse(rolledAt) || Date.now()),
     session_id: sessionId || '',
     character_id: characterId || state.character_id || '',
     move: request.move,
     modifier_type: source.type,
     modifier_key: source.key,
     circle: request.circle || null,
-    instinct_die: instinct,
-    other_die: other,
+    dice_source: diceSource === 'manual' ? 'manual' : 'bot',
+    instinct_die: resolvedInstinct,
+    other_die: resolvedOther,
     raw_total: rawTotal,
     base_modifier: baseModifier,
     forward,
     modifier,
     total,
     result,
-    advanced_move: (state.playbook_state?.advanced_moves || []).some(move => normalizedMove(move) === normalizedMove(request.move)),
-    extreme_failure: result === 'miss' && instinct === 1,
+    advanced_move: (state.playbook_state?.advanced_moves || [])
+      .some(move => normalizedMove(move) === normalizedMove(request.move)),
+    extreme_failure: result === 'miss' && resolvedInstinct === 1,
     rolled_at: rolledAt,
   };
 }
@@ -354,15 +467,38 @@ export function formatRoll(record, depth = 3) {
   const result = record.result === 'strong_hit'
     ? 'strong hit'
     : record.result === 'weak_hit' ? 'mixed hit' : 'miss';
-  const extreme = record.extreme_failure ? ' — Instinct complication triggered' : '';
+  const extreme = record.extreme_failure ? ' \u2014 Instinct complication triggered' : '';
+  const hasIndividualDice = Number.isInteger(record.instinct_die)
+    && Number.isInteger(record.other_die);
+  const modifierSign = record.modifier >= 0 ? '+' : '\u2212';
+
   if (depth >= 5) return 'Fate check recorded. The consequences will appear in the fiction.';
-  if (depth === 4) return `Fate check: **${result}**${extreme}.`;
-  if (depth === 3) return `🎲 **${record.instinct_die}** · **${record.other_die}** ${record.modifier >= 0 ? '+' : '−'} ${Math.abs(record.modifier)} → **${record.total}**, ${result}${extreme}.`;
-  if (depth === 2) return `🎲 ${record.instinct_die} (Instinct) + ${record.other_die} + ${record.modifier} = **${record.total}** — **${result}**${extreme}.`;
+  if (depth === 4) return 'Fate check: **' + result + '**' + extreme + '.';
+  if (depth === 3) {
+    const dice = hasIndividualDice
+      ? '**' + record.instinct_die + '** (Instinct) \u00b7 **' + record.other_die + '**'
+      : 'dice total **' + record.raw_total + '**';
+    return '\u{1F3B2} ' + dice + ' ' + modifierSign + ' '
+      + Math.abs(record.modifier) + ' \u2192 **' + record.total + '**, '
+      + result + extreme + '.';
+  }
+  if (depth === 2) {
+    const dice = hasIndividualDice
+      ? record.instinct_die + ' (Instinct) + ' + record.other_die
+      : 'dice total ' + record.raw_total;
+    return '\u{1F3B2} ' + dice + ' ' + modifierSign + ' '
+      + Math.abs(record.modifier) + ' = **'
+      + record.total + '** \u2014 **' + result + '**' + extreme + '.';
+  }
+  const dice = hasIndividualDice
+    ? record.instinct_die + ' (Instinct) + ' + record.other_die
+    : 'reported dice total ' + record.raw_total;
   return [
-    `🎲 **${record.move}** using **${record.modifier_key || record.modifier_type}**`,
-    `Dice: ${record.instinct_die} (Instinct) + ${record.other_die}; modifier ${record.modifier >= 0 ? '+' : ''}${record.modifier}; total **${record.total}**.`,
-    `Outcome: **${result}**${extreme}.`,
+    '\u{1F3B2} **' + record.move + '** using **'
+      + (record.modifier_key || record.modifier_type) + '**',
+    'Dice: ' + dice + '; modifier ' + (record.modifier >= 0 ? '+' : '')
+      + record.modifier + '; total **' + record.total + '**.',
+    'Outcome: **' + result + '**' + extreme + '.',
   ].join('\n');
 }
 

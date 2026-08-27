@@ -9,13 +9,14 @@ and the active World of Darkness extension.
 
 - A pre-narration rules adjudicator checks every returning-character turn against all basic moves and the active sheet's rollable moves. The MC remains the fallback when the adjudicator cannot return a valid decision, and narrates consequences only after the bot resolves required dice.
 - Put a Name to a Face requires connecting a person’s name and face. Recognizing or recalling symbols, sigils, emblems, logos, objects, places, or writing does not trigger it.
-- The bot owns dice, canonical modifiers, result tiers, session numbering, state
-  ranges, arc membership, and mechanical receipts.
+- The bot owns dice validation, canonical modifiers, result tiers, session
+  numbering, state ranges, arc membership, and mechanical receipts. The player
+  may have the bot roll, report the 2d6 subtotal, or report both individual dice.
 - `state.json` is authoritative for character numbers.
 - `game/debts.json` is authoritative for public Debt amounts.
 - `game/arcs.json.character_ids` is authoritative for character involvement;
   `state.json.active_arc_ids` is a derived convenience index.
-- Never ask a player to transcribe dice or calculate a modifier.
+- Never ask a player to calculate a modifier or total.
 
 ## Roll lifecycle
 
@@ -32,10 +33,15 @@ When a player action triggers uncertainty:
 <roll_request>{"move":"Keep Your Cool","modifier_type":"stat","modifier_key":"Spirit","circle":null,"forward":0,"reason":"Cross the buckling catwalk before it gives way"}</roll_request>
 ```
 
-3. End the visible prose by asking the player to use `/roll`.
+3. End the visible prose by offering a manual subtotal such as `I rolled an 8`,
+   both individual dice, or `/roll`.
 4. Stop. Do not narrate an outcome until the bot returns an authoritative result.
-5. The bot reads the modifier from `state.json`, rolls 2d6, applies the capped
-   modifier, records the Instinct Die, and injects the result into the session.
+5. The bot reads the modifier from `state.json`. With `/roll`, it rolls 2d6. For
+   a manual subtotal, it validates the 2-12 range and applies the canonical
+   modifier. A modified 7+ resolves immediately without individual dice. On a
+   modified 6 or less, the bot asks what the Instinct Die showed, validates that
+   it can produce the reported subtotal, and then checks Extreme Failure. A
+   player may instead report both individual dice up front.
 6. The bot injects a move-specific resolution contract. Narrate that exact tier, preserve every player-owned choice, and never change the total, tier, or Extreme Failure flag.
 7. A 12+ uses the advanced outcome only when `state.playbook_state.advanced_moves` contains that move.
 
@@ -66,8 +72,9 @@ Mechanics depth changes presentation, never whether rules are executed:
 5. The command acknowledgement is private and minimal; consequences are
    presented entirely through fiction.
 
-At every depth the player still uses `/roll` when prompted. The MC must not hide
-a required player decision or silently choose move options for them.
+At every depth the player can use `/roll`, report the 2d6 subtotal, or report
+both dice when prompted. The MC must not hide a required player decision or
+silently choose move options for them.
 
 ## Session close invariants
 

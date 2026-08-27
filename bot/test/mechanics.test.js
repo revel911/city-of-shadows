@@ -13,7 +13,9 @@ import {
   formatRoll,
   mergeDebtPatches,
   mechanicsResponseProblems,
+  parseManualRoll,
   parseRollRequest,
+  previewRollTotal,
   reconcileArcs,
   reconcileCharacterState,
   stripRollRequest,
@@ -275,6 +277,92 @@ test('roll resolution calculates tiers, cap, and Instinct extreme failure', () =
   assert.equal(advanced.advanced_move, true);
 });
 
+test('manual dice reports identify both dice and reject incomplete or invalid results', () => {
+  assert.deepEqual(parseManualRoll('I roll an 8'), { rawTotal: 8 });
+  assert.deepEqual(parseManualRoll('I rolled a 6'), { rawTotal: 6 });
+  assert.deepEqual(parseManualRoll('instinct die was a 1'), { instinct: 1 });
+  assert.deepEqual(
+    parseManualRoll('I rolled a 3, instinct dice was a 1'),
+    { instinct: 1, other: 3 }
+  );
+  assert.deepEqual(
+    parseManualRoll('instinct die: 6, regular die: 2'),
+    { instinct: 6, other: 2 }
+  );
+  assert.match(
+    parseManualRoll('I rolled a 3 on the dice').error,
+    /two-dice total or both dice/i
+  );
+  assert.match(parseManualRoll('I roll a 13').error, /2 to 12/i);
+  assert.match(parseManualRoll('regular 7, instinct 1').error, /1 to 6/i);
+  assert.equal(parseManualRoll('I move behind the boxes.'), null);
+});
+
+test('a reported subtotal resolves hits without Instinct and asks for Instinct on a miss', () => {
+  const request = {
+    move: 'Keep Your Cool',
+    modifier_type: 'stat',
+    modifier_key: 'Spirit',
+  };
+  const minusOneState = { ...state, stats: { ...state.stats, Spirit: -1 } };
+
+  const hitPreview = previewRollTotal({ request, state: minusOneState, rawTotal: 8 });
+  assert.equal(hitPreview.total, 7);
+  assert.equal(hitPreview.result, 'weak_hit');
+  const hit = createRollRecord({
+    request,
+    state: minusOneState,
+    rawTotal: 8,
+    diceSource: 'manual',
+    sessionId: 'thread-test',
+    characterId: 'jacob-boone',
+  });
+  assert.equal(hit.instinct_die, null);
+  assert.equal(hit.other_die, null);
+  assert.equal(hit.extreme_failure, false);
+  assert.match(formatRoll(hit, 3), /dice total/i);
+  assert.doesNotMatch(formatRoll(hit, 3), /Instinct/);
+
+  const missPreview = previewRollTotal({ request, state: minusOneState, rawTotal: 7 });
+  assert.equal(missPreview.total, 6);
+  assert.equal(missPreview.result, 'miss');
+  assert.throws(() => createRollRecord({
+    request,
+    state: minusOneState,
+    rawTotal: 7,
+  }), /needs the Instinct Die/i);
+
+  const completedMiss = createRollRecord({
+    request,
+    state: minusOneState,
+    rawTotal: 7,
+    instinct: 1,
+    diceSource: 'manual',
+    sessionId: 'thread-test',
+    characterId: 'jacob-boone',
+  });
+  assert.equal(completedMiss.other_die, 6);
+  assert.equal(completedMiss.extreme_failure, true);
+});
+
+test('manual dice use canonical modifiers and the same Instinct extreme failure rule', () => {
+  const dice = parseManualRoll('I rolled a 3, instinct dice was a 1');
+  const record = createRollRecord({
+    request: { move: 'Keep Your Cool', modifier_type: 'stat', modifier_key: 'Spirit' },
+    state: { ...state, stats: { ...state.stats, Spirit: -1 } },
+    ...dice,
+    diceSource: 'manual',
+    sessionId: 'thread-test',
+    characterId: 'jacob-boone',
+  });
+  assert.equal(record.dice_source, 'manual');
+  assert.equal(record.raw_total, 4);
+  assert.equal(record.modifier, -1);
+  assert.equal(record.total, 3);
+  assert.equal(record.result, 'miss');
+  assert.equal(record.extreme_failure, true);
+});
+
 test('mechanics depth changes presentation without changing the record', () => {
   const record = {
     move: 'Keep Your Cool', modifier_key: 'Spirit', instinct_die: 2, other_die: 5,
@@ -283,6 +371,7 @@ test('mechanics depth changes presentation without changing the record', () => {
   assert.match(formatRoll(record, 1), /Keep Your Cool/);
   assert.match(formatRoll(record, 2), /Instinct/);
   assert.match(formatRoll(record, 3), /7/);
+  assert.match(formatRoll(record, 3), /Instinct/);
   assert.match(formatRoll(record, 4), /Fate check/);
   assert.doesNotMatch(formatRoll(record, 5), /7|Keep Your Cool|Spirit/);
 });

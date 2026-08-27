@@ -140,6 +140,13 @@ test('pending move blocks narrative bypass while allowing explicit cancellation'
     pendingRoll: { move: 'Keep Your Cool' },
   };
   assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /Keep Your Cool/);
+  assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /regular 3, instinct 1/);
+  assert.ok(visibleSession.pendingRoll);
+  assert.equal(pendingRollGuard(
+    visibleSession,
+    'I rolled a 3, instinct dice was a 1'
+  ), null);
+  assert.equal(pendingRollGuard(visibleSession, 'I roll an 8'), null);
   assert.ok(visibleSession.pendingRoll);
 
   const hiddenSession = {

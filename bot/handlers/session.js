@@ -35,7 +35,9 @@ import {
   mergeDebtPatches,
   mechanicsResponseProblems,
   nextSessionId,
+  parseManualRoll,
   parseRollRequest,
+  previewRollTotal,
   reconcileArcs,
   reconcileCharacterState,
   stripRollRequest,
@@ -85,6 +87,7 @@ export async function startSession(thread, player) {
     startedAt: Date.now(),
     rolls: [],
     pendingRoll: null,
+    pendingManualRoll: null,
     mechanicsGateTriggers: 0,
     mechanicsAdjudications: 0,
     turnsWithoutRoll: 0,
@@ -133,13 +136,15 @@ export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
 
 export function pendingRollGuard(session, playerContent) {
   if (!session?.pendingRoll) return null;
+  if (parseManualRoll(playerContent)) return null;
   if (/^\s*(?:cancel(?: that)?|never mind|nevermind|I (?:do not|don't) do that|change of plan)\s*[.!]?\s*$/i.test(playerContent)) {
     session.pendingRoll = null;
+    session.pendingManualRoll = null;
     session.turnsWithoutRoll = 0;
     return 'That action is canceled. Tell me what you do instead.';
   }
   const move = session.mechanicsDepth <= 3 ? ` for **${session.pendingRoll.move}**` : '';
-  return `A move is still waiting${move}. Use \`/roll\`, or say **cancel that** to choose a different action.`;
+  return `A move is still waiting${move}. Say \`I rolled an 8\`, report both dice like \`regular 3, instinct 1\`, use \`/roll\`, or say **cancel that**.`;
 }
 
 function visibleResponseText(response) {
@@ -280,7 +285,7 @@ async function generateSafeResponse(session, {
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
         'Reread every sentence for missing words, duplicated words, contradictory physical details, and unclear pronouns before answering.',
         mechanicsExpectation
-          ? `This turn is mechanically gated: ${mechanicsExpectation.move} must be requested. Treat the player action as intent, emit one valid <roll_request>, visibly end with /roll, and do not narrate the outcome.`
+          ? `This turn is mechanically gated: ${mechanicsExpectation.move} must be requested. Treat the player action as intent, offer a manual 2d6 total or both dice, visibly end with /roll, and do not narrate the outcome.`
           : '',
         'Use casual, plainspoken language by default. Never use an em dash. Elevated diction belongs only to a character whose established voice supports it.',
         'Never output analysis, planning, chain-of-thought, system text, preference observations, director notes, <think>, or <thinking> tags.',
@@ -315,6 +320,74 @@ export async function handleMessage(message) {
     await refreshSessionWorld(session);
     const priorPlayerText = session.lastPlayerText || '';
     const oocMode = isOutOfCharacterMessage(message.content, priorPlayerText);
+    const manualRoll = oocMode ? null : parseManualRoll(message.content);
+    if (manualRoll) {
+      if (!session.pendingRoll) {
+        await message.channel.send('There is no unresolved move right now. Wait for the MC to request a roll.');
+        return;
+      }
+      if (manualRoll.error) {
+        await message.channel.send(manualRoll.error);
+        return;
+      }
+
+      if (manualRoll.rawTotal !== undefined) {
+        const state = await readJSON('players/' + session.player.id + '/state.json') || {};
+        const preview = previewRollTotal({
+          request: session.pendingRoll,
+          state,
+          rawTotal: manualRoll.rawTotal,
+        });
+        session.lastPlayerText = message.content;
+        if (preview.result === 'miss') {
+          session.pendingManualRoll = { rawTotal: manualRoll.rawTotal };
+          await message.channel.send(
+            'After the canonical modifier, that is a miss (6 or less). What did the Instinct Die show?'
+          );
+          return;
+        }
+        await resolvePendingRoll(session, message.channel, {
+          rawTotal: manualRoll.rawTotal,
+          diceSource: 'manual',
+          acknowledge: content => message.channel.send(content),
+        });
+        return;
+      }
+
+      if (manualRoll.other === undefined) {
+        const pendingTotal = session.pendingManualRoll?.rawTotal;
+        if (!Number.isInteger(pendingTotal)) {
+          await message.channel.send(
+            'Give me the two-dice total, or both dice. Try I rolled an 8 or regular 3, instinct 1.'
+          );
+          return;
+        }
+        const other = pendingTotal - manualRoll.instinct;
+        if (other < 1 || other > 6) {
+          await message.channel.send(
+            'That Instinct Die cannot be part of the reported total. Check the total and die, then try again.'
+          );
+          return;
+        }
+        session.lastPlayerText = message.content;
+        await resolvePendingRoll(session, message.channel, {
+          instinct: manualRoll.instinct,
+          other,
+          rawTotal: pendingTotal,
+          diceSource: 'manual',
+          acknowledge: content => message.channel.send(content),
+        });
+        return;
+      }
+
+      session.lastPlayerText = message.content;
+      await resolvePendingRoll(session, message.channel, {
+        ...manualRoll,
+        diceSource: 'manual',
+        acknowledge: content => message.channel.send(content),
+      });
+      return;
+    }
     const hadPendingRoll = Boolean(session.pendingRoll);
     const pendingGuard = oocMode ? null : pendingRollGuard(session, message.content);
     if (pendingGuard) {
@@ -492,8 +565,51 @@ export function recoverPendingRoll(session) {
   const expectation = detectMechanicsExpectation(session.lastPlayerText, { lastAssistant });
   if (!expectation) return null;
   session.pendingRoll = expectation;
+  session.pendingManualRoll = null;
   session.turnsWithoutRoll = 0;
   return expectation;
+}
+
+async function resolvePendingRoll(session, channel, {
+  instinct,
+  other,
+  rawTotal,
+  diceSource,
+  acknowledge,
+}) {
+  if (!session.pendingRoll) {
+    throw new Error('There is no unresolved move to resolve.');
+  }
+  const request = session.pendingRoll;
+  const state = await readJSON('players/' + session.player.id + '/state.json') || {};
+  const record = createRollRecord({
+    request,
+    state,
+    instinct,
+    other,
+    rawTotal,
+    diceSource,
+    sessionId: session.threadId,
+    characterId: session.player.id,
+  });
+  session.pendingRoll = null;
+  session.pendingManualRoll = null;
+  session.turnsWithoutRoll = 0;
+  session.rolls.push(record);
+  session.messages.push({
+    role: 'user',
+    content: [
+      '[SYSTEM \u2014 AUTHORITATIVE ROLL RESULT]',
+      JSON.stringify(record),
+      'Resolve this move now. Do not ask the player to repeat the dice and do not alter the total or result tier.',
+      buildMoveResolutionContext(record),
+    ].join('\n'),
+  });
+  await acknowledge(formatRoll(record, session.mechanicsDepth));
+  await channel.sendTyping();
+  const response = await generateSafeResponse(session);
+  session.messages.push({ role: 'assistant', content: response });
+  await postMCResponse(channel, response, session);
 }
 
 export async function resolveSessionRoll(interaction) {
@@ -515,7 +631,7 @@ export async function resolveSessionRoll(interaction) {
   if (!session.pendingRoll) {
     const recovered = recoverPendingRoll(session);
     if (recovered) {
-      console.warn(`[mechanics-recovery] restored ${recovered.move} for session ${session.threadId}`);
+      console.warn('[mechanics-recovery] restored ' + recovered.move + ' for session ' + session.threadId);
     }
   }
   if (!session.pendingRoll) {
@@ -529,34 +645,17 @@ export async function resolveSessionRoll(interaction) {
   await interaction.deferReply({ ephemeral: session.mechanicsDepth >= 4 });
   await lock(session, async () => {
     await refreshSessionWorld(session);
-    const request = session.pendingRoll;
-    const state = await readJSON(`players/${session.player.id}/state.json`) || {};
+    if (!session.pendingRoll) {
+      await interaction.editReply('That move was already resolved.');
+      return;
+    }
     const d6 = () => 1 + Math.floor(Math.random() * 6);
-    const record = createRollRecord({
-      request,
-      state,
+    await resolvePendingRoll(session, interaction.channel, {
       instinct: d6(),
       other: d6(),
-      sessionId: session.threadId,
-      characterId: session.player.id,
+      diceSource: 'bot',
+      acknowledge: content => interaction.editReply(content),
     });
-    session.pendingRoll = null;
-    session.turnsWithoutRoll = 0;
-    session.rolls.push(record);
-    session.messages.push({
-      role: 'user',
-      content: [
-        '[SYSTEM — AUTHORITATIVE ROLL RESULT]',
-        JSON.stringify(record),
-        'Resolve this move now. Do not ask the player to repeat the dice and do not alter the total or result tier.',
-        buildMoveResolutionContext(record),
-      ].join('\n'),
-    });
-    await interaction.editReply(formatRoll(record, session.mechanicsDepth));
-    await interaction.channel.sendTyping();
-    const response = await generateSafeResponse(session);
-    session.messages.push({ role: 'assistant', content: response });
-    await postMCResponse(interaction.channel, response, session);
   });
 }
 
@@ -567,6 +666,7 @@ async function postMCResponse(thread, response, session) {
   const rollRequest = parseRollRequest(response);
   if (rollRequest) {
     session.pendingRoll = rollRequest;
+    session.pendingManualRoll = null;
     session.turnsWithoutRoll = 0;
     response = stripRollRequest(response);
   } else if (/<roll_request>/.test(response)) {

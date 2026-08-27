@@ -37,7 +37,14 @@ pending roll. State your next in-fiction action or explicit choice to resume.
 | Command | What It Does |
 |---------|--------------|
 | `/play [character]` | Opens a private session thread with the MC. With no arg, replies with a character-picker menu. Pass `character:<id>` to skip the menu, or `character:new` to start onboarding. |
-| `/roll` | Resolves the MC's pending move from canonical character state, including the Instinct Die, modifier cap, result tier, and Extreme Failure trigger. |
+| `/roll` | Rolls and resolves the MC's pending move from canonical character state, including the Instinct Die, modifier cap, result tier, and Extreme Failure trigger. |
+
+When a move is pending, you can use your own dice instead. Report the 2d6
+subtotal with a message such as `I rolled an 8`; the bot applies the canonical
+modifier. If the modified result is 7+, it resolves immediately because the
+Instinct Die cannot change the outcome. If the result is 6 or less (a miss), the
+bot asks what the Instinct Die showed so it can check for an Extreme Failure.
+You may also report both dice up front, for example `regular 3, instinct 1`.
 
 **Your preferences** (player-scoped, replies are private to you)
 

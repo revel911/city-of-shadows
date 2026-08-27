@@ -245,12 +245,14 @@ tiered_outcomes:
 roll_protocol:
   ask_for: bot_integrated_roll
   rule: >
-    Follow MECHANICS-CONTRACT.md. Emit one roll_request, ask the player to use
-    /roll, and stop before the outcome. The bot reads canonical state, rolls,
-    applies the modifier, records the result, and injects it into your next turn.
-  prompt_format: "That triggers a move. Use /roll."
+    Follow MECHANICS-CONTRACT.md. Emit one roll_request, offer a manual 2d6
+    subtotal, both individual dice, or /roll, and stop before the outcome. The
+    bot reads canonical state, validates or rolls the dice, applies the modifier,
+    asks for the Instinct Die only on a manual miss, records the result, and
+    injects it into your next turn.
+  prompt_format: "That triggers a move. Say I rolled an 8, report both dice, or use /roll."
   forbidden:
-    - asking the player to transcribe or calculate dice
+    - asking the player to calculate a modifier or total
     - inventing or changing the bot's result
     - resolving a roll before the bot injects the authoritative result
 ```
@@ -566,7 +568,7 @@ The bot will inject the player's current `safety.hard_limits`, `safety.soft_limi
 
 ## Mechanics Depth
 
-The bot injects the current player's `mechanics_depth` integer (1-5) into your prompt context. It controls how much of the engine is visible in your narration. Mechanical execution is identical at every level: when prompted, the player still uses `/roll`, and the bot resolves it from canonical state. Only the acknowledgement and surface prose change.
+The bot injects the current player's `mechanics_depth` integer (1-5) into your prompt context. It controls how much of the engine is visible in your narration. Mechanical execution is identical at every level: when prompted, the player can report the 2d6 subtotal, report both individual dice, or use `/roll`, and the bot resolves every path from canonical state. Only the acknowledgement and surface prose change.
 
 | Level | Style | What you surface | What you hide |
 |---|---|---|---|

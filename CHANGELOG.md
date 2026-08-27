@@ -10,6 +10,11 @@ platform behaves, not API compatibility.
 ## [Unreleased]
 
 ### Changed
+- Pending moves now accept either bot-rolled dice through `/roll`, a manual 2d6
+  subtotal such as `I rolled an 8`, or both individual dice. A subtotal resolves
+  immediately on a modified 7+; on a miss, the bot asks only for the Instinct
+  Die. Every path shares canonical modifiers, tiers, receipts, and Extreme
+  Failure rules.
 - **MC engine migrated from Anthropic Claude (`claude-sonnet-4-6`) to DeepSeek (`deepseek-chat`).**
   The bot now talks to the DeepSeek API through the OpenAI-compatible SDK
   (`openai` npm package pointed at `https://api.deepseek.com`). Generation runs at
