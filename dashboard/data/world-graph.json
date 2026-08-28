@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-27",
+  "as_of": "2026-08-28",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1967,7 +1967,7 @@
         "hub_id": "hub_downtown",
         "status": "escalating",
         "subtype": "threat",
-        "escalation": 3,
+        "escalation": 4,
         "details": "Someone senior inside a Richmond hunter network accessed an operative's father's operational files and weaponized them to send the operative to kill a protected woman. A parallel inside-investigation is underway. The handler failed to produce the agreed password on the night of the warehouse op — compromised or impostor. A sealed field-research case from the elder Voss may contain the traitor's name."
       },
       "position": {
@@ -3087,11 +3087,11 @@
     },
     {
       "data": {
-        "id": "edge_npc_henrik_vael_hub_downtown",
+        "id": "edge_npc_henrik_vael_loc_the_exchange",
         "source": "npc_henrik_vael",
-        "target": "hub_downtown",
-        "type": "based_in",
-        "label": "Based in",
+        "target": "loc_the_exchange",
+        "type": "located_at",
+        "label": "At",
         "layer": "structural"
       }
     },

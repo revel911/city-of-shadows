@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "508a1bdb614e5590df2c5ca476419dba220d2b00",
-  "last_successful_run": "2026-08-28T20:22:26.073Z",
-  "last_city_turn": "2026-08-27",
-  "arc_cooldowns": {},
+  "last_processed_commit": "7895261f5fc6537c2c2c12a966f16b1e4cf0f47e",
+  "last_successful_run": "2026-08-28T21:52:08.854Z",
+  "last_city_turn": "2026-08-28",
+  "arc_cooldowns": {
+    "arc-006": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -217,6 +219,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence; no changes applied.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260828215208",
+      "phase": "city-turn",
+      "completed_at": "2026-08-28T21:52:08.854Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_roz_czerny",
+        "npc_henrik_vael",
+        "arc-006",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn: The Compromised Hunter Network escalates as Henrik Vael surfaces in Downtown, drawing scrutiny from the hunter network and unsettling Roz Czerny.",
       "dry_run": false
     }
   ],

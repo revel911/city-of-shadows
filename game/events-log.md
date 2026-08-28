@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-28] Former Operative Seen in Downtown
+
+**Hubs:** Downtown | **Circles:** Hunter
+
+A man matching the description of Henrik Vael, a former Night Stalker field operative who went off-grid, was spotted near The Exchange late last night. He did not approach the building, but his presence has not gone unnoticed. Several parties with an interest in the compromised hunter network have taken an interest in his reappearance. Roz Czerny, a retired forensic pathologist turned fixer, was seen in the area and appeared unsettled by the sighting. The network has not commented.
+
 ## [2026-08-27] Marked Envelope Left at Warehouse Entrance
 
 **Hubs:** Shockoe Bottom | **Circles:** Power

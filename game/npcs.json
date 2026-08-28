@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-27",
+  "last_updated": "2026-08-28",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -1043,8 +1043,11 @@
       "last_seen": "",
       "notes": "61 years old. Smokes cheap cigars. Drives a van with a broken heater. Knows what dies in this city and how.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical",
-      "location_status": "mobile"
+      "updated_by_session": "keeper_city_turn_20260828215208",
+      "location_status": "mobile",
+      "note": "Unsettled by Vael's reappearance; cautious about the network's interest.",
+      "revision": 1,
+      "last_updated": "2026-08-28"
     },
     {
       "id": "npc_linh_pham",
@@ -1093,7 +1096,11 @@
       "last_seen": "",
       "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "keeper_city_turn_20260828215208",
+      "current_location_id": "loc_the_exchange",
+      "note": "Recently seen in Downtown; the hunter network is aware of his presence.",
+      "revision": 1,
+      "last_updated": "2026-08-28"
     },
     {
       "id": "npc_dara_shin",

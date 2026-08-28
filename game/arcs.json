@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-27",
+  "last_updated": "2026-08-28",
   "arcs": [
     {
       "id": "arc-001",
@@ -142,7 +142,7 @@
       "id": "arc-006",
       "title": "The Compromised Hunter Network",
       "type": "threat",
-      "escalation": 3,
+      "escalation": 4,
       "status": "escalating",
       "hub_ids": [
         "hub_downtown",
@@ -159,12 +159,15 @@
       "agenda": "Bring The Compromised Hunter Network into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-08-28",
+      "ignored_sessions": 0,
+      "note": "Henrik Vael surfaced in Downtown, drawing hunter network attention; Roz Czerny is wary.",
+      "last_touched_session": "keeper_city_turn_20260828215208"
     },
     {
       "id": "arc-007",
