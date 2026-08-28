@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "ac3f7642ebb49ef28e0479bd8c6d4c0fa382120c",
-  "last_successful_run": "2026-08-27T22:34:12.525Z",
+  "last_processed_commit": "732a4f7c19c502807257f5e0bdb52b9b832b3f8a",
+  "last_successful_run": "2026-08-28T14:28:53.714Z",
   "last_city_turn": "2026-08-27",
   "arc_cooldowns": {
-    "arc-001": 2
+    "arc-001": 1
   },
   "runs": [
     {
@@ -197,6 +197,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "The Collector's pressure escalates as its presence becomes more tangible in Shockoe Bottom, with a marked envelope left at the warehouse entrance hinting at imminent approach.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260828142853",
+      "phase": "publish",
+      "completed_at": "2026-08-28T14:28:53.714Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
