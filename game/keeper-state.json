@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "0e743b5af3e7b5ad545445bc8c6054f13497cea0",
-  "last_successful_run": "2026-08-29T16:32:06.705Z",
-  "last_city_turn": "2026-08-28",
-  "arc_cooldowns": {},
+  "last_processed_commit": "9ca5f28cad4cb6cf0a71a4fc4fb7470fc9e492ec",
+  "last_successful_run": "2026-08-29T19:19:02.982Z",
+  "last_city_turn": "2026-08-29",
+  "arc_cooldowns": {
+    "arc-004": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -255,6 +257,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconciliation complete. No changes required; all supplied evidence is consistent with current world state.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260829191902",
+      "phase": "city-turn",
+      "completed_at": "2026-08-29T19:19:02.982Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_petra_holt",
+        "arc-004",
+        "hub_shockoe_bottom"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance for arc-004: Petra Holt's principals escalate pressure in Shockoe Bottom.",
       "dry_run": false
     }
   ],

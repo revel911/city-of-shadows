@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-29] Increased Activity Near Warehouse
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+Petra Holt has been observed conducting more direct surveillance of the converted tobacco warehouse on the eastern edge of Shockoe Bottom. Her associate was seen again near the building, this time marking entry points and noting patrol patterns. The sealed envelope left earlier remains unretrieved, but locals report a growing sense of unease as the area becomes a focus of quiet, coordinated observation. The Consilium has not commented.
+
 ## [2026-08-28] Former Operative Seen in Downtown
 
 **Hubs:** Downtown | **Circles:** Hunter

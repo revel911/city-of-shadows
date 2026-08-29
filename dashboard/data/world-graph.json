@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-28",
+  "as_of": "2026-08-29",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1536,9 +1536,9 @@
         "hub_id": "hub_shockoe_bottom",
         "faction": "Power",
         "status": "active",
-        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly",
+        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate.",
         "portrait": "",
-        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly"
+        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate."
       },
       "position": {
         "x": 72,
@@ -1935,7 +1935,7 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
+        "escalation": 3,
         "details": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem."
       },
       "position": {
