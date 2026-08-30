@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "9ca5f28cad4cb6cf0a71a4fc4fb7470fc9e492ec",
-  "last_successful_run": "2026-08-29T19:19:02.982Z",
+  "last_processed_commit": "0958e1e395b6eb45525787b1c045f440fc357a96",
+  "last_successful_run": "2026-08-30T10:31:03.939Z",
   "last_city_turn": "2026-08-29",
   "arc_cooldowns": {
-    "arc-004": 2
+    "arc-004": 1
   },
   "runs": [
     {
@@ -272,6 +272,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance for arc-004: Petra Holt's principals escalate pressure in Shockoe Bottom.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260830103103",
+      "phase": "publish",
+      "completed_at": "2026-08-30T10:31:03.939Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
