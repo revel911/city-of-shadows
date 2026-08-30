@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-29",
+  "last_updated": "2026-08-30",
   "arcs": [
     {
       "id": "arc-001",
@@ -88,8 +88,8 @@
       "id": "arc-004",
       "title": "Petra Holt & Unnamed Principals",
       "type": "slow-burn",
-      "escalation": 3,
-      "status": "active",
+      "escalation": 4,
+      "status": "escalating",
       "hub_ids": [
         "hub_university",
         "hub_shockoe_bottom"
@@ -98,19 +98,19 @@
         "npc_petra_holt"
       ],
       "character_ids": [],
-      "summary": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem.",
+      "summary": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem. The deadline has passed; the associate retrieved the marked envelope and reported back. Direct action is imminent.",
       "mc_notes": "Petra meeting at Gild was scheduled 9am the day after the most recent session. She agreed without pushing. She did not ask what the name was. Principals unknown — board connection to a rival Power faction.",
       "agenda": "Bring Petra Holt & Unnamed Principals into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-08-29",
+      "revision": 3,
+      "last_updated": "2026-08-30",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260829191902"
+      "last_touched_session": "keeper_city_turn_20260830191913"
     },
     {
       "id": "arc-005",

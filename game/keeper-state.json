@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "e1969754b38c8b612fb2591e53d64d6fd12a5f2e",
-  "last_successful_run": "2026-08-30T16:32:22.461Z",
-  "last_city_turn": "2026-08-29",
-  "arc_cooldowns": {},
+  "last_processed_commit": "ea23395a81906a1c2f32fd8696a5a73ce4fe7a03",
+  "last_successful_run": "2026-08-30T19:19:13.053Z",
+  "last_city_turn": "2026-08-30",
+  "arc_cooldowns": {
+    "arc-004": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -292,6 +294,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconciliation complete. No changes required; all evidence already consistent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260830191913",
+      "phase": "city-turn",
+      "completed_at": "2026-08-30T19:19:13.053Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_petra_holt",
+        "arc-004",
+        "hub_shockoe_bottom"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn: arc-004 advances. Petra Holt's associate retrieves the marked envelope, escalating the warehouse situation.",
       "dry_run": false
     }
   ],

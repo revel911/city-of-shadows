@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-30] Marked Envelope Retrieved at Warehouse
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+An associate of Petra Holt was observed approaching the converted tobacco warehouse on the eastern edge of Shockoe Bottom late last night. This time, the sealed envelope left at the main entrance was retrieved. The associate departed quickly without entering the building. Residents report a further increase in unease, and local trackers note that the area is now under near-constant quiet surveillance. The Consilium has not commented.
+
 ## [2026-08-29] Increased Activity Near Warehouse
 
 **Hubs:** Shockoe Bottom | **Circles:** Power
