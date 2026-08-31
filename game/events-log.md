@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-08-31] Warehouse Records Shifting
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+Residents and local trackers report that the administrative records for the converted tobacco warehouse on the eastern edge of Shockoe Bottom have begun to shift — permits, ownership documents, and inspection logs now show slight inconsistencies that were not present before. The Overwrite's influence appears to be reaching the building's paper trail. Petra Holt's associate was again seen near the warehouse, this time leaving with a folder of documents. The Consilium has not commented.
+
 ## [2026-08-30] Marked Envelope Retrieved at Warehouse
 
 **Hubs:** Shockoe Bottom | **Circles:** Power

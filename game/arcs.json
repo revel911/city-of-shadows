@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-30",
+  "last_updated": "2026-08-31",
   "arcs": [
     {
       "id": "arc-001",
@@ -175,7 +175,7 @@
       "id": "arc-007",
       "title": "The Tobacco Warehouse Operation",
       "type": "threat",
-      "escalation": 2,
+      "escalation": 3,
       "status": "active",
       "hub_ids": [
         "hub_shockoe_bottom",
@@ -185,17 +185,19 @@
         "npc_linh_pham"
       ],
       "character_ids": [],
-      "summary": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site.",
+      "summary": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals.",
       "mc_notes": "The warehouse flagged by the hunter network is likely the same Shockoe Bottom warehouse a practitioner investigated — confirm in play. Whoever sent the operative there wanted Pham dead. The network address may have been false bait.",
       "agenda": "Bring The Tobacco Warehouse Operation into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
-        "current": 2,
+        "current": 3,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-08-31",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260831192022"
     },
     {
       "id": "arc-008",

@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-30",
+  "as_of": "2026-08-31",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1536,9 +1536,9 @@
         "hub_id": "hub_shockoe_bottom",
         "faction": "Power",
         "status": "active",
-        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent.",
+        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent. Now also monitoring the warehouse's administrative records after noticing discrepancies.",
         "portrait": "",
-        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent."
+        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent. Now also monitoring the warehouse's administrative records after noticing discrepancies."
       },
       "position": {
         "x": 72,
@@ -1983,8 +1983,8 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "threat",
-        "escalation": 2,
-        "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site."
+        "escalation": 3,
+        "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals."
       },
       "position": {
         "x": 734,

@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "06aeeda6c6f6b3cd0cec20e1fe18d8028d3226cd",
-  "last_successful_run": "2026-08-31T16:33:57.147Z",
-  "last_city_turn": "2026-08-30",
-  "arc_cooldowns": {},
+  "last_processed_commit": "33a5ec75a46e1442c5b051a16b226938f88b8523",
+  "last_successful_run": "2026-08-31T19:20:22.980Z",
+  "last_city_turn": "2026-08-31",
+  "arc_cooldowns": {
+    "arc-007": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -329,6 +331,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconciliation complete. No changes required; all evidence already reflected in world state.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260831192022",
+      "phase": "city-turn",
+      "completed_at": "2026-08-31T19:20:22.980Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_petra_holt",
+        "arc-007",
+        "hub_shockoe_bottom"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advanced arc-007 (The Tobacco Warehouse Operation) by escalating pressure through the existing connected hub and NPCs. The Overwrite's rewriting of the warehouse's records draws attention, and Petra Holt's surveillance intensifies, raising the risk of discovery.",
       "dry_run": false
     }
   ],

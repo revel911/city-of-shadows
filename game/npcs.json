@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-30",
+  "last_updated": "2026-08-31",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -768,7 +768,7 @@
         "arc-004"
       ],
       "status": "active",
-      "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent.",
+      "role": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent. Now also monitoring the warehouse's administrative records after noticing discrepancies.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -780,10 +780,10 @@
       "last_seen": "session_001",
       "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260830191913",
+      "updated_by_session": "keeper_city_turn_20260831192022",
       "note": "Deadline for specimen retrieval has passed; principals likely becoming more active.",
-      "revision": 5,
-      "last_updated": "2026-08-30"
+      "revision": 6,
+      "last_updated": "2026-08-31"
     },
     {
       "id": "npc_nadia_vasek",
