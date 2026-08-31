@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "ea23395a81906a1c2f32fd8696a5a73ce4fe7a03",
-  "last_successful_run": "2026-08-30T19:19:13.053Z",
+  "last_processed_commit": "b7fa409ebd2276350c82326572e53676d9c2feba",
+  "last_successful_run": "2026-08-31T10:32:20.676Z",
   "last_city_turn": "2026-08-30",
   "arc_cooldowns": {
-    "arc-004": 2
+    "arc-004": 1
   },
   "runs": [
     {
@@ -309,6 +309,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn: arc-004 advances. Petra Holt's associate retrieves the marked envelope, escalating the warehouse situation.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260831103220",
+      "phase": "publish",
+      "completed_at": "2026-08-31T10:32:20.676Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
