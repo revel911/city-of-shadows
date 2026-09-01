@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "33a5ec75a46e1442c5b051a16b226938f88b8523",
-  "last_successful_run": "2026-08-31T19:20:22.980Z",
+  "last_processed_commit": "13012e296b377156824d4567c2ff8765758be4f4",
+  "last_successful_run": "2026-09-01T10:34:10.454Z",
   "last_city_turn": "2026-08-31",
   "arc_cooldowns": {
-    "arc-007": 2
+    "arc-007": 1
   },
   "runs": [
     {
@@ -346,6 +346,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advanced arc-007 (The Tobacco Warehouse Operation) by escalating pressure through the existing connected hub and NPCs. The Overwrite's rewriting of the warehouse's records draws attention, and Petra Holt's surveillance intensifies, raising the risk of discovery.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260901103410",
+      "phase": "publish",
+      "completed_at": "2026-09-01T10:34:10.454Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
