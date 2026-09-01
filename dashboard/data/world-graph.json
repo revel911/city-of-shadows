@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-08-31",
+  "as_of": "2026-09-01",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1983,7 +1983,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "threat",
-        "escalation": 3,
+        "escalation": 4,
         "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals."
       },
       "position": {

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-08-31",
+  "last_updated": "2026-09-01",
   "arcs": [
     {
       "id": "arc-001",
@@ -175,7 +175,7 @@
       "id": "arc-007",
       "title": "The Tobacco Warehouse Operation",
       "type": "threat",
-      "escalation": 3,
+      "escalation": 4,
       "status": "active",
       "hub_ids": [
         "hub_shockoe_bottom",
@@ -190,14 +190,14 @@
       "agenda": "Bring The Tobacco Warehouse Operation into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-08-31",
+      "revision": 3,
+      "last_updated": "2026-09-01",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260831192022"
+      "last_touched_session": "keeper_city_turn_20260901192208"
     },
     {
       "id": "arc-008",
