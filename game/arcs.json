@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-01",
+  "last_updated": "2026-09-02",
   "arcs": [
     {
       "id": "arc-001",
@@ -250,7 +250,7 @@
       "id": "arc-010",
       "title": "The General's Coup",
       "type": "slow-burn",
-      "escalation": 2,
+      "escalation": 3,
       "status": "active",
       "hub_ids": [
         "hub_downtown"
@@ -259,17 +259,19 @@
         "npc_the_general"
       ],
       "character_ids": [],
-      "summary": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger.",
+      "summary": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions.",
       "mc_notes": "The General's name is TBD. A Debt is owed to The General. Situation is a standoff — the wolf needs to act before the General stops cooperating and starts retaliating.",
       "agenda": "Bring The General's Coup into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 2,
+        "current": 3,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-09-02",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260902192205"
     },
     {
       "id": "arc-011",

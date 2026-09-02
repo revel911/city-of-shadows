@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-01",
+  "as_of": "2026-09-02",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -467,7 +467,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "Night Venues",
-        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched."
+        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions."
       },
       "position": {
         "x": 1059,
@@ -1689,9 +1689,9 @@
         "hub_id": "hub_downtown",
         "faction": "Night",
         "status": "active",
-        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing",
+        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange.",
         "portrait": "",
-        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing"
+        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange."
       },
       "position": {
         "x": 279,
@@ -2031,8 +2031,8 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
-        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger."
+        "escalation": 3,
+        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions."
       },
       "position": {
         "x": 1474,
@@ -3057,11 +3057,11 @@
     },
     {
       "data": {
-        "id": "edge_npc_the_general_hub_downtown",
+        "id": "edge_npc_the_general_loc_the_exchange",
         "source": "npc_the_general",
-        "target": "hub_downtown",
-        "type": "based_in",
-        "label": "Based in",
+        "target": "loc_the_exchange",
+        "type": "located_at",
+        "label": "At",
         "layer": "structural"
       }
     },

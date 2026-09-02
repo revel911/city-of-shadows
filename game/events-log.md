@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-02] The General Consolidates at The Exchange
+
+**Hubs:** Downtown | **Circles:** Night
+
+Late last night, The General was seen at The Exchange in a show of authority, meeting with several key figures and making clear that the venue remains under his control. This public display has unsettled some patrons and drawn the attention of other factions, who are watching for further moves. The Consilium has not commented.
+
 ## [2026-09-02] Warehouse Records Shifting Further
 
 **Hubs:** Shockoe Bottom | **Circles:** Power

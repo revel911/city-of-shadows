@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-01",
+  "last_updated": "2026-09-02",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -983,7 +983,7 @@
         "arc-010"
       ],
       "status": "active",
-      "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing",
+      "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 1,
@@ -995,7 +995,10 @@
       "last_seen": "",
       "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "keeper_city_turn_20260902192205",
+      "current_location_id": "loc_the_exchange",
+      "revision": 1,
+      "last_updated": "2026-09-02"
     },
     {
       "id": "npc_vera_medium",
