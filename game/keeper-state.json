@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "20e0164684db4a70435ab27fd4bfc55285044a4b",
-  "last_successful_run": "2026-09-01T19:22:08.896Z",
+  "last_processed_commit": "6a2e4431c1ffe841cfb8165bb4dad7a90acfb0e1",
+  "last_successful_run": "2026-09-02T10:33:20.039Z",
   "last_city_turn": "2026-09-01",
   "arc_cooldowns": {
-    "arc-007": 2
+    "arc-007": 1
   },
   "runs": [
     {
@@ -381,6 +381,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "The Overwrite's influence on the tobacco warehouse's administrative records continues to draw attention. Petra Holt's associate retrieved a folder of documents, and the warehouse's paper trail now shows inconsistencies. The Consilium remains silent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260902103320",
+      "phase": "publish",
+      "completed_at": "2026-09-02T10:33:20.039Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
