@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-02",
+  "last_updated": "2026-09-03",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -983,7 +983,7 @@
         "arc-010"
       ],
       "status": "active",
-      "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange.",
+      "role": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 1,
@@ -995,10 +995,10 @@
       "last_seen": "",
       "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260902192205",
+      "updated_by_session": "keeper_city_turn_20260903192123",
       "current_location_id": "loc_the_exchange",
-      "revision": 1,
-      "last_updated": "2026-09-02"
+      "revision": 2,
+      "last_updated": "2026-09-03"
     },
     {
       "id": "npc_vera_medium",
@@ -1099,11 +1099,11 @@
       "last_seen": "",
       "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260828215208",
+      "updated_by_session": "keeper_city_turn_20260903192123",
       "current_location_id": "loc_the_exchange",
       "note": "Recently seen in Downtown; the hunter network is aware of his presence.",
-      "revision": 1,
-      "last_updated": "2026-08-28"
+      "revision": 2,
+      "last_updated": "2026-09-03"
     },
     {
       "id": "npc_dara_shin",

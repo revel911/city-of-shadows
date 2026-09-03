@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-03] The General Tightens His Grip on Downtown
+
+**Hubs:** Downtown | **Circles:** Night
+
+The General has been seen making the rounds of several Downtown night venues, accompanied by a larger entourage than usual. At The Exchange, staff have been observed deferring more openly to his preferences, and some regular patrons have reportedly begun taking their business elsewhere. Other factions are watching closely, reading the move as a consolidation of control. The Consilium has not commented.
+
 ## [2026-09-02] The General Consolidates at The Exchange
 
 **Hubs:** Downtown | **Circles:** Night

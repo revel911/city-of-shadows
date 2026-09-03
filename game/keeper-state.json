@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "c8b8d39d94e4a16c03ab51063ccc03a913afc077",
-  "last_successful_run": "2026-09-03T16:35:20.969Z",
-  "last_city_turn": "2026-09-02",
-  "arc_cooldowns": {},
+  "last_processed_commit": "b224d5f6c8ccbcae32017c2be84144fba94a500c",
+  "last_successful_run": "2026-09-03T19:21:23.043Z",
+  "last_city_turn": "2026-09-03",
+  "arc_cooldowns": {
+    "arc-010": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -439,6 +441,23 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no changes required. All entities are consistent with established evidence.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260903192123",
+      "phase": "city-turn",
+      "completed_at": "2026-09-03T19:21:23.043Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_the_general",
+        "npc_henrik_vael",
+        "loc_the_exchange",
+        "arc-010",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "The General's consolidation at The Exchange continues to escalate faction tensions in Downtown.",
       "dry_run": false
     }
   ],

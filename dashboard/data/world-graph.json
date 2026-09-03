@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-02",
+  "as_of": "2026-09-03",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -467,7 +467,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "Night Venues",
-        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions."
+        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere."
       },
       "position": {
         "x": 1059,
@@ -1689,9 +1689,9 @@
         "hub_id": "hub_downtown",
         "faction": "Night",
         "status": "active",
-        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange.",
+        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues.",
         "portrait": "",
-        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange."
+        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues."
       },
       "position": {
         "x": 279,
@@ -2029,10 +2029,10 @@
         "label": "The General's Coup",
         "kind": "arc",
         "hub_id": "hub_downtown",
-        "status": "active",
+        "status": "escalating",
         "subtype": "slow-burn",
-        "escalation": 3,
-        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions."
+        "escalation": 4,
+        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions. He has now begun tightening his grip on Downtown night venues, making his move unmistakable."
       },
       "position": {
         "x": 1474,
