@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-03",
+  "last_updated": "2026-09-04",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -151,7 +151,9 @@
       ],
       "home_location_id": "loc_serranos_domain",
       "current_location_id": "loc_serranos_domain",
-      "updated_by_session": "canonical"
+      "updated_by_session": "keeper_city_turn_20260904191919",
+      "revision": 1,
+      "last_updated": "2026-09-04"
     },
     {
       "id": "npc_theo_marchand",
@@ -407,7 +409,9 @@
       "last_seen": "",
       "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "keeper_city_turn_20260904191919",
+      "revision": 1,
+      "last_updated": "2026-09-04"
     },
     {
       "id": "npc_dr_olave",

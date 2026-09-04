@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-03",
+  "last_updated": "2026-09-04",
   "arcs": [
     {
       "id": "arc-001",
@@ -277,8 +277,8 @@
       "id": "arc-011",
       "title": "The Breach in Serrano's Domain",
       "type": "threat",
-      "escalation": 2,
-      "status": "active",
+      "escalation": 3,
+      "status": "escalating",
       "hub_ids": [
         "hub_downtown"
       ],
@@ -291,12 +291,14 @@
       "agenda": "Bring The Breach in Serrano's Domain into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
-        "current": 2,
+        "current": 3,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-09-04",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260904191919"
     },
     {
       "id": "arc-012",

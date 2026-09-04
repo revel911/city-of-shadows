@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f6f3230ff56bee0af8d3672d2770aaacb573f827",
-  "last_successful_run": "2026-09-04T16:34:21.961Z",
-  "last_city_turn": "2026-09-03",
-  "arc_cooldowns": {},
+  "last_processed_commit": "875dcd60b81adf8ca9b2512d9f1c13f086d1b8c6",
+  "last_successful_run": "2026-09-04T19:19:19.277Z",
+  "last_city_turn": "2026-09-04",
+  "arc_cooldowns": {
+    "arc-011": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -478,6 +480,23 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase completed. No new session evidence was provided, so no changes were made to NPCs, locations, relationships, debts, arcs, mysteries, hubs, interactions, or conflicts. The world state remains consistent with the last known public events and projections.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260904191919",
+      "phase": "city-turn",
+      "completed_at": "2026-09-04T19:19:19.277Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_aldric_serrano",
+        "npc_riley_hoffman",
+        "loc_serranos_domain",
+        "arc-011",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn: The Breach in Serrano's Domain escalates as Aldric Serrano seals more tunnels and increases patrols, causing public unease in Downtown.",
       "dry_run": false
     }
   ],

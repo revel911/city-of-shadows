@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-04] Increased Tunnel Activity in Downtown
+
+**Hubs:** Downtown | **Circles:** Night
+
+Aldric Serrano has sealed off additional sections of the canal tunnels beneath Downtown and increased patrols. The public face of the Canal Walk remains unchanged, but those who know the tunnels report a heightened sense of unease. Riley Hoffman, a night security guard, has noted unusual sounds and movements near the old canal locks. The Consilium has not commented.
+
 ## [2026-09-03] The General Tightens His Grip on Downtown
 
 **Hubs:** Downtown | **Circles:** Night

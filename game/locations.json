@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-03",
+  "last_updated": "2026-09-04",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -298,10 +298,12 @@
       "controller_ids": [],
       "controller_note": "",
       "status": "active",
-      "description": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the \"breach.\"",
+      "description": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-08-21"
+      "last_updated": "2026-09-04",
+      "revision": 1,
+      "updated_by_session": "keeper_city_turn_20260904191919"
     },
     {
       "id": "loc_the_flood_chambers",
