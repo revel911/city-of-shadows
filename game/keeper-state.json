@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "b224d5f6c8ccbcae32017c2be84144fba94a500c",
-  "last_successful_run": "2026-09-03T19:21:23.043Z",
+  "last_processed_commit": "23043a3ba4ee41559f34d1593f1325409b62532e",
+  "last_successful_run": "2026-09-04T10:39:28.048Z",
   "last_city_turn": "2026-09-03",
   "arc_cooldowns": {
-    "arc-010": 2
+    "arc-010": 1
   },
   "runs": [
     {
@@ -458,6 +458,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "The General's consolidation at The Exchange continues to escalate faction tensions in Downtown.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260904103928",
+      "phase": "publish",
+      "completed_at": "2026-09-04T10:39:28.048Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
