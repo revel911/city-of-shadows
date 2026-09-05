@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04",
+  "last_updated": "2026-09-05",
   "arcs": [
     {
       "id": "arc-001",
@@ -277,7 +277,7 @@
       "id": "arc-011",
       "title": "The Breach in Serrano's Domain",
       "type": "threat",
-      "escalation": 3,
+      "escalation": 4,
       "status": "escalating",
       "hub_ids": [
         "hub_downtown"
@@ -286,19 +286,19 @@
         "npc_aldric_serrano"
       ],
       "character_ids": [],
-      "summary": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown.",
+      "summary": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown. Serrano has discovered fresh signs of intrusion near a previously sealed access point, prompting him to further seal sections and increase patrols.",
       "mc_notes": "Serrano's location is known to Declan Morrow; access costs a Debt. Serrano's domain connects Shockoe Bottom to Downtown via the canal tunnels.",
       "agenda": "Bring The Breach in Serrano's Domain into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-09-04",
+      "revision": 3,
+      "last_updated": "2026-09-05",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260904191919"
+      "last_touched_session": "keeper_city_turn_20260905191934"
     },
     {
       "id": "arc-012",

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04",
+  "last_updated": "2026-09-05",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -298,12 +298,12 @@
       "controller_ids": [],
       "controller_note": "",
       "status": "active",
-      "description": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased.",
+      "description": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased. Serrano has ordered even more sections sealed after discovering fresh signs of intrusion near a previously secured access point.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-09-04",
-      "revision": 1,
-      "updated_by_session": "keeper_city_turn_20260904191919"
+      "last_updated": "2026-09-05",
+      "revision": 2,
+      "updated_by_session": "keeper_city_turn_20260905191934"
     },
     {
       "id": "loc_the_flood_chambers",

@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-04",
+  "last_updated": "2026-09-05",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -135,7 +135,7 @@
         "arc-011"
       ],
       "status": "active",
-      "role": "Nosferatu elder and canal tunnel patriarch; wants to be left alone",
+      "role": "Nosferatu elder and canal tunnel patriarch; wants to be left alone; increasingly paranoid after discovering fresh signs of intrusion near a sealed access point",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -151,9 +151,9 @@
       ],
       "home_location_id": "loc_serranos_domain",
       "current_location_id": "loc_serranos_domain",
-      "updated_by_session": "keeper_city_turn_20260904191919",
-      "revision": 1,
-      "last_updated": "2026-09-04"
+      "updated_by_session": "keeper_city_turn_20260905191934",
+      "revision": 2,
+      "last_updated": "2026-09-05"
     },
     {
       "id": "npc_theo_marchand",

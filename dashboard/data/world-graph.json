@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-04",
+  "as_of": "2026-09-05",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -437,7 +437,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "The Canal System",
-        "details": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased."
+        "details": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased. Serrano has ordered even more sections sealed after discovering fresh signs of intrusion near a previously secured access point."
       },
       "position": {
         "x": 672,
@@ -1077,9 +1077,9 @@
         "hub_id": "hub_shockoe_bottom",
         "faction": "Night",
         "status": "active",
-        "subtype": "Nosferatu elder and canal tunnel patriarch; wants to be left alone",
+        "subtype": "Nosferatu elder and canal tunnel patriarch; wants to be left alone; increasingly paranoid after discovering fresh signs of intrusion near a sealed access point",
         "portrait": "",
-        "details": "Nosferatu elder and canal tunnel patriarch; wants to be left alone"
+        "details": "Nosferatu elder and canal tunnel patriarch; wants to be left alone; increasingly paranoid after discovering fresh signs of intrusion near a sealed access point"
       },
       "position": {
         "x": -265,
@@ -2047,8 +2047,8 @@
         "hub_id": "hub_downtown",
         "status": "escalating",
         "subtype": "threat",
-        "escalation": 3,
-        "details": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown."
+        "escalation": 4,
+        "details": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown. Serrano has discovered fresh signs of intrusion near a previously sealed access point, prompting him to further seal sections and increase patrols."
       },
       "position": {
         "x": -27,

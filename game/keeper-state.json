@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "49826d4d3e1d0c1ea334ce3b63bf3d8516a3c8d7",
-  "last_successful_run": "2026-09-05T16:32:16.426Z",
-  "last_city_turn": "2026-09-04",
-  "arc_cooldowns": {},
+  "last_processed_commit": "5a3e14dc970863a1bdcd9e0d58f2f812380da609",
+  "last_successful_run": "2026-09-05T19:19:34.816Z",
+  "last_city_turn": "2026-09-05",
+  "arc_cooldowns": {
+    "arc-011": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -517,6 +519,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase completed. No changes required; all evidence already consistent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260905191934",
+      "phase": "city-turn",
+      "completed_at": "2026-09-05T19:19:34.816Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_aldric_serrano",
+        "loc_serranos_domain",
+        "arc-011",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "The Breach in Serrano's Domain escalates as Aldric Serrano, already defensive, discovers fresh signs of intrusion near the sealed access point, prompting him to further seal sections and increase patrols. The public Canal Walk remains unchanged, but those in the know sense heightened tension beneath Downtown.",
       "dry_run": false
     }
   ],
