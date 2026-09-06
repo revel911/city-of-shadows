@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "5a3e14dc970863a1bdcd9e0d58f2f812380da609",
-  "last_successful_run": "2026-09-05T19:19:34.816Z",
+  "last_processed_commit": "5ee62b5442fa067296a0f983eda1f98c13a5f7cb",
+  "last_successful_run": "2026-09-06T10:30:55.698Z",
   "last_city_turn": "2026-09-05",
   "arc_cooldowns": {
-    "arc-011": 2
+    "arc-011": 1
   },
   "runs": [
     {
@@ -535,6 +535,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "The Breach in Serrano's Domain escalates as Aldric Serrano, already defensive, discovers fresh signs of intrusion near the sealed access point, prompting him to further seal sections and increase patrols. The public Canal Walk remains unchanged, but those in the know sense heightened tension beneath Downtown.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260906103055",
+      "phase": "publish",
+      "completed_at": "2026-09-06T10:30:55.698Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
