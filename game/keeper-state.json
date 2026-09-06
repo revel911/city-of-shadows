@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "a5762e870597a5730ca38a41c06696a0624a13fa",
-  "last_successful_run": "2026-09-06T16:32:24.678Z",
-  "last_city_turn": "2026-09-05",
+  "last_processed_commit": "b985502d5c1897a35116a2d7e23b5813659260ff",
+  "last_successful_run": "2026-09-06T19:19:06.437Z",
+  "last_city_turn": "2026-09-06",
   "arc_cooldowns": {},
   "runs": [
     {
@@ -555,6 +555,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconciliation complete. No changes required; all entities consistent with established evidence.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260906191906",
+      "phase": "city-turn",
+      "completed_at": "2026-09-06T19:19:06.437Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "No world advance this turn.",
       "dry_run": false
     }
   ],
