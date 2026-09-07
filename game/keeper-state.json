@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "b985502d5c1897a35116a2d7e23b5813659260ff",
-  "last_successful_run": "2026-09-06T19:19:06.437Z",
+  "last_processed_commit": "3ced896b2564a4eecb04be1271fec1275eea2af8",
+  "last_successful_run": "2026-09-07T10:33:15.208Z",
   "last_city_turn": "2026-09-06",
   "arc_cooldowns": {},
   "runs": [
@@ -566,6 +566,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No world advance this turn.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260907103315",
+      "phase": "publish",
+      "completed_at": "2026-09-07T10:33:15.208Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
