@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-05",
+  "as_of": "2026-09-07",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1919,7 +1919,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 1,
+        "escalation": 2,
         "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can."
       },
       "position": {

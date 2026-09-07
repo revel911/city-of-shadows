@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-05",
+  "last_updated": "2026-09-07",
   "arcs": [
     {
       "id": "arc-001",
@@ -62,7 +62,7 @@
       "id": "arc-003",
       "title": "Maren Voss's Ritual Circle",
       "type": "slow-burn",
-      "escalation": 1,
+      "escalation": 2,
       "status": "active",
       "hub_ids": [
         "hub_shockoe_bottom",
@@ -77,12 +77,14 @@
       "agenda": "Bring Maren Voss's Ritual Circle into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 1,
+        "current": 2,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-09-07",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260907192120"
     },
     {
       "id": "arc-004",

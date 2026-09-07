@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "5b59ef15d5cedc62c0d27e6aa61ee03f3d30a3d6",
-  "last_successful_run": "2026-09-07T16:34:42.188Z",
-  "last_city_turn": "2026-09-06",
-  "arc_cooldowns": {},
+  "last_processed_commit": "e7cf5688106bb4b2de182eab9d5e0466225a3d8a",
+  "last_successful_run": "2026-09-07T19:21:20.658Z",
+  "last_city_turn": "2026-09-07",
+  "arc_cooldowns": {
+    "arc-003": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -588,6 +590,20 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconciliation found no new session evidence requiring changes. Existing world state is consistent with the public events log.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260907192120",
+      "phase": "city-turn",
+      "completed_at": "2026-09-07T19:21:20.658Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-003",
+        "hub_shockoe_bottom"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advanced arc-003 (Maren Voss's Ritual Circle) with a public event in Shockoe Bottom.",
       "dry_run": false
     }
   ],

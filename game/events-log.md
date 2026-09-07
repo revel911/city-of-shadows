@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-07] Old Market Site Draws Quiet Attention
+
+**Hubs:** Shockoe Bottom | **Circles:** Power
+
+A researcher was seen late last night at the Old Market Site, taking notes and photographs of the memorial marker and surrounding ground. The individual did not approach any buildings and left before dawn. Local residents and trackers have noted the visit as another instance of renewed interest in Shockoe Bottom's buried history, following recent activity near the warehouse. The Consilium has not commented.
+
 ## [2026-09-05] Further Tunnel Sealing in Downtown
 
 **Hubs:** Downtown | **Circles:** Night
