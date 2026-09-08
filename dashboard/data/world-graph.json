@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-07",
+  "as_of": "2026-09-08",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1919,8 +1919,8 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
-        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can."
+        "escalation": 3,
+        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library has recently uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work."
       },
       "position": {
         "x": 800,

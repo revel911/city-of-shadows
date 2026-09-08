@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "39b6ee8d231f187c8f1be6ef2a2ab197c71040e2",
-  "last_successful_run": "2026-09-08T16:36:15.695Z",
-  "last_city_turn": "2026-09-07",
-  "arc_cooldowns": {},
+  "last_processed_commit": "b1886d2e13ca243cd2b092702fa9f048c4aebdc8",
+  "last_successful_run": "2026-09-08T19:22:17.381Z",
+  "last_city_turn": "2026-09-08",
+  "arc_cooldowns": {
+    "arc-003": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -624,6 +626,20 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no changes required; all evidence already consistent.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260908192217",
+      "phase": "city-turn",
+      "completed_at": "2026-09-08T19:22:17.381Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-003",
+        "hub_university"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advanced arc-003 (Maren Voss's Ritual Circle) via hub_university: a student finds a fragment of Maren's field notes in Cabell Library Special Collections, prompting renewed academic interest. No other changes.",
       "dry_run": false
     }
   ],

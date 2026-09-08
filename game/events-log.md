@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-08] Fragment of Maren Voss's Field Notes Found
+
+**Hubs:** University | **Circles:** Power
+
+A student researcher in Cabell Library's Special Collections has uncovered a fragment of field notes believed to belong to Maren Voss, the VCU Folklore & Mythology graduate student who died eight months ago. The fragment was found tucked inside an unrelated manuscript and appears to reference an unspecified ritual practice. University archivists have noted the discovery but have not commented. The Consilium has not commented.
+
 ## [2026-09-07] Old Market Site Draws Quiet Attention
 
 **Hubs:** Shockoe Bottom | **Circles:** Power
