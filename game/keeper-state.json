@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "e7cf5688106bb4b2de182eab9d5e0466225a3d8a",
-  "last_successful_run": "2026-09-07T19:21:20.658Z",
+  "last_processed_commit": "2145c1b4357ce2171cfd20af6e4229f3e54e4126",
+  "last_successful_run": "2026-09-08T10:32:50.103Z",
   "last_city_turn": "2026-09-07",
   "arc_cooldowns": {
-    "arc-003": 2
+    "arc-003": 1
   },
   "runs": [
     {
@@ -604,6 +604,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advanced arc-003 (Maren Voss's Ritual Circle) with a public event in Shockoe Bottom.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260908103250",
+      "phase": "publish",
+      "completed_at": "2026-09-08T10:32:50.103Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
