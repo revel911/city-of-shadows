@@ -149,11 +149,13 @@ section and use `TBD` for unfinished values.
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
 - **`<npc_patch>`** — required if any NPCs were introduced during onboarding (Phase 9 Debts & Anchors, in particular). Full personality-engine scores.
 - **`<location_patch>`** — include only when onboarding establishes a new named place not already present in the canonical world index.
-- **`<relationship_patch>`** — include public Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties.
+- **`<relationship_patch>`** — required JSON array. Include public Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties. Use `[]` only when an early save has not established any public ties yet.
 - **`<debt_patch>`** — authoritative public Debt amounts. Every entry uses a stable `debt_*` ID plus creditor, debtor, amount, status, and `visibility: "public"`.
 - **`<events_append>`** — optional. Use only if the character's arrival is publicly visible.
 
-The bot validates the save block before writing. If `character_id` or `sheet` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
+Both `<relationship_patch>` and `<debt_patch>` are required JSON arrays. The Debt patch is the authoritative public ledger. Use `[]` only when an early save has not established the corresponding records yet.
+
+The bot validates the save block before writing. If `character_id`, `sheet`, `relationship_patch`, or `debt_patch` is missing, the bot asks you to re-emit. **The thread is not closed by a save block** — play continues in the same session.
 
 ### Length & self-check
 
@@ -162,7 +164,7 @@ A complete `<save_onboarding>` for a fresh character typically runs 800–1500 c
 Before sending, verify three things:
 1. The response opens with `<save_onboarding>`.
 2. A matching `</save_onboarding>` appears before your scene narrative begins.
-3. Every nested tag inside the block (`<character_id>`, `<sheet>`, `<state_patch>`, `<npc_patch>`) has a matching closing tag.
+3. Every nested tag inside the block (`<character_id>`, `<sheet>`, `<state_patch>`, `<npc_patch>`, `<relationship_patch>`, `<debt_patch>`) has a matching closing tag.
 
 If you find yourself wanting to write a very long opening scene on the same turn as a save, prefer to keep the scene short — the next player turn will give you space to expand.
 

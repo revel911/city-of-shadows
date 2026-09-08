@@ -272,7 +272,8 @@ When the player confirms — or at any earlier trigger below — emit a `<save_o
 - `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `circle_marks`, `gear`, `effects`, `playbook_state`, and `notes`. Omit bot-owned `active_arc_ids` and `last_session`. (Safety is **not** part of state.json — it lives on the player profile.)
 - `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
 - `<location_patch>` — any new named place established during onboarding
-- `<relationship_patch>` — public Debts, Anchors, family, mentor, employer, and location ties
+- `<relationship_patch>` — required JSON array of public Anchors, family, mentor, employer, and location ties (`[]` only for an early save before ties exist)
+- `<debt_patch>` — required JSON array and authoritative ledger for public Debts (`[]` only for an early save before Debts exist)
 - `<events_append>` — only if the character's arrival is publicly visible
 
 The `<sheet>` content must copy the exact H1/H2 headings and section order from
@@ -308,4 +309,4 @@ The save in Phase 12.5 already persisted the sheet, state, and NPCs. The closing
 - `<events_append>` — if anything publicly visible happened during the first scene
 - `<world_event>` — single line for `#world-events`, if applicable
 
-If Phase 12.5 was skipped for any reason (legacy session, MC oversight), the close block must carry the full first-session payload: `<sheet>`, the full initial `<state_patch>`, and `<npc_patch>`. The bot will retry on incomplete onboarding closes, so do not let a new-character session end without persisting the sheet — re-emit the close block in full if asked.
+If Phase 12.5 was skipped for any reason (legacy session, MC oversight), the close block must carry the full first-session payload: `<sheet>`, the full initial `<state_patch>`, `<npc_patch>`, `<relationship_patch>`, and `<debt_patch>`. The bot will retry on incomplete onboarding closes, so do not let a new-character session end without persisting the sheet and public connections — re-emit the close block in full if asked.

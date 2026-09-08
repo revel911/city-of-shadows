@@ -181,6 +181,28 @@ for (const debt of debts) {
   if (debt.visibility !== 'public') errors.push(`${debt.id} is not public; game/debts.json is public`);
 }
 
+// Every onboarded PC should be visible in the atlas's default Story ties view.
+// Character creation establishes public Debts/Anchors, so a disconnected PC is
+// evidence that an onboarding patch was omitted rather than a valid end state.
+const storyConnectedIds = new Set();
+for (const rel of relationships) {
+  storyConnectedIds.add(rel.source);
+  storyConnectedIds.add(rel.target);
+}
+for (const debt of debts.filter(item => item.visibility === 'public' && item.amount > 0)) {
+  storyConnectedIds.add(debt.creditor_id);
+  storyConnectedIds.add(debt.debtor_id);
+}
+for (const arc of arcDoc.arcs || []) {
+  for (const id of arc.character_ids || []) storyConnectedIds.add(id);
+}
+for (const mystery of (mysteryDoc.mysteries || []).filter(item => item.status !== 'resolved')) {
+  for (const id of mystery.character_ids || []) storyConnectedIds.add(id);
+}
+for (const id of ids.pc) {
+  if (!storyConnectedIds.has(id)) errors.push(`PC ${id} has no public story connection for the relationship atlas`);
+}
+
 const interactions = interactionDoc.interactions || [];
 duplicateValues(interactions, 'id', 'interaction');
 for (const interaction of interactions) {

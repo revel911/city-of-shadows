@@ -12,6 +12,8 @@ function completeClose() {
       harm: 0, xp: 0,
     }),
     handoff: '## HANDOFF',
+    relationship_patch: '[]',
+    debt_patch: '[]',
   };
 }
 
@@ -77,6 +79,23 @@ test('multiple missing fields are all reported', () => {
   const c = { handoff: 'just a handoff', character_id: null, sheet: null, state_patch: null };
   assert.deepEqual(
     missingNewCharCloseFields(c),
-    ['character_id', 'sheet', 'state_patch (with stats)']
+    ['character_id', 'sheet', 'state_patch (with stats)', 'relationship_patch', 'debt_patch']
+  );
+});
+
+test('relationship and Debt patches must be explicit', () => {
+  const c = completeClose();
+  delete c.relationship_patch;
+  delete c.debt_patch;
+  assert.deepEqual(missingNewCharCloseFields(c), ['relationship_patch', 'debt_patch']);
+});
+
+test('relationship and Debt patches must be JSON arrays', () => {
+  const c = completeClose();
+  c.relationship_patch = '{}';
+  c.debt_patch = 'not json';
+  assert.deepEqual(
+    missingNewCharCloseFields(c),
+    ['relationship_patch (JSON array)', 'debt_patch (JSON array)']
   );
 });

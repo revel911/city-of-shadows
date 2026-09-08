@@ -28,6 +28,26 @@
       "status": "open",
       "visibility": "public",
       "source_session": "session_000"
+    },
+    {
+      "id": "debt_cristoff_marcus",
+      "creditor_id": "npc_marcus_voss",
+      "debtor_id": "cristoff-lepierre",
+      "amount": 1,
+      "status": "open",
+      "visibility": "public",
+      "source_session": "cristoff-lepierre:session_000",
+      "note": "Marcus Voss acts as the unknown benefactor's go-between."
+    },
+    {
+      "id": "debt_roz_cristoff",
+      "creditor_id": "cristoff-lepierre",
+      "debtor_id": "npc_roz_czerny",
+      "amount": 1,
+      "status": "open",
+      "visibility": "public",
+      "source_session": "cristoff-lepierre:session_000",
+      "note": "A favor from two years back."
     }
   ]
 }

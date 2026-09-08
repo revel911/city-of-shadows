@@ -923,6 +923,8 @@ function buildCloseRetryPrompt(missing) {
     '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, circle_marks, effects, playbook_state, notes. Omit bot-owned active_arc_ids and last_session.',
     '- <handoff>: full first handoff',
     '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
+    '- <relationship_patch>: JSON array of public character ties established during onboarding; use [] if none are established yet',
+    '- <debt_patch>: JSON array of public Debts established during onboarding; use [] if none are established yet',
     '',
     'You may repeat your closing narrative if you want, but the priority is a complete close block. Do not skip the sheet because the character is short-lived — the data you collected during onboarding has to land in the repo.',
   ].join('\n');
@@ -943,6 +945,7 @@ function buildSaveRetryPrompt(missing) {
     `Your <save_onboarding> block is missing required fields: ${missing.join(', ')}.`,
     'Re-emit the block now. At minimum it needs <character_id> (kebab-case, e.g. "joe-nakama").',
     'Include whatever data you have at this point: <sheet>, <state_patch> (JSON with at least character_name and stats), <npc_patch> for any NPCs introduced.',
+    'Always include <relationship_patch> and <debt_patch> as JSON arrays; use [] when an early save has not established any public ties or Debts yet.',
     'The sheet must copy the exact H1/H2 structure and section order from character-sheet-template.md. Keep every section and write TBD for unfinished values.',
   ].join('\n');
 }
@@ -1431,7 +1434,10 @@ export function missingSavePlayerFields(save) {
 // Validation for <save_onboarding>. The save MUST land a sheet — that's the
 // whole point of the mid-flow persistence (all three triggers — onboarding
 // complete, player says "save", player wants to start the story — require a
-// sheet to be created). state_patch is optional at save time: the player may
+// sheet to be created). relationship_patch and debt_patch are also required so
+// onboarding cannot silently persist a roster entry without making an explicit
+// decision about its atlas-visible ties. Empty arrays are valid for an early
+// save. state_patch is optional at save time: the player may
 // be saving early with stats still TBD, and the MC can fill in stats later
 // via state_patch in the session-close block.
 export function missingSaveOnboardingFields(save) {
@@ -1439,7 +1445,22 @@ export function missingSaveOnboardingFields(save) {
   const pid = typeof save.character_id === 'string' ? save.character_id.trim() : '';
   if (!pid || pid === '__new__') missing.push('character_id');
   if (!save.sheet || !save.sheet.trim()) missing.push('sheet');
+  requireJsonArrayField(save, 'relationship_patch', missing);
+  requireJsonArrayField(save, 'debt_patch', missing);
   return missing;
+}
+
+function requireJsonArrayField(block, field, problems) {
+  const raw = typeof block?.[field] === 'string' ? block[field].trim() : '';
+  if (!raw) {
+    problems.push(field);
+    return;
+  }
+  try {
+    if (!Array.isArray(JSON.parse(raw))) problems.push(`${field} (JSON array)`);
+  } catch {
+    problems.push(`${field} (JSON array)`);
+  }
 }
 
 function stripCloseBlock(text) {
@@ -2236,6 +2257,8 @@ export function missingNewCharCloseFields(close) {
     } catch {}
   }
   if (!stateOk) missing.push('state_patch (with stats)');
+  requireJsonArrayField(close, 'relationship_patch', missing);
+  requireJsonArrayField(close, 'debt_patch', missing);
   return missing;
 }
 

@@ -1,5 +1,36 @@
 {
   "last_updated": "2026-09-07",
   "derived_through": "2026-08-21",
-  "relationships": []
+  "relationships": [
+    {
+      "id": "rel_cristoff_cutlers_gym",
+      "source": "cristoff-lepierre",
+      "target": "loc_cutlers_gym",
+      "type": "anchor",
+      "label": "Anchor",
+      "direction": "outbound",
+      "visibility": "public",
+      "source_session": "cristoff-lepierre:session_000"
+    },
+    {
+      "id": "rel_cristoff_roz",
+      "source": "cristoff-lepierre",
+      "target": "npc_roz_czerny",
+      "type": "associate",
+      "label": "Working relationship",
+      "direction": "outbound",
+      "visibility": "public",
+      "source_session": "cristoff-lepierre:session_000"
+    },
+    {
+      "id": "rel_marcus_cristoff",
+      "source": "npc_marcus_voss",
+      "target": "cristoff-lepierre",
+      "type": "associate",
+      "label": "Benefactor's go-between",
+      "direction": "outbound",
+      "visibility": "public",
+      "source_session": "cristoff-lepierre:session_000"
+    }
+  ]
 }

@@ -20,6 +20,12 @@ Stats: Blood 1, Heart 2, Mind 0, Spirit -1
 <npc_patch>
 [ { "id": "npc_ximena_reyes", "name": "Ximena Reyes" } ]
 </npc_patch>
+<relationship_patch>
+[]
+</relationship_patch>
+<debt_patch>
+[]
+</debt_patch>
 </save_onboarding>
 
 And then the first scene opens with rain on the James.`;
@@ -49,35 +55,35 @@ test('missingSaveOnboardingFields: complete block returns []', () => {
 
 test('missingSaveOnboardingFields: missing character_id is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: null, sheet: '# Joe' }),
+    missingSaveOnboardingFields({ character_id: null, sheet: '# Joe', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('missingSaveOnboardingFields: "__new__" character_id is treated as missing', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: '__new__', sheet: '# Joe' }),
+    missingSaveOnboardingFields({ character_id: '__new__', sheet: '# Joe', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('missingSaveOnboardingFields: whitespace character_id is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: '  ', sheet: '# Joe' }),
+    missingSaveOnboardingFields({ character_id: '  ', sheet: '# Joe', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('missingSaveOnboardingFields: missing sheet is flagged (the user-asked requirement)', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: null }),
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: null, relationship_patch: '[]', debt_patch: '[]' }),
     ['sheet']
   );
 });
 
 test('missingSaveOnboardingFields: whitespace-only sheet is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '   \n  ' }),
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '   \n  ', relationship_patch: '[]', debt_patch: '[]' }),
     ['sheet']
   );
 });
@@ -88,14 +94,38 @@ test('missingSaveOnboardingFields: state_patch is NOT required at save time', ()
       character_id: 'joe-nakama',
       sheet: '# Joe Nakama',
       state_patch: null,
+      relationship_patch: '[]',
+      debt_patch: '[]',
     }),
     []
   );
 });
 
-test('missingSaveOnboardingFields: both fields missing returns both', () => {
+test('missingSaveOnboardingFields: all required fields missing returns all', () => {
   assert.deepEqual(
     missingSaveOnboardingFields({ character_id: null, sheet: null }),
-    ['character_id', 'sheet']
+    ['character_id', 'sheet', 'relationship_patch', 'debt_patch']
+  );
+});
+
+test('missingSaveOnboardingFields: requires explicit relationship and Debt arrays', () => {
+  assert.deepEqual(
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '# Joe' }),
+    ['relationship_patch', 'debt_patch']
+  );
+  assert.deepEqual(
+    missingSaveOnboardingFields({
+      character_id: 'joe-nakama', sheet: '# Joe', relationship_patch: '[]', debt_patch: '[]',
+    }),
+    []
+  );
+});
+
+test('missingSaveOnboardingFields: rejects malformed or non-array world patches', () => {
+  assert.deepEqual(
+    missingSaveOnboardingFields({
+      character_id: 'joe-nakama', sheet: '# Joe', relationship_patch: '{oops', debt_patch: '{}',
+    }),
+    ['relationship_patch (JSON array)', 'debt_patch (JSON array)']
   );
 });

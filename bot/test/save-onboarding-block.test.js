@@ -20,6 +20,8 @@ stats: Blood 0, Heart 1, Mind 2, Spirit -1
 <npc_patch>
 [{ "id": "npc_ximena_reyes", "name": "Ximena Reyes" }]
 </npc_patch>
+<relationship_patch>[]</relationship_patch>
+<debt_patch>[]</debt_patch>
 <events_append>
 Joe arrived in Shockoe Bottom.
 </events_append>
@@ -54,45 +56,45 @@ test('parseSaveOnboardingBlock works mid-message (not just trailing)', () => {
 
 test('missing character_id is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: null, sheet: 'something' }),
+    missingSaveOnboardingFields({ character_id: null, sheet: 'something', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('character_id of "__new__" is treated as missing', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: '__new__', sheet: 'something' }),
+    missingSaveOnboardingFields({ character_id: '__new__', sheet: 'something', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('whitespace-only character_id is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: '   ', sheet: 'something' }),
+    missingSaveOnboardingFields({ character_id: '   ', sheet: 'something', relationship_patch: '[]', debt_patch: '[]' }),
     ['character_id']
   );
 });
 
 test('missing sheet is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: null }),
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: null, relationship_patch: '[]', debt_patch: '[]' }),
     ['sheet']
   );
 });
 
 test('whitespace-only sheet is flagged', () => {
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '   \n  ' }),
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '   \n  ', relationship_patch: '[]', debt_patch: '[]' }),
     ['sheet']
   );
 });
 
-test('valid minimal save (id + sheet) reports no missing fields', () => {
+test('valid minimal save requires explicit empty world-patch arrays', () => {
   // Save is more lenient than close: stats are NOT required at save time
   // because trigger 2 ("save") or trigger 3 ("start the story") may fire
   // before Phase 6. Stats can be filled in later via state_patch.
   assert.deepEqual(
-    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '# Joe Nakama\nTBD' }),
+    missingSaveOnboardingFields({ character_id: 'joe-nakama', sheet: '# Joe Nakama\nTBD', relationship_patch: '[]', debt_patch: '[]' }),
     []
   );
 });
@@ -102,6 +104,8 @@ test('state_patch without stats is OK for save (unlike close)', () => {
     character_id: 'joe-nakama',
     sheet: '# Joe Nakama\nTBD',
     state_patch: JSON.stringify({ character_name: 'Joe Nakama' }),
+    relationship_patch: '[]',
+    debt_patch: '[]',
   };
   assert.deepEqual(missingSaveOnboardingFields(save), []);
 });
@@ -109,6 +113,6 @@ test('state_patch without stats is OK for save (unlike close)', () => {
 test('multiple missing fields are all reported', () => {
   assert.deepEqual(
     missingSaveOnboardingFields({ character_id: null, sheet: null }),
-    ['character_id', 'sheet']
+    ['character_id', 'sheet', 'relationship_patch', 'debt_patch']
   );
 });

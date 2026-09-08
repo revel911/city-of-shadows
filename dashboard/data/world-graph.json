@@ -3301,6 +3301,39 @@
     },
     {
       "data": {
+        "id": "rel_cristoff_cutlers_gym",
+        "source": "cristoff-lepierre",
+        "target": "loc_cutlers_gym",
+        "type": "anchor",
+        "label": "Anchor",
+        "direction": "outbound",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_cristoff_roz",
+        "source": "cristoff-lepierre",
+        "target": "npc_roz_czerny",
+        "type": "associate",
+        "label": "Working relationship",
+        "direction": "outbound",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_marcus_cristoff",
+        "source": "npc_marcus_voss",
+        "target": "cristoff-lepierre",
+        "type": "associate",
+        "label": "Benefactor's go-between",
+        "direction": "outbound",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
         "id": "edge_arc-001_hub_shockoe_bottom",
         "source": "arc-001",
         "target": "hub_shockoe_bottom",
@@ -3746,6 +3779,28 @@
         "id": "debt_jacob_tommy",
         "source": "npc_tommy_greer",
         "target": "jacob-boone",
+        "type": "debt",
+        "label": "Owes 1 Debt",
+        "direction": "outbound",
+        "layer": "debt"
+      }
+    },
+    {
+      "data": {
+        "id": "debt_cristoff_marcus",
+        "source": "cristoff-lepierre",
+        "target": "npc_marcus_voss",
+        "type": "debt",
+        "label": "Owes 1 Debt",
+        "direction": "outbound",
+        "layer": "debt"
+      }
+    },
+    {
+      "data": {
+        "id": "debt_roz_cristoff",
+        "source": "npc_roz_czerny",
+        "target": "cristoff-lepierre",
         "type": "debt",
         "label": "Owes 1 Debt",
         "direction": "outbound",
