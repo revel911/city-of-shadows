@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "a6c5afaa313167c9d724825c2de81043c2bf1998",
-  "last_successful_run": "2026-09-09T16:35:59.952Z",
-  "last_city_turn": "2026-09-08",
-  "arc_cooldowns": {},
+  "last_processed_commit": "8e4337a44ad1c6f0cbf6b09d71fe4e716e6ad0e2",
+  "last_successful_run": "2026-09-09T19:21:43.183Z",
+  "last_city_turn": "2026-09-09",
+  "arc_cooldowns": {
+    "arc-003": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -660,6 +662,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence to process. Existing world state is consistent with the public events log and hub/NPC revisions. No patches required.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260909192143",
+      "phase": "city-turn",
+      "completed_at": "2026-09-09T19:21:43.183Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_prof_tanaka",
+        "loc_harris_hall",
+        "arc-003",
+        "hub_university"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn phase executed. Arc-003 advanced via the University hub and Prof. Tanaka.",
       "dry_run": false
     }
   ],

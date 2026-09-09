@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-09] Tanaka Notices Pattern in Voss Fragment
+
+**Hubs:** University | **Circles:** Power
+
+Prof. Yuki Tanaka, excluded from Dr. Olave's closed faculty meetings, has reportedly noticed a mathematical pattern in the recently uncovered fragment of Maren Voss's field notes. Sources describe her as increasingly convinced the notes reference a third participant in the ritual. She has not yet shared her findings with the Consilium.
+
 ## [2026-09-08] Fragment of Maren Voss's Field Notes Found
 
 **Hubs:** University | **Circles:** Power

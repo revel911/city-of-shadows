@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-08",
+  "last_updated": "2026-09-09",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -385,10 +385,12 @@
       ],
       "controller_note": "",
       "status": "active",
-      "description": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.*",
+      "description": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.* A new whiteboard has been set up near Tanaka's desk covered in notes referencing the Maren Voss fragment.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-08-21"
+      "last_updated": "2026-09-09",
+      "revision": 1,
+      "updated_by_session": "keeper_city_turn_20260909192143"
     },
     {
       "id": "loc_fine_arts_building",

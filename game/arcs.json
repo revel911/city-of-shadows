@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-08",
+  "last_updated": "2026-09-09",
   "arcs": [
     {
       "id": "arc-001",
@@ -72,7 +72,7 @@
         "npc_maren_voss"
       ],
       "character_ids": [],
-      "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library has recently uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work.",
+      "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library has recently uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently noticed a mathematical pattern in the fragment that suggests a third participant in the ritual.",
       "mc_notes": "The other two circle members are unknown. Recent investigative searches into Vera Solis, Asha Tremblay, Maren Voss, or Petra Holt may have been noticed — someone is now aware these threads are being pulled.",
       "agenda": "Bring Maren Voss's Ritual Circle into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
@@ -81,10 +81,10 @@
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-08",
+      "revision": 4,
+      "last_updated": "2026-09-09",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260908192217"
+      "last_touched_session": "keeper_city_turn_20260909192143"
     },
     {
       "id": "arc-004",
