@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "b1886d2e13ca243cd2b092702fa9f048c4aebdc8",
-  "last_successful_run": "2026-09-08T19:22:17.381Z",
+  "last_processed_commit": "36d8d59a3bb35c1fe13b452d2c4404a197f7f47f",
+  "last_successful_run": "2026-09-09T10:33:13.309Z",
   "last_city_turn": "2026-09-08",
   "arc_cooldowns": {
-    "arc-003": 2
+    "arc-003": 1
   },
   "runs": [
     {
@@ -640,6 +640,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advanced arc-003 (Maren Voss's Ritual Circle) via hub_university: a student finds a fragment of Maren's field notes in Cabell Library Special Collections, prompting renewed academic interest. No other changes.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260909103313",
+      "phase": "publish",
+      "completed_at": "2026-09-09T10:33:13.309Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
