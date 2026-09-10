@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-09",
+  "last_updated": "2026-09-10",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -473,7 +473,7 @@
       "hub_id": "hub_university",
       "arc_ids": [],
       "status": "active",
-      "role": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; recently noticed a pattern in the Maren Voss field notes fragment that suggests a third participant in the ritual.",
+      "role": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; has confirmed a mathematical pattern in the Maren Voss field notes fragment indicating a third participant in the ritual, and has begun quietly cross-referencing University archival records to identify them.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -489,9 +489,9 @@
       ],
       "home_location_id": "loc_harris_hall",
       "current_location_id": "loc_harris_hall",
-      "updated_by_session": "keeper_city_turn_20260909192143",
-      "revision": 1,
-      "last_updated": "2026-09-09"
+      "updated_by_session": "keeper_city_turn_20260910191957",
+      "revision": 2,
+      "last_updated": "2026-09-10"
     },
     {
       "id": "npc_fen_adeyemi",

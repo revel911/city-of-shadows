@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-09",
+  "last_updated": "2026-09-10",
   "arcs": [
     {
       "id": "arc-001",
@@ -62,7 +62,7 @@
       "id": "arc-003",
       "title": "Maren Voss's Ritual Circle",
       "type": "slow-burn",
-      "escalation": 3,
+      "escalation": 4,
       "status": "active",
       "hub_ids": [
         "hub_shockoe_bottom",
@@ -72,19 +72,19 @@
         "npc_maren_voss"
       ],
       "character_ids": [],
-      "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library has recently uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently noticed a mathematical pattern in the fragment that suggests a third participant in the ritual.",
+      "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently confirmed a mathematical pattern in the fragment suggesting a third participant, and has begun quietly cross-referencing University archival records to try to identify them — moving the circle closer to institutional attention without yet naming anyone.",
       "mc_notes": "The other two circle members are unknown. Recent investigative searches into Vera Solis, Asha Tremblay, Maren Voss, or Petra Holt may have been noticed — someone is now aware these threads are being pulled.",
       "agenda": "Bring Maren Voss's Ritual Circle into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-09",
+      "revision": 5,
+      "last_updated": "2026-09-10",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260909192143"
+      "last_touched_session": "keeper_city_turn_20260910191957"
     },
     {
       "id": "arc-004",

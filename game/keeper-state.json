@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "183b9ac70cea62f2f385edceb418d6dc3d57560b",
-  "last_successful_run": "2026-09-10T16:33:43.449Z",
-  "last_city_turn": "2026-09-09",
-  "arc_cooldowns": {},
+  "last_processed_commit": "809e230e6e35134d314a9b2dbe99772bba552759",
+  "last_successful_run": "2026-09-10T19:19:57.494Z",
+  "last_city_turn": "2026-09-10",
+  "arc_cooldowns": {
+    "arc-003": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -698,6 +700,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence was supplied, so no entity, relationship, memory, debt, arc, mystery, hub, interaction, or conflict changes are warranted. All existing public records are internally consistent with the projection. City-turn candidate arc-005 is noted but not advanced during reconciliation.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260910191957",
+      "phase": "city-turn",
+      "completed_at": "2026-09-10T19:19:57.494Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_prof_tanaka",
+        "loc_harris_hall",
+        "arc-003",
+        "hub_university"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-003 (Maren Voss's Ritual Circle). Prof. Tanaka's independent analysis of the Voss field-note fragment has progressed, and she has begun quietly cross-referencing archival records in Harris Hall — a routine, institutional step that draws the ritual circle closer to public academic attention without revealing its participants. No player characters were touched, no secrets revealed, and no mysteries created or resolved.",
       "dry_run": false
     }
   ],

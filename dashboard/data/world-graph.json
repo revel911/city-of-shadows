@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-09",
+  "as_of": "2026-09-10",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -527,7 +527,7 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "Academic Buildings",
-        "details": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.* A new whiteboard has been set up near Tanaka's desk covered in notes referencing the Maren Voss fragment."
+        "details": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.* A new whiteboard has been set up near Tanaka's desk covered in notes referencing the Maren Voss fragment, now cross-referenced against archival records pulled from Special Collections."
       },
       "position": {
         "x": 339,
@@ -1315,9 +1315,9 @@
         "hub_id": "hub_university",
         "faction": "Power",
         "status": "active",
-        "subtype": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; recently noticed a pattern in the Maren Voss field notes fragment that suggests a third participant in the ritual.",
+        "subtype": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; has confirmed a mathematical pattern in the Maren Voss field notes fragment indicating a third participant in the ritual, and has begun quietly cross-referencing University archival records to identify them.",
         "portrait": "",
-        "details": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; recently noticed a pattern in the Maren Voss field notes fragment that suggests a third participant in the ritual."
+        "details": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; has confirmed a mathematical pattern in the Maren Voss field notes fragment indicating a third participant in the ritual, and has begun quietly cross-referencing University archival records to identify them."
       },
       "position": {
         "x": 598,
@@ -1919,8 +1919,8 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 3,
-        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library has recently uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently noticed a mathematical pattern in the fragment that suggests a third participant in the ritual."
+        "escalation": 4,
+        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently confirmed a mathematical pattern in the fragment suggesting a third participant, and has begun quietly cross-referencing University archival records to try to identify them — moving the circle closer to institutional attention without yet naming anyone."
       },
       "position": {
         "x": 800,

@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-10] Tanaka Cross-References Voss Fragment Against University Archives
+
+**Hubs:** University | **Circles:** Power
+
+Prof. Yuki Tanaka, still excluded from Dr. Olave's closed faculty meetings, has reportedly begun quietly cross-referencing University archival records against the fragment of Maren Voss's field notes. Sources describe her as treating the fragment's mathematical pattern as evidence of a third participant in the ritual, and as working through institutional records rather than the Consilium to try to identify them. She has not shared her findings publicly. The Consilium has not commented.
+
 ## [2026-09-09] Tanaka Notices Pattern in Voss Fragment
 
 **Hubs:** University | **Circles:** Power
