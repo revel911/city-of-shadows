@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "8e4337a44ad1c6f0cbf6b09d71fe4e716e6ad0e2",
-  "last_successful_run": "2026-09-09T19:21:43.183Z",
+  "last_processed_commit": "34c8d3963e01336e4344f3cf6a1096408bb0c6c9",
+  "last_successful_run": "2026-09-10T10:32:59.023Z",
   "last_city_turn": "2026-09-09",
   "arc_cooldowns": {
-    "arc-003": 2
+    "arc-003": 1
   },
   "runs": [
     {
@@ -678,6 +678,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn phase executed. Arc-003 advanced via the University hub and Prof. Tanaka.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260910103259",
+      "phase": "publish",
+      "completed_at": "2026-09-10T10:32:59.023Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
