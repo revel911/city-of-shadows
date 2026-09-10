@@ -1,11 +1,9 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "34c8d3963e01336e4344f3cf6a1096408bb0c6c9",
-  "last_successful_run": "2026-09-10T10:32:59.023Z",
+  "last_processed_commit": "183b9ac70cea62f2f385edceb418d6dc3d57560b",
+  "last_successful_run": "2026-09-10T16:33:43.449Z",
   "last_city_turn": "2026-09-09",
-  "arc_cooldowns": {
-    "arc-003": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -689,6 +687,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260910163343",
+      "phase": "reconcile",
+      "completed_at": "2026-09-10T16:33:43.449Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence was supplied, so no entity, relationship, memory, debt, arc, mystery, hub, interaction, or conflict changes are warranted. All existing public records are internally consistent with the projection. City-turn candidate arc-005 is noted but not advanced during reconciliation.",
       "dry_run": false
     }
   ],
