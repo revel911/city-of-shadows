@@ -1,11 +1,9 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "0b02201d96b6fe1c1d140ef1a57b2a24a0fe9c25",
-  "last_successful_run": "2026-09-11T10:32:37.318Z",
+  "last_processed_commit": "ea6e05413cea52492ab11c00683a76364f856e22",
+  "last_successful_run": "2026-09-11T16:35:10.262Z",
   "last_city_turn": "2026-09-10",
-  "arc_cooldowns": {
-    "arc-003": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -727,6 +725,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260911163510",
+      "phase": "reconcile",
+      "completed_at": "2026-09-11T16:35:10.262Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence was supplied, so no entity, relationship, memory, debt, mystery, or conflict changes are warranted. All public events are already reflected in existing entity revisions and arc summaries. No world advance is performed in this phase.",
       "dry_run": false
     }
   ],
