@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-11] Consilium Fracture Widens at the University
+
+**Hubs:** University | **Circles:** Power
+
+Dr. Sebastian Olave's closed faculty meetings in Harris Hall have grown more exclusive, with additional Power faction members reportedly no longer invited. Junior faculty and Consilium members have begun to notice who is absent. Separately, Councilor Ingrid Voss has been observed making quiet inquiries into University archival records — sources describe her as unusually guarded about what she is looking for. The Consilium has not commented.
+
 ## [2026-09-10] Tanaka Cross-References Voss Fragment Against University Archives
 
 **Hubs:** University | **Circles:** Power
