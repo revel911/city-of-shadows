@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "9745cf0cd9cf4b8ab2267012439001a39297b2e1",
-  "last_successful_run": "2026-09-12T16:32:35.554Z",
-  "last_city_turn": "2026-09-11",
-  "arc_cooldowns": {},
+  "last_processed_commit": "4bed0df20c6ff59bb8c2aacaac90084d8e0b1031",
+  "last_successful_run": "2026-09-12T19:19:15.362Z",
+  "last_city_turn": "2026-09-12",
+  "arc_cooldowns": {
+    "arc-005": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -775,6 +777,23 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity changes are warranted. All public records already reflect the established state. City-turn candidate arc-008 is noted but not advanced during reconciliation.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260912191915",
+      "phase": "city-turn",
+      "completed_at": "2026-09-12T19:19:15.362Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_dr_olave",
+        "npc_ingrid_voss",
+        "loc_hibbs_hall",
+        "arc-005",
+        "hub_university"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-005 (Consilium Politics & the Engineered Awakening Program). The Consilium's internal fracture deepens: Dr. Olave's exclusion list widens further and a closed meeting is held with the door held by a junior archivist, while Councilor Ingrid Voss quietly requests restricted archival material. No player characters are moved, harmed, or spoken for.",
       "dry_run": false
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-11",
+  "as_of": "2026-09-12",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -497,7 +497,7 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "Academic Buildings",
-        "details": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests. The closed faculty meetings held here have grown more exclusive, and junior faculty and Consilium members have begun to notice who is no longer invited."
+        "details": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests. The closed faculty meetings held here have grown more exclusive, and junior faculty and Consilium members have begun to notice who is no longer invited. A second, smaller meeting has begun convening on the same floor with a hand-picked subset of the Consilium, and the exclusion list has widened again."
       },
       "position": {
         "x": 675,
@@ -1281,9 +1281,9 @@
         "hub_id": "hub_university",
         "faction": "Power",
         "status": "active",
-        "subtype": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list, deepening the Consilium's internal fracture over who is permitted to know what.",
+        "subtype": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list again, deepening the Consilium's internal fracture over who is permitted to know what, and he has begun holding a second, smaller meeting with a hand-picked subset of the Consilium.",
         "portrait": "",
-        "details": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list, deepening the Consilium's internal fracture over who is permitted to know what."
+        "details": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list again, deepening the Consilium's internal fracture over who is permitted to know what, and he has begun holding a second, smaller meeting with a hand-picked subset of the Consilium."
       },
       "position": {
         "x": 86,
@@ -1298,9 +1298,9 @@
         "hub_id": "hub_university",
         "faction": "Power",
         "status": "active",
-        "subtype": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it.",
+        "subtype": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it. Her inquiries have now reached restricted Special Collections material, and she has been observed requesting access under a research pretext.",
         "portrait": "",
-        "details": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it."
+        "details": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it. Her inquiries have now reached restricted Special Collections material, and she has been observed requesting access under a research pretext."
       },
       "position": {
         "x": 291,
@@ -1951,8 +1951,8 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
-        "details": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting, and the exclusion list has widened, deepening the internal fracture. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified, and has begun quietly checking whether any University archival record touches on it."
+        "escalation": 3,
+        "details": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting, and the exclusion list has widened again, deepening the internal fracture; a smaller, hand-picked meeting now convenes alongside the larger one. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified, and her quiet checks have now reached restricted University archival material."
       },
       "position": {
         "x": 1317,

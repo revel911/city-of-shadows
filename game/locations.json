@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-11",
+  "last_updated": "2026-09-12",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -356,12 +356,12 @@
       ],
       "controller_note": "",
       "status": "active",
-      "description": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests. The closed faculty meetings held here have grown more exclusive, and junior faculty and Consilium members have begun to notice who is no longer invited.",
+      "description": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests. The closed faculty meetings held here have grown more exclusive, and junior faculty and Consilium members have begun to notice who is no longer invited. A second, smaller meeting has begun convening on the same floor with a hand-picked subset of the Consilium, and the exclusion list has widened again.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-09-11",
-      "revision": 1,
-      "updated_by_session": "keeper_city_turn_20260911192202"
+      "last_updated": "2026-09-12",
+      "revision": 2,
+      "updated_by_session": "keeper_city_turn_20260912191915"
     },
     {
       "id": "loc_cabell_library",

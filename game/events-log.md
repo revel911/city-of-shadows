@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-12] Consilium Fracture Deepens at the University
+
+**Hubs:** University | **Circles:** Power
+
+Dr. Sebastian Olave's closed faculty meetings in Harris Hall have widened their exclusion list once more, and a second, smaller meeting has begun convening on the same floor with a hand-picked subset of the Consilium. Junior faculty and Consilium members have taken note of who is no longer invited. Separately, Councilor Ingrid Voss has been observed requesting access to restricted Special Collections material under a research pretext, and sources describe her as unusually guarded about what she is looking for. The Consilium has not commented.
+
 ## [2026-09-11] Consilium Fracture Widens at the University
 
 **Hubs:** University | **Circles:** Power

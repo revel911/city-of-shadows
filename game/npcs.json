@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-11",
+  "last_updated": "2026-09-12",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -423,7 +423,7 @@
         "arc-005"
       ],
       "status": "active",
-      "role": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list, deepening the Consilium's internal fracture over who is permitted to know what.",
+      "role": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list again, deepening the Consilium's internal fracture over who is permitted to know what, and he has begun holding a second, smaller meeting with a hand-picked subset of the Consilium.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -439,9 +439,9 @@
       ],
       "home_location_id": "loc_hibbs_hall",
       "current_location_id": "loc_hibbs_hall",
-      "updated_by_session": "keeper_city_turn_20260911192202",
-      "revision": 1,
-      "last_updated": "2026-09-11"
+      "updated_by_session": "keeper_city_turn_20260912191915",
+      "revision": 2,
+      "last_updated": "2026-09-12"
     },
     {
       "id": "npc_ingrid_voss",
@@ -453,7 +453,7 @@
         "arc-005"
       ],
       "status": "active",
-      "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it.",
+      "role": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it. Her inquiries have now reached restricted Special Collections material, and she has been observed requesting access under a research pretext.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -465,9 +465,9 @@
       "last_seen": "session_001",
       "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. An Acanthus knows. An Acanthus kept quiet.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260911192202",
-      "revision": 1,
-      "last_updated": "2026-09-11"
+      "updated_by_session": "keeper_city_turn_20260912191915",
+      "revision": 2,
+      "last_updated": "2026-09-12"
     },
     {
       "id": "npc_prof_tanaka",

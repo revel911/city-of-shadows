@@ -1,13 +1,14 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-09-11",
+  "last_updated": "2026-09-12",
   "hubs": [
     {
       "state": "The ley line under Monroe Park ran off-tempo for the fourth time in seven weeks, now detected by unofficial instruments. Dr. Olave's closed meetings continue, and the engineered Awakening program remains secret.",
       "id": "hub_university",
-      "revision": 5,
-      "last_updated": "2026-09-11",
-      "updated_by_session": "keeper_city_turn_20260911192202"
+      "revision": 6,
+      "last_updated": "2026-09-12",
+      "updated_by_session": "keeper_city_turn_20260912191915",
+      "condition": "Consilium fracture widening; Olave's closed meetings have grown more exclusive and a second, smaller meeting now convenes; Ingrid Voss's archival inquiries have reached restricted Special Collections material. Junior faculty and Consilium members are tracking who is no longer invited."
     },
     {
       "last_updated": "2026-09-07",
