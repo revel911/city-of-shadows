@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-13] Consilium Files Reassigned as Fracture Deepens
+
+**Hubs:** University | **Circles:** Power
+
+Dr. Sebastian Olave's office has begun quietly reassigning oversight of certain Overwrite-related files away from Consilium members who are no longer invited to his closed faculty meetings in Harris Hall, consolidating control of the investigation on the building's top floor. Separately, Councilor Ingrid Voss has been observed requesting a second, more narrowly targeted set of restricted Special Collections records at Cabell Library, and was later seen leaving with copied material she did not log. Junior faculty and Consilium members continue to track who is being excluded. The Consilium has not commented.
+
 ## [2026-09-12] Consilium Fracture Deepens at the University
 
 **Hubs:** University | **Circles:** Power
