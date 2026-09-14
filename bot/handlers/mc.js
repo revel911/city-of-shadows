@@ -7,7 +7,8 @@ import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
 import { buildCanonicalWorldContext, buildRelevantWorldContext } from './world-state.js';
 
-const MODEL = 'deepseek-chat';
+// DeepSeek-V4.1-Flash; override explicitly when changing deployed models.
+const MODEL = process.env.DEEPSEEK_MODEL || 'deepseek-flash';
 const MAX_TOKENS = 4096;
 // Keep regular narration creative but controlled; the summarizer overrides
 // this with 0 for faithful, low-variance recaps.
@@ -65,6 +66,7 @@ export async function adjudicateMove({
   for (let attempt = 0; attempt <= MOVE_ADJUDICATION_RETRIES; attempt += 1) {
     const resp = await client().chat.completions.create({
       model: MODEL,
+      thinking: { type: 'disabled' },
       messages,
       max_tokens: MOVE_ADJUDICATION_MAX_TOKENS,
       temperature: 0,
@@ -74,7 +76,7 @@ export async function adjudicateMove({
     if (decision) {
       const usage = resp.usage || {};
       console.log(
-        `[move-adjudicator] decision=${decision.decision} attempt=${attempt + 1} ` +
+        `[move-adjudicator] model=${resp.model || MODEL} decision=${decision.decision} attempt=${attempt + 1} ` +
         `in=${usage.prompt_tokens || 0} out=${usage.completion_tokens || 0}`
       );
       return decision;
@@ -352,6 +354,7 @@ async function maybeCompact(session) {
   try {
     const resp = await client().chat.completions.create({
       model: MODEL,
+      thinking: { type: 'disabled' },
       messages: [
         { role: 'system', content: SUMMARY_SYSTEM },
         { role: 'user', content: `Transcript to summarize:\n\n${transcript}` },
@@ -368,7 +371,7 @@ async function maybeCompact(session) {
       { role: 'assistant', content: `[Earlier this session — compacted recap]\n${text}` },
       ...recent,
     ];
-    console.log(`[compact] session ${session.threadId}: compressed ${middle.length} turns, now ${session.messages.length} messages.`);
+    console.log(`[compact] model=${resp.model || MODEL} session ${session.threadId}: compressed ${middle.length} turns, now ${session.messages.length} messages.`);
   } catch (e) {
     console.warn(`[compact] failed for session ${session.threadId}: ${e.message}`);
   }
@@ -379,13 +382,14 @@ export async function generate(session, { maxTokens = MAX_TOKENS, temperature = 
   const system = await getSystemPrompt(session.rulesProfile || {});
   const resp = await client().chat.completions.create({
     model: MODEL,
+    thinking: { type: 'disabled' },
     messages: [{ role: 'system', content: system }, ...session.messages],
     max_tokens: maxTokens,
     temperature,
   });
   const u = resp.usage || {};
   console.log(
-    `[mc] thread=${session.threadId} msgs=${session.messages.length} ` +
+    `[mc] model=${resp.model || MODEL} thread=${session.threadId} msgs=${session.messages.length} ` +
     `in=${u.prompt_tokens || 0} out=${u.completion_tokens || 0} ` +
     `cache_hit=${u.prompt_cache_hit_tokens || 0} ` +
     `cache_miss=${u.prompt_cache_miss_tokens || 0}`

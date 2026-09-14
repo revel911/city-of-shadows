@@ -120,7 +120,8 @@ async function callKeeper(context) {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      model: process.env.KEEPER_MODEL || 'deepseek-chat',
+      model: process.env.KEEPER_MODEL || 'deepseek-flash',
+      thinking: { type: 'disabled' },
       messages: [
         { role: 'system', content: context.prompt },
         {

@@ -36,7 +36,7 @@ writes new files back. Everything else is plumbing around that loop.
 | **`mc-reference/`** | (data) | The MC's system prompt — rules, moves, playbooks, WoD extensions, schemas, output contract. Loaded every session. |
 | **`game/`, `hubs/`, `players/`** | (data) | The world: NPCs, arcs, events, interactions, neighborhood lore, per-player profiles, per-character state. |
 | **`dashboard/`** | Static site on GitHub Pages | Read-only window into the world, rendered from raw GitHub content. |
-| **DeepSeek API** | external | The MC. `deepseek-chat` via the OpenAI-compatible SDK. |
+| **DeepSeek API** | external | The MC. `deepseek-flash` via the OpenAI-compatible SDK. |
 
 The bot is the only writer. The dashboard is a pure reader. The model never
 touches GitHub directly — it emits structured text that the bot parses and
@@ -222,7 +222,7 @@ extensions + wizard). Two mechanisms keep cost bounded:
 **Provider abstraction.** The MC is reached through the OpenAI-compatible client,
 so swapping providers (Anthropic ⇄ DeepSeek ⇄ others) is a base-URL, key, and
 model-name change in `mc.js` rather than a rewrite. The platform migrated from
-Claude Sonnet 4.6 to `deepseek-chat` this way (see [CHANGELOG](../CHANGELOG.md)).
+Claude Sonnet 4.6 to `deepseek-flash` this way (see [CHANGELOG](../CHANGELOG.md)).
 
 **Dashboard freshness.** The dashboard sanitizes markdown through DOMPurify
 before `innerHTML` and bumps a `?v=` token on refresh to defeat the raw-content

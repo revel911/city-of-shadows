@@ -10,6 +10,10 @@ platform behaves, not API compatibility.
 ## [Unreleased]
 
 ### Changed
+- Bot, narrator evaluations, and City Keeper now default to DeepSeek-V4.1-Flash
+  (`deepseek-flash`) with thinking explicitly disabled to preserve response
+  budgets and temperature controls. `DEEPSEEK_MODEL` overrides the bot model;
+  bot logs include the model returned by the API.
 - Pending moves now accept either bot-rolled dice through `/roll`, a manual 2d6
   subtotal such as `I rolled an 8`, or both individual dice. A subtotal resolves
   immediately on a modified 7+; on a miss, the bot asks only for the Instinct

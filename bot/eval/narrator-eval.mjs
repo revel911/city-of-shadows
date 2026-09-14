@@ -27,7 +27,8 @@ const client = new OpenAI({
 let failures = 0;
 for (const scenario of scenarios) {
   const response = await client.chat.completions.create({
-    model: process.env.DEEPSEEK_MODEL || 'deepseek-chat',
+    model: process.env.DEEPSEEK_MODEL || 'deepseek-flash',
+    thinking: { type: 'disabled' },
     temperature: 0,
     max_tokens: 1600,
     messages: [

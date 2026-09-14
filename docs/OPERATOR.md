@@ -28,7 +28,7 @@ End-to-end setup for running your own instance of City of Shadows. If you just w
 **Player flow**
 
 1. Player runs `/play` in Discord. The bot replies with characters they own, explicitly shared characters, legacy unowned characters, plus a `+ New character` entry. Operator IDs can override this.
-2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks the MC model (`deepseek-chat`) for the opening scene.
+2. Player picks one. The bot opens a private thread, loads the character's handoff, sheet, state, recent events, and MC instructions, then asks the MC model (`deepseek-flash`) for the opening scene.
 3. Player and the MC trade messages in the thread.
 4. When the session ends, the MC emits a `<close_session>` block. The bot parses it and writes updates back to GitHub: handoff, state.json, events log, NPCs, locations, public relationships, and arcs.
 5. The dashboard reflects the new world state on next refresh.
@@ -100,7 +100,7 @@ The bot writes session results back to this repo. Create a fine-grained personal
 
 ### 5 — DeepSeek API key
 
-Get one at [platform.deepseek.com](https://platform.deepseek.com). The bot uses `deepseek-chat` through the OpenAI-compatible SDK (base URL `https://api.deepseek.com`).
+Get one at [platform.deepseek.com](https://platform.deepseek.com). The bot defaults to DeepSeek-V4.1-Flash (`deepseek-flash`), overridable with `DEEPSEEK_MODEL`, in non-thinking mode through the OpenAI-compatible SDK (base URL `https://api.deepseek.com`).
 
 ### 6 — Deploy the bot to Fly.io
 
@@ -160,7 +160,7 @@ The City Keeper workflow runs three timezone-aware phases in America/New_York:
 
 The two model phases require a repository Actions secret named
 `DEEPSEEK_API_KEY`. An optional Actions variable `KEEPER_MODEL` overrides
-`deepseek-chat`. The request is built by `scripts/keeper-projection.mjs`,
+`deepseek-flash`. The request is built by `scripts/keeper-projection.mjs`,
 which whitelists public hub state, public entity fields, public events, continuity
 metadata, and impact-only ledger evidence. It excludes player files, Discord
 identifiers, profiles and safety data, transcripts, NPC personality/notes, arc
