@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "461a9b9d60b6c1f950da493dd7175f2c46699aa3",
-  "last_successful_run": "2026-09-13T19:20:11.463Z",
+  "last_processed_commit": "fddfcb4c7d0db6d05f7b04280a6c1e746b53cd43",
+  "last_successful_run": "2026-09-14T10:33:44.330Z",
   "last_city_turn": "2026-09-13",
   "arc_cooldowns": {
-    "arc-005": 2
+    "arc-005": 1
   },
   "runs": [
     {
@@ -833,6 +833,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-005 (Consilium Politics & the Engineered Awakening Program). Off-screen institutional pressure deepens: Dr. Olave's exclusionary meetings continue to fracture the Consilium, and Councilor Ingrid Voss's archival inquiries reach further into restricted University material. No player characters affected; no secrets revealed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260914103344",
+      "phase": "publish",
+      "completed_at": "2026-09-14T10:33:44.330Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
