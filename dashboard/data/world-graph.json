@@ -975,9 +975,9 @@
         "label": "Cutler's Gym",
         "kind": "location",
         "hub_id": "hub_oregon_hill",
-        "status": "active",
+        "status": "burned_down",
         "subtype": "Boxing gym",
-        "details": "A boxing gym on Decatur Street and one of Jacob Boone's mortal anchors."
+        "details": "The burned-down remains of Cutler's Gym on Decatur Street; an affected anchor for Jacob Boone and Cristoff LePierre."
       },
       "position": {
         "x": -497,
@@ -1536,9 +1536,9 @@
         "hub_id": "hub_shockoe_bottom",
         "faction": "Power",
         "status": "active",
-        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent. Now also monitoring the warehouse's administrative records after noticing discrepancies.",
+        "subtype": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The earlier report attributing envelope retrieval to her associate is disputed by recovered player history: Cristoff retrieved it. Direct confrontation remains a threat. Now also monitoring the warehouse's administrative records after noticing discrepancies.",
         "portrait": "",
-        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The associate retrieved the marked envelope and reported back; direct confrontation is imminent. Now also monitoring the warehouse's administrative records after noticing discrepancies."
+        "details": "Unknown principals; board connection to a rival Power faction; knows too much about the warehouse; now under pressure from principals to resolve the specimen situation directly; has begun discreetly surveying warehouse approaches and coordinating with an associate. The earlier report attributing envelope retrieval to her associate is disputed by recovered player history: Cristoff retrieved it. Direct confrontation remains a threat. Now also monitoring the warehouse's administrative records after noticing discrepancies."
       },
       "position": {
         "x": 72,
@@ -1791,9 +1791,9 @@
         "hub_id": "hub_oregon_hill",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Jacob's boxing trainer. Runs a gym on Decatur Street. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor.",
+        "subtype": "Jacob's boxing trainer. His gym on Decatur Street burned down; he survived after a cleanup crew rescued him. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor.",
         "portrait": "",
-        "details": "Jacob's boxing trainer. Runs a gym on Decatur Street. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor."
+        "details": "Jacob's boxing trainer. His gym on Decatur Street burned down; he survived after a cleanup crew rescued him. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor."
       },
       "position": {
         "x": -505,
@@ -1904,7 +1904,7 @@
         "status": "escalating",
         "subtype": "personal",
         "escalation": 4,
-        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach."
+        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach. Continuity repair: Cristoff retrieved the marked envelope. The separately reported box containing a demon heart was taken by a cleanup crew after the gym fire; no link to the fae-adjacent specimen is established."
       },
       "position": {
         "x": -784,

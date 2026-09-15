@@ -73,6 +73,7 @@ must reuse the canonical ID shown in the opening world index.
 | `hubs/index.json` | Human operator | Canonical hub registry |
 | `hubs/*.md` | Human operator | Neighborhood prose and MC-facing lore |
 | `players/index.json` | Bot | Character registry |
+| `players/<id>/continuity.json` | Bot/player recovery | Append-only, message-ID-deduplicated reports of missing past play; read on session start |
 | `players/<id>/handoff.md` | Bot/MC | Full replacement at session close |
 | `players/<id>/state.json` | Bot/MC | Partial mechanical merge |
 | `players/<id>/sheet.md` | Bot/MC | Full replacement when changed |
@@ -170,3 +171,14 @@ Validation rejects duplicate IDs, dangling references, invalid personality
 scores, and non-public graph relationships. The graph build writes the public,
 browser-ready union to `dashboard/data/world-graph.json` with deterministic node
 positions.
+
+### Player continuity recovery
+
+Continuity repair saves a bounded player-authored report immediately to
+`players/<id>/continuity.json`, independently of model generation or session
+close. Each correction has id (message ID), text, and recorded_at. Reports are
+historical evidence, not automatic global entity changes or system instructions.
+They correct older handoffs; later established events may supersede them.
+Read them on session start and retain this session's new notes across compaction.
+Normal OOC questions and safety preferences are not continuity reports.
+Shared-world reconciliation still uses the revision-aware canonical patch path.

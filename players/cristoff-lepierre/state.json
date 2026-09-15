@@ -33,7 +33,9 @@
   },
   "gear": [
     "Grandfather's pocket watch",
-    "Gym locker at Cutler's"
+    "Gym locker at Cutler's (post-fire condition and access unconfirmed)",
+    "High-end SUV with armored interior, pull-out workbench, tools, and a small armory",
+    "Sigil-marked envelope retrieved by Cristoff (last confirmed possession)"
   ],
   "active_arc_ids": [],
   "last_session": "session_001",
@@ -43,5 +45,5 @@
     "ongoing": []
   },
   "playbook_state": {},
-  "notes": "Newcomer. Lucifuge (Hunter: The Vigil). Owe Marcus Voss 1 Debt. Roz Czerny owes me 1 Debt. Anchors: pocket watch, Cutler's Gym. Benefactor identity unknown. Established gear: high-end SUV (armored interior, pull-out workbench, tools, small armory of melee and ranged weapons) — add to gear list next close."
+  "notes": "Lucifuge (Hunter: The Vigil). Owes Marcus Voss 1 Debt; Roz owes Cristoff 1 Debt. Anchors: grandfather's pocket watch and Cutler's Gym (burned down). Benefactor identity unknown. Player-confirmed recovery of missing play: Cutler's Gym burned down. A cleanup crew saved Ray Cutler and took a box containing a demon's heart. Cristoff retrieved the sigil-marked envelope. The crew's identity, Ray's present whereabouts, Cristoff's current location, and the exact chronology are not established. Do not identify the heart box as the fae-adjacent specimen without further evidence."
 }

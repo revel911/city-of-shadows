@@ -9,7 +9,7 @@ they may control.
 | [by-id/](by-id/) | Player profiles | One profile per Discord snowflake containing safety, mechanics depth, character ownership, and broad non-sensitive play tendencies |
 | [_player_template/profile.json](_player_template/profile.json) | Player profile template | Canonical initial shape for a new Discord-scoped player profile |
 | [_template/state.json](_template/state.json) | Character state template | Canonical initial stats, harm, corruption, XP, Circles, gear, effects, playbook state, arcs, and session counters |
-| [Character directories](./) | Character persistence | One folder per character containing sheet.md, state.json, handoff.md, and optional active checkpoint.json |
+| [Character directories](./) | Character persistence | One folder per character containing sheet.md, state.json, handoff.md, optional active checkpoint.json, and durable continuity.json recovery notes |
 
 ## Ownership and privacy rules
 

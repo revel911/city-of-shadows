@@ -1,3 +1,4 @@
+import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
 import { adjudicateMove, generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
 import {
   buildMoveResolutionContext,
@@ -317,9 +318,24 @@ export async function handleMessage(message) {
   if (!message.content?.trim()) return;
 
   await lock(session, async () => {
-    await refreshSessionWorld(session);
     const priorPlayerText = session.lastPlayerText || '';
-    const oocMode = isOutOfCharacterMessage(message.content, priorPlayerText);
+    const repairReply = await handleContinuityAction(session, message.content, {
+      priorText: priorPlayerText,
+      id: message.id,
+      recordedAt: new Date().toISOString(),
+      save: correction => updateJSON(
+        `players/${session.player.id}/continuity.json`,
+        doc => appendContinuityCorrection(doc, correction),
+        `[continuity] player correction for ${session.player.name}`
+      ),
+    });
+    if (repairReply) {
+      session.lastPlayerText = message.content;
+      await message.channel.send(repairReply);
+      return;
+    }
+    await refreshSessionWorld(session);
+    const oocMode = session.continuityRepair || isOutOfCharacterMessage(message.content, priorPlayerText);
     const manualRoll = oocMode ? null : parseManualRoll(message.content);
     if (manualRoll) {
       if (!session.pendingRoll) {
@@ -468,6 +484,7 @@ export async function handleMessage(message) {
       playerText: message.content,
       priorPlayerText,
       playstyleSignals: session.playstyleSignals,
+      forceOoc: Boolean(session.continuityRepair),
       lastAssistant,
     });
     session.messages.push({

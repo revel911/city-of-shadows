@@ -7,6 +7,14 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-14] Continuity correction recorded (event date unspecified)
+
+Operator reconciliation of player-reported missing play: Cutler's Gym burned
+down and Ray Cutler survived. Cristoff retrieved the sigil-marked envelope;
+earlier public chatter attributing its retrieval to an associate of Petra Holt
+is disputed. This is a correction to missing history, not a newly occurring
+scene. The fire's cause, exact date, and Ray's current whereabouts are unknown.
+
 ## [2026-09-13] Consilium Files Reassigned as Fracture Deepens
 
 **Hubs:** University | **Circles:** Power

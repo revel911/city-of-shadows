@@ -1,20 +1,29 @@
-## HANDOFF -- 2026-08-26
-Where we are: Cutler's Gym, Oregon Hill, late evening.
-Who is present: Cristoff alone; Ray Cutler in the back.
-Last beat: Roz Czerny texted about the sigil-marked envelope at the Shockoe Bottom warehouse, asking Cristoff to call her.
-Player intent: To be established — last action was to call Roz after the text. Treat dispatch SUV as established gear going forward.
-Tension threads (max 5):
-- arc-002 (Fae-Adjacent Specimen) — Petra Holt's associate left a sigil-marked envelope at the warehouse; retrieval deadline passed.
-- arc-001 (The Collector) — Catalogued Maren Voss; may have noticed warehouse activity. Escalation 3.
-- arc-012 (The Overwrite) — Running off-tempo again; instruments at Monroe Park are unofficial. Escalation 4.
-- arc-006 (Compromised Hunter Network) — Roz Czerny connected to this arc; her info may come with strings.
-- Debt to Marcus Voss (1) — benefactor's go-between; unpaid.
-Must not forget (max 3):
-- Roz owes Cristoff 1 Debt from two years back.
-- Benefactor identity still unknown; pay comes through Roz.
-- SUV (high-end, armored interior, workbench, tool stash, small armory) established as gear — add to sheet and state at next close.
-Mood: Quiet before something breaks.
-Sheet delta: None this session. Add SUV + gear description at next close.
-Hubs touched: Oregon Hill.
-Public events logged this session: None.
-Open interactions: None.
+## HANDOFF -- continuity repaired from player report
+
+Where we are: Current location and in-fiction time are not yet established.
+Do not restart inside an intact Cutler's Gym or assume the call to Roz occurred.
+
+Established events recovered from missing play:
+- Cutler's Gym burned down.
+- A cleanup crew saved Ray Cutler and took a box containing a demon's heart.
+- Cristoff retrieved the sigil-marked envelope.
+
+Resume out of character: acknowledge these recovered events, then ask where
+Cristoff is now and which moment the player wants to resume. Do not decide a
+call, movement, statement, or emotion for the player.
+
+Unresolved:
+- The cleanup crew's identity and affiliation, the heart box's destination,
+  Ray's present location/condition beyond survival, and the fire's cause/date.
+- The envelope's contents and what Cristoff has done with it since retrieval.
+- Whether the heart box relates to the warehouse specimen; do not merge them.
+- Petra Holt's principals and warehouse surveillance remain unresolved pressure.
+- Cristoff owes Marcus Voss 1 Debt; Roz owes Cristoff 1 Debt from two years back.
+- Benefactor identity remains unknown.
+
+Resources: The previously established high-end SUV is now recorded in gear.
+Cutler's Gym remains an affected anchor, not an available intact gym. The locker
+and any contents have no confirmed post-fire condition.
+
+Older handoff and public-chatter claims about an unretrieved envelope must not
+override the player's confirmed retrieval. Fictional event timing remains unknown.

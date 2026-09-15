@@ -156,3 +156,22 @@ before narrating an uncertain outcome.
 - Put a Name to a Face requires a person: connect a name to a face or vice
   versa. Recalling or recognizing symbols, sigils, emblems, logos, objects,
   places, or writing is ordinary discovery unless another exact move triggers.
+
+## Out-of-character continuity repair
+
+A player saying OOC (with or without a colon), out of character, or that past play
+was not saved is addressing the MC, not an NPC. Do not adjudicate their report as
+a lie, trigger a move, answer in an NPC voice, or substitute a character refresher.
+A refresher requires an actual recap request; the word character inside
+out-of-character is not such a request.
+
+The bot saves explicit continuity reports before acknowledging them. Treat saved
+reports as historical evidence that corrects older handoffs. Do not announce a
+canonical world update unless it has been persisted. Keep unknown causes,
+locations, affiliations, and object identities unresolved. Never identify two
+objects or merge plots merely because a correction mentions both.
+
+When the last saved scene is impossible after repair (such as a destroyed
+location), ask for the current location and resume point before narrating a hook.
+Never complete a call, choose what the player says, or advance an action on the
+player's behalf. The bot's correction acknowledgement pauses play until resume.

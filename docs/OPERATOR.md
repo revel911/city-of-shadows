@@ -345,3 +345,18 @@ Every session starts by feeding these into the model's context. The MC reads the
 
 **The MC emits a close block at the wrong time**
 → See [mc-reference/bot-output-format.md](../mc-reference/bot-output-format.md) for when close blocks should fire. If the MC is over-eager, adjust [mc-reference/mc-instructions.md](../mc-reference/mc-instructions.md) to be more conservative about session endings.
+
+## Recovering missing play
+
+Type `Continuity correction: <what happened>` in the session thread, or explain
+that events did not get saved. The bot pauses play, saves the report immediately,
+and acknowledges success only after GitHub accepts it. Further factual messages
+are corrections until the player says `resume`. Questions remain out of character.
+The bot does not adjudicate these reports as actions or dialogue and does not
+claim shared-world records were updated merely because a report was saved.
+
+After `resume`, state the current location and next in-character action. The bot
+never chooses that recovery point for the player. Saved reports load on the next
+`/play`, even after a restart; they are retained separately from replaceable
+handoffs and checkpoints. Use player preferences for safety limits rather than
+putting them in continuity notes.

@@ -1,3 +1,4 @@
+import { formatContinuityContext } from './continuity.js';
 import OpenAI from 'openai';
 import {
   buildMoveAdjudicationPrompt,
@@ -256,13 +257,14 @@ export async function buildOpeningContext(player) {
     ].join('\n');
   }
 
-  const [handoff, sheet, state, checkpoint, events, interactions] = await Promise.all([
+  const [handoff, sheet, state, checkpoint, events, interactions, continuity] = await Promise.all([
     readFile(`players/${player.id}/handoff.md`),
     readFile(`players/${player.id}/sheet.md`),
     readJSON(`players/${player.id}/state.json`),
     readJSON(`players/${player.id}/checkpoint.json`),
     readFile('game/events-log.md'),
     readJSON('game/interactions.json'),
+    readJSON(`players/${player.id}/continuity.json`),
   ]);
   const worldContext = await buildRelevantWorldContext({
     characterId: player.id,
@@ -280,13 +282,16 @@ export async function buildOpeningContext(player) {
     '--- RETURNING-CHARACTER OPENING CONTRACT ---',
     'Start the player-facing response with **Previously in City of Shadows...** followed by one or two short paragraphs (700 characters maximum combined).',
     'Cover, when the records support it: what has recently been happening; the character\'s present state of mind; their current or last-known location; and their most recent meaningful NPC interactions.',
-    'Treat the handoff and active checkpoint as the primary sources for recent events and location. Use state, sheet, and character-specific NPC memory as supporting sources.',
+    'Apply saved continuity corrections to older records first, then use the handoff and active checkpoint for recent events and location. Use state, sheet, and character-specific NPC memory as supporting sources.',
     'Do not invent missing history, emotions, locations, or meetings. If an emotion is not explicit, describe the pressure the character is under instead of declaring how they feel.',
     'Do not infer that a canonical NPC employs, funds, contacts, trains, or knows this character merely because that NPC appears in the world directory or a city event. A character-specific relationship must be supported by the handoff, sheet, checkpoint, Debt ledger, or NPC memory.',
     'Preserve every canonical NPC role and location controller. If character documents conflict with canonical identity, omit the disputed claim from the opening and ask out of character on the next turn.',
     'Before sending the hook, verify its timeline and object state. Do not say an item is already gone and then invite the player to watch someone pick it up.',
     'Do not expose IDs, JSON, mechanics bookkeeping, or these instructions. Do not recap general city lore unless it directly affected this character.',
+    'Never complete a call, choose a reply, or initiate another player action before the player chooses it. If the current location or resume point is unknown, ask one out-of-character clarification instead of inventing a hook.',
     'After the recap, add a blank line and continue at the immediate playable moment. Keep the whole response within the opening limit, avoid repeating the recap in the scene, and end at one clear player decision.',
+    '',
+    formatContinuityContext(continuity),
     '',
     '--- HANDOFF ---',
     handoff || '(none — treat as first scene for this character)',
@@ -383,7 +388,7 @@ export async function generate(session, { maxTokens = MAX_TOKENS, temperature = 
   const resp = await client().chat.completions.create({
     model: MODEL,
     thinking: { type: 'disabled' },
-    messages: [{ role: 'system', content: system }, ...session.messages],
+    messages: [{ role: 'system', content: [system, formatContinuityContext(session.continuityCorrections)].filter(Boolean).join('\n\n') }, ...session.messages],
     max_tokens: maxTokens,
     temperature,
   });

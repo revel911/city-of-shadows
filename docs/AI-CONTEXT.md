@@ -31,7 +31,7 @@ DeepSeek does not browse GitHub. The bot is the retrieval layer:
    retrieval map, then assembles the stable MC reference prompt, the active
    character-specific reference pack, and a per-session opening context.
 3. The opening context includes player safety and mechanics preferences, broad
-   play tendencies learned from prior actions, handoff/sheet/state, recent events,
+   play tendencies learned from prior actions, handoff/sheet/state, saved player continuity corrections, recent events,
    one relevant interaction echo, detailed relevant world entities (including
    relevant clue maps), and an identity-only directory that prevents duplicates.
    Relevant NPCs also carry only the active character's NPC–character memory.

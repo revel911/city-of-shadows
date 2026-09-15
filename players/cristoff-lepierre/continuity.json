@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "corrections": [
+    {
+      "id": "operator-recovery-gym-envelope",
+      "text": "Player-confirmed recovery of missing play: Cutler's Gym burned down. A cleanup crew saved Ray Cutler and took a box containing a demon's heart. Cristoff retrieved the sigil-marked envelope. The crew's identity, Ray's present whereabouts, Cristoff's current location, and the exact chronology are not established. Do not identify the heart box as the fae-adjacent specimen without further evidence.",
+      "recorded_at": "2026-09-15T00:46:12.025202+00:00"
+    }
+  ]
+}

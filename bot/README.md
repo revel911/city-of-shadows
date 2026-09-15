@@ -28,6 +28,7 @@ between players, the model, and the GitHub-backed world. Start with
 | [narrative-state.js](handlers/narrative-state.js) | Narrative-state rules | Move-resolution contracts, investigation depth, mysteries, character knowledge, scene pressure, arc pressure, and City Keeper selection |
 | [npc-personality.js](handlers/npc-personality.js) | NPC personality contract | Shared validation, legacy fallbacks, and social behavior instructions |
 | [world-state.js](handlers/world-state.js) | World retrieval and merging | Canonical/relevant context, entity compaction, relevance routing, patches, conflicts, interactions, and NPC memory |
+| [continuity.js](handlers/continuity.js) | Continuity recovery | Paused correction routing, durable player reports, and recovery context |
 | [scene-director.js](handlers/scene-director.js) | Scene director | Hidden scene-mode selection, variation, player-agency safeguards, and broad non-sensitive playstyle signals |
 | [character-sheet.js](handlers/character-sheet.js) | Sheet contract | Canonical section order, validation, and live-state rendering |
 | [profile.js](handlers/profile.js) | Player profiles | Discord-scoped profile paths, reads/writes, mechanics depth, safety, and ownership |

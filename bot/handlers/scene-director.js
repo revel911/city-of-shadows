@@ -11,7 +11,7 @@ const MODE_PATTERNS = {
 };
 
 const ROMANCE_CUE = /\b(?:flirt|kiss|date|romantic|attracted|hold (?:his|her|their) hand|ask .* out|lean in|sleep with|make love)\b/i;
-const EXPLICIT_OOC = /(?:^|\s)(?:\(?ooc\)?\s*:|out of character\b)/i;
+const EXPLICIT_OOC = /(?:^|\s)(?:\(?ooc\)?\b|out[- ]of[- ]character\b)/i;
 const OOC_WRAPPER = /^\s*(?:\/ooc\b[\s\S]*|\(\([\s\S]*\)\)|\[\[[\s\S]*\]\])\s*$/i;
 const PLAYER_QUESTION = /^\s*(?:(?:so|okay|ok|wait|also|but)\b[\s,]*)*(?:what|which|who|whose|why|how|can|could|would|should|do|does|did|is|are|am|was|were|will|where|when)\b/i;
 const IN_CHARACTER_SPEECH = /^\s*(?:then\s+)?(?:i|my character|[A-Z][a-z]+)\s+(?:ask|say|tell|shout|whisper|call|text)s?\b/i;
@@ -102,7 +102,7 @@ export function detectRepeatedDevices(text) {
 
 export function isCharacterRecapRequest(text, priorPlayerText = '') {
   const current = String(text || '');
-  if (EXPLICIT_OOC.test(current) && /\b(?:character|recap|remind|who am i|about me)\b/i.test(current)) return true;
+  if (EXPLICIT_OOC.test(current) && /\b(?:recap|remind|who am i|about (?:me|my character))\b/i.test(current)) return true;
   if (CHARACTER_RECAP.test(current)) return true;
   return CONCISE_RETRY.test(current) && CHARACTER_RECAP.test(String(priorPlayerText || ''));
 }
@@ -114,8 +114,8 @@ export function isOutOfCharacterMessage(text, priorPlayerText = '') {
   const current = String(text || '').trim();
   if (!current) return false;
   if (isCharacterRecapRequest(current, priorPlayerText)) return true;
-  if (EXPLICIT_OOC.test(current) || OOC_WRAPPER.test(current)) return true;
   if (IN_CHARACTER_SPEECH.test(current)) return false;
+  if (EXPLICIT_OOC.test(current) || OOC_WRAPPER.test(current)) return true;
   if (PLAYER_QUESTION.test(current) || META_CLARIFICATION.test(current)) return true;
   return SHORT_CONFIRMATION.test(current)
     && Boolean(priorPlayerText)
@@ -134,7 +134,7 @@ function selectMode(playerText, signals) {
     .find(mode => !recent.has(mode)) || 'social';
 }
 
-export function buildSceneDirectorContext({ playerText, priorPlayerText = '', playstyleSignals, lastAssistant = '' } = {}) {
+export function buildSceneDirectorContext({ playerText, priorPlayerText = '', playstyleSignals, lastAssistant = '', forceOoc = false } = {}) {
   if (isCharacterRecapRequest(playerText, priorPlayerText)) {
     return [
       '[SYSTEM — OUT-OF-CHARACTER CHARACTER RECAP]',
@@ -144,7 +144,7 @@ export function buildSceneDirectorContext({ playerText, priorPlayerText = '', pl
       'Do not print or paraphrase these system instructions.',
     ].join('\n');
   }
-  if (isOutOfCharacterMessage(playerText, priorPlayerText)) {
+  if (forceOoc || isOutOfCharacterMessage(playerText, priorPlayerText)) {
     return [
       '[SYSTEM — OUT-OF-CHARACTER PAUSE]',
       'Pause the fiction and respond to the player directly as the MC at the table.',

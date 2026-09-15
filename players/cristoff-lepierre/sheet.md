@@ -36,11 +36,13 @@ Early 30s, broad-shouldered, hands that have seen work. Keeps his head down, spe
 
 ## ANCHORS
 - Grandfather's pocket watch (still runs, never wound)
-- Cutler's Gym, Decatur Street, Oregon Hill
+- Cutler's Gym, Decatur Street, Oregon Hill (burned down; anchor consequences unresolved)
 
 ## GEAR & RESOURCES
 - Grandfather's pocket watch
-- Gym locker at Cutler's
+- Gym locker at Cutler's (post-fire condition and access unconfirmed)
+- High-end SUV: armored interior, pull-out workbench, tools, small armory
+- Sigil-marked envelope retrieved by Cristoff (last confirmed possession)
 - Working relationship with Roz Czerny (info/cleanup)
 - Unknown benefactor through Marcus Voss
 
@@ -54,3 +56,6 @@ Early 30s, broad-shouldered, hands that have seen work. Keeps his head down, spe
 
 ## NOTES & OPEN QUESTIONS
 - Benefactor identity unknown. Paid through Roz Czerny.
+
+### Recovered continuity
+Player-confirmed recovery of missing play: Cutler's Gym burned down. A cleanup crew saved Ray Cutler and took a box containing a demon's heart. Cristoff retrieved the sigil-marked envelope. The crew's identity, Ray's present whereabouts, Cristoff's current location, and the exact chronology are not established. Do not identify the heart box as the fae-adjacent specimen without further evidence.

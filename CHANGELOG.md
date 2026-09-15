@@ -10,6 +10,11 @@ platform behaves, not API compatibility.
 ## [Unreleased]
 
 ### Changed
+- Plain OOC markers no longer require a colon, and out-of-character comments
+  no longer trigger character recaps by themselves. Continuity repair now saves
+  player reports directly, pauses mechanics, and reloads reports after restart.
+  Reconciled the player-confirmed gym fire, Ray rescue, heart-box removal, and
+  envelope retrieval without inventing a present location or merging artifacts.
 - NPC personality now separates warmth from verbosity and adds humor style/frequency,
   contextual contrasts, evidence notes, and optional flirtation/intimacy traits.
   All 51 NPCs retain their existing voices and histories with authored starting

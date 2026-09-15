@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13",
+  "last_updated": "2026-09-14",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -784,11 +784,13 @@
         "npc_ray_cutler"
       ],
       "controller_note": "Ray Cutler",
-      "status": "active",
-      "description": "A boxing gym on Decatur Street and one of Jacob Boone's mortal anchors.",
-      "atmosphere": "Sweat, old canvas, practiced discipline",
-      "notes": "",
-      "last_updated": "2026-08-21"
+      "status": "burned_down",
+      "description": "The burned-down remains of Cutler's Gym on Decatur Street; an affected anchor for Jacob Boone and Cristoff LePierre.",
+      "atmosphere": "Fire-damaged site; present access and condition not yet established.",
+      "notes": "Player-confirmed recovery: the gym burned down and Ray survived after rescue by a cleanup crew. Cause and in-fiction date not established.",
+      "last_updated": "2026-09-14",
+      "revision": 1,
+      "updated_by_session": "operator:continuity-repair"
     }
   ]
 }
