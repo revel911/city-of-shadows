@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-15] Unlogged Contact Surfaces Through Familiar Channels
+
+**Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter
+
+A second contact attributed to the unknown party who warned an operative they were "watching the wrong door" has surfaced through ordinary institutional channels in Downtown and Shockoe Bottom. The message was not logged by any known network and again demonstrates knowledge of an operative's name and position. No response has been made. Those who track such things note the sender appears to be following established routines rather than the original night alone. The Consilium has not commented.
+
 ## [2026-09-14] Continuity correction recorded (event date unspecified)
 
 Operator reconciliation of player-reported missing play: Cutler's Gym burned

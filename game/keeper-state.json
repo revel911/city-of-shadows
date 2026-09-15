@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "8273bc222e8286c55a8caf507784e8e996264dd3",
-  "last_successful_run": "2026-09-15T16:36:21.340Z",
-  "last_city_turn": "2026-09-13",
-  "arc_cooldowns": {},
+  "last_processed_commit": "736e4635e1bcf4b21df439dfbc451227f4982e83",
+  "last_successful_run": "2026-09-15T19:22:59.530Z",
+  "last_city_turn": "2026-09-15",
+  "arc_cooldowns": {
+    "arc-008": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -875,6 +877,19 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity, memory, relationship, debt, arc, mystery, or hub changes are warranted. The projection is internally consistent with the public event log; the continuity correction regarding Cristoff retrieving the marked envelope is already reflected in arc-002 and the events log. No conflicts are pending.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260915192259",
+      "phase": "city-turn",
+      "completed_at": "2026-09-15T19:22:59.530Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-008"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-008 (The Unknown Text Sender). The unknown sender's reach extends through institutional routines: a second unlogged contact surfaces via Downtown and Shockoe Bottom channels, deepening the sense that the sender is watching established operations. No NPCs moved, no hub conditions materially altered beyond a minor Downtown note, no player characters touched.",
       "dry_run": false
     }
   ],
