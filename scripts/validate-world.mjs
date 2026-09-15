@@ -1,3 +1,4 @@
+import { personalityProblems } from '../bot/handlers/npc-personality.js';
 import { readJSON } from './world-utils.mjs';
 import { npcCharacterMemoryId } from '../bot/handlers/world-state.js';
 
@@ -84,11 +85,7 @@ for (const npc of npcDoc.npcs || []) {
     if (!ids.loc.has(id)) errors.push(`${npc.id} references missing associated location ${id}`);
   }
   for (const id of npc.arc_ids || []) if (!ids.arc.has(id)) errors.push(`${npc.id} references missing arc ${id}`);
-  const p = npc.personality || {};
-  for (const axis of ['moral', 'order', 'manner', 'violence']) {
-    if (!Number.isInteger(p[axis]) || p[axis] < 1 || p[axis] > 5) errors.push(`${npc.id}.personality.${axis} must be 1-5`);
-  }
-  if (!p.voice_note) errors.push(`${npc.id} is missing personality.voice_note`);
+  errors.push(...personalityProblems(npc.personality).map(problem => `${npc.id}.personality: ${problem}`));
   if (!npc.hub_id && !['unknown', 'mobile', 'unestablished'].includes(npc.location_status)) warnings.push(`${npc.id} has no home hub or explicit location_status`);
 }
 

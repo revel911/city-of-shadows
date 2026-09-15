@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-13",
+  "last_updated": "2026-09-14",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -16,12 +16,21 @@
         "order": 5,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Speaks like every word is already on the record, because in her head it is."
+        "voice_note": "Speaks like every word is already on the record, because in her head it is.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Dry understatement, used sparingly.",
+        "contrast_note": "Official restraint does not mean indifference; show concern through precise attention.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Private and deliberate; trust grows through reliability, with clear separation between work and personal closeness.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 2. Quietly pulling contradictory cold cases from the 1970s.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_father_hruska",
@@ -38,7 +47,14 @@
         "order": 4,
         "manner": 5,
         "violence": 5,
-        "voice_note": "Warmth that feels earned rather than performed — the most disarming thing about him in this city."
+        "voice_note": "Warmth that feels earned rather than performed — the most disarming thing about him in this city.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Gentle understatement; never at a vulnerable person's expense.",
+        "contrast_note": "Disarming warmth coexists with a firm personal code.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Affection through listening and practical presence; slow to disclose personal vulnerability, explicit about boundaries.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1. Church basement locked since 1943. He has never asked why.",
@@ -47,7 +63,9 @@
       ],
       "home_location_id": "loc_st_peters_catholic",
       "current_location_id": "loc_st_peters_catholic",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_emmett_daye",
@@ -64,7 +82,14 @@
         "order": 2,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Talks around what he's seen rather than at it. Forty years of watching strange things taught him not to name them out loud."
+        "voice_note": "Talks around what he's seen rather than at it. Forty years of watching strange things taught him not to name them out loud.",
+        "verbosity": 4,
+        "humor_frequency": 2,
+        "humor_style": "Oblique anecdotes that skirt the unsettling point.",
+        "contrast_note": "Can talk at length while avoiding the one thing he actually witnessed.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Indirect and companionable; shared routines make personal disclosure easier than direct questioning.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0. Cemetery has new sections he doesn't remember being built.",
@@ -73,7 +98,9 @@
       ],
       "home_location_id": "loc_hollywood_cemetery",
       "current_location_id": "loc_hollywood_cemetery",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_celestine_morrow",
@@ -90,7 +117,14 @@
         "order": 3,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Knows more than she says. Measures you by how you treat the neighborhood before she'll treat you well."
+        "voice_note": "Knows more than she says. Measures you by how you treat the neighborhood before she'll treat you well.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Wry observations about conduct, not generic banter.",
+        "contrast_note": "Cordial with visitors, more forthcoming when they demonstrate care for the neighborhood.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Patient and discerning; responds to demonstrated care before offering private warmth.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1. Shop has a copy of a book that was never published.",
@@ -99,7 +133,9 @@
       ],
       "home_location_id": "loc_morrows_books",
       "current_location_id": "loc_morrows_books",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_declan_morrow",
@@ -118,12 +154,21 @@
         "order": 2,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Charming in the way that makes you check your pockets. Thinks being useful excuses being reckless."
+        "voice_note": "Charming in the way that makes you check your pockets. Thinks being useful excuses being reckless.",
+        "verbosity": 4,
+        "humor_frequency": 4,
+        "humor_style": "Fast teasing and self-excusing quips.",
+        "contrast_note": "Easy charm becomes over-explanation when his recklessness has consequences.",
+        "flirtatiousness": 5,
+        "intimacy_style": "Playful and quick to initiate banter; admitting insecurity is harder than expressing interest.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0 / Night 0. Convinced Nadia to follow him; she got a Scar. Knows Serrano's tunnel entry location.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_aldric_serrano",
@@ -142,7 +187,14 @@
         "order": 3,
         "manner": 2,
         "violence": 2,
-        "voice_note": "Doesn't threaten. States facts about consequences in the same tone he'd use to describe the weather."
+        "voice_note": "Doesn't threaten. States facts about consequences in the same tone he'd use to describe the weather.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, flat understatement; no theatrical villain jokes.",
+        "contrast_note": "Calm delivery persists even when his territorial suspicion sharpens.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Guarded and deliberate; values space, predictability, and control over his own disclosure.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Night 3. Entry location known to Declan Morrow; access costs a Debt. Something breached his domain recently.",
@@ -151,9 +203,9 @@
       ],
       "home_location_id": "loc_serranos_domain",
       "current_location_id": "loc_serranos_domain",
-      "updated_by_session": "keeper_city_turn_20260905191934",
-      "revision": 2,
-      "last_updated": "2026-09-05"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 3,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_theo_marchand",
@@ -170,12 +222,21 @@
         "order": 3,
         "manner": 3,
         "violence": 2,
-        "voice_note": "Quiet professional. Does the job, doesn't editorialize. You'd walk past him twice."
+        "voice_note": "Quiet professional. Does the job, doesn't editorialize. You'd walk past him twice.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; do not supply action-movie one-liners.",
+        "contrast_note": "Can act decisively without narrating his competence.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Quiet and action-oriented; expresses care through dependable follow-through rather than declarations.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_patrice_guidry",
@@ -192,12 +253,21 @@
         "order": 3,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Reads a room faster than most people breathe. Tells you what you need to hear just late enough that you can't argue."
+        "voice_note": "Reads a room faster than most people breathe. Tells you what you need to hear just late enough that you can't argue.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Dry, precisely timed observations.",
+        "contrast_note": "Social attentiveness coexists with deliberate control over when information arrives.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Attentive and measured; comfortable expressing interest while disclosing personal stakes slowly.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_mireille_fontenot",
@@ -214,7 +284,14 @@
         "order": 4,
         "manner": 5,
         "violence": 4,
-        "voice_note": "Impeccably kind right up until she isn't, and the transition is invisible until it's too late."
+        "voice_note": "Impeccably kind right up until she isn't, and the transition is invisible until it's too late.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Polished wit that can turn cutting.",
+        "contrast_note": "Kind presentation can end abruptly; charm and the Blood Bond plot are not proof of sexual interest.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Expressive and polished; genuine vulnerability is harder than creating a feeling of closeness. Social manipulation never establishes consent.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Night 2. Grooming Jonah Pryce for Blood Bond. Buying the Tobacco Exchange Building — basement levels not on official plans.",
@@ -223,7 +300,9 @@
       ],
       "home_location_id": "loc_maison_rouge",
       "current_location_id": "loc_maison_rouge",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_asha_tremblay",
@@ -242,7 +321,14 @@
         "order": 2,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Curious and careful in equal measure. Asks questions like she's already decided not to be surprised by the answer."
+        "voice_note": "Curious and careful in equal measure. Asks questions like she's already decided not to be surprised by the answer.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Light, questioning understatement.",
+        "contrast_note": "Curiosity invites conversation while caution limits disclosure.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Curious and cautious; asks questions, checks reciprocity, and prefers gradual trust.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Status: Wild 2. Hedge Door unstable — opens onto unfamiliar ground for 3 weeks. Had a visitor from 'prior version of the city.' Meeting: Grisette on Ellwood, 7am 2026-04-25.",
@@ -251,7 +337,9 @@
       ],
       "home_location_id": "loc_threshold",
       "current_location_id": "loc_threshold",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_vera_solis",
@@ -268,12 +356,21 @@
         "order": 3,
         "manner": 3,
         "violence": 5,
-        "voice_note": "Still. Precise. The way she handles objects tells you she remembers every one that passed through her hands."
+        "voice_note": "Still. Precise. The way she handles objects tells you she remembers every one that passed through her hands.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; preserve stillness and precision.",
+        "contrast_note": "Care is expressed through handling objects rather than conversational reassurance.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Patient, private, and attentive to small gestures; dislikes pressure to explain feelings on demand.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Wild 1. No photo, no social media, no prior existence. Suspected Wizened. Contact pending intro from Asha.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_marcus_delacroix",
@@ -290,12 +387,21 @@
         "order": 2,
         "manner": 3,
         "violence": 5,
-        "voice_note": "Earnest in a city that punishes it. Says what he means because he hasn't learned yet that nobody wants to hear it."
+        "voice_note": "Earnest in a city that punishes it. Says what he means because he hasn't learned yet that nobody wants to hear it.",
+        "verbosity": 4,
+        "humor_frequency": 2,
+        "humor_style": "Earnest, lightly self-deprecating observations.",
+        "contrast_note": "Open speech remains sincere even when others treat sincerity as a liability.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Earnest and direct about feelings once invited; prefers sincerity over social games.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Wild 0. His pieces 'evolve' after installation — change to match whatever the current reality becomes.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_jonah_pryce",
@@ -312,12 +418,21 @@
         "order": 3,
         "manner": 3,
         "violence": 5,
-        "voice_note": "Enthusiastic about things with no idea what they cost. The kind of person Mireille collects."
+        "voice_note": "Enthusiastic about things with no idea what they cost. The kind of person Mireille collects.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Enthusiastic, unguarded amusement.",
+        "contrast_note": "His excitement can outpace his understanding of the cost; do not recast vulnerability as consent.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Enthusiastic and openly responsive; eagerness does not remove boundaries or make manipulation consensual.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Night 0. At risk — actively being groomed.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_elspeth_crane",
@@ -334,12 +449,21 @@
         "order": 5,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Everything measured. Everything billed. Warmth is a service she charges extra for."
+        "voice_note": "Everything measured. Everything billed. Warmth is a service she charges extra for.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Dry contractual wit.",
+        "contrast_note": "Polite delivery remains transactional, even when she appears accommodating.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Deliberate and private; personal closeness requires stepping outside the transactional register by mutual choice.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Night 2. Private office in Riverfront Plaza with no official address — listed as 'storage.'",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_judge_kellom",
@@ -356,12 +480,21 @@
         "order": 5,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Genuine conviction in every ruling. The tragedy is she means every word."
+        "voice_note": "Genuine conviction in every ruling. The tragedy is she means every word.",
+        "verbosity": 3,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; keep rulings sincere rather than arch.",
+        "contrast_note": "Conviction is real even when others exploit the results of her decisions.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Steady and explicit; seeks clarity about commitments and is uncomfortable with ambiguous promises.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 3. Night faction asset — she doesn't know it. Consistently rules in favor of development projects that create underground access.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_marcus_voss",
@@ -380,14 +513,21 @@
         "order": 4,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Measured, professional. Never raises his voice. Treats information like currency and people like investments."
+        "voice_note": "Measured, professional. Never raises his voice. Treats information like currency and people like investments.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Occasional dry understatement.",
+        "contrast_note": "Professional courtesy coexists with calculating what information and favors are worth.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Measured and attentive; slow to reveal dependence, with a tendency to substitute useful gestures for vulnerable speech.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Cristoff owes him 1 Debt. Benefactor identity unknown; Marcus handles the handoffs.",
       "associated_location_ids": [],
-      "updated_by_session": "cristoff-lepierre:session_000",
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 2,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_riley_hoffman",
@@ -404,14 +544,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Keeps the tour moving past the parts that would ruin it. Professional pretending — the good kind."
+        "voice_note": "Keeps the tour moving past the parts that would ruin it. Professional pretending — the good kind.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Tour-guide patter and conversational deflection.",
+        "contrast_note": "Public ease becomes redirection when someone asks about the tunnels.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Easy conversational playfulness; becomes more direct when the exchange turns genuinely personal.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260904191919",
-      "revision": 1,
-      "last_updated": "2026-09-04"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 2,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_dr_olave",
@@ -430,7 +577,14 @@
         "order": 4,
         "manner": 4,
         "violence": 4,
-        "voice_note": "Collegial and measured. The warmth is real; so is the calculation underneath it."
+        "voice_note": "Collegial and measured. The warmth is real; so is the calculation underneath it.",
+        "verbosity": 4,
+        "humor_frequency": 2,
+        "humor_style": "Collegial, carefully placed wit.",
+        "contrast_note": "Real warmth coexists with the exclusion and information control recorded in recent city events.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Conversational and intellectually engaged; comfortable sharing ideas before admitting emotional uncertainty.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 3. Convening closed faculty meetings with no agenda. Two junior Consilium members not invited.",
@@ -439,9 +593,9 @@
       ],
       "home_location_id": "loc_hibbs_hall",
       "current_location_id": "loc_hibbs_hall",
-      "updated_by_session": "keeper_city_turn_20260913192011",
-      "revision": 3,
-      "last_updated": "2026-09-13"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 4,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_ingrid_voss",
@@ -460,14 +614,21 @@
         "order": 5,
         "manner": 5,
         "violence": 5,
-        "voice_note": "Every sentence is load-bearing. She never says anything she hasn't already thought three moves past."
+        "voice_note": "Every sentence is load-bearing. She never says anything she hasn't already thought three moves past.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, pointed understatement.",
+        "contrast_note": "Controlled public speech grows more selective when inquiry approaches her own past.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Controlled and selective; vulnerable disclosures arrive one carefully chosen fact at a time.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Status: Power 3. Secret: her Awakening was engineered by something she has never fully identified. An Acanthus knows. An Acanthus kept quiet.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260913192011",
-      "revision": 3,
-      "last_updated": "2026-09-13"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 4,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_prof_tanaka",
@@ -484,7 +645,14 @@
         "order": 4,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Precise. Frustrated. The equations are right but the conclusions are impossible, and she knows it."
+        "voice_note": "Precise. Frustrated. The equations are right but the conclusions are impossible, and she knows it.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Dry observations about impossible contradictions.",
+        "contrast_note": "Precise speech becomes more animated around a pattern that should not exist.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Reserved until shared curiosity creates ease; more candid in a focused conversation than public banter.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 1. Tracking mathematical patterns in Richmond's layout that shouldn't exist given when the streets were laid.",
@@ -493,9 +661,9 @@
       ],
       "home_location_id": "loc_harris_hall",
       "current_location_id": "loc_harris_hall",
-      "updated_by_session": "keeper_city_turn_20260910191957",
-      "revision": 2,
-      "last_updated": "2026-09-10"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 3,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_fen_adeyemi",
@@ -512,12 +680,21 @@
         "order": 3,
         "manner": 3,
         "violence": 5,
-        "voice_note": "Eager to use the access he has. Not quite sure what for. That combination is how things get loose."
+        "voice_note": "Eager to use the access he has. Not quite sure what for. That combination is how things get loose.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Eager, slightly awkward asides.",
+        "contrast_note": "Talkative enthusiasm narrows when he realizes the implications of his access.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Eager but hesitant to initiate; responsive to clear invitations and prone to overexplaining when nervous.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 0. Has access to restricted knowledge he doesn't fully understand.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_dr_ashford",
@@ -534,12 +711,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Gets excited about things most people would find alarming. Writes grants for research she can't quite explain to committees."
+        "voice_note": "Gets excited about things most people would find alarming. Writes grants for research she can't quite explain to committees.",
+        "verbosity": 5,
+        "humor_frequency": 3,
+        "humor_style": "Delighted observations about alarming discoveries.",
+        "contrast_note": "Expansive excitement meets careful institutional wording when explaining the research.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Animated and direct; shares enthusiasm readily, then has to slow down to listen to another person's pace.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 1. Has a painting donated in 1995 — canvas and pigments date to the 1850s.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_mama_dee_washington",
@@ -556,12 +742,21 @@
         "order": 4,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Treats the impossible as a practical problem. Has been solving impossible problems for thirty years."
+        "voice_note": "Treats the impossible as a practical problem. Has been solving impossible problems for thirty years.",
+        "verbosity": 3,
+        "humor_frequency": 3,
+        "humor_style": "Practical, wry observations that bring a discussion back to work.",
+        "contrast_note": "Treats impossible circumstances matter-of-factly while taking people's needs seriously.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Straightforward and grounded; values dependable presence and mutual effort over grand gestures.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 2. Holds community meetings where some attendees are families displaced months ago.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_marcus_ghost_williams",
@@ -578,12 +773,21 @@
         "order": 3,
         "manner": 3,
         "violence": 5,
-        "voice_note": "Never explains how he got there. Never explains how he left."
+        "voice_note": "Never explains how he got there. Never explains how he left.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; do not fill his silences with jokes.",
+        "contrast_note": "Useful presence does not come with an explanation of his movements.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Quiet companionship and practical care; private feelings are offered sparingly rather than extracted.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1. Works maintenance on buildings that appear on his work orders but not current site maps.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_sister_catherine_burke",
@@ -602,7 +806,14 @@
         "order": 4,
         "manner": 5,
         "violence": 5,
-        "voice_note": "Hears the impossible thing and asks what they need to eat."
+        "voice_note": "Hears the impossible thing and asks what they need to eat.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Gentle, practical understatement.",
+        "contrast_note": "Brief practical care can feel warmer than a long reassurance.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Care through presence and practical support; personal boundaries are plainly stated, and kindness is not romantic interest.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 2. Food pantry serves families from multiple timeline layers simultaneously.",
@@ -611,7 +822,9 @@
       ],
       "home_location_id": "loc_east_end_family_resource_center",
       "current_location_id": "loc_east_end_family_resource_center",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_jrock_thompson",
@@ -628,12 +841,21 @@
         "order": 2,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Talks about the neighborhood like it's a living person. Because for him, it is."
+        "voice_note": "Talks about the neighborhood like it's a living person. Because for him, it is.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Affectionate neighborhood observations.",
+        "contrast_note": "Expressive storytelling stays rooted in a serious attachment to place.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Expressive and playful; shares personal stories readily but treats meaningful attachment seriously.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Wild 1. Murals sometimes appear overnight depicting community events from decades past.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_dr_reeves",
@@ -650,12 +872,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Keeps notes about which timeline she's operating in for each appointment. Does not explain this to supervisors."
+        "voice_note": "Keeps notes about which timeline she's operating in for each appointment. Does not explain this to supervisors.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Understated observations about logistical contradictions.",
+        "contrast_note": "Professional composure coexists with private uncertainty about impossible casework.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Patient and attentive; needs a clear distinction between caring for someone professionally and choosing personal closeness.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Power 1. Case files include families whose addresses change depending on what day she visits.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_eddie_mcallister",
@@ -672,12 +903,21 @@
         "order": 3,
         "manner": 3,
         "violence": 3,
-        "voice_note": "Tells stories about his grandfather's work at Tredegar, sometimes speaking as if the old man is still showing up for shifts."
+        "voice_note": "Tells stories about his grandfather's work at Tredegar, sometimes speaking as if the old man is still showing up for shifts.",
+        "verbosity": 5,
+        "humor_frequency": 3,
+        "humor_style": "Anecdotal humor woven through work stories.",
+        "contrast_note": "Expansive reminiscence may slide between past and present without an announced transition.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Companionable and anecdotal; shared time opens vulnerability more easily than a demand for emotional labels.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 3.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_lucia_santos",
@@ -694,12 +934,21 @@
         "order": 2,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Holds opening nights where attendees include longtime residents who moved away decades ago. She introduces them by name."
+        "voice_note": "Holds opening nights where attendees include longtime residents who moved away decades ago. She introduces them by name.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Welcoming, inclusive social wit.",
+        "contrast_note": "An easy public welcome carries deliberate recognition of particular people.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Welcoming and expressive; makes invitations clear and leaves room for another person to set the pace.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Wild 2.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_tommy_barrett",
@@ -716,12 +965,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Interviews residents about companies that officially closed before the interview subjects were born. Takes it in stride."
+        "voice_note": "Interviews residents about companies that officially closed before the interview subjects were born. Takes it in stride.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Conversational asides and curiosity-led wit.",
+        "contrast_note": "Friendly talk gives other people room to supply the story.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Conversational and curious; prefers reciprocal stories and mutual interest over a rehearsed approach.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_becca_chen",
@@ -738,12 +996,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Earnest connector. Finds tools and work clothes from previous generations of neighborhood maintenance during her clean-up days."
+        "voice_note": "Earnest connector. Finds tools and work clothes from previous generations of neighborhood maintenance during her clean-up days.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Earnest, lightly self-deprecating enthusiasm.",
+        "contrast_note": "Enthusiasm stays practical when there is volunteer work to organize.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Earnest and playful; readily reciprocates clear interest but may cover uncertainty with too much explanation.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Wild 1.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_pete_kowalski",
@@ -760,12 +1027,21 @@
         "order": 4,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Patrols streets that sometimes show different house numbers. Adjusts his rounds based on which version of the neighborhood he's experiencing."
+        "voice_note": "Patrols streets that sometimes show different house numbers. Adjusts his rounds based on which version of the neighborhood he's experiencing.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Grumbling, practical understatement.",
+        "contrast_note": "Familiarity with neighbors coexists with suspicion of changes to their streets.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Slow-building familiarity; care appears in reliable acts, while personal trust takes longer than friendly recognition.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 2.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_petra_holt",
@@ -785,15 +1061,22 @@
         "order": 4,
         "manner": 4,
         "violence": 3,
-        "voice_note": "Controlled-still. Dressed like hospital administration. Says exactly what she means. Does not ask follow-up questions."
+        "voice_note": "Controlled-still. Dressed like hospital administration. Says exactly what she means. Does not ask follow-up questions.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; keep the delivery literal and controlled.",
+        "contrast_note": "Institutional presentation coexists with increasingly direct pressure around the warehouse.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Private and direct; sets clear limits and does not use professional polish as an invitation.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Status: Power (faction unknown). Principals named principals unknown — board connection to a rival Power faction. Did not ask what the name was when offered.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260831192022",
+      "updated_by_session": "operator:personality-expansion",
       "note": "Deadline for specimen retrieval has passed; principals likely becoming more active.",
-      "revision": 6,
-      "last_updated": "2026-08-31"
+      "revision": 7,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_nadia_vasek",
@@ -812,12 +1095,21 @@
         "order": 1,
         "manner": 2,
         "violence": 2,
-        "voice_note": "Not rude — just nineteen and terrified and trying not to burn something down. The bluntness is a side effect of the fear."
+        "voice_note": "Not rude — just nineteen and terrified and trying not to burn something down. The bluntness is a side effect of the fear.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; fear must not automatically become sarcasm.",
+        "contrast_note": "Bluntness comes from fear, not a settled contempt for others.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Cautious and easily overwhelmed; prefers clear invitations, room to decline, and a pace she can control.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Status: Power 0 (ward). Awakened 8 months ago. Scar on left palm from Declan Morrow. Timing of Awakening matches Maren Voss's death.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_maren_voss",
@@ -838,12 +1130,21 @@
         "order": 2,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Pressed a memory into river clay knowing she was going to die. Whatever she was, she was not afraid of what came next."
+        "voice_note": "Pressed a memory into river clay knowing she was going to die. Whatever she was, she was not afraid of what came next.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; surviving evidence does not establish a comic voice.",
+        "contrast_note": "Keep portrayal limited to established memories and records; courage at death does not establish everyday sociability.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Deliberate and sincere; private trust matters more than public display. Applies only to adult past-life portrayal, not invented present-day encounters.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Deceased. Obituary: six lines, no cause of death. One of three ritual practitioners in the warehouse. The Collector killed her. Relation to Ingrid Voss unknown but surname matches.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_the_collector",
@@ -862,13 +1163,22 @@
         "order": 4,
         "manner": 1,
         "violence": 2,
-        "voice_note": "Leave blank until nature is established. Entity, not person. It catalogs. It does not speak."
+        "voice_note": "Leave blank until nature is established. Entity, not person. It catalogs. It does not speak.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Not applicable to its established non-speaking portrayal.",
+        "contrast_note": "Do not anthropomorphize cataloguing into jokes, affection, or social small talk.",
+        "flirtatiousness": null,
+        "intimacy_style": null,
+        "calibration_note": "Existing voice_note explicitly says it does not speak. Verbosity is a compatibility score, not permission to give it dialogue. Flirtation and intimacy are not applicable."
       },
       "last_seen": "",
       "notes": "City-wide. Identity and nature unknown. Noticed the warehouse. May have noticed an Acanthus.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical",
-      "location_status": "unestablished"
+      "updated_by_session": "operator:personality-expansion",
+      "location_status": "unestablished",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_dad_grey",
@@ -885,13 +1195,22 @@
         "order": 3,
         "manner": 3,
         "violence": 3,
-        "voice_note": "TBD — establish in play."
+        "voice_note": "TBD — establish in play.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Dry deflection when a question becomes too personal.",
+        "contrast_note": "Practical and attentive about immediate needs, evasive about his own history.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Guarded and indirect; tends to offer practical help before acknowledging what is personally at stake.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Full name unknown. Location unknown. History with a hunter's kidney unresolved.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical",
-      "location_status": "unknown"
+      "updated_by_session": "operator:personality-expansion",
+      "location_status": "unknown",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_father_dominic",
@@ -908,12 +1227,21 @@
         "order": 5,
         "manner": 4,
         "violence": 5,
-        "voice_note": "The calls always come at the worst possible moment. This is not entirely coincidental."
+        "voice_note": "The calls always come at the worst possible moment. This is not entirely coincidental.",
+        "verbosity": 3,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; inconvenient timing is not necessarily an intentional joke.",
+        "contrast_note": "Genuine devotion coexists with suspicion of his junior priest.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Measured and boundary-conscious; prefers plain discussion of expectations over suggestive ambiguity.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 1.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_hannibal",
@@ -930,13 +1258,22 @@
         "order": 1,
         "manner": 2,
         "violence": 2,
-        "voice_note": "Tolerates. That is the word. The gap between tolerate and welcome is wider than most people survive crossing."
+        "voice_note": "Tolerates. That is the word. The gap between tolerate and welcome is wider than most people survive crossing.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; do not soften threats with friendly banter.",
+        "contrast_note": "Tolerance of this hunter remains distinct from welcome or affection.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Strongly private; requires mutual respect for space, and tolerance alone never means interest.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Full name unknown. Location unknown.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical",
-      "location_status": "mobile"
+      "updated_by_session": "operator:personality-expansion",
+      "location_status": "mobile",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_marcus_teen",
@@ -953,12 +1290,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Trusts completely. That is his danger."
+        "voice_note": "Trusts completely. That is his danger.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Tentative, lightly self-deprecating jokes around trusted peers.",
+        "contrast_note": "Open and talkative with trusted people; more hesitant with unfamiliar authority.",
+        "flirtatiousness": null,
+        "intimacy_style": null,
+        "calibration_note": "Authored nonsexual social profile consistent with the canonical age of 16 and trust in his priest. No sexual characterization; flirtation and intimacy are not applicable."
       },
       "last_seen": "",
       "notes": "Last name unknown. No father. Gravitating toward wrong people.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_sandra_grey",
@@ -975,13 +1321,22 @@
         "order": 4,
         "manner": 4,
         "violence": 5,
-        "voice_note": "TBD — establish in play."
+        "voice_note": "TBD — establish in play.",
+        "verbosity": 4,
+        "humor_frequency": 3,
+        "humor_style": "Familiar teasing, sharper when an answer dodges the point.",
+        "contrast_note": "Easy conversation can turn unusually direct when familiarity is used to avoid an explanation.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Direct and familiar once comfortable; insists that past closeness does not settle present expectations.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "He always picks up.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical",
-      "location_status": "unknown"
+      "updated_by_session": "operator:personality-expansion",
+      "location_status": "unknown",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_the_general",
@@ -1000,15 +1355,22 @@
         "order": 3,
         "manner": 3,
         "violence": 1,
-        "voice_note": "TBD — name and full description to be established in play."
+        "voice_note": "TBD — name and full description to be established in play.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Sparse, pointed understatement; does not explain the joke.",
+        "contrast_note": "Economical in private exchanges, more ceremonial when publicly asserting control.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Self-possessed and selective; expressing interest is easier than admitting emotional dependence.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Name TBD. A hunter holds damaging information; using it to dangle coup bait. Situation is a standoff.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260903192123",
+      "updated_by_session": "operator:personality-expansion",
       "current_location_id": "loc_the_exchange",
-      "revision": 2,
-      "last_updated": "2026-09-03"
+      "revision": 3,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_vera_medium",
@@ -1027,12 +1389,21 @@
         "order": 3,
         "manner": 4,
         "violence": 5,
-        "voice_note": "Not afraid. She's been leaving candles and water for a ghost she can see clearly. She is waiting."
+        "voice_note": "Not afraid. She's been leaving candles and water for a ghost she can see clearly. She is waiting.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; preserve calm rather than adding cryptic jokes.",
+        "contrast_note": "Patience and offerings coexist with withholding what she knows.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Patient and quiet; allows silence and gradual disclosure without treating mystery as an invitation.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Last name unknown. She knows something she is not telling the ghost yet.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_roz_czerny",
@@ -1051,16 +1422,23 @@
         "order": 2,
         "manner": 4,
         "violence": 3,
-        "voice_note": "Professionally smooth. Personally done. Every favor she does is a small step closer to the retirement she knows isn't coming."
+        "voice_note": "Professionally smooth. Personally done. Every favor she does is a small step closer to the retirement she knows isn't coming.",
+        "verbosity": 2,
+        "humor_frequency": 3,
+        "humor_style": "Dry, weary understatement; gallows humor only when the situation supports it.",
+        "contrast_note": "Professional smoothness coexists with visible fatigue about more obligations.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Dry, candid, and unsentimental; practical companionship comes more easily than promises or grand declarations.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "61 years old. Smokes cheap cigars. Drives a van with a broken heater. Knows what dies in this city and how.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260828215208",
+      "updated_by_session": "operator:personality-expansion",
       "location_status": "mobile",
       "note": "Unsettled by Vael's reappearance; cautious about the network's interest.",
-      "revision": 1,
-      "last_updated": "2026-08-28"
+      "revision": 2,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_linh_pham",
@@ -1080,12 +1458,21 @@
         "order": 3,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Knew Johan's name without being told it. Said what she needed to say before the end."
+        "voice_note": "Knew Johan's name without being told it. Said what she needed to say before the end.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; do not invent a comic personality from final words.",
+        "contrast_note": "Her final directness belongs to that recorded situation; other aspects remain unestablished.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Thoughtful and direct in private; values being understood without prolonged performance. Applies only to adult past-life portrayal.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_001",
       "notes": "Deceased. Knew the people who sent the operative were 'cleaning house' and they were the mop. Carried Voss's sealed field research case.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_henrik_vael",
@@ -1104,16 +1491,23 @@
         "order": 3,
         "manner": 3,
         "violence": 2,
-        "voice_note": "Talks like a man choosing each word carefully because he's already said too much once and paid for it."
+        "voice_note": "Talks like a man choosing each word carefully because he's already said too much once and paid for it.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare, guarded understatement.",
+        "contrast_note": "Shared operational history can permit specificity without removing his caution about disclosure.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Guarded and slow to trust; reliable shared action matters more than verbal reassurance.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
       "notes": "Status: Mortalis 0. Location known only to an operative. Surfaced in Richmond three weeks ago. Ran with an operative in Europe before the mission that went wrong.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260903192123",
+      "updated_by_session": "operator:personality-expansion",
       "current_location_id": "loc_the_exchange",
       "note": "Recently seen in Downtown; the hunter network is aware of his presence.",
-      "revision": 2,
-      "last_updated": "2026-09-03"
+      "revision": 3,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_dara_shin",
@@ -1130,12 +1524,21 @@
         "order": 4,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Minimal words. Reads the room before speaking. Asks questions by waiting. Warmth is functional — she invests in what's worth investing in. No performance."
+        "voice_note": "Minimal words. Reads the room before speaking. Asks questions by waiting. Warmth is functional — she invests in what's worth investing in. No performance.",
+        "verbosity": 1,
+        "humor_frequency": 1,
+        "humor_style": "Rare, restrained humor; no banter merely because trust increases.",
+        "contrast_note": "Investment in Jacob appears through attention and action while her speech stays spare.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Quiet and deliberate; expresses interest through chosen attention and actions, not increased chatter. Mentorship and pack obligations are not attraction.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_000",
       "notes": "Irraka auspice. Patient, territorial, reads people like exits. Vouched for Jacob with Night Circle.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_ray_cutler",
@@ -1152,7 +1555,14 @@
         "order": 3,
         "manner": 4,
         "violence": 2,
-        "voice_note": "Talks like a man who has said hard things before and doesn't need to raise his voice. Uses your name. Notices when you're not okay and doesn't push."
+        "voice_note": "Talks like a man who has said hard things before and doesn't need to raise his voice. Uses your name. Notices when you're not okay and doesn't push.",
+        "verbosity": 2,
+        "humor_frequency": 2,
+        "humor_style": "Gentle, understated teasing only where familiarity supports it.",
+        "contrast_note": "Quiet care can include hard truths without pushing for a confession.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Steady and undemanding; patient company and honest words matter more than display. Care for a trainee remains professional or familial.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_000",
       "notes": "Anchor. Knows something is different about Jacob. Does not ask questions.",
@@ -1161,7 +1571,9 @@
       ],
       "home_location_id": "loc_cutlers_gym",
       "current_location_id": "loc_cutlers_gym",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_carla_boone",
@@ -1178,12 +1590,21 @@
         "order": 4,
         "manner": 5,
         "violence": 1,
-        "voice_note": "Warm but not soft. Will say the hard thing with a steady voice. Loves Jacob completely and is running out of explanations for him."
+        "voice_note": "Warm but not soft. Will say the hard thing with a steady voice. Loves Jacob completely and is running out of explanations for him.",
+        "verbosity": 3,
+        "humor_frequency": 2,
+        "humor_style": "Familiar, affectionate teasing only when the family context supports it.",
+        "contrast_note": "Love for Jacob coexists with frustration at explanations that no longer convince her.",
+        "flirtatiousness": 3,
+        "intimacy_style": "Warm and direct; values emotional honesty and consistency. Her affection for Jacob is strictly familial.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_000",
       "notes": "Anchor. Has a son, Marcus, age 7. Does not know about the supernatural world.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_tommy_greer",
@@ -1200,12 +1621,21 @@
         "order": 2,
         "manner": 3,
         "violence": 3,
-        "voice_note": "Jokes when nervous, which is often. Talks around the point. Has seen enough to be scared but too much pride to show it clean."
+        "voice_note": "Jokes when nervous, which is often. Talks around the point. Has seen enough to be scared but too much pride to show it clean.",
+        "verbosity": 4,
+        "humor_frequency": 4,
+        "humor_style": "Nervous deflection; jokes skirt what actually frightened him.",
+        "contrast_note": "Loose talk and jokes increase around fear while pride resists admitting it cleanly.",
+        "flirtatiousness": 4,
+        "intimacy_style": "Playful but nervous; jokes can delay an honest admission, so clear reciprocal interest matters.",
+        "calibration_note": "Nervous joking and talking around the point are already explicit in the voice_note. Other social traits are authored starting tendencies, not new past events or current attraction; established relationships and adult consent remain separate."
       },
       "last_seen": "session_000",
       "notes": "Saw something near the canal he can't explain. Jacob told him to forget it. He hasn't.",
       "associated_location_ids": [],
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     },
     {
       "id": "npc_priest",
@@ -1222,7 +1652,14 @@
         "order": 3,
         "manner": 3,
         "violence": 4,
-        "voice_note": "Economical. Pours a drink and lets you talk yourself into the corner. Never confirms what he knows — makes you earn it. Comfortable with silence and with consequences."
+        "voice_note": "Economical. Pours a drink and lets you talk yourself into the corner. Never confirms what he knows — makes you earn it. Comfortable with silence and with consequences.",
+        "verbosity": 1,
+        "humor_frequency": 2,
+        "humor_style": "Sparse, dry understatement.",
+        "contrast_note": "Hospitality and silence can make someone comfortable enough to reveal what he wants to know.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Private and understated; steady companionship and respectful silence precede vulnerable disclosure.",
+        "calibration_note": "Authored starting social profile, calibrated to the existing voice, role, notes, and recorded interactions. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Existing specific history takes precedence. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "session_000",
       "notes": "Runs The Nail, Idlewood Ave. Jacob has back-door access. Information broker. Former military background.",
@@ -1231,7 +1668,9 @@
       ],
       "home_location_id": "loc_the_nail",
       "current_location_id": "loc_the_nail",
-      "updated_by_session": "canonical"
+      "updated_by_session": "operator:personality-expansion",
+      "revision": 1,
+      "last_updated": "2026-09-14"
     }
   ]
 }

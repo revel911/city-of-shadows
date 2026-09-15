@@ -113,6 +113,22 @@ NPC-memory promises, grievances, boundaries, beliefs, and key moments also merge
 additively. Conflicting stale changes to disposition, trust, fear, respect, or
 relationship state become reviewable conflicts rather than overwrites.
 
+NPC personality keeps moral/order/manner/violence (1-5), with manner representing
+warmth independently of verbosity (1-5). humor_frequency (1-5), humor_style,
+contrast_note, calibration_note, and voice_note complete the social profile.
+flirtatiousness is null or 1-5; intimacy_style is null or a nonempty description.
+Null means unestablished/not applicable, never an inferred preference or identity.
+See the [NPC Personality Engine](../mc-reference/npc-personality-engine.md).
+
+New NPCs must supply the complete profile. Applicable adult social traits may
+be authored before first contact; calibration_note distinguishes this from
+recorded history. Minors and non-person entities keep intimate traits null. Existing `changes.personality` patches
+merge individual fields and require expected_revision. Stale personality edits
+become conflicts; unrelated status/location updates preserve the entire profile.
+The validator and runtime share one personality schema. Opening context and later
+hydration include the social behavior guidance; legacy records receive conservative
+read-time fallbacks. Migration changes increment NPC and shared-world revisions.
+
 NPC-memory scores are deliberately small and bounded: disposition is -5 through
 +5, while trust, fear, and respect are 0 through 5. Formal Debts remain exclusively
 in `game/debts.json`. Historical romance never constitutes current consent.

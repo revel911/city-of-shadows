@@ -51,7 +51,7 @@ test('NPC behavior cards preserve voice while producing distinct speech and conf
   });
 
   assert.equal(dangerous.voice_note, 'Commands, never bargains.');
-  assert.match(dangerous.dialogue_register, /One to three words/);
+  assert.match(dangerous.dialogue_register, /Hostile or dismissive/);
   assert.match(dangerous.conflict_instinct, /attacks early/);
   assert.match(conciliatory.dialogue_register, /Warm and disarming/);
   assert.match(conciliatory.conflict_instinct, /off the table/);
@@ -92,7 +92,7 @@ test('NPC hydration carries the complete authoritative record and binding behavi
 
   assert.match(result, /NPC PERSONALITY HYDRATION/);
   assert.match(result, /Answers questions with prices/);
-  assert.match(result, /Short transactional sentences/);
+  assert.match(result, /Transactional and blunt/);
   assert.match(result, /follows through quickly/);
   assert.match(result, /NPC–CHARACTER MEMORY FOR THIS CHARACTER ONLY/);
   assert.match(result, /Wary ally/);

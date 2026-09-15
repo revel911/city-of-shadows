@@ -922,7 +922,7 @@ function buildCloseRetryPrompt(missing) {
     '- <sheet>: copy the exact H1/H2 structure and section order from character-sheet-template.md; use TBD for unfinished values',
     '- <state_patch>: JSON with character_name, stats (Blood/Heart/Mind/Spirit), harm: 0, corrupt: 0, xp: 0, advances, circle_ratings, circle_status, safety, gear, circle_marks, effects, playbook_state, notes. Omit bot-owned active_arc_ids and last_session.',
     '- <handoff>: full first handoff',
-    '- <npc_patch>: every NPC introduced during onboarding, with full personality-engine scores',
+    '- <npc_patch>: every NPC introduced during onboarding, with the complete personality profile (core scores, voice_note, verbosity, humor_frequency, humor_style, contrast_note, calibration_note, flirtatiousness and intimacy_style; author adult starting traits; use null for inapplicable exceptions)',
     '- <relationship_patch>: JSON array of public character ties established during onboarding; use [] if none are established yet',
     '- <debt_patch>: JSON array of public Debts established during onboarding; use [] if none are established yet',
     '',

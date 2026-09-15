@@ -211,7 +211,7 @@ Apply rules:
 - 1–2 NPCs who owe the character
 - 2–3 Anchors (people / objects / places)
 
-**Capture:** Debts list (both directions), Anchors list. **Every new NPC introduced here must go into the close-block `<npc_patch>` with full personality-engine scores** (see `npc-personality-engine.md`).
+**Capture:** Debts list (both directions), Anchors list. **Every new NPC introduced here must go into the close-block `<npc_patch>` with a complete personality-engine profile: core scores, voice_note, verbosity, humor frequency/style, contextual contrast, calibration note, and authored adult flirtation/intimacy traits (null when inapplicable)** (see `npc-personality-engine.md`).
 
 **Where it goes:** Sheet `DEBTS` and `ANCHORS` sections; `<npc_patch>` block at close.
 
@@ -270,7 +270,7 @@ When the player confirms — or at any earlier trigger below — emit a `<save_o
   Copy the exact H1/H2 headings and section order from `character-sheet-template.md`.
   Never rename or omit a section; write `TBD` inside unfinished sections.
 - `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `circle_marks`, `gear`, `effects`, `playbook_state`, and `notes`. Omit bot-owned `active_arc_ids` and `last_session`. (Safety is **not** part of state.json — it lives on the player profile.)
-- `<npc_patch>` — every NPC introduced in Phase 9, with full personality-engine scores
+- `<npc_patch>` — every NPC introduced in Phase 9, with a complete personality-engine profile: core scores, voice_note, verbosity, humor frequency/style, contextual contrast, calibration note, and authored adult flirtation/intimacy traits (null when inapplicable)
 - `<location_patch>` — any new named place established during onboarding
 - `<relationship_patch>` — required JSON array of public Anchors, family, mentor, employer, and location ties (`[]` only for an early save before ties exist)
 - `<debt_patch>` — required JSON array and authoritative ledger for public Debts (`[]` only for an early save before Debts exist)

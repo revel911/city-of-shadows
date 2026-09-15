@@ -26,6 +26,7 @@ between players, the model, and the GitHub-backed world. Start with
 | [mechanics.js](handlers/mechanics.js) | Deterministic mechanics | Fast trigger gate, roll requests, modifiers, result records, state reconciliation, Debts, arcs, and session audit |
 | [move-adjudicator.js](handlers/move-adjudicator.js) | Semantic move router | Structured triggers, non-triggers, requirements, active character moves, adjudication prompt, and validated decisions |
 | [narrative-state.js](handlers/narrative-state.js) | Narrative-state rules | Move-resolution contracts, investigation depth, mysteries, character knowledge, scene pressure, arc pressure, and City Keeper selection |
+| [npc-personality.js](handlers/npc-personality.js) | NPC personality contract | Shared validation, legacy fallbacks, and social behavior instructions |
 | [world-state.js](handlers/world-state.js) | World retrieval and merging | Canonical/relevant context, entity compaction, relevance routing, patches, conflicts, interactions, and NPC memory |
 | [scene-director.js](handlers/scene-director.js) | Scene director | Hidden scene-mode selection, variation, player-agency safeguards, and broad non-sensitive playstyle signals |
 | [character-sheet.js](handlers/character-sheet.js) | Sheet contract | Canonical section order, validation, and live-state rendering |

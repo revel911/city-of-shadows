@@ -10,6 +10,13 @@ platform behaves, not API compatibility.
 ## [Unreleased]
 
 ### Changed
+- NPC personality now separates warmth from verbosity and adds humor style/frequency,
+  contextual contrasts, evidence notes, and optional flirtation/intimacy traits.
+  All 51 NPCs retain their existing voices and histories with authored starting
+  social profiles, including adult flirtation/intimacy and explicit inapplicable
+  exceptions. Opening and hydration prompts use the traits; new NPC saves
+  require complete profiles and existing edits preserve omitted fields with
+  revision conflict protection.
 - Bot, narrator evaluations, and City Keeper now default to DeepSeek-V4.1-Flash
   (`deepseek-flash`) with thinking explicitly disabled to preserve response
   budgets and temperature controls. `DEEPSEEK_MODEL` overrides the bot model;

@@ -1,3 +1,4 @@
+import { personalityProblems, personalityWithDefaults, socialBehavior } from './npc-personality.js';
 import { readJSON } from './github.js';
 import {
   deriveKnowledgeRecords,
@@ -42,10 +43,10 @@ export function npcBehaviorCard(npc) {
     5: 'Believes in hierarchy, jurisdiction, and process.',
   };
   const manner = {
-    1: 'One to three words; hostile or dismissive; posture carries the rest.',
-    2: 'Short transactional sentences; no cushioning or pleasantries.',
-    3: 'Professional cadence; says enough to complete the transaction.',
-    4: 'Conversational; uses names and may volunteer useful context.',
+    1: 'Hostile or dismissive; makes no effort to cushion the interaction.',
+    2: 'Transactional and blunt; little warmth or cushioning.',
+    3: 'Civil and professional; neutral warmth.',
+    4: 'Warm and attentive; uses names and notices people.',
     5: 'Warm and disarming without becoming automatically verbose.',
   };
   const violence = {
@@ -62,6 +63,7 @@ export function npcBehaviorCard(npc) {
     institutional_instinct: order[p.order] || 'Uncalibrated relationship to systems.',
     dialogue_register: manner[p.manner] || 'Uncalibrated dialogue register.',
     conflict_instinct: violence[p.violence] || 'Uncalibrated conflict instinct.',
+    ...socialBehavior(p),
   };
 }
 
@@ -564,6 +566,29 @@ export function mergeCanonicalPatches(doc, patches, {
     }
     const existing = index >= 0 ? list[index] : null;
     const currentRevision = Number.isInteger(existing?.revision) ? existing.revision : 0;
+    if (collection === 'npcs' && (!existing || Object.hasOwn(patch, 'personality'))) {
+      if (existing && expectedRevision === null) {
+        rejected.push(`${patch.id} personality changes require expected_revision`);
+        continue;
+      }
+      const incoming = patch.personality;
+      if (!incoming || typeof incoming !== 'object' || Array.isArray(incoming)) {
+        rejected.push(`${patch.id} requires a personality object`);
+        continue;
+      }
+      const personality = existing
+        ? { ...personalityWithDefaults(existing.personality), ...incoming }
+        : incoming;
+      const problems = personalityProblems(personality);
+      if (problems.length) {
+        rejected.push(`${patch.id}.personality: ${problems.join('; ')}`);
+        continue;
+      }
+      // Merge nested personality fields without erasing established traits.
+      // The existing revision conflict path still protects the whole profile.
+      patch.personality = personality;
+    }
+
     // Mystery clue/revelation maps are keyed collections. A close block may
     // safely emit only the clue it discovered without deleting every other
     // clue from the canonical map.

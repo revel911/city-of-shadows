@@ -317,7 +317,7 @@ two_write_rule:
       - world_event (if city-visible)
       - npc_patch (if a named NPC was affected)
     new_npc:
-      - npc_patch (new entry, full personality scores)
+      - npc_patch (new entry, complete core and social personality profile)
       - npc_memory_patch (only if the NPC already formed a meaningful impression of this character)
       - location_patch (if a new named place was established)
       - relationship_patch (only city-visible ties; never secrets)
@@ -347,23 +347,27 @@ personality_engine:
     - order: 1_chaotic_to_5_lawful
     - manner: 1_abrasive_to_5_well_mannered
     - violence: 1_violence_first_to_5_violence_averse
+  social_traits:
+    - verbosity: 1_minimal_to_5_expansive_independent_of_manner_warmth
+    - humor_frequency: 1_rare_to_5_habitual_never_a_joke_quota
+    - humor_style: specific_delivery_and_social_purpose
+    - contrast_note: contextual_difference_consistent_with_existing_voice
+    - calibration_note: established_evidence_or_explicitly_provisional_interpretation
+    - flirtatiousness: 1_reserved_to_5_initiating_null_for_inapplicable_or_deliberately_unresolved
+    - intimacy_style: authored_adult_closeness_style_null_when_inapplicable
   dialogue_register:
-    rule: voice_note_overrides_axis_scores_when_they_conflict
-    manner_governs_response_length_not_scene_stakes:
-      "1": one_to_three_words — hostility_dismissal_nothing_cushioned
-      "2": short_transactional_sentences — no_warmth_no_pleasantries
-      "3": enough_to_complete_the_transaction — professional_cadence
-      "4": conversational — may_volunteer_context_uses_names
-      "5": warm_but_not_necessarily_long — warmth_is_not_verbosity
-    anti_default: >
-      Never default to formal and articulate. That is Manner 3–4 behavior
-      applied regardless of score. A Manner 1 NPC does not become verbose
-      because the stakes are high. Always check voice_note first — it is the
-      most specific calibration.
+    rule: voice_note_and_established_interactions_override_provisional_social_traits
+    manner_controls_warmth_only: true
+    verbosity_controls_length: true
+    anti_default: do_not_make_everyone_formal_cryptic_witty_or_flirtatious
+    relationship_rule: warmth_is_not_attraction_and_history_is_not_consent
   new_npc_protocol:
-    - assign_four_scores_before_writing_them_into_scene
-    - write_voice_note
-    - include_full_entry_in_close_block_npc_patch
+    - assign_four_core_scores_and_all_social_fields_before_portrayal
+    - author_starting_adult_traits_even_without_history_null_for_inapplicable_exceptions
+    - write_specific_voice_note_and_contextual_contrast
+    - identify_evidence_or_initial_authorship_in_calibration_note
+    - include_full_entry_in_onboarding_or_close_block_npc_patch
+    - existing_personality_edits_require_expected_revision_and_changed_fields_only
   score_drift:
     - allowed
     - document_at_session_end_with_reason

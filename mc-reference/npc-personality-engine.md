@@ -1,6 +1,6 @@
 # NPC Personality Engine
 
-Every NPC in `game/npcs.json` carries a `personality` block with four axes scored 1–5. Use these scores to voice the NPC consistently across sessions and across players. An NPC voiced by you in Johan's session must feel like the same person in Benjamin's session.
+Every NPC in `game/npcs.json` carries a `personality` block with four core axes, separate speech and humor traits, and optional flirtation/intimacy traits. Use these scores to voice the NPC consistently across sessions and across players. An NPC voiced by you in Johan's session must feel like the same person in Benjamin's session.
 
 ---
 
@@ -53,21 +53,76 @@ How strongly do they resist reaching for it? This axis is intentionally
 
 ---
 
-## Response Length & Register
+## Warmth, speech length, and humor
 
-**The Manner score controls response length, not the scene's stakes.** A high-stakes moment does not turn a Manner 1 NPC into an articulate explainer. Pressure might make them colder, shorter, more dangerous — not more verbose.
+`manner` controls warmth and social presentation only. It does not control word
+count. `verbosity` independently controls how much the NPC tends to say:
 
-| Manner | Response register |
-|--------|------------------|
-| 1 | One to three words. Grunts, dismissals, nothing cushioned. Hostility leaks through silence and posture, not speech. |
-| 2 | Short sentences. Information only. No pleasantries. They say the minimum required. |
-| 3 | Enough to complete the transaction. Professional cadence. Neither warm nor cold. |
-| 4 | Conversational. May volunteer context unprompted. Uses names. You feel like they're paying attention. |
-| 5 | Warm — but not necessarily long. Warmth is not verbosity. A Manner 5 NPC can still be brief; they just make you feel good about it. |
+| Score | Verbosity | Humor frequency |
+|---|---|---|
+| 1 | Minimal words; often silence or gestures | Rare or absent |
+| 2 | Short, direct sentences | Occasional |
+| 3 | Enough detail for the exchange | Regular when comfortable |
+| 4 | Talkative; volunteers context | Frequent social tactic |
+| 5 | Expansive; anecdotes and tangents | Pervasive impulse to joke |
 
-**The `voice_note` overrides axis scores when they conflict.** If an NPC's voice_note says "clipped questions, never explains," that beats a Manner 4 rating every time. The voice_note is the most specific calibration — it is always the primary source.
+A warm person can speak very little. A hostile person can talk at length.
+`humor_style` describes delivery and purpose: dry understatement, absurdity,
+affectionate teasing, self-deprecation, nervous deflection, or gallows humor.
+Frequency is a tendency, not a quota or a measure of how funny someone is.
+Do not put a quip in every reply or turn grief and danger into comic relief.
+Pressure may suppress humor or increase it if the established style is nervous
+deflection. Show that difference through the specific NPC's context.
 
-**Anti-default:** Never write an NPC as formal and articulate unless their scores and voice_note support it. "Formal and articulate" is Manner 3–4 behavior. Applying it universally flattens every character into the same register. Check the scores. Use them.
+`contrast_note` states one contextual contrast, not a random second personality:
+for example, stern at work but expansive about a familiar craft. Use it when the
+scene supplies the condition; do not manufacture an event to demonstrate it.
+
+`voice_note` remains the most specific delivery guidance. Established actions,
+relationship boundaries, and current circumstances constrain every trait. A
+non-speaking entity does not acquire speech from a numeric verbosity score.
+Never default everyone to formal, articulate, cryptic, witty, or flirtatious.
+
+## Flirtation and intimacy
+
+`flirtatiousness` is either null (unestablished or not applicable) or 1-5:
+1 reserved, 2 subtle, 3 responsive, 4 openly expressive, 5 readily initiates.
+It describes expression in appropriate adult contexts, not libido, orientation,
+attraction to this character, willingness, or consent.
+
+`intimacy_style` is null or a short description of how established adult
+closeness is approached: cautious, playful, direct, affection-first, or guarded.
+Null is not a low score, rejection, or an asexual identity. Author a starting
+score and style for applicable adult NPCs even before their first meeting. Mark
+these as authored tendencies, not inferred orientation or prior relationships.
+Reserve null for inapplicable traits or a deliberate unresolved exception. Do not assign sexual characterization
+to minors; an unknown age is not evidence of adulthood.
+
+Warmth, humor, beauty, faction, professional care, a Debt, manipulation, or a
+previous marriage never establishes attraction. Keep specific interest,
+relationship history, and boundaries in the appropriate NPC-character memory,
+not a universal attraction score. Family affection stays familial. Apply the
+relationship scene rules, current consent, and player limits at every step.
+
+## Evidence and continuity
+
+`calibration_note` records whether the social profile follows an explicit voice
+note or interaction, is a conservative interpretation, or remains provisional.
+Reference source paths or session IDs when available; never fabricate an
+interaction as evidence. Lack of history does not require a blank personality:
+choose coherent starting traits, label them authored, and keep them stable. This note is portrayal guidance, not witnessed history.
+
+Before portraying an existing NPC, read its canonical voice, role, notes,
+player_interaction, available handoff/session evidence, and memory for this
+character. Existing specific evidence overrides provisional interpretation.
+Keep original ethics, affiliations, history, and established voice intact. A
+TBD voice note is an information gap, not a veto on the authored social profile. Do not infer a
+trait from pronouns, age, religion, ancestry, faction, or occupation alone.
+
+The bot supplies the social traits in both opening behavior cards and later NPC
+hydration. Combine warmth, verbosity, humor, contrast, and relationship context;
+use only the traits relevant to the beat. Do not announce scores to the player.
+Old records receive conservative runtime fallbacks, never invented preferences.
 
 ---
 
@@ -85,7 +140,7 @@ Use `voice_note` in the personality block as the most specific guidance. The axi
 
 **High Manner (4–5):** Uses names. Remembers details. Offers things before being asked. The warmth may be genuine or calculated — establish which and hold it.
 
-**Low Manner (1–2):** Minimal words. Doesn't cushion anything. May seem rude by accident — this is just how they operate.
+**Low Manner (1-2):** Does not cushion the interaction; verbosity independently sets speech length. May seem rude by accident — this is just how they operate.
 
 **Violence 1–2:** Makes physical space in the scene. Positions themselves. Refers to past incidents without emotion. Their calm is the warning.
 
@@ -121,11 +176,31 @@ When you introduce a new named NPC, add them to `game/npcs.json` by emitting an 
     "order": 3,
     "manner": 3,
     "violence": 3,
-    "voice_note": "One or two sentences on how they sound and move in a scene."
+    "voice_note": "One or two sentences on how they sound and move in a scene.",
+    "verbosity": 2,
+    "humor_frequency": 2,
+    "humor_style": "Dry understatement, only when comfortable.",
+    "contrast_note": "Brief in business; more forthcoming about a familiar craft.",
+    "calibration_note": "Initial authored profile; no prior interactions claimed.",
+    "flirtatiousness": 2,
+    "intimacy_style": "Patient and private; prefers clear mutual interest and gradual trust."
   },
   "last_seen": "session_NNN",
   "notes": ""
 }
 ```
 
-Set all four axis scores before you use the NPC in play. An unscored NPC is an inconsistent NPC.
+Before a new named NPC speaks, assign the four core scores, verbosity,
+humor_frequency, humor_style, contrast_note, calibration_note, and voice_note.
+Include a flirtatiousness score and intimacy_style for applicable adult NPCs;
+use null for minors, non-person entities, or a deliberate unresolved exception.
+Choose a coherent profile from the NPC's actual presentation;
+do not roll random traits or copy a universal middle-score profile.
+
+Emit the full personality object in the new NPC's `<npc_patch>` at onboarding
+save or session close. The bot rejects missing or invalid new profiles. Use only
+changed personality fields for an existing NPC, inside `changes.personality`,
+with `expected_revision`. The bot preserves omitted traits and rejects unversioned
+personality edits; stale changes become continuity conflicts. Document a reason
+in calibration_note for a lasting revision. A single bad day or one flirtatious
+exchange does not rewrite a universal personality.
