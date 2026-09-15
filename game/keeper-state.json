@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f9ba5400d4037d3c417be12704b500dd2ac9fb21",
-  "last_successful_run": "2026-09-14T16:35:35.767Z",
+  "last_processed_commit": "c99236a50430626adc0870cde6a1c63fae2d8c5b",
+  "last_successful_run": "2026-09-15T10:33:51.865Z",
   "last_city_turn": "2026-09-13",
   "arc_cooldowns": {},
   "runs": [
@@ -853,6 +853,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity, relationship, memory, debt, arc, mystery, or hub changes are warranted. All public-safe projection data already matches existing canonical state. No conflicts pending.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260915103351",
+      "phase": "publish",
+      "completed_at": "2026-09-15T10:33:51.865Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
