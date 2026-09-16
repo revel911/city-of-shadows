@@ -1,11 +1,9 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "0dd1661119ce1464004890f9883ead7fd9214b0b",
-  "last_successful_run": "2026-09-16T10:33:34.264Z",
+  "last_processed_commit": "efdba300d3598d2645f719164eed9fb14b539d69",
+  "last_successful_run": "2026-09-16T16:35:29.507Z",
   "last_city_turn": "2026-09-15",
-  "arc_cooldowns": {
-    "arc-008": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -901,6 +899,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260916163529",
+      "phase": "reconcile",
+      "completed_at": "2026-09-16T16:35:29.507Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence was supplied, so no entity changes are warranted. The projection's public events and arc summaries are already consistent with the listed NPC, location, and arc revisions. No conflicts are pending. No world advance is performed in this phase.",
       "dry_run": false
     }
   ],
