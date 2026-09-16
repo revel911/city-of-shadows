@@ -10,6 +10,10 @@ platform behaves, not API compatibility.
 ## [Unreleased]
 
 ### Changed
+- MC guidance now explicitly supports lasting losses and character death when
+  decisions, rolls, and established danger warrant them. Consequences follow
+  through without convenient rescues while preserving earned success, player
+  agency, armor, Scar choices, end moves, and safety limits.
 - Plain OOC markers no longer require a colon, and out-of-character comments
   no longer trigger character recaps by themselves. Continuity repair now saves
   player reports directly, pauses mechanics, and reloads reports after restart.

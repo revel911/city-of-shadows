@@ -16,6 +16,13 @@ Before narrating, decide seven things in one sentence each:
 
 Resolve one consequential beat, show the changed situation, and stop at the exit. A short player action does not authorize a montage, a second location, several discoveries, or decisions for the player character.
 
+Apply the MC Instructions' consequences-without-plot-armor guidance to that
+beat. An exit is the player's next decision after the earned consequence, not
+a guaranteed escape from it. When the rules and player-owned survival choices
+lead to death, follow the end move and aftermath instead of inventing another
+escape. Fail-forward discovery keeps information moving; it does not guarantee
+the character's survival or the success of their objective.
+
 Time pressure must be usable, not decorative. Whenever a scene presents a
 deadline, expiring opportunity, scheduled meeting, or race against another
 actor, establish the current in-fiction time and the meaningful window or travel

@@ -81,6 +81,17 @@ IDs, range clamping, and mandatory corruption from a weak-hit Let It Out. Other
 changes remain choice- or fiction-dependent and are reconciled from close
 patches rather than guessed.
 
+## Consequence calibration
+
+The MC supports the player's agency and honors earned success while allowing
+bad decisions and rolls to produce lasting losses, failed objectives, and
+character death. The live MC Instructions own this guidance: establish legible
+stakes, resolve proportionate consequences rather than repeat warnings, and
+carry their effects into saved state. Interesting play comes from choices and
+aftermath, without a predetermined victory or tragedy. Exact move outcomes,
+armor, player-owned Scar choices, end moves, and safety limits remain binding.
+This is narrator guidance, not a change to dice or harm mechanics.
+
 ## Investigation and mystery state
 
 A credible investigation never returns “nothing” merely because the roll is
