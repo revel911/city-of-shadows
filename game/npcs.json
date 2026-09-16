@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-15",
+  "last_updated": "2026-09-16",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -537,7 +537,7 @@
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise",
+      "role": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -556,9 +556,9 @@
       "last_seen": "",
       "notes": "Status: Mortalis 1. Has been steering tourists away from certain Canal Walk sections 'under maintenance' for years.",
       "associated_location_ids": [],
-      "updated_by_session": "operator:personality-expansion",
-      "revision": 2,
-      "last_updated": "2026-09-14"
+      "updated_by_session": "keeper_city_turn_20260916192253",
+      "revision": 3,
+      "last_updated": "2026-09-16"
     },
     {
       "id": "npc_dr_olave",

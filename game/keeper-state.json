@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "efdba300d3598d2645f719164eed9fb14b539d69",
-  "last_successful_run": "2026-09-16T16:35:29.507Z",
-  "last_city_turn": "2026-09-15",
-  "arc_cooldowns": {},
+  "last_processed_commit": "8548f0809c2f573dfb53a67f9531932f4b5b7b5c",
+  "last_successful_run": "2026-09-16T19:22:53.037Z",
+  "last_city_turn": "2026-09-16",
+  "arc_cooldowns": {
+    "arc-008": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -910,6 +912,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence was supplied, so no entity changes are warranted. The projection's public events and arc summaries are already consistent with the listed NPC, location, and arc revisions. No conflicts are pending. No world advance is performed in this phase.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260916192253",
+      "phase": "city-turn",
+      "completed_at": "2026-09-16T19:22:53.037Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_riley_hoffman",
+        "arc-008",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-008 (The Unknown Text Sender). The unknown sender's pattern of contact continues to move through ordinary institutional channels in Downtown and Shockoe Bottom, drawing quiet attention from an existing connected NPC without revealing identity. No other arcs advanced.",
       "dry_run": false
     }
   ],

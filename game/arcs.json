@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-15",
+  "last_updated": "2026-09-16",
   "arcs": [
     {
       "id": "arc-001",
@@ -208,7 +208,7 @@
       "id": "arc-008",
       "title": "The Unknown Text Sender",
       "type": "slow-burn",
-      "escalation": 2,
+      "escalation": 3,
       "status": "active",
       "hub_ids": [
         "hub_downtown",
@@ -216,19 +216,19 @@
       ],
       "npc_ids": [],
       "character_ids": [],
-      "summary": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact has now surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. Still unidentified and unresponded to.",
+      "summary": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them. Still unidentified and unresponded to.",
       "mc_notes": "Pending response. Identity fully unknown — could be ally, enemy, or something else. They demonstrated surveillance capability and knowledge of the network.",
       "agenda": "Bring The Unknown Text Sender into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 2,
+        "current": 3,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-09-15",
+      "revision": 3,
+      "last_updated": "2026-09-16",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260915192259"
+      "last_touched_session": "keeper_city_turn_20260916192253"
     },
     {
       "id": "arc-009",

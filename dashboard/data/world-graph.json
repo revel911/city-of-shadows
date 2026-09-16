@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-15",
+  "as_of": "2026-09-16",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1264,9 +1264,9 @@
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise",
+        "subtype": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network.",
         "portrait": "",
-        "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise"
+        "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network."
       },
       "position": {
         "x": 1138,
@@ -1999,8 +1999,8 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
-        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact has now surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. Still unidentified and unresponded to."
+        "escalation": 3,
+        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them. Still unidentified and unresponded to."
       },
       "position": {
         "x": 780,

@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-16] Unlogged Messages Continue Through Downtown Night Routines
+
+**Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter
+
+The unknown party who warned an operative they were "watching the wrong door" appears to be widening its pattern of contact. Unlogged messages and unusual deliveries have been noted passing through the ordinary night-shift routines of Downtown venues and the Canal Walk, none of them claimed by any known network. Night security and venue staff who work those hours have begun to notice the discrepancies, though no one has come forward publicly. The sender still demonstrates knowledge of an operative's name and position, and continues to follow established routines rather than the original night alone. No response has been made. The Consilium has not commented.
+
 ## [2026-09-15] Unlogged Contact Surfaces Through Familiar Channels
 
 **Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter
