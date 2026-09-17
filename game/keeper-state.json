@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "2e17e2f0f310562cc5688257ca77dca107a016a4",
-  "last_successful_run": "2026-09-17T16:35:55.587Z",
-  "last_city_turn": "2026-09-16",
-  "arc_cooldowns": {},
+  "last_processed_commit": "97aac297a32fd57e6f28f585c30cb384607dd117",
+  "last_successful_run": "2026-09-17T19:22:43.191Z",
+  "last_city_turn": "2026-09-17",
+  "arc_cooldowns": {
+    "arc-008": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -947,6 +949,23 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no session evidence supplied, so no entity, memory, relationship, debt, arc, mystery, or hub changes are warranted. All existing public records already reflect the established events. No conflicts pending.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260917192243",
+      "phase": "city-turn",
+      "completed_at": "2026-09-17T19:22:43.191Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_riley_hoffman",
+        "npc_the_general",
+        "loc_the_exchange",
+        "arc-008",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-008 (The Unknown Text Sender). The sender's pattern of unlogged contact continues to move through established night-shift routines in Downtown and Shockoe Bottom, drawing quiet notice from venue and security staff. No player characters are moved or spoken for; no secrets revealed.",
       "dry_run": false
     }
   ],

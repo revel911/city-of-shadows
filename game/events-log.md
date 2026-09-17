@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-17] Night-Shift Staff Begin Comparing Notes on Unlogged Traffic
+
+**Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter / Night
+
+The pattern of unlogged messages and deliveries moving through Downtown night-shift routines has begun to draw quiet, informal attention from the people who work those hours. Canal Walk night security and venue staff have reportedly started comparing what they saw on shift against official logs, finding discrepancies no known network has claimed. The unknown party who warned an operative they were "watching the wrong door" still demonstrates knowledge of that operative's name and position, and continues to follow established routines rather than the original night alone. No response has been made. The General's tightening grip on Downtown night venues has added pressure on night-shift staff to account for traffic that does not match any known network. The Consilium has not commented.
+
 ## [2026-09-16] Unlogged Messages Continue Through Downtown Night Routines
 
 **Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter

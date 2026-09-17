@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-16",
+  "as_of": "2026-09-17",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -467,7 +467,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "Night Venues",
-        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere."
+        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records."
       },
       "position": {
         "x": 1059,
@@ -1264,9 +1264,9 @@
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network.",
+        "subtype": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network, and has started quietly cross-checking the Canal Walk's own night logs against what he actually saw on shift.",
         "portrait": "",
-        "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network."
+        "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network, and has started quietly cross-checking the Canal Walk's own night logs against what he actually saw on shift."
       },
       "position": {
         "x": 1138,
@@ -1689,9 +1689,9 @@
         "hub_id": "hub_downtown",
         "faction": "Night",
         "status": "active",
-        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues.",
+        "subtype": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues, now including quiet pressure on night-shift staff to account for unlogged traffic moving through his venues.",
         "portrait": "",
-        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues."
+        "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues, now including quiet pressure on night-shift staff to account for unlogged traffic moving through his venues."
       },
       "position": {
         "x": 279,
@@ -1999,8 +1999,8 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 3,
-        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them. Still unidentified and unresponded to."
+        "escalation": 4,
+        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them, and night-shift staff have begun quietly comparing notes. Still unidentified and unresponded to."
       },
       "position": {
         "x": 780,

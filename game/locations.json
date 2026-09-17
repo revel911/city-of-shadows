@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-16",
+  "last_updated": "2026-09-17",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -326,12 +326,12 @@
       "controller_ids": [],
       "controller_note": "",
       "status": "active",
-      "description": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere.",
+      "description": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-09-03",
-      "revision": 2,
-      "updated_by_session": "keeper_city_turn_20260903192123"
+      "last_updated": "2026-09-17",
+      "revision": 3,
+      "updated_by_session": "keeper_city_turn_20260917192243"
     },
     {
       "id": "loc_the_club_at_101",
