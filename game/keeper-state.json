@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "97aac297a32fd57e6f28f585c30cb384607dd117",
-  "last_successful_run": "2026-09-17T19:22:43.191Z",
+  "last_processed_commit": "1827cad793cefaac211e7f3e3124dd58f4a4529b",
+  "last_successful_run": "2026-09-18T10:32:47.142Z",
   "last_city_turn": "2026-09-17",
   "arc_cooldowns": {
-    "arc-008": 2
+    "arc-008": 1
   },
   "runs": [
     {
@@ -966,6 +966,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-008 (The Unknown Text Sender). The sender's pattern of unlogged contact continues to move through established night-shift routines in Downtown and Shockoe Bottom, drawing quiet notice from venue and security staff. No player characters are moved or spoken for; no secrets revealed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260918103247",
+      "phase": "publish",
+      "completed_at": "2026-09-18T10:32:47.142Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
