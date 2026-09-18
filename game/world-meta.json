@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "revision": 26,
+  "revision": 27,
   "last_player_update": null,
-  "last_keeper_run": "2026-09-18T16:34:55.416Z",
-  "last_commit": "b7744c88f176421a3090d373e5c44592ef3fc6f5",
+  "last_keeper_run": "2026-09-18T19:22:16.689Z",
+  "last_commit": "c14701c17dc08e74484ca829e1c41dedb599143b",
   "maintenance_status": "open"
 }

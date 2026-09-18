@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "b7744c88f176421a3090d373e5c44592ef3fc6f5",
-  "last_successful_run": "2026-09-18T16:34:55.416Z",
-  "last_city_turn": "2026-09-17",
-  "arc_cooldowns": {},
+  "last_processed_commit": "c14701c17dc08e74484ca829e1c41dedb599143b",
+  "last_successful_run": "2026-09-18T19:22:16.689Z",
+  "last_city_turn": "2026-09-18",
+  "arc_cooldowns": {
+    "arc-009": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -986,6 +988,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence was supplied, so no entity, relationship, memory, debt, arc, mystery, or hub changes are warranted. The projection is internally consistent with the public event log; the only notable discrepancy (envelope retrieval attribution) is already recorded as a continuity correction in the event log and reflected in arc-002 and npc_petra_holt. No changes made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260918192216",
+      "phase": "city-turn",
+      "completed_at": "2026-09-18T19:22:16.689Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_vera_medium",
+        "loc_the_exchange",
+        "arc-009",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-009 (The Ghost of a Dead Vampire). The monster-poaching market's interest in the ghost sharpens as Downtown's night-shift traffic anomalies complicate the picture; no player characters are touched, and no secrets are revealed.",
       "dry_run": false
     }
   ],

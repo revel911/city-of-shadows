@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-17",
+  "last_updated": "2026-09-18",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -1382,7 +1382,7 @@
         "arc-014"
       ],
       "status": "active",
-      "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has",
+      "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -1401,9 +1401,9 @@
       "last_seen": "",
       "notes": "Last name unknown. She knows something she is not telling the ghost yet.",
       "associated_location_ids": [],
-      "updated_by_session": "operator:personality-expansion",
-      "revision": 1,
-      "last_updated": "2026-09-14"
+      "updated_by_session": "keeper_city_turn_20260918192216",
+      "revision": 2,
+      "last_updated": "2026-09-18"
     },
     {
       "id": "npc_roz_czerny",

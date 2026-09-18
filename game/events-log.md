@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-18] Medium's Questions About a Ghost Draw Quiet Attention Downtown
+
+**Hubs:** Downtown | **Circles:** Night
+
+A mortal medium known to leave offerings for a nameless ghost has been quietly asking after the ghost's story among Downtown night contacts. Her questions have not gone unnoticed: parties who track the monster-poaching market have reportedly taken interest, given the market's standing mark on a ghost of a dead vampire — something that shouldn't exist twice. No one has come forward publicly, and no connection between the two has been confirmed. The night-shift traffic anomalies through Downtown venues continue, unclaimed by any known network. The Consilium has not commented.
+
 ## [2026-09-17] Night-Shift Staff Begin Comparing Notes on Unlogged Traffic
 
 **Hubs:** Downtown / Shockoe Bottom | **Circles:** Hunter / Night

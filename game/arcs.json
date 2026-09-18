@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-17",
+  "last_updated": "2026-09-18",
   "arcs": [
     {
       "id": "arc-001",
@@ -234,24 +234,26 @@
       "id": "arc-009",
       "title": "The Ghost of a Dead Vampire",
       "type": "personal",
-      "escalation": 1,
+      "escalation": 2,
       "status": "active",
       "hub_ids": [
         "hub_downtown"
       ],
       "npc_ids": [],
       "character_ids": [],
-      "summary": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already.",
+      "summary": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market — bringing the mark and the mistaken identity closer together without yet naming either.",
       "mc_notes": "The hunter is a wanted man in the mortal system. A nameless ghost may be mistaken for this mark — manifested wrong near the hunter once. Market window closes if something else finds it first. The General's coup leverage situation creates a volatile backdrop.",
       "agenda": "Bring The Ghost of a Dead Vampire into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "complicate identity, need, loyalty, or obligation",
       "clock": {
-        "current": 1,
+        "current": 2,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 1,
-      "last_updated": "2026-08-26"
+      "revision": 2,
+      "last_updated": "2026-09-18",
+      "ignored_sessions": 0,
+      "last_touched_session": "keeper_city_turn_20260918192216"
     },
     {
       "id": "arc-010",
