@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "2178c0379ec1b7d9acd52602b657fb1c306456fe",
-  "last_successful_run": "2026-09-19T16:33:16.948Z",
-  "last_city_turn": "2026-09-18",
-  "arc_cooldowns": {},
+  "last_processed_commit": "20b3e8ce4741741ba0849bd5a6ff6797d99d3086",
+  "last_successful_run": "2026-09-19T19:19:29.088Z",
+  "last_city_turn": "2026-09-19",
+  "arc_cooldowns": {
+    "arc-009": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -1024,6 +1026,20 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity patches are warranted. All public records already reflect the established state. City-turn candidate arc-013 is present but this is the reconcile phase only; no world advance is made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260919191929",
+      "phase": "city-turn",
+      "completed_at": "2026-09-19T19:19:29.088Z",
+      "changed": true,
+      "touched_ids": [
+        "arc-009",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-009 (The Ghost of a Dead Vampire). The monster-poaching market's standing mark on a ghost of a dead vampire draws closer to the mistaken-identity ghost in Downtown, as parties tracking the market take quiet interest in the medium's questions. No NPCs are harmed, moved, or spoken for; no secrets revealed; no mystery created or resolved.",
       "dry_run": false
     }
   ],

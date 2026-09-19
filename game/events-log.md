@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-19] Poaching-Market Interest Sharpens Around a Downtown Ghost
+
+**Hubs:** Downtown | **Circles:** Night
+
+Parties who track the monster-poaching market have reportedly begun quietly confirming the rumored presence of a standing mark in Downtown — the ghost of a dead vampire, something that shouldn't exist twice. Their interest follows the mortal medium who has been asking after a nameless ghost's story among Downtown night contacts, and who has already been mistaken for a connection once. No contact has been made publicly, and no link between the mark and the nameless ghost has been confirmed. The night-shift traffic anomalies through Downtown venues continue, unclaimed by any known network. The Consilium has not commented.
+
 ## [2026-09-18] Medium's Questions About a Ghost Draw Quiet Attention Downtown
 
 **Hubs:** Downtown | **Circles:** Night
