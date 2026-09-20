@@ -21,6 +21,7 @@ between players, the model, and the GitHub-backed world. Start with
 
 | Link | Title | Information within |
 |---|---|---|
+| [lifecycle.js](handlers/lifecycle.js) | Player lifecycle | Explicit save/end routing, draft readiness, creation guidance, and retry-safe close writes |
 | [session.js](handlers/session.js) | Session orchestrator | Session start/turn/roll/close lifecycle, locks, checkpoints, parsing, reconciliation, persistence, and Discord posting |
 | [mc.js](handlers/mc.js) | Model and prompt layer | Stable reference loading, selective playbook/extension retrieval, opening context, compaction, generation, and move adjudication calls |
 | [mechanics.js](handlers/mechanics.js) | Deterministic mechanics | Fast trigger gate, roll requests, modifiers, result records, state reconciliation, Debts, arcs, and session audit |

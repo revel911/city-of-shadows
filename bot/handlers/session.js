@@ -1,3 +1,6 @@
+import { randomUUID } from 'node:crypto';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
+import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, retryableCloseWrites, persistencePayloadProblems } from './lifecycle.js';
 import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
 import { adjudicateMove, generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
 import {
@@ -11,6 +14,7 @@ import { readProfile, updateProfile } from './profile.js';
 import {
   buildSceneDirectorContext,
   isCharacterRecapRequest,
+  isNarrativeFollowThrough,
   isOutOfCharacterMessage,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
@@ -72,6 +76,8 @@ export async function startSession(thread, player) {
     openingInteractions,
     worldMeta,
     mechanicsSheet,
+    savedProgress,
+    savedCheckpoint,
   ] = await Promise.all([
     buildOpeningContext(player),
     player.discord_id ? readProfile(player.discord_id) : null,
@@ -79,23 +85,27 @@ export async function startSession(thread, player) {
     player.id !== '__new__' ? readJSON('game/interactions.json') : null,
     readJSON('game/world-meta.json'),
     player.id !== '__new__' ? readFile(`players/${player.id}/sheet.md`) : null,
+    player.id !== '__new__' ? readJSON(`players/${player.id}/creation.json`) : null,
+    player.id !== '__new__' ? readJSON(`players/${player.id}/checkpoint.json`) : null,
   ]);
   const initialPlaystyleSignals = normalizePlaystyleSignals(profile?.inferred_playstyle);
   const session = {
     player,
+    draftId: player.id === '__new__' ? `character-${randomUUID().slice(0, 8)}` : player.id,
     threadId: thread.id,
     messages: [{ role: 'user', content: opening }],
     startedAt: Date.now(),
-    rolls: [],
-    pendingRoll: null,
-    pendingManualRoll: null,
+    rolls: savedCheckpoint?.active && Array.isArray(savedCheckpoint.rolls) ? savedCheckpoint.rolls : [],
+    pendingRoll: savedCheckpoint?.pending_roll || null,
+    pendingManualRoll: savedCheckpoint?.pending_manual_roll || null,
     mechanicsGateTriggers: 0,
     mechanicsAdjudications: 0,
     turnsWithoutRoll: 0,
+    profileReady: Boolean(profile),
     mechanicsDepth: profile?.mechanics_depth || 3,
     mechanicsSheet: mechanicsSheet || '',
     rulesProfile: {
-      isNew: player.id === '__new__',
+      isNew: player.id === '__new__' || savedProgress?.status === 'draft' || player.creation_status === 'draft',
       playbook: openingState?.playbook || '',
       wod_extension: openingState?.wod_extension || '',
     },
@@ -107,13 +117,15 @@ export async function startSession(thread, player) {
     playstyleBaseline: initialPlaystyleSignals,
     playstyleSignals: initialPlaystyleSignals,
   };
+  if (session.rulesProfile.isNew) session.messages[0].content += '\n\n' + creationTurnContext(session);
   sessions.set(thread.id, session);
+  await thread.send(sessionControls(session));
 
   await lock(session, async () => {
     const notice = await thread.send('— *The city is gathering your opening scene. This can take a minute…* —');
     await thread.sendTyping();
     try {
-      const response = await generateSafeResponse(session, { opening: true });
+      const response = await generateSafeResponse(session, { opening: true, maxVisibleChars: session.rulesProfile.isNew ? 700 : OPENING_MAX_CHARS });
       session.messages.push({ role: 'assistant', content: response });
       await postMCResponse(thread, response, session);
       if (typeof notice?.delete === 'function') notice.delete().catch(() => {});
@@ -217,6 +229,7 @@ export function responseSafetyProblems(response, {
     problems.push('out-of-character response attempts to advance or persist state');
   }
   const visible = visibleResponseText(text);
+  if (/I (?:can(?:not|'t)|don(?:not|'t)) (?:write|decide|invent) (?:the |what(?:'s| is) )?contents|you (?:decide|tell me) what(?:'s| is) inside/i.test(visible)) problems.push('MC refuses responsibility for an observable discovery');
   if (oocMode && playerContent) {
     if (normalizedEchoText(visible) === normalizedEchoText(playerContent)) {
       problems.push('out-of-character response merely repeats the player');
@@ -247,7 +260,7 @@ async function generateSafeResponse(session, {
 } = {}) {
   let response = await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
-    : (oocMode ? { maxTokens: OOC_MAX_TOKENS, temperature: 0.4 } : {}));
+    : (oocMode ? { maxTokens: OOC_MAX_TOKENS, temperature: 0.4 } : session.rulesProfile?.isNew ? { maxTokens: 6500 } : {}));
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
     const problems = responseSafetyProblems(response, {
       opening,
@@ -257,6 +270,10 @@ async function generateSafeResponse(session, {
       mechanicsExpectation,
       mechanicsDepth: session.mechanicsDepth,
     });
+    if (!opening && !oocMode && session.profileReady && session.rulesProfile?.isNew && !parseSaveOnboardingBlock(response)) {
+      problems.push('creation progress must include a complete save_onboarding block before the visible question');
+    }
+    if (opening && !session.rulesProfile?.isNew && !/^\*\*Where we left off\*\*/i.test(visibleResponseText(response))) problems.push('returning opening must begin with **Where we left off**');
     if (!problems.length) return response;
     console.warn(`[generation-safety] rejected response: ${problems.join('; ')}`);
     if (attempt === GENERATION_RETRIES) {
@@ -273,15 +290,16 @@ async function generateSafeResponse(session, {
       content: [
         '[SYSTEM — RESPONSE CORRECTION]',
         `The previous response was rejected: ${problems.join('; ')}.`,
-        `Re-emit only the player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters.`,
+        `Keep player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters. Preserve required hidden save and mechanics blocks.`,
+        session.rulesProfile?.isNew && !opening && !oocMode ? creationTurnContext(session) : '',
         opening
           ? (session.rulesProfile?.isNew
-              ? 'Establish the location, immediate pressure, and one actionable hook, then end with a direct question. If the hook has a deadline, state the current in-fiction time.'
-              : 'Preserve the required **Previously in City of Shadows...** recap, then establish the immediate pressure and one actionable hook before ending with a direct question. If the hook has a deadline, state the current in-fiction time.')
+              ? 'Continue character creation at the current stage. Ask one useful question. Do not open fictional play before the character is ready.'
+              : 'Preserve the brief **Where we left off** orientation and continue the saved beat without repeating completed actions. If the hook has a deadline, state the current in-fiction time.')
           : (oocMode
               ? (oocRecap
                   ? 'Answer the out-of-character character refresher directly in at most five compact bullets. Do not advance the scene or ask for a decision.'
-                  : 'Answer the player out of character. Do not repeat or rephrase their question. If the exact answer is absent, say so and give the closest established answer. Do not advance the fiction or character-creation phase, infer a choice, request a roll, or change state.')
+                  : 'Answer the player out of character. Do not bounce their question back. Never fabricate missing past events; consistent observable world details are the MC responsibility. Do not advance fiction or creation, infer a choice, request a roll, or change state.')
               : 'Resolve one consequential beat, then stop at the next player decision. Do not carry the character through multiple actions, locations, or discoveries.'),
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
         'Reread every sentence for missing words, duplicated words, contradictory physical details, and unclear pronouns before answering.',
@@ -303,6 +321,76 @@ async function generateSafeResponse(session, {
   throw new Error('unreachable generation safety state');
 }
 
+export function hasLiveSession(threadId) { return sessions.has(threadId); }
+
+export function sessionControls(session) {
+  const creating = session.rulesProfile?.isNew;
+  const actions = creating
+    ? [['help', 'Help me choose'], ['build', 'I know my build'], ['save', 'Save progress'], ['end', 'Finish later']]
+    : [['recap', 'Quick recap'], ['correct', 'Correct something'], ['save', 'Save progress'], ['end', 'Save & end']];
+  return { content: creating ? 'Build your character: Concept → Abilities → Connections → Review. You can save and return anytime.' : 'Continue at your own pace. Save progress keeps a recovery checkpoint; Save & end finishes this session.',
+    components: [new ActionRowBuilder().addComponents(actions.map(([action, label]) => new ButtonBuilder().setCustomId(`session:${action}`).setLabel(label).setStyle(action === 'end' ? ButtonStyle.Primary : ButtonStyle.Secondary))), ...(creating ? [new ActionRowBuilder().addComponents(new ButtonBuilder().setCustomId('session:start').setLabel('Start playing').setStyle(ButtonStyle.Primary), new ButtonBuilder().setCustomId('session:edit').setLabel('Edit a choice').setStyle(ButtonStyle.Secondary))] : [])] };
+}
+
+export async function handleSessionControl(interaction) {
+  const session = sessions.get(interaction.channelId);
+  if (!session) { await interaction.reply({ content: 'Use /play to recover this session.', ephemeral: true }); return; }
+  if (String(session.player.discord_id) !== String(interaction.user.id)) {
+    await interaction.reply({ content: 'These controls belong to the player running this session.', ephemeral: true }); return;
+  }
+  await interaction.deferUpdate();
+  const action = interaction.customId.split(':')[1];
+  if (action === 'correct') {
+    await interaction.followUp({ content: 'Type **Continuity correction:** followed by what needs fixing. Play will pause while we record it.', ephemeral: true }); return;
+  }
+  const content = { start: 'I am ready to play. Review the required choices and start playing if complete.', edit: 'OOC: I want to edit a character choice. Show me the current choices briefly and ask which to change.', save: 'save progress', end: 'save & end', recap: 'OOC: Give me a quick recap.', help: 'Help me choose a character concept.', build: 'I know my build. Let me give you the choices together.' }[action];
+  if (content) await handleMessage({ channel: interaction.channel, author: interaction.user, content, id: interaction.id });
+}
+
+async function runLifecycle(thread, session, intent) {
+  const creating = session.rulesProfile?.isNew;
+  if (session.closeAttempt) {
+    const payload = Object.entries(session.closeAttempt.payload).filter(([, value]) => value != null).map(([key, value]) => `<${key}>${value}</${key}>`).join('\n');
+    await postMCResponse(thread, `<close_session>\n${payload}\n</close_session>`, session);
+    return;
+  }
+  session.messages.push({ role: 'user', content: lifecyclePrompt(intent, session) });
+  await thread.sendTyping();
+  // A lifecycle payload needs the full generation budget and bypasses OOC/move routing.
+  for (let attempt = 0; attempt < 3; attempt += 1) {
+    const response = await generate(session, { maxTokens: 6500, temperature: 0.2 });
+    session.messages.push({ role: 'assistant', content: response });
+    if (creating) {
+      const save = parseSaveOnboardingBlock(response);
+      if (save && !missingSaveOnboardingFields(save).length && !characterSheetProblems(save.sheet).length) {
+        save.creation_status = 'draft';
+        const result = await processSaveOnboarding(thread, session, save);
+        if (result.success && intent === 'end') {
+          sessions.delete(session.threadId);
+          await thread.send('Creation paused. Use /play to continue your draft.');
+          await thread.setArchived?.(true);
+        }
+        return;
+      }
+    } else if (intent === 'save') {
+      const checkpoint = parseCheckpointBlock(response);
+      if (checkpoint) {
+        await writeCheckpoint(session, checkpoint);
+        await thread.send('Recovery checkpoint saved. Keep playing, or use Save & end to finish and record all session changes.');
+        return;
+      }
+    } else {
+      const close = parseCloseBlock(response);
+      if (close?.handoff && !validateWorldImpact(close).length && !persistencePayloadProblems(close).length) {
+        await postMCResponse(thread, response, session);
+        return;
+      }
+    }
+    session.messages.push({ role: 'user', content: 'The required save payload was missing or invalid. Repair it now. ' + lifecyclePrompt(intent, session) });
+  }
+  await thread.send('Saving could not be completed. Your session is still open. Use the save control to retry.');
+}
+
 export async function handleMessage(message) {
   const session = sessions.get(message.channel.id);
   if (!session) {
@@ -311,13 +399,17 @@ export async function handleMessage(message) {
     const ch = message.channel;
     if (ch?.isThread?.() && typeof ch.name === 'string' &&
         (ch.name.endsWith(' — session') || ch.name.endsWith(' — new character'))) {
-      try { await ch.send('Session state was lost (the bot likely restarted). Use `/play` to start a new session.'); } catch {}
+      try { await ch.send('The bot restarted. Use `/play` and choose this character to recover the saved session in this thread.'); } catch {}
     }
     return;
   }
   if (!message.content?.trim()) return;
 
   await lock(session, async () => {
+    if (session.player.discord_id && String(message.author?.id) !== String(session.player.discord_id)) return;
+    const intent = lifecycleIntent(message.content);
+    if (intent) { await runLifecycle(message.channel, session, intent); return; }
+    if (session.closeAttempt) { await message.channel.send('The previous save is incomplete. Use Save & end to retry before continuing play.'); return; }
     const priorPlayerText = session.lastPlayerText || '';
     const repairReply = await handleContinuityAction(session, message.content, {
       priorText: priorPlayerText,
@@ -437,7 +529,7 @@ export async function handleMessage(message) {
       session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
     }
     const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
-    const mechanicsActive = !oocMode && session.player.id !== '__new__';
+    const mechanicsActive = !oocMode && !session.rulesProfile?.isNew && !isNarrativeFollowThrough(message.content);
     let mechanicsExpectation = mechanicsActive
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
@@ -491,6 +583,7 @@ export async function handleMessage(message) {
       role: 'user',
       content: [
         npcHydration,
+        session.rulesProfile?.isNew && !oocMode ? creationTurnContext(session) : '',
         sceneDirection,
         mechanicsActive ? buildMoveAuditContext(session.turnsWithoutRoll) : '',
         buildMechanicsGateContext(mechanicsExpectation, session.mechanicsDepth),
@@ -700,16 +793,8 @@ async function postMCResponse(thread, response, session) {
   // scene transitions; it is stripped before Discord and stores no transcript
   // or player profile data.
   const checkpoint = parseCheckpointBlock(response);
-  if (checkpoint) {
-    response = stripCheckpointBlock(response);
-    if (session.player.id !== '__new__') {
-      try {
-        await writeCheckpoint(session, checkpoint);
-      } catch (err) {
-        console.error(`[checkpoint] write failed for ${session.player.id}: ${err.message}`);
-      }
-    }
-  }
+  if (checkpoint) response = stripCheckpointBlock(response);
+
   // 0. <save_player> — persists the *player* profile (Discord user) at the end
   //    of player-onboarding. Runs BEFORE save_onboarding because a brand-new
   //    user sometimes emits both in the same response (or back-to-back), and
@@ -793,6 +878,7 @@ async function postMCResponse(thread, response, session) {
             },
             `[player] onboarding for ${savePlayer.discord_id}`
           );
+          session.profileReady = true;
         } catch (err) {
           console.error(`<save_player> updateProfile failed: ${err.message}`);
         }
@@ -809,6 +895,8 @@ async function postMCResponse(thread, response, session) {
   const save = parseSaveOnboardingBlock(response);
   if (save) {
     const missing = missingSaveOnboardingFields(save);
+    if (save.character_id !== (session.player.id === '__new__' ? session.draftId : session.player.id)) missing.push('permanent character_id supplied by bot');
+    if (save.creation_status === 'ready' && !/\b(?:start (?:playing|play|the story)|ready to play|let'?s (?:play|start)|begin (?:play|the story))\b/i.test(session.lastPlayerText || '')) missing.push('explicit player decision to start play');
     if (save.sheet?.trim()) {
       missing.push(...characterSheetProblems(save.sheet).map(problem => `sheet ${problem}`));
     }
@@ -817,8 +905,7 @@ async function postMCResponse(thread, response, session) {
       if (retries < SAVE_ONBOARDING_MAX_RETRIES) {
         session._saveRetries = retries + 1;
         await thread.send(
-          `⚠ <save_onboarding> is missing: ${missing.join(', ')}. ` +
-          `Asking the MC to re-emit — retry ${session._saveRetries}/${SAVE_ONBOARDING_MAX_RETRIES}.`
+          'I’m repairing the character save. Your choices are still here.'
         );
         session.messages.push({ role: 'user', content: buildSaveRetryPrompt(missing) });
         await thread.sendTyping();
@@ -828,22 +915,41 @@ async function postMCResponse(thread, response, session) {
         return;
       }
       await thread.send(
-        `⚠ <save_onboarding> still incomplete after ${SAVE_ONBOARDING_MAX_RETRIES} retries ` +
-        `(still missing: ${missing.join(', ')}). Skipping the save; the close block will need to carry the data.`
+        'Your character could not be saved completely. Use Save progress to retry.'
       );
       console.error(`[save-onboarding] exhausted retries for ${session.player.name}: missing ${missing.join(', ')}`);
+      return;
     } else {
-      await thread.send('— *saving character to GitHub (this usually takes 10–20 seconds)…* —');
-      await processSaveOnboarding(thread, session, save);
+      await thread.send('Saving your character…');
+      const saved = await processSaveOnboarding(thread, session, save);
+      if (!saved.success) return;
       response = stripSaveOnboardingBlock(response);
       // Clean save fired — reset the leak retry counter so a future,
       // unrelated leak gets the full SAVE_ONBOARDING_MAX_RETRIES budget.
       session._saveLeakRetries = 0;
+      session._saveRetries = 0;
       cleanSaveFiredThisTurn = true;
     }
   }
 
+  if (checkpoint && session.player.id !== '__new__') {
+    try { await writeCheckpoint(session, checkpoint); }
+    catch (err) { console.error(`[checkpoint] write failed for ${session.player.id}: ${err.message}`); }
+  }
   const close = parseCloseBlock(response);
+  if (close && persistencePayloadProblems(close).length) {
+    console.error('[close] invalid payload', persistencePayloadProblems(close));
+    await thread.send('The save needs repair before anything can be written. Use Save & end to retry.');
+    return;
+  }
+  if (close && close.character_id && close.character_id !== session.player.id && session.player.id !== '__new__') {
+    await thread.send('The save did not match this character. Use Save & end to retry.');
+    return;
+  }
+  if (close && !close.handoff?.trim()) {
+    await thread.send('The resume point was missing. Use Save & end to retry; this thread will stay open.');
+    return;
+  }
 
   // 2. <close_session> retry guard — only for sessions still in '__new__' state
   //    (i.e., save_onboarding never fired). If save fired earlier, session.player
@@ -912,14 +1018,15 @@ async function postMCResponse(thread, response, session) {
       session._lastTurnSaveLeak = true;
     }
   }
-  for (const part of chunk(visible)) {
+  if (!close) for (const part of chunk(visible)) {
     if (part.trim()) await thread.send(part);
   }
 
   if (close) {
-    await thread.send('— *writing session close to GitHub (this usually takes 10–20 seconds)…* —');
+    await thread.send('Saving your session…');
     const result = await processSessionClose(thread, session, close);
     if (result?.success) {
+      for (const part of chunk(visible)) if (part.trim()) await thread.send(part);
       sessions.delete(session.threadId);
       if (typeof thread.setArchived === 'function') {
         thread.setArchived(true).catch(() => {});
@@ -1100,6 +1207,10 @@ async function writeCheckpoint(session, checkpoint, active = true) {
       world_revision: session.worldRevision || 0,
       updated_at: new Date().toISOString(),
       ...checkpoint,
+      thread_id: session.threadId,
+      pending_roll: session.pendingRoll || null,
+      pending_manual_roll: session.pendingManualRoll || null,
+      rolls: session.rolls || [],
     }, null, 2) + '\n',
     `[session] checkpoint for ${session.player.name}`
   );
@@ -1155,6 +1266,8 @@ export function parseSaveOnboardingBlock(text) {
     relationship_patch: grabTag(body, 'relationship_patch'),
     debt_patch:    grabTag(body, 'debt_patch'),
     character_id:     grabTag(body, 'character_id'),
+    creation_status: grabTag(body, 'creation_status'),
+    next_step: grabTag(body, 'next_step'),
   };
 }
 
@@ -1184,6 +1297,8 @@ const STRUCTURED_BARE_TAGS = [
   'world_impact',
   'world_event',
   'checkpoint',
+  'creation_status',
+  'next_step',
 ];
 
 // Step-4 orphan cleanup considers container tags too — bare opens/closes of
@@ -1535,18 +1650,22 @@ export function freshCharacterState(id) {
   };
 }
 
-// Persists a new character mid-session, before the session ends. Writes sheet,
-// state, npcs, and the arrival event (if present) and adds the character to
-// players/index.json. After this fires, session.player.id moves from '__new__'
-// to the real id, so a later <close_session> only needs the handoff. Idempotent:
-// if save_onboarding fires a second time in the same session, the second call
-// is a no-op (we already saved).
-async function processSaveOnboarding(thread, session, save) {
-  if (session._onboardingSaved) {
-    await thread.send('ℹ️ Character is already saved — ignoring duplicate <save_onboarding>.');
-    return;
+// Persist a complete draft snapshot repeatedly; completion is a separate validated transition.
+export async function processSaveOnboarding(thread, session, save) {
+  if (persistencePayloadProblems(save).length) {
+    console.error('[creation] invalid payload', persistencePayloadProblems(save));
+    await thread.send('The draft needs repair before it can be saved. Use Save progress to retry.');
+    return { success: false };
   }
-  const id = (save.character_id || '').trim();
+  if (!session.rulesProfile?.isNew) {
+    await thread.send('Character creation is already complete. Use Save progress for this session.');
+    return { success: false };
+  }
+  const id = session.player.id === '__new__' ? session.draftId : session.player.id;
+  if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(id || '') || save.character_id !== id) {
+    await thread.send('The draft could not be matched to this character. Use Save progress to retry.');
+    return { success: false };
+  }
   const stamp = new Date().toISOString().slice(0, 10);
   const publicSessionId = `${id}:session_000`;
   const writes = [];
@@ -1554,9 +1673,23 @@ async function processSaveOnboarding(thread, session, save) {
 
   let parsedStatePatch = null;
   if (save.state_patch) {
-    try { parsedStatePatch = JSON.parse(save.state_patch); }
+    try {
+      parsedStatePatch = JSON.parse(save.state_patch);
+      if (!parsedStatePatch || typeof parsedStatePatch !== 'object' || Array.isArray(parsedStatePatch)) throw new Error('expected a state object');
+      delete parsedStatePatch.safety;
+      delete parsedStatePatch.profile_patch;
+    }
     catch (e) { warnings.push(`state_patch: ${e.message}`); }
   }
+
+  const currentState = await readJSON(`players/${id}/state.json`);
+  let progress;
+  try { progress = creationProgress(save, applyPatch(currentState || {}, parsedStatePatch || {})); }
+  catch (err) { await thread.send(err.message); return { success: false }; }
+  if (warnings.length) { await thread.send('The draft could not be saved. Use Save progress to retry.'); return { success: false }; }
+
+  // Persist draft status before any fan-out so partial writes cannot masquerade as a ready character.
+  await writeFile(`players/${id}/creation.json`, JSON.stringify({ schema_version: 1, status: 'draft', next_step: progress.next_step || 'Review your character', updated_at: new Date().toISOString() }, null, 2) + '\n', `[creation] saving draft ${id}`);
 
   if (save.sheet) {
     writes.push(['sheet', writeFile(
@@ -1576,7 +1709,7 @@ async function processSaveOnboarding(thread, session, save) {
     `[onboarding] state for ${id} (${stamp})`
   )]);
 
-  if (save.npc_patch) {
+  if (save.npc_patch && JSON.parse(save.npc_patch).length) {
     try {
       const patches = JSON.parse(save.npc_patch);
       writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
@@ -1587,7 +1720,7 @@ async function processSaveOnboarding(thread, session, save) {
     } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
   }
 
-  if (save.location_patch) {
+  if (save.location_patch && JSON.parse(save.location_patch).length) {
     try {
       const patches = JSON.parse(save.location_patch);
       writes.push(['locations', updateJSON('game/locations.json', (doc) => {
@@ -1598,7 +1731,7 @@ async function processSaveOnboarding(thread, session, save) {
     } catch (e) { warnings.push(`location_patch: ${e.message}`); }
   }
 
-  if (save.relationship_patch) {
+  if (save.relationship_patch && JSON.parse(save.relationship_patch).length) {
     try {
       const patches = JSON.parse(save.relationship_patch);
       writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
@@ -1609,7 +1742,7 @@ async function processSaveOnboarding(thread, session, save) {
     } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
   }
 
-  if (save.debt_patch) {
+  if (save.debt_patch && JSON.parse(save.debt_patch).length) {
     try {
       const patches = JSON.parse(save.debt_patch);
       writes.push(['debts', updateJSON('game/debts.json', (doc) => {
@@ -1636,8 +1769,11 @@ async function processSaveOnboarding(thread, session, save) {
     const existing = list.find(p => p.id === id);
     if (existing) {
       if (ownerId && !existing.owner_id) existing.owner_id = ownerId;
+      existing.name = displayName;
+      existing.creation_status = progress.status;
+      existing.thread_id = thread.id;
     } else {
-      const entry = { id, name: displayName };
+      const entry = { id, name: displayName, creation_status: progress.status, thread_id: thread.id };
       if (ownerId) entry.owner_id = ownerId;
       list.push(entry);
     }
@@ -1673,28 +1809,28 @@ async function processSaveOnboarding(thread, session, save) {
     }
   });
 
-  // Only flip the session out of '__new__' if the roster write actually landed.
-  // Otherwise /play won't find this character next time, and we want the close
-  // block retry path to still see this as a new-character session.
-  const registered = !failNames.some(f => f.startsWith('players-index'));
-  if (registered) {
-    // Preserve discord_id — the close-session path reads it for profile_patch
-    // application, calibration firing, and character→profile linking. Dropping
-    // it here silently breaks all three for the very population they exist for
-    // (a brand-new player just finishing onboarding).
-    session.player = { ...session.player, id, name: displayName };
-    session._onboardingSaved = true;
-    // Thread launched as "<username> — new character"; now that the character
-    // has a real name, retitle it so this character's thread is distinct.
-    await renameSessionThread(thread, displayName);
+  let success = !failNames.length && !warnings.length;
+  if (success) {
+    try {
+      await writeFile(`players/${id}/creation.json`, JSON.stringify({
+        schema_version: 1, ...progress, updated_at: new Date().toISOString(),
+      }, null, 2) + '\n', `[creation] ${progress.status} for ${id}`);
+    } catch (err) { success = false; console.error('[creation]', err.message); }
   }
+  if (!success) {
+    console.error('[creation] incomplete save', { failNames, warnings });
+    await thread.send('Your character was not fully saved. This thread is still open. Use Save progress to retry.');
+    return { success: false };
+  }
+  session.player = { ...session.player, id, name: displayName, creation_status: progress.status };
+  session._onboardingSaved = true;
+  session.rulesProfile = { isNew: progress.status === 'draft', playbook: parsedStatePatch?.playbook || currentState?.playbook || '', wod_extension: parsedStatePatch?.wod_extension || currentState?.wod_extension || '' };
+  session.mechanicsSheet = save.sheet;
+  await renameSessionThread(thread, displayName);
+  if (progress.status === 'ready') await thread.send(sessionControls(session));
+  await thread.send(progress.status === 'draft' ? `Draft saved. Next: ${progress.next_step}` : `${displayName} is ready. Your character is saved.`);
+  return { success: true };
 
-  const lines = [];
-  if (okNames.length) lines.push(`✓ character saved: ${okNames.join(', ')}`);
-  if (failNames.length) lines.push(`✗ failed:\n${failNames.join('\n')}`);
-  if (warnings.length) lines.push(`⚠ ${warnings.join('; ')}`);
-  if (!lines.length) lines.push('No onboarding fields detected — nothing written.');
-  await thread.send(lines.join('\n'));
 }
 
 async function processSessionClose(thread, session, close) {
@@ -1711,11 +1847,13 @@ async function processSessionClose(thread, session, close) {
   const recordedConflicts = [];
   const worldImpact = parseWorldImpact(close) || { level: 'personal', summary: 'Missing impact declaration.', affected_ids: [] };
   const baseWorldRevision = session.worldRevision || 0;
-  const stateBeforeClose = await readJSON(`players/${id}/state.json`) || freshCharacterState(id);
+  session.closeAttempt ||= { payload: close, baseState: await readJSON(`players/${id}/state.json`) || freshCharacterState(id) };
+  const stateBeforeClose = session.closeAttempt.baseState;
+  const retry = retryableCloseWrites(session.closeAttempt, { writeFile, updateFile, updateJSON });
   const logicalSessionId = `${id}:${nextSessionId(stateBeforeClose.last_session)}`;
 
   if (close.handoff) {
-    writes.push(['handoff', writeFile(
+    writes.push(['handoff', retry.writeFile(
       `players/${id}/handoff.md`,
       close.handoff.endsWith('\n') ? close.handoff : close.handoff + '\n',
       `[session] handoff for ${session.player.name} (${stamp})`
@@ -1723,7 +1861,7 @@ async function processSessionClose(thread, session, close) {
   }
 
   if (close.sheet) {
-    writes.push(['sheet', writeFile(
+    writes.push(['sheet', retry.writeFile(
       `players/${id}/sheet.md`,
       close.sheet.endsWith('\n') ? close.sheet : close.sheet + '\n',
       `[session] sheet for ${session.player.name} (${stamp})`
@@ -1767,7 +1905,7 @@ async function processSessionClose(thread, session, close) {
   const hadActiveArcs = deriveActiveArcIds(currentArcs, id).length > 0;
   if (arcPatches.length || hadActiveArcs) {
     try {
-      await updateJSON('game/arcs.json', (doc) => {
+      await retry.updateJSON('game/arcs.json', (doc) => {
         currentArcs = reconcileArcs(doc, arcPatches, {
           characterId: id,
           sessionId: logicalSessionId,
@@ -1783,6 +1921,7 @@ async function processSessionClose(thread, session, close) {
       console.error(`[session-close] arc reconciliation failed for ${id}: ${e.message}`);
     }
   }
+  if (retry.document('game/arcs.json')) currentArcs = JSON.parse(retry.document('game/arcs.json'));
   const activeArcIds = deriveActiveArcIds(currentArcs, id);
 
   // State is always written on a real close. Session numbering, ranges,
@@ -1790,7 +1929,7 @@ async function processSessionClose(thread, session, close) {
   // are bot-owned invariants rather than model suggestions.
   let reconciledState = null;
   try {
-    await updateJSON(`players/${id}/state.json`, (current) => {
+    await retry.updateJSON(`players/${id}/state.json`, (current) => {
       const result = reconcileCharacterState(current || stateBeforeClose, parsedStatePatch, {
         characterId: id,
         activeArcIds,
@@ -1800,6 +1939,7 @@ async function processSessionClose(thread, session, close) {
       warnings.push(...result.warnings);
       return result.state;
     }, `[session] state for ${session.player.name} (${stamp})`);
+    reconciledState = JSON.parse(retry.document(`players/${id}/state.json`));
     okNames.push('state');
   } catch (e) {
     failNames.push(`state: ${e.message}`);
@@ -1808,7 +1948,7 @@ async function processSessionClose(thread, session, close) {
 
   if (close.events_append) {
     const append = close.events_append.trim();
-    writes.push(['events-log', updateFile(
+    writes.push(['events-log', retry.updateFile(
       'game/events-log.md',
       (current) => prependPublicEvent(current, append),
       `[session] events log (${stamp})`
@@ -1818,7 +1958,7 @@ async function processSessionClose(thread, session, close) {
   if (close.npc_patch) {
     try {
       const patches = JSON.parse(close.npc_patch);
-      writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
+      writes.push(['npcs', retry.updateJSON('game/npcs.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
@@ -1830,7 +1970,7 @@ async function processSessionClose(thread, session, close) {
   if (close.location_patch) {
     try {
       const patches = JSON.parse(close.location_patch);
-      writes.push(['locations', updateJSON('game/locations.json', (doc) => {
+      writes.push(['locations', retry.updateJSON('game/locations.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
         warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
@@ -1842,7 +1982,7 @@ async function processSessionClose(thread, session, close) {
   if (close.mystery_patch) {
     try {
       const patches = JSON.parse(close.mystery_patch);
-      writes.push(['mysteries', updateJSON('game/mysteries.json', (doc) => {
+      writes.push(['mysteries', retry.updateJSON('game/mysteries.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'mysteries', idPrefix: 'mystery_', sessionId: logicalSessionId, stamp });
         warnings.push(...result.rejected.map(message => `mystery_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
@@ -1856,7 +1996,7 @@ async function processSessionClose(thread, session, close) {
       const patches = JSON.parse(close.npc_memory_patch);
       const npcDocForMemory = await readJSON('game/npcs.json');
       const validNpcIds = new Set((npcDocForMemory?.npcs || []).map(npc => npc.id));
-      writes.push(['npc-character-memory', updateJSON('game/npc-character-memory.json', (doc) => {
+      writes.push(['npc-character-memory', retry.updateJSON('game/npc-character-memory.json', (doc) => {
         const result = mergeNpcCharacterMemoryPatches(doc, patches, {
           characterId: id,
           validNpcIds,
@@ -1873,7 +2013,7 @@ async function processSessionClose(thread, session, close) {
   if (close.relationship_patch) {
     try {
       const patches = JSON.parse(close.relationship_patch);
-      writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
+      writes.push(['relationships', retry.updateJSON('game/relationships.derived.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: logicalSessionId, stamp, publicOnly: true });
         warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
@@ -1885,7 +2025,7 @@ async function processSessionClose(thread, session, close) {
   if (close.debt_patch) {
     try {
       const patches = JSON.parse(close.debt_patch);
-      writes.push(['debts', updateJSON('game/debts.json', (doc) => {
+      writes.push(['debts', retry.updateJSON('game/debts.json', (doc) => {
         const result = mergeDebtPatches(doc, patches, { sessionId: logicalSessionId, stamp });
         warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
         return result.doc;
@@ -1896,7 +2036,7 @@ async function processSessionClose(thread, session, close) {
   if (close.hub_patch) {
     try {
       const patches = JSON.parse(close.hub_patch);
-      writes.push(['hub-state', updateJSON('game/hub-state.json', (doc) => {
+      writes.push(['hub-state', retry.updateJSON('game/hub-state.json', (doc) => {
         const result = mergeCanonicalPatches(doc, patches, { collection: 'hubs', idPrefix: 'hub_', sessionId: logicalSessionId, stamp });
         warnings.push(...result.rejected.map(message => `hub_patch: ${message}`));
         recordedConflicts.push(...result.conflicts);
@@ -1909,7 +2049,7 @@ async function processSessionClose(thread, session, close) {
     try {
       const operations = close.interaction_ops ? JSON.parse(close.interaction_ops) : null;
       const emitted = !operations && close.interactions_patch ? JSON.parse(close.interactions_patch) : null;
-      writes.push(['interactions', updateJSON(
+      writes.push(['interactions', retry.updateJSON(
         'game/interactions.json',
         (current) => {
           if (operations) {
@@ -1993,7 +2133,7 @@ async function processSessionClose(thread, session, close) {
 
   if (recordedConflicts.length) {
     try {
-      await updateJSON('game/conflicts.json', (current) => {
+      await retry.updateJSON('game/conflicts.json', (current) => {
         const list = Array.isArray(current?.conflicts) ? [...current.conflicts] : [];
         for (const conflict of recordedConflicts) {
           const suffix = `${logicalSessionId}_${conflict.entity_id}_${conflict.fields.join('_')}`.replace(/[^a-zA-Z0-9_]+/g, '_').toLowerCase();
@@ -2027,7 +2167,7 @@ async function processSessionClose(thread, session, close) {
   let resultingWorldRevision = session.worldRevision || 0;
   if (hasSharedTouches) {
     try {
-      await updateJSON('game/world-meta.json', (current) => {
+      await retry.updateJSON('game/world-meta.json', (current) => {
         resultingWorldRevision = (Number.isInteger(current?.revision) ? current.revision : 0) + 1;
         return {
           ...(current || {}),
@@ -2059,7 +2199,7 @@ async function processSessionClose(thread, session, close) {
       conflicts: recordedConflicts.map(item => ({ entity_id: item.entity_id, fields: item.fields })),
       warnings: [...warnings],
     };
-    await writeFile(
+    await retry.writeFile(
       `game/session-ledger/${ledgerName}.json`,
       JSON.stringify(ledger, null, 2) + '\n',
       `[session] public ledger ${logicalSessionId} (${stamp})`
@@ -2099,7 +2239,7 @@ async function processSessionClose(thread, session, close) {
       }),
     };
     try {
-      await writeFile(
+      await retry.writeFile(
         `players/${id}/sessions/${reconciledState.last_session}.json`,
         JSON.stringify(receipt, null, 2) + '\n',
         `[session] receipt for ${session.player.name} ${reconciledState.last_session} (${stamp})`
@@ -2126,12 +2266,12 @@ async function processSessionClose(thread, session, close) {
     }
   }
 
-  const lines = [];
-  if (okNames.length) lines.push(`✓ wrote: ${okNames.join(', ')}`);
-  if (failNames.length) lines.push(`✗ failed:\n${failNames.join('\n')}`);
-  if (warnings.length) lines.push(`⚠ ${warnings.join('; ')}`);
-  if (!lines.length) lines.push('No close-block fields detected — nothing written.');
-  await thread.send(lines.join('\n'));
+  if (failNames.length || warnings.length) console.error('[session-close]', { failNames, warnings });
+  await thread.send(failNames.length
+    ? 'Your session was not fully saved. This thread is still open. Use Save & end to retry.'
+    : 'Session saved. Use /play when you want to continue.');
+
+  if (failNames.length) return { success: false, failures: failNames };
 
   // Player profile follow-ups: apply any `profile_patch` carried inside the
   // close block's state_patch (already lifted out of parsedStatePatch above),

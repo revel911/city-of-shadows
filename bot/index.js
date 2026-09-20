@@ -3,7 +3,7 @@ import { Client, Collection, GatewayIntentBits, Events, Partials } from 'discord
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readdir } from 'node:fs/promises';
-import { handleMessage } from './handlers/session.js';
+import { handleMessage, handleSessionControl } from './handlers/session.js';
 import { handleSelect as handlePlaySelect, SELECT_CUSTOM_ID as PLAY_SELECT_ID } from './commands/play.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -27,11 +27,15 @@ for (const file of await readdir(commandsDir)) {
 }
 
 client.once(Events.ClientReady, c => {
-  console.log(`Ready as ${c.user.tag} — ${client.commands.size} commands loaded.`);
+  console.log(`Ready as ${c.user.tag} — ${client.commands.size} commands loaded. revision=${process.env.APP_REVISION || 'unknown'}`);
 });
 
 client.on(Events.InteractionCreate, async interaction => {
   try {
+    if (interaction.isButton() && interaction.customId.startsWith('session:')) {
+      await handleSessionControl(interaction);
+      return;
+    }
     if (interaction.isChatInputCommand()) {
       const cmd = client.commands.get(interaction.commandName);
       if (!cmd) return;

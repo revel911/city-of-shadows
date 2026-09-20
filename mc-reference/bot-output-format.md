@@ -4,7 +4,7 @@ This document tells the MC how to format its output so the bot can read it. It s
 
 The bot is a Discord client that posts your messages directly to the player. Anything you write is sent verbatim **except** the structured blocks below, which are parsed, processed, and stripped before posting:
 
-- `<save_onboarding>` — emitted **once**, during onboarding, to persist the new character before play begins.
+- `<save_onboarding>` — emitted after confirmed creation choices and on save requests; persists a resumable draft or a ready character.
 - `<close_session>` — emitted at session end to persist the handoff and final state, and to archive the thread.
 - `<roll_request>` — emitted on a move-triggering turn so `/roll` can resolve canonical dice and modifiers.
 - `<checkpoint>` — emitted during play for restart recovery; compact JSON, stripped before posting.
@@ -57,7 +57,7 @@ Use canonical IDs when known. Keep this public-safe: no transcript, Discord ID,
 player safety profile, secret MC note, or hidden relationship. A checkpoint does
 not change the shared world and does not close the session.
 
-**No code, no JSON, no schemas in player-facing turns.** Everything you write outside the `<close_session>` block is posted verbatim to the player's Discord thread. Never paste an NPC's `personality` block, an `npc_patch` entry, a `state_patch` fragment, or any other structured data into a normal turn — those belong **only** inside the close block. When introducing an NPC to the player (especially during onboarding Phase 9), describe them in prose: name, faction, where they're found, how they come across. The mechanical scoring (core axes, warmth, verbosity, humor, optional flirtation/intimacy, and voice_note) is yours alone — apply it silently in voice and behavior, and write it out only when you emit the `<npc_patch>` at close. The same applies to character sheets, state, debts, anchors: describe in prose during play; serialize only at close.
+**No code, no JSON, no schemas in player-facing turns.** Everything you write outside the `<close_session>` block is posted verbatim to the player's Discord thread. Never paste an NPC's `personality` block, an `npc_patch` entry, a `state_patch` fragment, or any other structured data into a normal turn — those belong **only** inside the close block. When introducing an NPC to the player (especially during onboarding Phase 9), describe them in prose: name, faction, where they're found, how they come across. The mechanical scoring (core axes, warmth, verbosity, humor, optional flirtation/intimacy, and voice_note) is yours alone — apply it silently in voice and behavior, and write it out only when you emit the `<npc_patch>` at close. The same applies to character sheets, state, debts, anchors: describe in prose during play; serialize only inside a save or close block.
 
 ## Save Player (first-time Discord user — emitted once per player, before any character)
 
@@ -94,9 +94,11 @@ After the bot writes `profile.json`, the same response (or the next turn) procee
 
 Character creation must be persisted to GitHub **before** the first scene begins. Emit a `<save_onboarding>` block when any of these triggers fires:
 
-1. **Onboarding completes naturally.** You finish Phase 12 (character_id confirmed) and the player confirms the character is done. Before opening Phase 13, ask the player explicitly: *"Anything else to lock in before we drop into your first scene?"* If they're satisfied, emit `<save_onboarding>`, then open the scene in the same response.
-2. **Player says "save".** Any phrasing equivalent to "save", "save my character", "commit what we have" — emit `<save_onboarding>` with whatever data is filled in. The sheet may still have TBD fields; that's fine.
-3. **Player wants to start the story early.** Phrasings like "let's just start", "I'm ready to play", "skip the rest" — emit `<save_onboarding>` first with the current state, then open the first scene. Do not start play before the save is recorded.
+1. **A creation choice is confirmed.** Save the full current sheet and confirmed state, with creation_status draft and next_step. TBD is allowed for unfinished sections. Do not repeat already-persisted world patches unless they changed.
+2. **Player says save or finish later.** Save the current draft without opening a scene or marking creation complete.
+3. **Player chooses Start playing after review.** If required choices are complete, set creation_status ready and persist before opening play. Otherwise remain a draft and ask the next required question.
+
+Use the permanent character_id supplied by the bot. Add `<creation_status>draft</creation_status>` (or ready) and `<next_step>next unanswered choice</next_step>` inside the block. The bot sends the save receipt after all writes succeed. Your visible text should acknowledge the choice, not the write: "Morgan, professional investigator. Next, let’s choose abilities." Never write "Saved", "on file", "persisted", or "session saved" as a save acknowledgement.
 
 The `<save_onboarding>` block MUST be the **first content** in your response, before any narrative. The bot extracts it and posts the trailing narrative to the thread. Putting the save block first protects the structured save from being truncated when your response is long — only the narrative tail can be lost to a length cap, and the narrative can be recreated on the next turn while a partial save cannot.
 
@@ -170,8 +172,8 @@ If you find yourself wanting to write a very long opening scene on the same turn
 
 ### When not to emit save_onboarding
 
-- Returning-character session. `<save_onboarding>` is only for the first session of a new character. Returning players use only `<close_session>`.
-- You already emitted one this session. The bot ignores duplicates.
+- Completed characters in normal play use `<close_session>`. Resumed drafts continue using `<save_onboarding>` until ready.
+- Repeat saves are expected for drafts. Update the same character ID; never create a second character when saving progress.
 
 ## Session Close
 
@@ -306,7 +308,7 @@ Any field you omit is skipped — the bot only writes fields that are present. I
 
 ### Shared-world automation fields
 
-- `<world_impact>` is required JSON with `level`, `summary`, `affected_ids`, and optional `fiction_time`. Shared impact requires a matching patch, interaction operation, or public event.
+- `<world_impact>` is required JSON. `level` must be exactly `none`, `personal`, or `shared` (never `private`). Include `summary`, `affected_ids`, and optional `fiction_time`. Shared impact requires a matching patch, interaction operation, or public event.
 - `<hub_patch>` updates mutable conditions, rumors, control, pressure, and public notes. It never rewrites foundational hub lore.
 - `<interaction_ops>` replaces full-queue output. Use `add` or `update` with an interaction object, and `consume` with an interaction ID.
 - Existing entities should use `expected_revision` plus a nested `changes` object. This prevents a stale session from silently overwriting another session.

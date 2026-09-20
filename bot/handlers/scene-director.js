@@ -110,9 +110,21 @@ export function isCharacterRecapRequest(text, priorPlayerText = '') {
 // Give players a predictable way to step outside the fiction. Direct questions
 // are treated as table talk unless the player explicitly frames them as their
 // character speaking. Explicit OOC markers also support comments with no question.
+export function isNarrativeFollowThrough(text) {
+  return /^(?:and[.?!…\s]*|go on[.!]*|continue[.!]*|what(?:'s| is) inside(?: (?:it|the envelope))?[?!.]*|it[’']?s your (?:freaking )?mystery\b[\s\S]*|(?:how|why) would i know(?: what (?:it|that) is)?[?!.]*)$/i.test(String(text || '').trim());
+}
+
+export const MC_AUTHORSHIP_CONTRACT = [
+  'The player owns their character\'s actions, words, thoughts, and decisions. The MC owns NPCs, the environment, clues, discoveries, and consequences.',
+  'Use established mystery contents when supplied; otherwise author a concrete discovery consistent with known facts. Missing unwritten world detail is not a reason to refuse or ask the player to invent your mystery.',
+  'Track object state and completed actions from recent turns. Finish the discovery owed by an already-declared action before inviting another choice. Never ask the player to open an envelope already narrated as open.',
+  'A brief continuation such as And...? asks you to finish the unresolved beat. It does not authorize new player actions. If the player challenges your refusal, briefly own the mistake and supply the missing MC contribution.',
+].join('\n');
+
 export function isOutOfCharacterMessage(text, priorPlayerText = '') {
   const current = String(text || '').trim();
   if (!current) return false;
+  if (isNarrativeFollowThrough(current)) return false;
   if (isCharacterRecapRequest(current, priorPlayerText)) return true;
   if (IN_CHARACTER_SPEECH.test(current)) return false;
   if (EXPLICIT_OOC.test(current) || OOC_WRAPPER.test(current)) return true;
@@ -135,6 +147,7 @@ function selectMode(playerText, signals) {
 }
 
 export function buildSceneDirectorContext({ playerText, priorPlayerText = '', playstyleSignals, lastAssistant = '', forceOoc = false } = {}) {
+  if (!forceOoc && isNarrativeFollowThrough(playerText)) return '[SYSTEM ? COMPLETE THE UNRESOLVED BEAT]\n' + MC_AUTHORSHIP_CONTRACT;
   if (isCharacterRecapRequest(playerText, priorPlayerText)) {
     return [
       '[SYSTEM — OUT-OF-CHARACTER CHARACTER RECAP]',
@@ -149,7 +162,7 @@ export function buildSceneDirectorContext({ playerText, priorPlayerText = '', pl
       '[SYSTEM — OUT-OF-CHARACTER PAUSE]',
       'Pause the fiction and respond to the player directly as the MC at the table.',
       'Answer the question or acknowledge the comment without advancing time, resolving an action, speaking as an NPC, introducing a hook, revealing a new fictional event, or asking “What do you do?”',
-      'Do not repeat, rephrase, or bounce the player’s question back at them. If the supplied fiction does not establish the exact answer, say that plainly and give the closest established answer.',
+      'Do not repeat, rephrase, or bounce the question back. Distinguish missing records of past events from unwritten present-world details: do not fabricate past events, but you may supply consistent observable details of the current situation. Never tell the player to invent an MC-owned mystery. For a genuine pause, explain your responsibility without advancing the scene.',
       'You may establish a harmless missing frame detail such as the current time, weather, or room layout when needed to make an existing choice usable. This clarifies the present moment; it does not advance it.',
       'Do not request a move or roll and do not change, checkpoint, or close any state.',
       'During character creation, remain on the exact current phase. Do not lock a choice, infer an answer, repeat the phase as if it advanced, or alter any previously locked choice.',
@@ -173,6 +186,7 @@ export function buildSceneDirectorContext({ playerText, priorPlayerText = '', pl
   }[mode];
   return [
     '[SYSTEM — SILENT SCENE DIRECTOR]',
+    MC_AUTHORSHIP_CONTRACT,
     `Current mode: ${mode}. The player’s current declared action always overrides historical tendency.`,
     `Observed tendencies (soft steering only): ${preferences.length ? preferences.join(', ') : 'not enough evidence yet'}.`,
     'Silently set: this scene’s agenda, one dramatic question, the player’s immediate objective from their exact words, opposing objective, obstacle, stakes, and the next decision point. Do not print this plan.',

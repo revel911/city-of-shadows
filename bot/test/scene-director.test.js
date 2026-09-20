@@ -98,6 +98,7 @@ test('short clarifications inherit OOC mode after a direct question', () => {
 
   const direction = buildSceneDirectorContext({ playerText: original });
   assert.match(direction, /Do not repeat, rephrase, or bounce/i);
-  assert.match(direction, /closest established answer/i);
+  assert.match(direction, /do not fabricate past events/i);
+  assert.match(direction, /consistent observable details/i);
   assert.match(direction, /current time/i);
 });

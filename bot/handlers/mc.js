@@ -44,6 +44,7 @@ function client() {
     _deepseek = new OpenAI({
       baseURL: 'https://api.deepseek.com',
       apiKey: process.env.DEEPSEEK_API_KEY,
+      fetch: (...args) => globalThis.fetch(...args),
     });
   }
   return _deepseek;
@@ -240,7 +241,7 @@ export async function buildOpeningContext(player) {
       profileContext,
       '',
       'This is a new character. Walk them through onboarding by following',
-      '`mc-reference/character-creation.md` phase-by-phase (already in your',
+      '`mc-reference/character-creation.md` four-stage flow (already in your',
       'context). At session close, emit the close block with the full sheet,',
       'initial state_patch, npc_patch for any NPCs introduced, and the first',
       'handoff.',
@@ -257,7 +258,7 @@ export async function buildOpeningContext(player) {
     ].join('\n');
   }
 
-  const [handoff, sheet, state, checkpoint, events, interactions, continuity] = await Promise.all([
+  const [handoff, sheet, state, checkpoint, events, interactions, continuity, creation] = await Promise.all([
     readFile(`players/${player.id}/handoff.md`),
     readFile(`players/${player.id}/sheet.md`),
     readJSON(`players/${player.id}/state.json`),
@@ -265,6 +266,7 @@ export async function buildOpeningContext(player) {
     readFile('game/events-log.md'),
     readJSON('game/interactions.json'),
     readJSON(`players/${player.id}/continuity.json`),
+    readJSON(`players/${player.id}/creation.json`),
   ]);
   const worldContext = await buildRelevantWorldContext({
     characterId: player.id,
@@ -273,15 +275,25 @@ export async function buildOpeningContext(player) {
   });
   const interactionEcho = selectInteractionEcho(interactions, player.id);
 
+  if (creation?.status === 'draft' || player.creation_status === 'draft') {
+    return [
+      `Resume character creation: ${player.name} (id: ${player.id}).`, profileContext,
+      'Continue from the next unanswered choice. Do not replay onboarding, re-ask confirmed choices, or begin fictional play. Explain the current stage in one sentence.',
+      '--- SAVED CREATION PROGRESS ---', JSON.stringify(creation || { status: 'draft' }),
+      '--- CHARACTER SHEET ---', sheet || '(none)',
+      '--- STATE ---', JSON.stringify(state || {}), worldContext,
+    ].join('\n\n');
+  }
+
   return [
     `Returning player: ${player.name} (id: ${player.id}).`,
     profileContext,
     '',
-    'Read the documents below, then open with a brief returning-character recap before continuing the scene.',
+    'Read the documents below, orient the player briefly, then continue the unresolved beat.',
     '',
     '--- RETURNING-CHARACTER OPENING CONTRACT ---',
-    'Start the player-facing response with **Previously in City of Shadows...** followed by one or two short paragraphs (700 characters maximum combined).',
-    'Cover, when the records support it: what has recently been happening; the character\'s present state of mind; their current or last-known location; and their most recent meaningful NPC interactions.',
+    'Start with **Where we left off** and at most two factual sentences: current location, immediate situation, and outstanding decision. A full recap is optional through Quick recap.',
+    'Preserve the exact physical state of objects and completed actions. If an envelope is already open, supply the discovery instead of asking the player to open it again.',
     'Apply saved continuity corrections to older records first, then use the handoff and active checkpoint for recent events and location. Use state, sheet, and character-specific NPC memory as supporting sources.',
     'Do not invent missing history, emotions, locations, or meetings. If an emotion is not explicit, describe the pressure the character is under instead of declaring how they feel.',
     'Do not infer that a canonical NPC employs, funds, contacts, trains, or knows this character merely because that NPC appears in the world directory or a city event. A character-specific relationship must be supported by the handoff, sheet, checkpoint, Debt ledger, or NPC memory.',
@@ -315,7 +327,7 @@ export async function buildOpeningContext(player) {
     '',
     worldContext,
     '',
-    'Give the returning-character recap, then begin the scene.',
+    'Orient briefly and continue from the saved stop point. Do not introduce a replacement hook or resolve a pending roll.',
   ].join('\n');
 }
 

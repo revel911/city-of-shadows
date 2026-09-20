@@ -77,6 +77,7 @@ must reuse the canonical ID shown in the opening world index.
 | `players/<id>/handoff.md` | Bot/MC | Full replacement at session close |
 | `players/<id>/state.json` | Bot/MC | Partial mechanical merge |
 | `players/<id>/sheet.md` | Bot/MC | Full replacement when changed |
+| `players/<id>/creation.json` | Bot | Creation status (`draft` or `ready`), next unanswered choice, and last save time; never raw chat or player safety |
 | `players/<id>/checkpoint.json` | Bot/MC | Public-safe interrupted-session recovery; retired on successful close |
 | `players/<id>/sessions/session_NNN.json` | Bot | Append-only public-safe mechanical receipt |
 
@@ -182,3 +183,22 @@ They correct older handoffs; later established events may supersede them.
 Read them on session start and retain this session's new notes across compaction.
 Normal OOC questions and safety preferences are not continuity reports.
 Shared-world reconciliation still uses the revision-aware canonical patch path.
+
+### Creation and session recovery
+
+New creation threads receive a permanent `character-<random suffix>` ID before
+any save. Display names remain editable. Legacy character IDs are unchanged.
+The roster may include `creation_status` and `thread_id`; `creation.json` owns
+the draft resume point. A draft remains a draft after saving and on restart.
+Ready requires explicit start intent, a valid canonical sheet without TBD,
+character name, playbook, and bounded integer stats. The MC still validates
+playbook-specific move selections and advancement prerequisites.
+
+Checkpoint records also carry `thread_id`, `pending_roll`, and
+`pending_manual_roll`, and the current session’s authoritative `rolls`. These bot-owned fields preserve unresolved mechanics even
+across a successful close. An inactive checkpoint no longer supplies scene
+summary, but pending mechanics are restored until resolved. Save progress during
+play creates recovery context; Save & end persists the full canonical close.
+Successful close writes are cached during a live retry so session counters,
+automatic corruption, and shared changes are not applied twice. This retry cache
+is in memory; it is not a multi-file atomic Git transaction.

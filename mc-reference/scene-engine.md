@@ -106,7 +106,7 @@ Keep sentences clean and physical. Choose two or three decisive sensory details.
 
 ## Mysteries
 
-Prepare revelations and clues, never a mandatory sequence of scenes.
+Prepare revelations and clues, never a mandatory sequence of scenes. The MC supplies mystery contents and discoveries; the player chooses how their character responds. Unwritten details may be authored consistently with known facts. Complete the result of an already-declared action before asking for another choice.
 
 - Every required revelation should have at least three independently discoverable clues from different plausible sources.
 - A credible player approach finds a useful core clue. A weak roll or risky method adds cost, danger, delay, unwanted attention, or ambiguity; it does not dead-end the story.

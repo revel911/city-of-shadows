@@ -4,8 +4,8 @@ import {
   StringSelectMenuBuilder,
   ActionRowBuilder,
 } from 'discord.js';
-import { startSession } from '../handlers/session.js';
-import { listPlayers } from '../handlers/github.js';
+import { startSession, hasLiveSession } from '../handlers/session.js';
+import { listPlayers, readJSON, updateJSON } from '../handlers/github.js';
 import { resolveCharacterFromList } from '../handlers/read-utils.js';
 
 const NEW_CHARACTER_VALUE = '__new__';
@@ -49,11 +49,12 @@ export async function execute(interaction) {
   const options = [
     {
       label: '+ New character',
-      description: 'Start onboarding for a new character.',
+      description: 'Create someone new. Save a draft and return anytime.',
       value: NEW_CHARACTER_VALUE,
     },
     ...players.filter(p => canPlayCharacter(p, interaction.user.id)).slice(0, 24).map(p => ({
       label: p.name,
+      description: p.creation_status === 'draft' ? 'Resume character creation' : 'Continue or start your next session',
       value: p.id,
     })),
   ];
@@ -122,12 +123,16 @@ async function openSession(interaction, channel, chosen) {
     : `${chosen.name} — session`;
 
   if (!isNew) {
-    const active = await findActiveSessionThread(channel.guild, threadName);
-    if (active) {
-      await interaction.editReply({
-        content: `**${chosen.name}** is currently in a session: <#${active.id}>. Try again once it's archived.`,
-        components: [],
-      });
+    const checkpoint = await readJSON(`players/${chosen.id}/checkpoint.json`);
+    const savedThreadId = chosen.thread_id || checkpoint?.thread_id;
+    let active = savedThreadId ? await channel.guild.channels.fetch(savedThreadId).catch(() => null) : null;
+    // Name lookup is only a migration fallback for sessions created before stable IDs.
+    if (!active) active = await findActiveSessionThread(channel.guild, threadName);
+    if (active && (!active.archived || checkpoint?.active || chosen.creation_status === 'draft')) {
+      if (active.archived) await active.setArchived(false);
+      await active.members.add(interaction.user.id);
+      await interaction.editReply({ content: `Continue **${chosen.name}**: <#${active.id}>`, components: [] });
+      if (!hasLiveSession(active.id)) await startSession(active, chosen);
       return;
     }
   }
@@ -139,6 +144,7 @@ async function openSession(interaction, channel, chosen) {
     autoArchiveDuration: 1440,
   });
   await thread.members.add(interaction.user.id);
+  if (!isNew) await updateJSON('players/index.json', current => (current || []).map(item => item.id === chosen.id ? { ...item, thread_id: thread.id } : item), `[session] thread for ${chosen.id}`);
 
   await interaction.editReply({ content: `Session opened: <#${thread.id}>`, components: [] });
   await startSession(thread, chosen);

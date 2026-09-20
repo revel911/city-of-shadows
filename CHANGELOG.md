@@ -1,5 +1,21 @@
 # Changelog
 
+## 2026-09-19 — Character and session lifecycle
+
+- Clarify MC ownership of clues and mysteries, finish unresolved discoveries,
+  and preserve player agency and completed object actions.
+- Present character creation as Concept, Abilities, Connections, and Review;
+  save repeatable drafts, resume unfinished choices, and gate play on readiness.
+- Add in-thread creation, recap, correction, save, and end controls. Recover
+  existing threads by stable ID after restart and preserve pending rolls.
+- Confirm saves after successful persistence, keep failed closes open, and avoid
+  reapplying successful writes during a live close retry.
+- Extend offline lifecycle coverage and opt-in live narrator evaluations.
+- Validation: 255 automated tests passed, world/content validation and graph
+  build passed; 20/20 live narrator scenarios passed (17 on the first attempt,
+  three with a bounded repair).
+
+
 All notable changes to City of Shadows are recorded here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).

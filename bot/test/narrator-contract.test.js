@@ -48,13 +48,11 @@ test('top-level Discord handlers never expose raw exception messages to players'
   assert.doesNotMatch(index, /channel\.send\(`[^`]*\$\{err\.message\}/);
 });
 
-test('returning-character openings recap personal continuity before play', async () => {
+test('returning-character openings orient briefly and preserve the unresolved beat', async () => {
   const mc = await readFile(new URL('../handlers/mc.js', import.meta.url), 'utf8');
-  assert.match(mc, /Previously in City of Shadows/);
-  assert.match(mc, /one or two short paragraphs \(700 characters maximum combined\)/i);
-  assert.match(mc, /present state of mind/i);
-  assert.match(mc, /current or last-known location/i);
-  assert.match(mc, /most recent meaningful NPC interactions/i);
+  assert.match(mc, /Where we left off/);
+  assert.match(mc, /at most two factual sentences/i);
+  assert.match(mc, /physical state of objects and completed actions/i);
   assert.match(mc, /character-specific NPC memory/i);
   assert.match(mc, /Do not invent missing history, emotions, locations, or meetings/i);
   assert.match(mc, /Do not infer that a canonical NPC employs, funds, contacts, trains, or knows this character/i);
@@ -62,12 +60,12 @@ test('returning-character openings recap personal continuity before play', async
   assert.match(mc, /continue at the immediate playable moment/i);
 
   const session = await readFile(new URL('../handlers/session.js', import.meta.url), 'utf8');
-  assert.match(session, /Preserve the required \*\*Previously in City of Shadows/);
+  assert.match(session, /Preserve the brief \*\*Where we left off/);
 });
 
 test('character creation uses a consistent guided flow and canonical save', async () => {
   const creation = await readFile(new URL('../../mc-reference/character-creation.md', import.meta.url), 'utf8');
-  assert.match(creation, /Character Creation - Phase X\/12: Name/);
+  assert.match(creation, /Concept → Abilities → Connections → Review/);
   assert.match(creation, /one primary decision per reply/i);
   assert.match(creation, /Confirm newly locked choices/i);
   assert.match(creation, /compact final preview/i);

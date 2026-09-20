@@ -100,9 +100,10 @@ derived state, revisions, and offscreen eligibility. See
 ### Statelessness
 
 The bot keeps an in-memory `messages[]` array **only while a thread is live**.
-On session close — or a bot restart — that array is discarded. If a player types
-into a thread whose in-memory session is gone (restart), the bot tells them to
-`/play` again rather than silently dropping the message.
+On session close or a bot restart that array is discarded. `/play` uses the
+saved character/thread identity to reconstruct the session in the existing
+thread from canonical records, creation progress, and checkpoint. Pending rolls
+are restored as bot-owned checkpoint fields.
 
 Continuity is therefore a property of the *documents*, not the chat log:
 

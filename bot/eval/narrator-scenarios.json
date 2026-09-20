@@ -2,67 +2,304 @@
   {
     "id": "move_trigger_waits_for_bot",
     "prompt": "Jacob runs across a collapsing catwalk while debris falls around him. Trigger the correct move. Do not assume any dice result.",
-    "must_include": ["<roll_request>", "Keep Your Cool", "/roll"],
-    "must_not_include": ["<close_session>", "you make it safely"]
+    "must_include": [
+      "<roll_request>",
+      "Keep Your Cool",
+      "/roll"
+    ],
+    "must_not_include": [
+      "<close_session>",
+      "you make it safely"
+    ]
   },
   {
     "id": "warehouse_ambush_turns_to_violence",
     "prompt": "An alert driver is watching a warehouse from his truck. Jacob says: I find a long path behind his vehicle, stay out of reflections and mirrors, sneak up on him, then pull him out to question him. Treat this as declared intent. Stop at the first required move and do not narrate success.",
-    "must_include": ["<roll_request>", "Turn to Violence", "/roll"],
-    "must_not_include": ["you grab him", "you pull him", "you restrain him", "he is pinned"]
+    "must_include": [
+      "<roll_request>",
+      "Turn to Violence",
+      "/roll"
+    ],
+    "must_not_include": [
+      "you grab him",
+      "you pull him",
+      "you restrain him",
+      "he is pinned"
+    ]
   },
   {
     "id": "canal_rope_hazard_keeps_cool",
     "prompt": "Jacob stands on wet concrete beside a dark canal with a strong current. A pale hand-shaped object is caught 100 feet away in a lock gate. He says: I throw the rope hoping to loop it so we can pull the thing to us. Stop at the first required move and do not narrate whether the rope catches.",
-    "must_include": ["<roll_request>", "Keep Your Cool", "/roll"],
-    "must_not_include": ["rope catches", "loop settles", "lands short", "throw again"]
+    "must_include": [
+      "<roll_request>",
+      "Keep Your Cool",
+      "/roll"
+    ],
+    "must_not_include": [
+      "rope catches",
+      "loop settles",
+      "lands short",
+      "throw again"
+    ]
   },
   {
     "id": "authoritative_roll_is_resolved",
     "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Keep Your Cool\",\"modifier_key\":\"Spirit\",\"instinct_die\":2,\"other_die\":5,\"modifier\":0,\"total\":7,\"result\":\"weak_hit\",\"extreme_failure\":false}\nResolve this move now. Do not ask for another roll.",
     "must_include": [],
-    "must_not_include": ["<roll_request>", "use /roll", "roll again"]
+    "must_not_include": [
+      "<roll_request>",
+      "use /roll",
+      "roll again"
+    ]
   },
   {
     "id": "debt_spend_uses_ledger",
     "prompt": "The player cashes in debt_jacob_priest, reducing it from 1 to 0, then says they want to end the session. Emit a correct close block for jacob-boone.",
-    "must_include": ["<close_session>", "<debt_patch>", "debt_jacob_priest", "\"amount\": 0"],
-    "must_not_include": ["<save_onboarding>"]
+    "must_include": [
+      "<close_session>",
+      "<debt_patch>",
+      "debt_jacob_priest",
+      "\"amount\": 0"
+    ],
+    "must_not_include": [
+      "<save_onboarding>"
+    ]
   },
   {
     "id": "extreme_failure_is_not_softened",
     "prompt": "[SYSTEM — AUTHORITATIVE ROLL RESULT]\n{\"move\":\"Turn to Violence\",\"modifier_key\":\"Blood\",\"instinct_die\":1,\"other_die\":2,\"modifier\":3,\"total\":6,\"result\":\"miss\",\"extreme_failure\":true}\nJacob is The Veteran. Resolve the Extreme Failure without changing the result.",
     "must_include": [],
-    "must_not_include": ["weak hit", "7-9", "<roll_request>"]
+    "must_not_include": [
+      "weak hit",
+      "7-9",
+      "<roll_request>"
+    ]
   },
   {
     "id": "violence_one_means_violence_first",
     "prompt": "EVALUATION ONLY. An NPC has Violence 1. Classify their default conflict instinct using exactly one label: VIOLENCE_FIRST or VIOLENCE_AVERSE.",
-    "must_include": ["VIOLENCE_FIRST"],
-    "must_not_include": ["VIOLENCE_AVERSE"]
+    "must_include": [
+      "VIOLENCE_FIRST"
+    ],
+    "must_not_include": [
+      "VIOLENCE_AVERSE"
+    ]
   },
   {
     "id": "violence_five_means_violence_averse",
     "prompt": "EVALUATION ONLY. An NPC has Violence 5. Classify their default conflict instinct using exactly one label: VIOLENCE_FIRST or VIOLENCE_AVERSE.",
-    "must_include": ["VIOLENCE_AVERSE"],
-    "must_not_include": ["VIOLENCE_FIRST"]
+    "must_include": [
+      "VIOLENCE_AVERSE"
+    ],
+    "must_not_include": [
+      "VIOLENCE_FIRST"
+    ]
   },
   {
     "id": "mystery_failure_preserves_core_clue",
     "prompt": "EVALUATION ONLY. A player credibly searches the correct office for a core mystery clue but gets a weak result. Choose exactly one label: CORE_CLUE_WITH_COST or NO_CLUE_DEAD_END.",
-    "must_include": ["CORE_CLUE_WITH_COST"],
-    "must_not_include": ["NO_CLUE_DEAD_END"]
+    "must_include": [
+      "CORE_CLUE_WITH_COST"
+    ],
+    "must_not_include": [
+      "NO_CLUE_DEAD_END"
+    ]
   },
   {
     "id": "romance_history_is_not_consent",
     "prompt": "EVALUATION ONLY. The profile indicates frequent social scenes, but the current player message contains no romantic signal. Choose exactly one label: DO_NOT_ESCALATE_ROMANCE or ASSUME_CONSENT.",
-    "must_include": ["DO_NOT_ESCALATE_ROMANCE"],
-    "must_not_include": ["ASSUME_CONSENT"]
+    "must_include": [
+      "DO_NOT_ESCALATE_ROMANCE"
+    ],
+    "must_not_include": [
+      "ASSUME_CONSENT"
+    ]
   },
   {
     "id": "action_is_objective_driven",
     "prompt": "EVALUATION ONLY. Choose the required action-scene approach using exactly one label: OBJECTIVES_GEOGRAPHY_DECISION or BLOW_BY_BLOW_SPECTACLE.",
-    "must_include": ["OBJECTIVES_GEOGRAPHY_DECISION"],
-    "must_not_include": ["BLOW_BY_BLOW_SPECTACLE"]
+    "must_include": [
+      "OBJECTIVES_GEOGRAPHY_DECISION"
+    ],
+    "must_not_include": [
+      "BLOW_BY_BLOW_SPECTACLE"
+    ]
+  },
+  {
+    "id": "envelope_unwritten_discovery",
+    "messages": [
+      {
+        "role": "user",
+        "content": "Cristoff is parked outside the burned gym with a sigil-marked envelope. Its contents have not yet been authored. I open it."
+      }
+    ],
+    "must_include": [],
+    "must_not_include": [
+      "I can't write",
+      "you decide what's inside",
+      "What’s inside",
+      "What is inside",
+      "not established",
+      "do you open"
+    ],
+    "must_match": [
+      "inside|contains|paper|letter|note|photograph|photo|key|map|address|card"
+    ]
+  },
+  {
+    "id": "envelope_and_continues_completed_action",
+    "messages": [
+      {
+        "role": "user",
+        "content": "I park outside the alley."
+      },
+      {
+        "role": "assistant",
+        "content": "Cristoff slides his thumb under the seal and opens the envelope."
+      },
+      {
+        "role": "user",
+        "content": "And...."
+      }
+    ],
+    "must_include": [],
+    "must_not_include": [
+      "I can't write",
+      "you decide",
+      "do you open",
+      "open it,",
+      "not established"
+    ],
+    "must_match": [
+      "inside|paper|letter|note|photograph|photo|key|map|address|card"
+    ]
+  },
+  {
+    "id": "envelope_ownership_complaint_repaired",
+    "messages": [
+      {
+        "role": "user",
+        "content": "The envelope is open. And...?"
+      },
+      {
+        "role": "assistant",
+        "content": "I can't write the contents for you. You decide. What's inside the sigil-marked envelope?"
+      },
+      {
+        "role": "user",
+        "content": "It's your freaking mystery, how would I know what it is"
+      }
+    ],
+    "must_include": [],
+    "must_not_include": [
+      "what does your character",
+      "you decide",
+      "do you open",
+      "can't decide"
+    ],
+    "must_match": [
+      "inside|paper|letter|note|photograph|photo|key|map|address|card"
+    ]
+  },
+  {
+    "id": "creation_concept_not_catalog",
+    "creation": true,
+    "prompt": "New character. Player profile is already saved. Begin character creation for a first-time roleplayer. They have not offered a concept yet.",
+    "must_include": [],
+    "must_not_include": [
+      "kebab",
+      "Phase 1/12",
+      "<save_onboarding>",
+      "Twelve playbooks"
+    ],
+    "max_characters": 1100
+  },
+  {
+    "id": "creation_draft_then_resume",
+    "creation": true,
+    "prompt": "The player profile is saved. Permanent character_id: character-eval. The player confirms: My name is Morgan, a professional supernatural investigator. Please save what we have; I will choose abilities later. Emit a draft save with the full canonical sheet and only confirmed state, then one short next question.",
+    "must_include": [
+      "<save_onboarding>",
+      "<character_id>character-eval</character_id>",
+      "<creation_status>draft</creation_status>",
+      "<next_step>",
+      "<relationship_patch>",
+      "<debt_patch>"
+    ],
+    "must_not_include": [
+      "<creation_status>ready</creation_status>",
+      "Saved.",
+      "<close_session>"
+    ],
+    "check_draft": true
+  },
+  {
+    "id": "resume_draft_preserves_choices",
+    "creation": true,
+    "prompt": "Resume draft character-eval. Confirmed choices: Morgan, they/them, professional investigator, The Veteran, Hunter: The Vigil extension. Current stage Abilities, next_step choose starting stat array. Resume with one question. Do not make a new choice or save again merely on opening.",
+    "must_include": [],
+    "must_not_include": [
+      "What is your name",
+      "What’s your name",
+      "Who do you want to be",
+      "choose a playbook",
+      "<close_session>"
+    ],
+    "must_match": [
+      "stat"
+    ]
+  },
+  {
+    "id": "returning_open_envelope_continuity",
+    "prompt": "Returning character Cristoff. Handoff: parked outside the burned gym, envelope already opened, contents not yet revealed. No pending roll. Open with Where we left off and two factual sentences, then complete the owed discovery without choosing his next action.",
+    "must_include": [
+      "Where we left off"
+    ],
+    "must_not_include": [
+      "do you open",
+      "slides his thumb",
+      "you drive",
+      "you decide"
+    ],
+    "must_match": [
+      "inside|paper|letter|note|photograph|photo|key|map|address|card"
+    ]
+  },
+  {
+    "id": "end_session_without_homework",
+    "prompt": "Player character character-eval is outside the burned gym with an open envelope. The envelope contained a photo of the gym before the fire. No state changes other than this personal discovery, no named NPCs. The player says: done for tonight. Save and end now without further questions. Emit a trailing close_session with character_id, handoff and world_impact. Do not advance time or claim persistence succeeded.",
+    "must_include": [
+      "<close_session>",
+      "<handoff>",
+      "<world_impact>",
+      "character-eval"
+    ],
+    "must_not_include": [
+      "where are you",
+      "what’s still unresolved",
+      "what is still unresolved",
+      "before we close",
+      "Session saved",
+      "Saved."
+    ]
+  },
+  {
+    "id": "end_preserves_unresolved_roll",
+    "prompt": "Character character-eval stands on a catwalk. Keep Your Cool is pending with Spirit, manual subtotal 4, Instinct Die not yet supplied. The player says save and end. Emit the handoff and close_session, preserve the pending roll as unresolved, do not determine an outcome, and do not demand dice before closing.",
+    "must_include": [
+      "<close_session>",
+      "<handoff>",
+      "Keep Your Cool"
+    ],
+    "must_not_include": [
+      "you fall",
+      "you make it",
+      "roll now",
+      "use /roll",
+      "Session saved"
+    ],
+    "must_match": [
+      "pending|unresolved|awaiting"
+    ]
   }
 ]

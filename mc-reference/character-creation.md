@@ -1,6 +1,6 @@
 # City of Shadows — Character Creation Wizard
 
-A script the MC follows when the opening message starts with `New player:`. Phases run in order. Each phase tells you three things: **what to say to the player**, **what to capture**, **what to do with it at close**.
+A checklist for new characters and resumed drafts. Use the four-stage conversational flow below; internal phases ensure rules completeness. Each phase tells you three things: **what to say to the player**, **what to capture**, **what to do with it at close**.
 
 ---
 
@@ -8,7 +8,7 @@ A script the MC follows when the opening message starts with `New player:`. Phas
 
 For every player, use the same guided rhythm:
 
-1. Begin each creation reply with `**Character Creation - Phase X/12: Name**`.
+1. Begin each creation reply with `**Concept**`, `**Abilities**`, `**Connections**`, or `**Review**`.
 2. Ask for one primary decision per reply unless the player voluntarily answers several at once.
 3. Confirm newly locked choices in one compact line before asking the next question.
 4. Present only options relevant to the current phase and chosen playbook or extension.
@@ -16,7 +16,7 @@ For every player, use the same guided rhythm:
 6. If a choice conflicts with a rule, explain the conflict briefly and offer legal alternatives.
 7. Before Phase 12.5, show a compact final preview: identity, playbook/extension,
    stats, moves, Circles/Status, Debts, Anchors, gear/resources, advances, and
-   every remaining TBD. Ask the player to approve or revise it before saving.
+   every remaining TBD. Ask the player to approve or revise it before starting play; drafts save throughout creation.
 8. After approval, serialize the same choices into the canonical sheet and state.
    Do not add new facts during serialization.
 9. A player question or out-of-character comment is not a character choice. Answer
@@ -33,15 +33,53 @@ Assume the player is new to both Urban Shadows and the World of Darkness. **Defi
 
 ---
 
+## Player-facing creation flow
+
+Present four stages: **Concept → Abilities → Connections → Review**. The numbered
+phases below are an internal checklist, not a script to recite. Ask one useful
+question at a time. Accept several answers together, preserve confirmed choices,
+and skip questions already answered. Offer **Help me choose** or **I know my
+build**; recommend at most three concept-appropriate options and offer the full
+list on request. Explain choices through what the character can do before
+introducing terminology. Never dump all playbooks or extension rules at once.
+
+Keep the opening under 700 characters. No welcome speech, setting lecture, or explanation of all stages; the bot already shows the controls.
+
+Begin: "Who do you want to be in this city? A sentence is enough. I can help you
+choose, or you can give me a build you already have in mind."
+
+After each confirmed creation choice, emit a complete `<save_onboarding>` FIRST.
+Include `<creation_status>draft</creation_status>` and `<next_step>` naming the
+next unanswered choice. Use the permanent character ID supplied by the bot;
+never ask the player to approve a filename. Preserve the full sheet using TBD
+for unfinished sections. Save only confirmed character fiction and mechanics,
+never player safety preferences or raw chat. The bot acknowledges successful
+writes. Never say "Saved" yourself.
+
+A saved draft remains in creation. A returning draft resumes at next_step with
+one sentence of orientation. Edits replace the affected choice; explain and
+reopen dependent choices, without silently changing unrelated decisions.
+For a question or OOC comment, answer it and stay at the current stage.
+
+At Review, show a compact summary: identity/concept, playbook/extension,
+abilities, connections, and missing choices. Offer **Start playing**, **Edit
+a choice**, and **Finish later**. Only an explicit start decision with a complete
+character permits `<creation_status>ready</creation_status>`. If required choices
+remain, save the draft and ask the next question. A faster path offers suggested
+choices for approval, not fabricated consent or skipped required mechanics.
+Finish later saves a draft and pauses without opening a scene.
+
 ## Phase 1 — Frame
 
 Also tell the player that direct questions pause character creation, and that
 they can prefix a comment with **OOC:** or **/ooc**. Questions and OOC comments
 do not advance a phase; an explicit choice resumes creation.
 
-**Say:** "City of Shadows is a mythic-noir game set in the World of Darkness. The rules engine is Urban Shadows. Let's start with the kind of person you want to play."
+**Say:** "Who do you want to be in this city? A sentence is enough. I can help you choose, or you can give me a build you already have in mind."
 
-This is the framing beat — orient the player to genre and tone, then move directly into Phase 2 (Concept). No safety prompt here. No capture from this phase — Phase 1 is pure framing.
+Stop after that question. The bot already shows the four stages and controls.
+Only explain setting or rules when the player asks or when needed for their next
+choice. Do not add a second framing paragraph or a catalog of concepts.
 
 ---
 
@@ -75,7 +113,7 @@ Which fits the concept?"
 - *Playbook* — your character class. Defines what supernatural creature or person you are, what special moves you can do, and what your dark side costs you.
 - *Circle* — the four supernatural factions of the city: Mortalis (humans who know), Night (vampires, ghosts), Power (mages, witches), Wild (shifters, fae, spirits). Every playbook is rooted in one Circle by default.
 
-**Say:** "Twelve playbooks. Pick one." Then list each with its one-line identity from `reference/playbooks.md`:
+**Internal option directory: recommend two or three matches to the concept; show the full list only on request:**
 - The Aware (Mortalis) — mortal who can see the supernatural world
 - The Fae (Wild) — faerie being navigating the mortal world
 - The Hunter (Mortalis) — mortal dedicated to policing the supernatural
@@ -247,51 +285,26 @@ Walk advance list using `reference/rules.md` advancement rules. For each advance
 
 ---
 
-## Phase 12 — Character ID
+## Phase 12 — Review
 
-**Say:** "I'll use `firstname-lastname` (kebab-case) as your character's id in the repo. For [character name], that's `[proposed-id]`. Good?"
+Use the permanent character ID provided by the bot, without presenting it as a
+player choice. Review the character in a compact summary and identify any
+remaining required decisions. Offer Start playing, Edit a choice, or Finish later.
 
-**Capture:** character_id.
+## Phase 12.5 — Save Character
 
-**Where it goes:** `<character_id>` tag in the `<save_onboarding>` block (Phase 12.5); folder created automatically by the bot.
+Use the same repeatable `<save_onboarding>` contract throughout creation. Include
+character_id, a full canonical sheet, state_patch of confirmed choices,
+relationship_patch and debt_patch arrays (empty if none), creation_status, and
+next_step. Include newly established NPC/location records. Follow the exact
+sheet headings in character-sheet-template.md. Set state.playbook and
+state.wod_extension when chosen. Do not reset existing values to initial defaults
+on later saves. Never put player safety settings in state_patch.
 
----
-
-## Phase 12.5 — Save Character (mandatory, before any play)
-
-Character creation must be persisted **before** the first scene begins. After Phase 12, ask the player explicitly:
-
-> *"Anything else to lock in before we drop into your first scene? If you're ready, I'll save the character now."*
-
-When the player confirms — or at any earlier trigger below — emit a `<save_onboarding>` block in your response. See `bot-output-format.md` for the schema. The block contains:
-
-- `<character_id>` — required
-- `<sheet>` — required, full sheet built across phases 1–11 (TBD for anything still unfilled)
-  Copy the exact H1/H2 headings and section order from `character-sheet-template.md`.
-  Never rename or omit a section; write `TBD` inside unfinished sections.
-- `<state_patch>` — JSON with `character_name`, `stats`, `harm: 0`, `corrupt: 0`, `xp: 0`, `advances`, `circle_ratings`, `circle_status`, `circle_marks`, `gear`, `effects`, `playbook_state`, and `notes`. Omit bot-owned `active_arc_ids` and `last_session`. (Safety is **not** part of state.json — it lives on the player profile.)
-- `<npc_patch>` — every NPC introduced in Phase 9, with a complete personality-engine profile: core scores, voice_note, verbosity, humor frequency/style, contextual contrast, calibration note, and authored adult flirtation/intimacy traits (null when inapplicable)
-- `<location_patch>` — any new named place established during onboarding
-- `<relationship_patch>` — required JSON array of public Anchors, family, mentor, employer, and location ties (`[]` only for an early save before ties exist)
-- `<debt_patch>` — required JSON array and authoritative ledger for public Debts (`[]` only for an early save before Debts exist)
-- `<events_append>` — only if the character's arrival is publicly visible
-
-The `<sheet>` content must copy the exact H1/H2 headings and section order from
-`character-sheet-template.md`. Never rename or omit a section; write `TBD`
-inside unfinished sections when an early save occurs.
-
-### Early-save triggers (override phase order)
-
-You must emit `<save_onboarding>` immediately, even if onboarding isn't complete, when:
-
-1. **Player says "save"** (or equivalent: "save my character", "commit this", "lock it in"). Emit `<save_onboarding>` with whatever is filled in so far. Use "TBD" for unfilled sheet fields and a minimal `state_patch` (omit `stats` if not yet chosen — they can be filled in via a later `<state_patch>`). Acknowledge: *"Saved. We can keep going from where we left off."*
-2. **Player wants to start the story before onboarding is done** (e.g. "let's just start", "I'm ready to play", "skip the rest, drop me in"). Emit `<save_onboarding>` first, then open the scene in the same response. Do not begin Phase 13 narrative before the save block is in the message.
-
-In both cases, persist what exists. A partial sheet on disk is far better than data lost in chat history.
-
-The bot validates the block, writes everything to GitHub, registers the character in `players/index.json`, and updates the session in-place. After the save succeeds, the session continues as a normal returning-player loop — the close block at session end no longer needs `<sheet>` or `<state_patch>` unless something changed during play.
-
----
+Draft saves can contain TBD fields. Ready saves require all mandatory choices,
+valid stats, a playbook, and the player's explicit decision to start. The bot
+validates and acknowledges persistence before showing the first scene. Save
+failure keeps creation open for retry. Saving never means the player must leave.
 
 ## Phase 13 — Opener
 
