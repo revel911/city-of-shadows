@@ -1,9 +1,11 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "11f4a2a2a3b63e83cb5f67baa74502c5fd7f077a",
-  "last_successful_run": "2026-09-20T16:33:36.351Z",
-  "last_city_turn": "2026-09-19",
-  "arc_cooldowns": {},
+  "last_processed_commit": "3bd451a95d401230c6afd195647b8ff23df3c049",
+  "last_successful_run": "2026-09-20T19:20:10.901Z",
+  "last_city_turn": "2026-09-20",
+  "arc_cooldowns": {
+    "arc-009": 2
+  },
   "runs": [
     {
       "id": "keeper_reconcile_20260822205402",
@@ -1060,6 +1062,21 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity, memory, relationship, debt, arc, mystery, or hub changes are warranted. All public events in the log are already reflected in existing entity revisions and arc summaries. No conflicts pending. No world advance performed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260920192010",
+      "phase": "city-turn",
+      "completed_at": "2026-09-20T19:20:10.901Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_vera_medium",
+        "arc-009",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-009 (The Ghost of a Dead Vampire). Poaching-market parties tighten quiet confirmation of a standing mark in Downtown, and a mortal medium's questions about a nameless ghost draw closer to that mark without contact. No player characters moved or spoken for; no secrets revealed.",
       "dry_run": false
     }
   ],

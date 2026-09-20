@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-19",
+  "as_of": "2026-09-20",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1706,9 +1706,9 @@
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market.",
+        "subtype": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact.",
         "portrait": "",
-        "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market."
+        "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact."
       },
       "position": {
         "x": 626,
@@ -2015,8 +2015,8 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "personal",
-        "escalation": 3,
-        "details": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market. Those parties have now begun quietly confirming the mark's rumored presence in Downtown, moving the mark and the mistaken identity closer together without yet naming either or making contact."
+        "escalation": 4,
+        "details": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market. Those parties have now moved from rumor to quiet confirmation of the mark's presence in Downtown, positioning the mark and the mistaken identity nearer to each other without naming either or making contact."
       },
       "position": {
         "x": 794,

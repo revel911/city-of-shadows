@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-20] Poaching-Market Parties Move From Rumor to Quiet Confirmation Downtown
+
+**Hubs:** Downtown | **Circles:** Night
+
+Parties who track the monster-poaching market have reportedly stopped treating the standing mark in Downtown as mere rumor. Sources describe quiet confirmation work underway regarding the ghost of a dead vampire — something that shouldn't exist twice — and note that the mortal medium asking after a nameless ghost's story has drawn closer to that mark without any contact being made. No link between the mark and the nameless ghost has been confirmed, and neither has been named publicly. The night-shift traffic anomalies through Downtown venues continue, unclaimed by any known network. The Consilium has not commented.
+
 ## [2026-09-19] Poaching-Market Interest Sharpens Around a Downtown Ghost
 
 **Hubs:** Downtown | **Circles:** Night
