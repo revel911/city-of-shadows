@@ -61,6 +61,10 @@ maps, and a City Keeper. The gaps were orchestration gaps:
 The fast gate handles obvious actions. The semantic adjudicator runs before
 narration only for inconclusive returning-character turns and compares the turn
 with every basic move plus rollable moves extracted from the active sheet.
+When the adjudicator needs clarification, the bot retains the original action,
+each clarification, and each player answer until the move is resolved or the
+player cancels. Follow-up answers are adjudicated as one accumulated action, and
+an already-answered question cannot be repeated.
 
 Put a Name to a Face is deliberately narrow: it connects a person’s name and
 face. Recalling or recognizing a symbol, sigil, emblem, logo, object, place, or

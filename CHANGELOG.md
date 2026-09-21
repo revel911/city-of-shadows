@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-09-21 — Mechanics clarification follow-through
+
+- Accumulate the original action and follow-up answers while clarifying a move.
+- Prevent the move router from repeating an already-answered question.
+- Preserve an active clarification in recovery checkpoints and allow the player
+  to cancel it with “never mind” or “change of plan.”
+- Add the reported Figure Someone Out exchange to unit and live evaluations.
+
 ## 2026-09-19 — Character and session lifecycle
 
 - Clarify MC ownership of clues and mysteries, finish unresolved discoveries,

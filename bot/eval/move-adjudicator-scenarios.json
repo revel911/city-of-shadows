@@ -72,7 +72,7 @@
       "circle": "Night"
     }
   },
-{
+  {
     "id": "put_a_name_to_a_face",
     "last_assistant": "A woman Jacob has never met steps under the light. Someone nearby whispers that her name is Mirela Voss, a Power broker.",
     "player_text": "Now that I can see Mirela, do I recognize who she is?",
@@ -81,7 +81,8 @@
       "move": "Put a Name to a Face",
       "circle": "Power"
     }
-  },  {
+  },
+  {
     "id": "symbol_recognition_is_not_put_a_name_to_a_face",
     "last_assistant": "The unknown serpent mark glows with chaotic otherworldly magic beside the canal.",
     "player_text": "Do I recognize that occult symbol or who uses it?",
@@ -150,6 +151,27 @@
     "player_text": "I try to get a sense of what this is.",
     "expected": {
       "decision": "clarify"
+    }
+  },
+  {
+    "id": "figure_someone_out_uses_accumulated_clarifications",
+    "last_assistant": "Three people stand near the alley mouth. Their intentions and affiliations are still unclear.",
+    "player_text": "CLARIFICATION TRANSCRIPT - use every answer below:\nOriginal action: I actively read one of them.\nQuestion: Which person, and what does he want to find out?\nAnswer: Understanding if he is involved.\nQuestion: Which person?\nAnswer: The one closest.\nDo not repeat an answered question.",
+    "expected": {
+      "decision": "roll",
+      "move": "Figure Someone Out"
+    }
+  },
+  {
+    "id": "figure_someone_out_partial_answer_asks_only_missing_target",
+    "last_assistant": "Three people stand near the alley mouth. Their intentions and affiliations are still unclear.",
+    "player_text": "CLARIFICATION TRANSCRIPT - use every answer below:\nOriginal action: I actively read one of them.\nQuestion: Which person, and what does he want to find out?\nAnswer: Understanding if he is involved.\nDo not repeat an answered question.",
+    "expected": {
+      "decision": "clarify",
+      "question_must_not_include": [
+        "what does he want",
+        "find out about"
+      ]
     }
   }
 ]

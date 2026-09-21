@@ -158,8 +158,12 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
     '- Treat completed-action wording as attempted action, but do not roll hypotheticals, preparation for a future action, passive observation, routine travel, ordinary recollection not covered by Put a Name to a Face, or an unopposed request.',
     '- An armed confrontation can trigger Keep Your Cool when the player deliberately holds steady, waits under threat, avoids escalation, or resists losing control. Mere proximity to a weapon is not enough.',
     '- Put a Name to a Face requires a person: connect their name to their face or vice versa. Recognizing or recalling a symbol, sigil, emblem, logo, object, place, or writing does not trigger it.',
+    '- If the player explicitly asks only to recognize or recall a symbol, sigil, emblem, or logo, return none. Do not clarify by proposing a person the player did not mention.',
     '- Use only a move listed below. Character moves require their exact trigger, not merely a thematic resemblance.',
     '- If the player might mean ordinary observation or a supernatural ability and that choice changes the move, clarify.',
+    '- PLAYER MESSAGE may contain a clarification transcript. Treat its answers as part of the original declared action, not as new standalone actions.',
+    '- Never repeat a clarification the player already answered. Ask only for the specific missing detail. Once target, intent, and method are sufficient for a listed move, return roll.',
+    '- When several people are present, an indefinite target such as one of them does not identify the person being read. Ask which person, unless a later answer identifies them.',
     '- Infer a Circle move target from the immediate fiction; do not ask the player to classify something their character may not understand.',
     '- Circle guide: Mortalis is ordinary humanity and mortal institutions; Night is embodied predators, the dead, and hunger-driven supernatural communities; Power is wizards, oracles, immortals, and organized occult authority; Wild is fae, demons, otherworldly beings, and chaotic magic.',
     '- Always set circle to Mortalis, Night, Power, or Wild for a Circle roll.',
@@ -177,6 +181,34 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
     'PLAYER MESSAGE',
     String(playerText || '').slice(0, 1600),
   ].join('\n');
+}
+
+export function buildClarificationAdjudicationText({
+  originalPlayerText = '',
+  exchanges = [],
+  playerText = '',
+} = {}) {
+  const lines = [
+    'CLARIFICATION TRANSCRIPT — adjudicate the original action using every answer below:',
+    `Original declared action: ${String(originalPlayerText).trim()}`,
+  ];
+  for (const exchange of exchanges) {
+    if (!exchange?.question) continue;
+    lines.push(`MC clarification: ${String(exchange.question).trim()}`);
+    if (exchange.answer) lines.push(`Player answer: ${String(exchange.answer).trim()}`);
+  }
+  if (playerText) lines.push(`Latest player answer: ${String(playerText).trim()}`);
+  lines.push('Do not repeat an answered question. Return roll as soon as the accumulated details satisfy a move trigger.');
+  return lines.join('\n').slice(0, 4000);
+}
+
+export function sameClarificationQuestion(left, right) {
+  const normalize = value => String(value || '')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return Boolean(normalize(left)) && normalize(left) === normalize(right);
 }
 
 function jsonObjectFromText(text) {

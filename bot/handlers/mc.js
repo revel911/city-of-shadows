@@ -3,6 +3,7 @@ import OpenAI from 'openai';
 import {
   buildMoveAdjudicationPrompt,
   parseMoveAdjudication,
+  sameClarificationQuestion,
 } from './move-adjudicator.js';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
@@ -54,6 +55,7 @@ export async function adjudicateMove({
   playerText,
   lastAssistant = '',
   sheet = '',
+  priorClarificationQuestions = [],
 } = {}) {
   const messages = [
     {
@@ -75,7 +77,11 @@ export async function adjudicateMove({
     });
     const raw = resp.choices[0]?.message?.content || '';
     const decision = parseMoveAdjudication(raw, { sheet });
-    if (decision) {
+    const repeatsAnsweredClarification = decision?.decision === 'clarify'
+      && priorClarificationQuestions.some(question =>
+        sameClarificationQuestion(question, decision.question)
+      );
+    if (decision && !repeatsAnsweredClarification) {
       const usage = resp.usage || {};
       console.log(
         `[move-adjudicator] model=${resp.model || MODEL} decision=${decision.decision} attempt=${attempt + 1} ` +
@@ -87,7 +93,9 @@ export async function adjudicateMove({
       messages.push({ role: 'assistant', content: raw || '[empty response]' });
       messages.push({
         role: 'user',
-        content: 'Invalid decision. Return one supported JSON object using only a listed move and all required Circle data.',
+        content: repeatsAnsweredClarification
+          ? 'Invalid decision: that clarification was already asked and answered. Use the entire clarification transcript. Return roll if the move is now specified; otherwise ask only for a different missing detail.'
+          : 'Invalid decision. Return one supported JSON object using only a listed move and all required Circle data.',
       });
     }
   }

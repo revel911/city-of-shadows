@@ -24,7 +24,10 @@ for (const scenario of scenarios) {
   const expectation = actual.expectation || {};
   const passed = actual.decision === expected.decision
     && (!expected.move || expectation.move === expected.move)
-    && (!expected.circle || expectation.circle === expected.circle);
+    && (!expected.circle || expectation.circle === expected.circle)
+    && !(expected.question_must_not_include || []).some(value =>
+      String(actual.question || '').toLowerCase().includes(value.toLowerCase())
+    );
   if (!passed) failures += 1;
   console.log(`${passed ? 'PASS' : 'FAIL'} ${scenario.id}`);
   if (!passed) console.log('  expected:', expected, 'actual:', actual);

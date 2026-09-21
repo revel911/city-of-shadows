@@ -3,9 +3,11 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   BASIC_MOVE_SEMANTICS,
+  buildClarificationAdjudicationText,
   buildMoveAdjudicationPrompt,
   extractRollableCharacterMoves,
   parseMoveAdjudication,
+  sameClarificationQuestion,
 } from '../handlers/move-adjudicator.js';
 
 const jacobSheet = await readFile(
@@ -133,4 +135,29 @@ test('adjudication prompt includes active moves and excludes symbol recall', () 
   assert.match(prompt, /symbol, sigil, emblem, logo, object, place, or writing does not trigger it/i);
   assert.match(prompt, /Put a Name to a Face/);
   assert.match(prompt, /Do not add a separate difficulty, uncertainty, or drama test/);
+});
+
+test('clarification transcript preserves the original action and every answer', () => {
+  const text = buildClarificationAdjudicationText({
+    originalPlayerText: 'I actively read one of them.',
+    exchanges: [
+      { question: 'Which person, and what do you want to learn?', answer: 'Whether he is involved.' },
+      { question: 'Which person?', answer: 'The one closest.' },
+    ],
+  });
+  assert.match(text, /original declared action: I actively read one of them/i);
+  assert.match(text, /whether he is involved/i);
+  assert.match(text, /the one closest/i);
+  assert.match(text, /do not repeat an answered question/i);
+});
+
+test('repeated clarification questions compare without punctuation or case', () => {
+  assert.equal(
+    sameClarificationQuestion(
+      'Which person is Cristoff actively reading?',
+      'which person is cristoff actively reading'
+    ),
+    true
+  );
+  assert.equal(sameClarificationQuestion('Which person?', 'What do you want to learn?'), false);
 });

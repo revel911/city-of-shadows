@@ -3,6 +3,7 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, retryableCloseWrites, persistencePayloadProblems } from './lifecycle.js';
 import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
 import { adjudicateMove, generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
+import { buildClarificationAdjudicationText } from './move-adjudicator.js';
 import {
   buildMoveResolutionContext,
   withDerivedMysteryState,
@@ -98,6 +99,7 @@ export async function startSession(thread, player) {
     rolls: savedCheckpoint?.active && Array.isArray(savedCheckpoint.rolls) ? savedCheckpoint.rolls : [],
     pendingRoll: savedCheckpoint?.pending_roll || null,
     pendingManualRoll: savedCheckpoint?.pending_manual_roll || null,
+    pendingMechanicsClarification: savedCheckpoint?.pending_mechanics_clarification || null,
     mechanicsGateTriggers: 0,
     mechanicsAdjudications: 0,
     turnsWithoutRoll: 0,
@@ -427,7 +429,9 @@ export async function handleMessage(message) {
       return;
     }
     await refreshSessionWorld(session);
-    const oocMode = session.continuityRepair || isOutOfCharacterMessage(message.content, priorPlayerText);
+    const hasMechanicsClarification = Boolean(session.pendingMechanicsClarification);
+    const oocMode = session.continuityRepair
+      || (!hasMechanicsClarification && isOutOfCharacterMessage(message.content, priorPlayerText));
     const manualRoll = oocMode ? null : parseManualRoll(message.content);
     if (manualRoll) {
       if (!session.pendingRoll) {
@@ -529,8 +533,25 @@ export async function handleMessage(message) {
       session.playstyleSignals = updatePlaystyleSignals(session.playstyleSignals, message.content);
     }
     const oocRecap = isCharacterRecapRequest(message.content, priorPlayerText);
-    const mechanicsActive = !oocMode && !session.rulesProfile?.isNew && !isNarrativeFollowThrough(message.content);
-    let mechanicsExpectation = mechanicsActive
+    const mechanicsActive = !session.rulesProfile?.isNew
+      && (hasMechanicsClarification || (!oocMode && !isNarrativeFollowThrough(message.content)));
+    const clarification = mechanicsActive ? session.pendingMechanicsClarification : null;
+    if (clarification && /^\s*(?:cancel(?: that)?|never ?mind|change of plan)\s*[.!]?\s*$/i.test(message.content)) {
+      session.pendingMechanicsClarification = null;
+      session.lastPlayerText = message.content;
+      await message.channel.send(`Got it. Tell me what ${session.player.name} does instead.`);
+      return;
+    }
+    if (clarification?.exchanges?.length) {
+      clarification.exchanges[clarification.exchanges.length - 1].answer = message.content;
+    }
+    const adjudicationPlayerText = clarification
+      ? buildClarificationAdjudicationText({
+          originalPlayerText: clarification.originalPlayerText,
+          exchanges: clarification.exchanges,
+        })
+      : message.content;
+    let mechanicsExpectation = mechanicsActive && !clarification
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
     let mechanicsClarification = null;
@@ -538,15 +559,28 @@ export async function handleMessage(message) {
       await message.channel.sendTyping();
       try {
         const adjudication = await adjudicateMove({
-          playerText: message.content,
-          lastAssistant,
+          playerText: adjudicationPlayerText,
+          lastAssistant: clarification?.fictionBeforeClarification || lastAssistant,
           sheet: session.mechanicsSheet,
+          priorClarificationQuestions: clarification?.exchanges?.map(item => item.question) || [],
         });
         session.mechanicsAdjudications += 1;
         if (adjudication.decision === 'roll') {
           mechanicsExpectation = adjudication.expectation;
+          session.pendingMechanicsClarification = null;
         } else if (adjudication.decision === 'clarify') {
           mechanicsClarification = adjudication.question;
+          if (clarification) {
+            clarification.exchanges.push({ question: adjudication.question, answer: null });
+          } else {
+            session.pendingMechanicsClarification = {
+              originalPlayerText: message.content,
+              fictionBeforeClarification: lastAssistant,
+              exchanges: [{ question: adjudication.question, answer: null }],
+            };
+          }
+        } else {
+          session.pendingMechanicsClarification = null;
         }
       } catch (err) {
         console.warn(`[move-adjudicator] falling back to narrator audit: ${err.message}`);
@@ -587,7 +621,9 @@ export async function handleMessage(message) {
         sceneDirection,
         mechanicsActive ? buildMoveAuditContext(session.turnsWithoutRoll) : '',
         buildMechanicsGateContext(mechanicsExpectation, session.mechanicsDepth),
-        `[PLAYER MESSAGE]\n${userContent}`,
+        clarification
+          ? `[PLAYER ACTION WITH CLARIFICATIONS]\n${adjudicationPlayerText}`
+          : `[PLAYER MESSAGE]\n${userContent}`,
       ]
         .filter(Boolean)
         .join('\n\n'),
@@ -1210,6 +1246,7 @@ async function writeCheckpoint(session, checkpoint, active = true) {
       thread_id: session.threadId,
       pending_roll: session.pendingRoll || null,
       pending_manual_roll: session.pendingManualRoll || null,
+      pending_mechanics_clarification: session.pendingMechanicsClarification || null,
       rolls: session.rolls || [],
     }, null, 2) + '\n',
     `[session] checkpoint for ${session.player.name}`
