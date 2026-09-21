@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-21] Pantry Records at East End Resource Center Don't Match RRHA Rolls
+
+**Hubs:** Creighton Court | **Circles:** Power
+
+Staff and volunteers at the East End Family Resource Center have reportedly begun noticing that some pantry intake names and vouchers do not match current RRHA records — entries that are legible, consistent, and unclaimed by any known resident roll. Sister Catherine Burke, who runs the pantry, is described as quietly setting the anomalous entries aside in a separate ledger rather than turning anyone away. Residents describe the discrepancy as part of a wider pattern in Creighton Court, where demolished buildings still cast shadows and removed equipment still draws children. The Consilium has not commented.
+
 ## [2026-09-20] Poaching-Market Parties Move From Rumor to Quiet Confirmation Downtown
 
 **Hubs:** Downtown | **Circles:** Night

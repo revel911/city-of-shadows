@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-09-20",
+  "last_updated": "2026-09-21",
   "hubs": [
     {
       "state": "The ley line under Monroe Park ran off-tempo for the fourth time in seven weeks, now detected by unofficial instruments. Dr. Olave's closed meetings continue, and the engineered Awakening program remains secret.",
@@ -24,6 +24,13 @@
       "last_updated": "2026-09-20",
       "updated_by_session": "keeper_city_turn_20260920192010",
       "condition": "Night-shift routines continue to carry unlogged traffic no known network claims, and a mortal medium's quiet questions about a ghost have begun circulating among Downtown night contacts, drawing the attention of parties who track the monster-poaching market."
+    },
+    {
+      "condition": "Temporal displacement deepening; institutional records and routine services beginning to register residents and addresses that don't match current RRHA rolls.",
+      "id": "hub_creighton_court",
+      "revision": 1,
+      "last_updated": "2026-09-21",
+      "updated_by_session": "keeper_city_turn_20260921192349"
     }
   ]
 }

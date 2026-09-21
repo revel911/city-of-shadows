@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-20",
+  "last_updated": "2026-09-21",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -534,10 +534,12 @@
       ],
       "controller_note": "",
       "status": "active",
-      "description": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help.",
+      "description": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake has recently begun logging names and vouchers that don't match current RRHA records, and a second, unshared ledger now sits behind the counter.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-08-21"
+      "last_updated": "2026-09-21",
+      "revision": 1,
+      "updated_by_session": "keeper_city_turn_20260921192349"
     },
     {
       "id": "loc_oakland_cemetery",

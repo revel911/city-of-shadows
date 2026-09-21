@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-20",
+  "last_updated": "2026-09-21",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -799,7 +799,7 @@
         "arc-013"
       ],
       "status": "active",
-      "role": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway",
+      "role": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Recently, pantry intake at the East End Family Resource Center has begun including names and vouchers that don't match current RRHA records, and she has started quietly setting aside a second ledger for them.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 5,
@@ -822,9 +822,9 @@
       ],
       "home_location_id": "loc_east_end_family_resource_center",
       "current_location_id": "loc_east_end_family_resource_center",
-      "updated_by_session": "operator:personality-expansion",
-      "revision": 1,
-      "last_updated": "2026-09-14"
+      "updated_by_session": "keeper_city_turn_20260921192349",
+      "revision": 2,
+      "last_updated": "2026-09-21"
     },
     {
       "id": "npc_jrock_thompson",
