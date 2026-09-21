@@ -1,10 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "3bd451a95d401230c6afd195647b8ff23df3c049",
-  "last_successful_run": "2026-09-20T19:20:10.901Z",
+  "last_processed_commit": "607f6ebba72a07549168d0346903166e94d330b6",
+  "last_successful_run": "2026-09-21T10:33:50.344Z",
   "last_city_turn": "2026-09-20",
   "arc_cooldowns": {
-    "arc-009": 2
+    "arc-009": 1
   },
   "runs": [
     {
@@ -1077,6 +1077,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-009 (The Ghost of a Dead Vampire). Poaching-market parties tighten quiet confirmation of a standing mark in Downtown, and a mortal medium's questions about a nameless ghost draw closer to that mark without contact. No player characters moved or spoken for; no secrets revealed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260921103350",
+      "phase": "publish",
+      "completed_at": "2026-09-21T10:33:50.344Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
