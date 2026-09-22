@@ -1,23 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "96564093b3d594cbc581931e312a9d1370847b8f",
-  "last_successful_run": "2026-09-21T19:23:49.333Z",
+  "last_processed_commit": "8299474eace8521a5af2812776b2494197970c33",
+  "last_successful_run": "2026-09-22T10:34:02.843Z",
   "last_city_turn": "2026-09-21",
   "arc_cooldowns": {
-    "arc-013": 2
+    "arc-013": 1
   },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260822205402",
-      "phase": "reconcile",
-      "completed_at": "2026-08-22T20:54:02.316Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase completed. No changes required; all provided data is consistent.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260823103751",
       "phase": "publish",
@@ -1115,6 +1104,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-013 (Creighton Court Redevelopment & Temporal Displacement). The Overwrite's temporal displacement deepens around the Renaissance site, and Sister Catherine Burke's pantry quietly absorbs the consequences. No player characters touched; no mysteries created or resolved.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260922103402",
+      "phase": "publish",
+      "completed_at": "2026-09-22T10:34:02.843Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
