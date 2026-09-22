@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-09-21",
+  "last_updated": "2026-09-22",
   "hubs": [
     {
       "state": "The ley line under Monroe Park ran off-tempo for the fourth time in seven weeks, now detected by unofficial instruments. Dr. Olave's closed meetings continue, and the engineered Awakening program remains secret.",
@@ -26,11 +26,11 @@
       "condition": "Night-shift routines continue to carry unlogged traffic no known network claims, and a mortal medium's quiet questions about a ghost have begun circulating among Downtown night contacts, drawing the attention of parties who track the monster-poaching market."
     },
     {
-      "condition": "Temporal displacement deepening; institutional records and routine services beginning to register residents and addresses that don't match current RRHA rolls.",
+      "condition": "Temporal displacement continues to surface through ordinary institutional routines. The East End Family Resource Center's pantry intake keeps logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke's separate ledger for them has grown as she cross-checks the entries against older parish records.",
       "id": "hub_creighton_court",
-      "revision": 1,
-      "last_updated": "2026-09-21",
-      "updated_by_session": "keeper_city_turn_20260921192349"
+      "revision": 2,
+      "last_updated": "2026-09-22",
+      "updated_by_session": "keeper_city_turn_20260922192233"
     }
   ]
 }

@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-22] Pantry Discrepancy Widens; Sister Catherine Cross-Checks Old Parish Records
+
+**Hubs:** Creighton Court | **Circles:** Power
+
+Staff at the East End Family Resource Center report that the pantry intake names and vouchers not matching current RRHA records have continued to accumulate, and Sister Catherine Burke has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away. Her separate, unshared ledger for the entries has grown. Residents describe the discrepancy as part of the wider Creighton Court pattern in which demolished buildings still cast shadows and removed equipment still draws children. The Consilium has not commented.
+
 ## [2026-09-21] Pantry Records at East End Resource Center Don't Match RRHA Rolls
 
 **Hubs:** Creighton Court | **Circles:** Power

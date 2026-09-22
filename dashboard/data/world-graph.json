@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-21",
+  "as_of": "2026-09-22",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -692,7 +692,7 @@
         "hub_id": "hub_creighton_court",
         "status": "active",
         "subtype": "Community Anchors",
-        "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake has recently begun logging names and vouchers that don't match current RRHA records, and a second, unshared ledger now sits behind the counter."
+        "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake continues logging names and vouchers that don't match current RRHA records; the second, unshared ledger behind the counter has grown, and Sister Catherine has begun cross-checking the anomalous entries against older parish records."
       },
       "position": {
         "x": 241,
@@ -1400,9 +1400,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Recently, pantry intake at the East End Family Resource Center has begun including names and vouchers that don't match current RRHA records, and she has started quietly setting aside a second ledger for them.",
+        "subtype": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she now keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away.",
         "portrait": "",
-        "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Recently, pantry intake at the East End Family Resource Center has begun including names and vouchers that don't match current RRHA records, and she has started quietly setting aside a second ledger for them."
+        "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she now keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away."
       },
       "position": {
         "x": -91,
@@ -2079,8 +2079,8 @@
         "hub_id": "hub_creighton_court",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 2,
-        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them."
+        "escalation": 3,
+        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. She has now begun cross-checking the anomalous entries against older parish records, and the discrepancy has grown harder to dismiss as clerical error."
       },
       "position": {
         "x": -712,

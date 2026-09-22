@@ -1,21 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "bdd61882fde2a2c7eadfbb321c27564c036cb433",
-  "last_successful_run": "2026-09-22T16:36:50.690Z",
-  "last_city_turn": "2026-09-21",
-  "arc_cooldowns": {},
+  "last_processed_commit": "b392370b8b2b33793b21049c2cc89677d45dea41",
+  "last_successful_run": "2026-09-22T19:22:33.276Z",
+  "last_city_turn": "2026-09-22",
+  "arc_cooldowns": {
+    "arc-013": 2
+  },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260823164002",
-      "phase": "reconcile",
-      "completed_at": "2026-08-23T16:40:02.461Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no session evidence provided; no changes made.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260823192418",
       "phase": "city-turn",
@@ -1113,6 +1104,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied, so no entity, memory, relationship, debt, arc, mystery, or hub changes are warranted. All public-safe projection data is already consistent with the recent events log. No conflicts pending.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260922192233",
+      "phase": "city-turn",
+      "completed_at": "2026-09-22T19:22:33.276Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_sister_catherine_burke",
+        "loc_east_end_family_resource_center",
+        "arc-013",
+        "hub_creighton_court"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-013 (Creighton Court Redevelopment & Temporal Displacement). The Overwrite's temporal displacement continues to reach ordinary institutional routines: Sister Catherine Burke expands her separate ledger practice as anomalous pantry entries persist, and the Creighton Court hub's condition reflects the widening discrepancy. No player characters touched; no major arc resolved.",
       "dry_run": false
     }
   ],
