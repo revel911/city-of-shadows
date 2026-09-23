@@ -39,7 +39,9 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - None
 
 ## ANCHORS
-- TBD
+- **Asha Tremblay** — Fairest, owns Threshold on Ellwood. Birdie's oldest friend in the city; the one person whose promises she never audits.
+- **The Fan (Ellwood street and its old trees)** — Birdie's territory in the way that matters to her. She can feel when it's wrong.
+- **A standing deal with a Wild court** — she swore to keep something safe, and it holds. Specifics set at the debt step.
 
 ## GEAR & RESOURCES
 - TBD
@@ -62,4 +64,4 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith, Contract of Hearth (Favored Fate)
 - Faerie Powers: Nature's Caress, Glamours, Bedlam
 - Dual Kith move not yet chosen (one move from Imp or Tainted)
-- Anchors and gear not yet set
+- Gear not yet set; standing Wild-court deal not yet specified
