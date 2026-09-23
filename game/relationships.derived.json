@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-22",
+  "last_updated": "2026-09-23",
   "derived_through": "2026-08-21",
   "relationships": [
     {
@@ -31,6 +31,30 @@
       "direction": "outbound",
       "visibility": "public",
       "source_session": "cristoff-lepierre:session_000"
+    },
+    {
+      "id": "rel_birdie_asha",
+      "source": "character-3f1a4509",
+      "target": "npc_asha_tremblay",
+      "type": "friend",
+      "label": "Oldest friend",
+      "direction": "undirected",
+      "visibility": "public",
+      "revision": 1,
+      "last_updated": "2026-09-23",
+      "updated_by_session": "character-3f1a4509:session_000"
+    },
+    {
+      "id": "rel_birdie_ellwood",
+      "source": "character-3f1a4509",
+      "target": "loc_the_fan_historic_district",
+      "type": "anchor",
+      "label": "Territory · Anchor",
+      "direction": "outbound",
+      "visibility": "public",
+      "revision": 1,
+      "last_updated": "2026-09-23",
+      "updated_by_session": "character-3f1a4509:session_000"
     }
   ]
 }
