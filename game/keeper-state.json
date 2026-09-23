@@ -1,25 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "b392370b8b2b33793b21049c2cc89677d45dea41",
-  "last_successful_run": "2026-09-22T19:22:33.276Z",
+  "last_processed_commit": "e0634822c6d3b43f595d05855639d691bb2ebd9c",
+  "last_successful_run": "2026-09-23T10:34:08.712Z",
   "last_city_turn": "2026-09-22",
   "arc_cooldowns": {
-    "arc-013": 2
+    "arc-013": 1
   },
   "runs": [
-    {
-      "id": "keeper_city_turn_20260823192418",
-      "phase": "city-turn",
-      "completed_at": "2026-08-23T19:24:18.343Z",
-      "changed": true,
-      "touched_ids": [
-        "arc-012"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn advances the escalating Overwrite arc: the ley line under Monroe Park runs off-tempo a fourth time, and a minor public event reflects the city's continued self-rewriting.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260824104235",
       "phase": "publish",
@@ -1120,6 +1107,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-013 (Creighton Court Redevelopment & Temporal Displacement). The Overwrite's temporal displacement continues to reach ordinary institutional routines: Sister Catherine Burke expands her separate ledger practice as anomalous pantry entries persist, and the Creighton Court hub's condition reflects the widening discrepancy. No player characters touched; no major arc resolved.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260923103408",
+      "phase": "publish",
+      "completed_at": "2026-09-23T10:34:08.712Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],

@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-22",
+  "as_of": "2026-09-23",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -961,8 +961,8 @@
         "kind": "location",
         "hub_id": "hub_oregon_hill",
         "status": "active",
-        "subtype": "Bar / information broker",
-        "details": "A bar on Idlewood Avenue where information is charged by the drink."
+        "subtype": "bar",
+        "details": "A corner bar in Oregon Hill. Corner booth against the wall, no window, furthest from the door. TV behind the bar."
       },
       "position": {
         "x": -791,
@@ -1853,6 +1853,23 @@
     },
     {
       "data": {
+        "id": "npc_aldridge",
+        "label": "Aldridge",
+        "kind": "npc",
+        "hub_id": "hub_oregon_hill",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Man in his fifties claiming to work for the owners of the burned black sedan; confronted Cristoff about the two dead couriers and demanded prior contact before Cristoff pursues the courier's sender.",
+        "portrait": "",
+        "details": "Man in his fifties claiming to work for the owners of the burned black sedan; confronted Cristoff about the two dead couriers and demanded prior contact before Cristoff pursues the courier's sender."
+      },
+      "position": {
+        "x": -1087,
+        "y": 757
+      }
+    },
+    {
+      "data": {
         "id": "jacob-boone",
         "label": "Jacob Boone",
         "kind": "pc",
@@ -1861,7 +1878,7 @@
         "details": "Player character"
       },
       "position": {
-        "x": -90,
+        "x": -180,
         "y": 0
       }
     },
@@ -1875,7 +1892,21 @@
         "details": "Player character"
       },
       "position": {
-        "x": 90,
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "data": {
+        "id": "character-3f1a4509",
+        "label": "Birdie Salton",
+        "kind": "pc",
+        "hub_id": "",
+        "status": "active",
+        "details": "Player character"
+      },
+      "position": {
+        "x": 180,
         "y": 0
       }
     },
@@ -3147,6 +3178,16 @@
     },
     {
       "data": {
+        "id": "edge_npc_aldridge_hub_oregon_hill",
+        "source": "npc_aldridge",
+        "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
         "id": "rel_hruska_st_peters",
         "source": "npc_father_hruska",
         "target": "loc_st_peters_catholic",
@@ -3328,6 +3369,39 @@
         "target": "cristoff-lepierre",
         "type": "associate",
         "label": "Benefactor's go-between",
+        "direction": "outbound",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_birdie_asha",
+        "source": "character-3f1a4509",
+        "target": "npc_asha_tremblay",
+        "type": "friend",
+        "label": "Oldest friend",
+        "direction": "undirected",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_birdie_ellwood",
+        "source": "character-3f1a4509",
+        "target": "loc_the_fan_historic_district",
+        "type": "anchor",
+        "label": "Territory · Anchor",
+        "direction": "outbound",
+        "layer": "derived"
+      }
+    },
+    {
+      "data": {
+        "id": "rel_cristoff_aldridge",
+        "source": "cristoff-lepierre",
+        "target": "npc_aldridge",
+        "type": "contact",
+        "label": "Uneasy contact",
         "direction": "outbound",
         "layer": "derived"
       }
