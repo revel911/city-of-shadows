@@ -31,7 +31,12 @@
     "Power": false,
     "Wild": false
   },
-  "gear": [],
+  "gear": [
+    "Iron-bladed garden shears (focus and tool)",
+    "Small greenhouse off Grove Avenue",
+    "Threshold back-door access and one thing hidden there",
+    "Cell phone with no saved contacts"
+  ],
   "active_arc_ids": [],
   "last_session": "session_000",
   "effects": {
