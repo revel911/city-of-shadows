@@ -22,10 +22,10 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - Elemental (Seeming) — Trait: when you push your body beyond its limits to tap your element, mark a Circle. Drawback: refuse a plea for help from a human, mark a Circle.
 - Woodblood (Kith) — When you mark Wild, you may become one with the natural world and communicate with plants and animals in the area for the rest of the scene. Leaves a lingering Wild scent.
 - Contract of Hearth — Favored Fate: when you aid an ally, roll with Heart. 10+: they gain +1 forward. 7-9: they still benefit, you take -1 forward. Miss: both suffer -1 ongoing for the scene.
-- Faerie Powers: Nature's Caress (touch heals 2-harm, not self), Glamours (illusions that fool the senses), Bedlam (touch a vulnerable target to place a chosen emotion for the scene; mark corruption to direct that emotion at a chosen target)
+- Faerie Powers: Nature's Caress, Glamours, Bedlam
 - Words Are Wind — she knows instantly when someone breaks their word to her; take a Debt on them and +1 ongoing to claim what she's owed until they make it right.
-- Dual Kith — she has opened herself to another kith (one move from another Wild playbook; currently open)
-- The Bound Word — deals and promises she makes are enforced by fate; if any party breaks their word, both the MC and the other parties gain 1 hold against the offender.
+- Dual Kith — one move from another Wild playbook (open)
+- The Bound Word — deals and promises she makes are enforced by fate; if any party breaks their word, the MC and the other parties gain 1 hold against the offender.
 ### Cross-archetype
 - None
 
@@ -36,15 +36,18 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **Wild:** Rating +0, Status 1
 
 ## DEBTS
-- None
+- None yet (standing Wild-court obligation to be set in GEAR/notes as a binding promise, not a ledger Debt)
 
 ## ANCHORS
-- **Asha Tremblay** — Fairest, owns Threshold on Ellwood. Birdie's oldest friend in the city; the one person whose promises she never audits.
-- **The Fan (Ellwood street and its old trees)** — Birdie's territory in the way that matters to her. She can feel when it's wrong.
-- **A standing deal with a Wild court** — she swore to keep something safe, and it holds. Specifics set at the debt step.
+- **Asha Tremblay** — Fairest, owns Threshold on Ellwood. Birdie's oldest friend; the one person whose promises she never audits.
+- **The Fan (Ellwood street and its old trees)** — Birdie's territory in the way that matters. She feels when it's wrong.
+- **A standing deal with a Wild court** — she swore to keep something safe, and it holds.
 
 ## GEAR & RESOURCES
-- TBD
+- **Shears** — a good pair of garden shears, iron-bladed, worn from years of use. Her focus and her favorite tool.
+- **A rented greenhouse off Grove Avenue** — a small glasshouse she keeps the same way other people keep a garden. Nothing in it is purely mundane.
+- **A favor owed at Threshold** — Asha's shop is a place Birdie can walk into at any hour; the standing deal includes one thing hidden there.
+- **A cell phone with no contacts saved** — she memorizes numbers instead.
 
 ## ADVANCEMENT
 - **Advances spent:** 6
@@ -63,5 +66,5 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 ## NOTES & OPEN QUESTIONS
 - Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith, Contract of Hearth (Favored Fate)
 - Faerie Powers: Nature's Caress, Glamours, Bedlam
-- Dual Kith move not yet chosen (one move from Imp or Tainted)
-- Gear not yet set; standing Wild-court deal not yet specified
+- Dual Kith move not yet chosen (Imp or Tainted)
+- Standing Wild-court deal: Birdie swore to keep the **Hedge Door at Threshold** from opening onto anything that means the shop's owner harm, for one cycle of the court's choosing — still unfulfilled. The Hedge Door has been unstable for three weeks.
