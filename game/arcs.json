@@ -342,7 +342,7 @@
       "id": "arc-013",
       "title": "Creighton Court Redevelopment & Temporal Displacement",
       "type": "slow-burn",
-      "escalation": 3,
+      "escalation": 4,
       "status": "active",
       "hub_ids": [
         "hub_creighton_court"
@@ -351,19 +351,19 @@
         "npc_sister_catherine_burke"
       ],
       "character_ids": [],
-      "summary": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. She has now begun cross-checking the anomalous entries against older parish records, and the discrepancy has grown harder to dismiss as clerical error.",
+      "summary": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. Her cross-check of the anomalous entries against older parish records has now surfaced a name that appears in the parish archive but matches no living resident roll, making the discrepancy harder to dismiss as clerical error.",
       "mc_notes": "No PC direct involvement yet. Could connect to the broader Overwrite arc or develop independently.",
       "agenda": "Bring Creighton Court Redevelopment & Temporal Displacement into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
-        "current": 3,
+        "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-22",
+      "revision": 4,
+      "last_updated": "2026-09-23",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260922192233"
+      "last_touched_session": "keeper_city_turn_20260923192346"
     },
     {
       "id": "arc-014",

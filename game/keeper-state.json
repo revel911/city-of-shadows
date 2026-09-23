@@ -1,21 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "5f51b1f3488648fc744cb948a3565368ccfa0a18",
-  "last_successful_run": "2026-09-23T16:37:37.227Z",
-  "last_city_turn": "2026-09-22",
-  "arc_cooldowns": {},
+  "last_processed_commit": "e935d3287ae74f6e029df1eeaae0019f43052c5a",
+  "last_successful_run": "2026-09-23T19:23:46.648Z",
+  "last_city_turn": "2026-09-23",
+  "arc_cooldowns": {
+    "arc-013": 2
+  },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260824164426",
-      "phase": "reconcile",
-      "completed_at": "2026-08-24T16:44:26.401Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no session evidence provided; no changes made.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260824192607",
       "phase": "city-turn",
@@ -1116,6 +1107,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence beyond the Aldridge confrontation, which is already reflected in the projection (npc_aldridge exists, relationship rel_cristoff_aldridge exists, arc-006 escalating). No established facts require repair. No world advance performed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260923192346",
+      "phase": "city-turn",
+      "completed_at": "2026-09-23T19:23:46.648Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_sister_catherine_burke",
+        "loc_east_end_family_resource_center",
+        "arc-013",
+        "hub_creighton_court"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-013 (Creighton Court Redevelopment & Temporal Displacement). The pantry discrepancy at the East End Family Resource Center widens; Sister Catherine Burke's cross-checking against older parish records yields a name that matches no living roll, deepening the institutional footprint of the temporal displacement. No player characters affected.",
       "dry_run": false
     }
   ],

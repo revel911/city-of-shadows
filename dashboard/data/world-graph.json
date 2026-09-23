@@ -692,7 +692,7 @@
         "hub_id": "hub_creighton_court",
         "status": "active",
         "subtype": "Community Anchors",
-        "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake continues logging names and vouchers that don't match current RRHA records; the second, unshared ledger behind the counter has grown, and Sister Catherine has begun cross-checking the anomalous entries against older parish records."
+        "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake continues logging names and vouchers that don't match current RRHA records; the second, unshared ledger behind the counter has grown, and Sister Catherine's cross-check against older parish records has surfaced at least one name that appears in the parish archive but matches no living resident roll."
       },
       "position": {
         "x": 241,
@@ -1400,9 +1400,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she now keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away.",
+        "subtype": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away. Her cross-check has now surfaced a name that appears in an older parish record but matches no living resident roll, and she has begun setting aside the corresponding vouchers separately.",
         "portrait": "",
-        "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she now keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away."
+        "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away. Her cross-check has now surfaced a name that appears in an older parish record but matches no living resident roll, and she has begun setting aside the corresponding vouchers separately."
       },
       "position": {
         "x": -91,
@@ -2110,8 +2110,8 @@
         "hub_id": "hub_creighton_court",
         "status": "active",
         "subtype": "slow-burn",
-        "escalation": 3,
-        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. She has now begun cross-checking the anomalous entries against older parish records, and the discrepancy has grown harder to dismiss as clerical error."
+        "escalation": 4,
+        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. Her cross-check of the anomalous entries against older parish records has now surfaced a name that appears in the parish archive but matches no living resident roll, making the discrepancy harder to dismiss as clerical error."
       },
       "position": {
         "x": -712,

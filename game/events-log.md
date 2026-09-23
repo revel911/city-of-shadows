@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-23] Pantry Cross-Check Surfaces Name With No Living Roll
+
+**Hubs:** Creighton Court | **Circles:** Power
+
+Sister Catherine Burke's quiet cross-check of the East End Family Resource Center's anomalous pantry entries against older parish records has reportedly surfaced at least one name that appears in the parish archive but matches no living resident roll. Staff describe the separate, unshared ledger behind the counter as having grown again, and the discrepancy as increasingly difficult to dismiss as clerical error. Residents continue to describe the pantry anomalies as part of the wider Creighton Court pattern in which demolished buildings still cast shadows and removed equipment still draws children. The Consilium has not commented.
+
 ## [2026-09-22] Pantry Discrepancy Widens; Sister Catherine Cross-Checks Old Parish Records
 
 **Hubs:** Creighton Court | **Circles:** Power
