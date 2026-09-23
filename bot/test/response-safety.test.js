@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   playerFacingTurnLimit,
   pendingRollGuard,
+  contextualManualRoll,
   proseQualityProblems,
   recoverPendingRoll,
   responseSafetyProblems,
@@ -159,4 +160,40 @@ test('pending move blocks narrative bypass while allowing explicit cancellation'
   assert.equal(visibleSession.pendingRoll, null);
   assert.equal(visibleSession.turnsWithoutRoll, 0);
   assert.equal(pendingRollGuard(visibleSession, 'I leave.'), null);
+});
+
+
+test('bare totals use pending move context and accept conversational confirmation', () => {
+  for (let total = 2; total <= 12; total++) {
+    const session = { pendingRoll: { move: 'Keep Your Cool' } };
+    assert.match(contextualManualRoll(session, String(total)).reply, new RegExp(`total ${total}, before modifiers`));
+    assert.deepEqual(contextualManualRoll(session, 'yep!').roll, { rawTotal: total });
+    assert.equal(session.rollConfirmation, null);
+  }
+  assert.equal(contextualManualRoll({}, '9').roll, null);
+});
+
+test('contextual rolls allow corrections and preserve validation and die context', () => {
+  const session = { pendingRoll: { move: 'Keep Your Cool' } };
+  contextualManualRoll(session, '9');
+  assert.match(contextualManualRoll(session, 'no').reply, /What was your two-dice total/);
+  contextualManualRoll(session, '8');
+  contextualManualRoll(session, '7');
+  assert.deepEqual(contextualManualRoll(session, 'yes').roll, { rawTotal: 7 });
+  for (const input of ['1', '13', '-2', '0']) {
+    assert.match(contextualManualRoll(session, input).roll.error, /2 to 12/);
+  }
+  session.pendingManualRoll = { rawTotal: 4 };
+  assert.deepEqual(contextualManualRoll(session, '1').roll, { instinct: 1 });
+  assert.match(contextualManualRoll(session, '9').roll.error, /1 to 6/);
+});
+
+test('confirmation cannot carry over to another move or override an explicit report', () => {
+  const session = { pendingRoll: { move: 'Keep Your Cool' } };
+  contextualManualRoll(session, '9');
+  session.pendingRoll = { move: 'Keep Your Cool' };
+  assert.equal(contextualManualRoll(session, 'yes').roll, null);
+  contextualManualRoll(session, '9');
+  assert.deepEqual(contextualManualRoll(session, 'I rolled an 8').roll, { rawTotal: 8 });
+  assert.equal(session.rollConfirmation, null);
 });

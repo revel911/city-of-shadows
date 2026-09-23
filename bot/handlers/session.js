@@ -149,6 +149,41 @@ export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
     : TURN_MAX_CHARS;
 }
 
+export function contextualManualRoll(session, playerContent) {
+  const explicit = parseManualRoll(playerContent);
+  if (!session?.pendingRoll) return { roll: explicit };
+  const input = String(playerContent || '').trim();
+  const confirmation = session.rollConfirmation;
+  if (explicit) {
+    session.rollConfirmation = null;
+    return { roll: explicit };
+  }
+  if (confirmation?.request === session.pendingRoll) {
+    if (/^(?:yes|yeah|yep|yup|correct|right|sure|affirmative|that's right|that is right)[.!]*$/i.test(input)) {
+      session.rollConfirmation = null;
+      return { roll: parseManualRoll(`I rolled ${confirmation.total}`) };
+    }
+    if (/^(?:no|nope|nah|incorrect)[.!]*$/i.test(input)) {
+      session.rollConfirmation = null;
+      return { reply: 'What was your two-dice total before modifiers? You can also report both dice or use `/roll`.' };
+    }
+  }
+  const number = input.match(/^(-?\d+)[.!]?$/);
+  if (!number) {
+    session.rollConfirmation = null;
+    return { roll: null };
+  }
+  if (Number.isInteger(session.pendingManualRoll?.rawTotal)) {
+    session.rollConfirmation = null;
+    return { roll: parseManualRoll(`instinct ${number[1]}`) };
+  }
+  session.rollConfirmation = null;
+  const roll = parseManualRoll(`I rolled ${number[1]}`);
+  if (roll.error) return { roll };
+  session.rollConfirmation = { request: session.pendingRoll, total: roll.rawTotal };
+  return { reply: `Was your two-dice total ${roll.rawTotal}, before modifiers? Say yes, give the corrected total, or use \`/roll\`.` };
+}
+
 export function pendingRollGuard(session, playerContent) {
   if (!session?.pendingRoll) return null;
   if (parseManualRoll(playerContent)) return null;
@@ -432,7 +467,12 @@ export async function handleMessage(message) {
     const hasMechanicsClarification = Boolean(session.pendingMechanicsClarification);
     const oocMode = session.continuityRepair
       || (!hasMechanicsClarification && isOutOfCharacterMessage(message.content, priorPlayerText));
-    const manualRoll = oocMode ? null : parseManualRoll(message.content);
+    const contextualRoll = oocMode ? {} : contextualManualRoll(session, message.content);
+    if (contextualRoll.reply) {
+      await message.channel.send(contextualRoll.reply);
+      return;
+    }
+    const manualRoll = contextualRoll.roll;
     if (manualRoll) {
       if (!session.pendingRoll) {
         await message.channel.send('There is no unresolved move right now. Wait for the MC to request a roll.');
