@@ -5,7 +5,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 
 ## ARCHETYPE / PLAYBOOK
 - **Playbook:** The Fae
-- **Experience Tier:** TBD
+- **Experience Tier:** Established (6 advances)
 - **World of Darkness Extension:** TBD (Changeling available)
 - **Home Circle:** Wild
 
@@ -39,7 +39,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - TBD
 
 ## ADVANCEMENT
-- **Advances spent:** 0
+- **Advances spent:** 6 (unallocated)
 
 ## SPECIAL TRIGGERS
 - **Intimacy Move:** TBD
@@ -47,5 +47,6 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **End Move:** TBD
 
 ## NOTES & OPEN QUESTIONS
+- Experience tier set: Established (6 advances to spend in Phase 10)
 - Faerie powers not yet selected
 - Mortal relationships / anchors not yet set
