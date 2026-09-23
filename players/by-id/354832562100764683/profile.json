@@ -16,13 +16,22 @@
   "inferred_playstyle": {
     "schema_version": 1,
     "scores": {
-      "action": 0,
+      "action": 8,
       "investigation": 0,
-      "social": 0,
-      "exploration": 0,
-      "reflection": 0
+      "social": 12,
+      "exploration": 4,
+      "reflection": 8
     },
-    "observed_choices": 0,
-    "recent_modes": []
+    "observed_choices": 10,
+    "recent_modes": [
+      "action",
+      "social",
+      "action",
+      "action",
+      "social",
+      "social",
+      "social",
+      "social"
+    ]
   }
 }
