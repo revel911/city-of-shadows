@@ -1,0 +1,81 @@
+{
+  "schema_version": 1,
+  "session_id": "session_002",
+  "character_id": "cristoff-lepierre",
+  "date": "2026-09-23",
+  "rolls": [
+    {
+      "move": "Figure Someone Out",
+      "modifier_key": "Mind",
+      "circle": null,
+      "instinct_die": null,
+      "other_die": null,
+      "modifier": 2,
+      "total": 11,
+      "result": "strong_hit",
+      "advanced_move": false,
+      "extreme_failure": false
+    },
+    {
+      "move": "Mislead, Distract, or Trick",
+      "modifier_key": "Mind",
+      "circle": null,
+      "instinct_die": null,
+      "other_die": null,
+      "modifier": 2,
+      "total": 9,
+      "result": "weak_hit",
+      "advanced_move": false,
+      "extreme_failure": false
+    },
+    {
+      "move": "Turn to Violence",
+      "modifier_key": "Blood",
+      "circle": null,
+      "instinct_die": null,
+      "other_die": null,
+      "modifier": 1,
+      "total": 12,
+      "result": "strong_hit",
+      "advanced_move": false,
+      "extreme_failure": false
+    },
+    {
+      "move": "Turn to Violence",
+      "modifier_key": "Blood",
+      "circle": null,
+      "instinct_die": null,
+      "other_die": null,
+      "modifier": 1,
+      "total": 10,
+      "result": "strong_hit",
+      "advanced_move": false,
+      "extreme_failure": false
+    },
+    {
+      "move": "Keep Your Cool",
+      "modifier_key": "Spirit",
+      "circle": null,
+      "instinct_die": null,
+      "other_die": null,
+      "modifier": -1,
+      "total": 7,
+      "result": "weak_hit",
+      "advanced_move": false,
+      "extreme_failure": false
+    }
+  ],
+  "active_arc_ids": [],
+  "touched_arc_ids": [
+    "arc-006"
+  ],
+  "pacing_audit": {
+    "meaningful_choice_prompted": true,
+    "mechanics_gate_triggers": 4,
+    "move_adjudications": 21,
+    "consequential_rolls": 5,
+    "world_state_touches": 4,
+    "handoff_written": true,
+    "healthy_short_session": true
+  }
+}
