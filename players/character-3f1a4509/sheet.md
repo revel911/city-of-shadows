@@ -10,10 +10,10 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **Home Circle:** Wild
 
 ## STATS
-- **Blood:** TBD
-- **Heart:** TBD
-- **Mind:** TBD
-- **Spirit:** TBD
+- **Blood:** +0
+- **Heart:** +1
+- **Mind:** +0
+- **Spirit:** +2
 
 ## MOVES
 ### Playbook
