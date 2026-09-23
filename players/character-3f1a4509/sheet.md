@@ -24,7 +24,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - Contract of Hearth — Favored Fate: when you aid an ally, roll with Heart. 10+: they gain +1 forward. 7-9: they still benefit, you take -1 forward. Miss: both suffer -1 ongoing for the scene.
 - Faerie Powers: Nature's Caress (touch heals 2-harm, not self), Glamours (illusions that fool the senses), Bedlam (touch a vulnerable target to place a chosen emotion for the scene; mark corruption to direct that emotion at a chosen target)
 - Words Are Wind — she knows instantly when someone breaks their word to her; take a Debt on them and +1 ongoing to claim what she's owed until they make it right.
-- Dual Kith — she has opened herself to another kith (move from another Wild playbook — chosen in the Dual Kith step; currently open)
+- Dual Kith — she has opened herself to another kith (one move from another Wild playbook; currently open)
 - The Bound Word — deals and promises she makes are enforced by fate; if any party breaks their word, both the MC and the other parties gain 1 hold against the offender.
 ### Cross-archetype
 - None
@@ -61,5 +61,5 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 ## NOTES & OPEN QUESTIONS
 - Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith, Contract of Hearth (Favored Fate)
 - Faerie Powers: Nature's Caress, Glamours, Bedlam
-- **Dual Kith move not yet chosen** (one Wild-playbook move — Imp, Oracle/Spectre? no: Wild = Fae/Imp/Tainted. Pick from Imp or Tainted.)
+- Dual Kith move not yet chosen (one move from Imp or Tainted)
 - Anchors and gear not yet set
