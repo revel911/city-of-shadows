@@ -1,23 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "e0634822c6d3b43f595d05855639d691bb2ebd9c",
-  "last_successful_run": "2026-09-23T10:34:08.712Z",
+  "last_processed_commit": "5f51b1f3488648fc744cb948a3565368ccfa0a18",
+  "last_successful_run": "2026-09-23T16:37:37.227Z",
   "last_city_turn": "2026-09-22",
-  "arc_cooldowns": {
-    "arc-013": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260824104235",
-      "phase": "publish",
-      "completed_at": "2026-08-24T10:42:35.403Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260824164426",
       "phase": "reconcile",
@@ -1119,7 +1106,18 @@
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
       "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260923163737",
+      "phase": "reconcile",
+      "completed_at": "2026-09-23T16:37:37.227Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence beyond the Aldridge confrontation, which is already reflected in the projection (npc_aldridge exists, relationship rel_cristoff_aldridge exists, arc-006 escalating). No established facts require repair. No world advance performed.",
+      "dry_run": false
     }
   ],
-  "last_processed_session": "cristoff-lepierre-session_001.json"
+  "last_processed_session": "cristoff-lepierre-session_002.json"
 }
