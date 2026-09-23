@@ -20,8 +20,8 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - TBD (Faerie Magic given up to induction)
 ### Extension / Subtype
 - Elemental (Seeming) — Trait: when you push your body beyond its limits to tap your element, mark a Circle. Drawback: refuse a plea for help from a human, mark a Circle.
-- Woodblood (Kith) — When you mark Wild, you may become one with the natural world and communicate with plants and animals in the area for the rest of the scene. Leaves a lingering Wild scent, marking you as intruder or potential ally to powerful Wild beings.
-- Contract: TBD
+- Woodblood (Kith) — When you mark Wild, you may become one with the natural world and communicate with plants and animals in the area for the rest of the scene. Leaves a lingering Wild scent.
+- Contract of Hearth — Favored Fate: when you aid an ally, roll with Heart. 10+: they gain +1 forward. 7-9: they still benefit, you take -1 forward. Miss: both suffer -1 ongoing for the scene.
 ### Cross-archetype
 - None
 
@@ -49,7 +49,6 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **End Move:** TBD
 
 ## NOTES & OPEN QUESTIONS
-- Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith
-- Contract not yet selected
+- Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith, Contract of Hearth (Favored Fate) — MC-picked
 - Faerie powers not yet selected
 - Mortal relationships / anchors not yet set
