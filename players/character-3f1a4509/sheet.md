@@ -6,7 +6,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 ## ARCHETYPE / PLAYBOOK
 - **Playbook:** The Fae
 - **Experience Tier:** Established (6 advances)
-- **World of Darkness Extension:** Changeling: The Lost (Elemental; inducted — trades starting Fae move for Seeming + first Contract)
+- **World of Darkness Extension:** Changeling: The Lost (Elemental / Woodblood; inducted — trades starting Fae move for Seeming + first Contract)
 - **Home Circle:** Wild
 
 ## STATS
@@ -19,8 +19,8 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 ### Playbook
 - TBD (Faerie Magic given up to induction)
 ### Extension / Subtype
-- Elemental (Seeming) — Trait: when you push your body beyond its limits to tap into your element, mark a Circle. Drawback: if you refuse a plea for help from a human, mark a Circle.
-- Kith: TBD
+- Elemental (Seeming) — Trait: when you push your body beyond its limits to tap your element, mark a Circle. Drawback: refuse a plea for help from a human, mark a Circle.
+- Woodblood (Kith) — When you mark Wild, you may become one with the natural world and communicate with plants and animals in the area for the rest of the scene. Leaves a lingering Wild scent, marking you as intruder or potential ally to powerful Wild beings.
 - Contract: TBD
 ### Cross-archetype
 - None
@@ -49,7 +49,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **End Move:** TBD
 
 ## NOTES & OPEN QUESTIONS
-- Extension: Changeling: The Lost, Elemental Seeming
-- Kith and Contract not yet selected
+- Extension: Changeling: The Lost, Elemental Seeming, Woodblood Kith
+- Contract not yet selected
 - Faerie powers not yet selected
 - Mortal relationships / anchors not yet set
