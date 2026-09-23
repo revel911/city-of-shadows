@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "session_id": "cristoff-lepierre:session_002",
+  "character_id": "cristoff-lepierre",
+  "closed_at": "2026-09-23T02:17:37.522Z",
+  "base_world_revision": 31,
+  "resulting_world_revision": 32,
+  "world_impact": {
+    "level": "personal",
+    "summary": "Aldridge, claiming to represent the owners of the burned black sedan, confronted Cristoff at The Nail and demanded prior contact before Cristoff pursues the courier's sender. He left a face-down phone on the table.",
+    "affected_ids": [
+      "cristoff-lepierre",
+      "npc_aldridge",
+      "arc-006"
+    ],
+    "fiction_time": ""
+  },
+  "touched": [
+    "npc_patch",
+    "location_patch",
+    "relationship_patch",
+    "arc_patch"
+  ],
+  "public_event": null,
+  "conflicts": [],
+  "warnings": []
+}
