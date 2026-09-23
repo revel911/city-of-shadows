@@ -3,14 +3,17 @@
   "active": true,
   "character_id": "cristoff-lepierre",
   "world_revision": 31,
-  "updated_at": "2026-09-23T02:16:02.003Z",
-  "summary": "Cristoff is at The Nail in Oregon Hill. Aldridge has left after a tense exchange, leaving a face-down phone on the table. A second drink has been delivered.",
+  "updated_at": "2026-09-23T02:17:06.128Z",
+  "summary": "Cristoff is at The Nail in Oregon Hill. Aldridge, a man claiming to work for the owners of the burned black sedan, confronted him about the two dead couriers, warned that the open phone line exposed Cristoff's location, and demanded Cristoff contact him before pursuing the courier's sender. Aldridge left a face-down phone on the table and drove off in a beige Camry. A second drink has been delivered.",
   "location_id": "loc_the_nail",
   "present_entity_ids": [],
   "open_threads": [
-    "Aldridge's face-down phone on the table",
-    "Aldridge's demand to be contacted before Cristoff pursues the courier's sender",
-    "The sigil-marked envelope in Cristoff's possession"
+    "Aldridge's face-down phone on the table, left deliberately",
+    "Aldridge's demand: contact him before pursuing whoever sent the courier",
+    "The sigil-marked envelope in Cristoff's possession",
+    "The open phone line that may have exposed Cristoff's location",
+    "The cleanup crew's identity and the heart box's destination",
+    "Ray Cutler's present whereabouts and condition"
   ],
   "pending_mechanics": [],
   "thread_id": "1551721516582965330",
