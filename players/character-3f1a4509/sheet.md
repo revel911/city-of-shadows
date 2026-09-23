@@ -6,7 +6,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 ## ARCHETYPE / PLAYBOOK
 - **Playbook:** The Fae
 - **Experience Tier:** Established (6 advances)
-- **World of Darkness Extension:** TBD (Changeling available)
+- **World of Darkness Extension:** Changeling: The Lost (inducted — trades starting Fae move for Seeming + first Contract)
 - **Home Circle:** Wild
 
 ## STATS
@@ -17,9 +17,9 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 
 ## MOVES
 ### Playbook
-- TBD
+- TBD (Faerie Magic given up to induction)
 ### Extension / Subtype
-- TBD
+- TBD (Seeming trait + first Contract)
 ### Cross-archetype
 - None
 
@@ -47,6 +47,7 @@ She/her. Medium build, strong, long brown curly hair, purple eyes. A fae who gre
 - **End Move:** TBD
 
 ## NOTES & OPEN QUESTIONS
-- Experience tier set: Established (6 advances to spend in Phase 10)
+- Extension: Changeling: The Lost, induction chosen
+- Seeming, Kith, and Contract not yet selected
 - Faerie powers not yet selected
 - Mortal relationships / anchors not yet set
