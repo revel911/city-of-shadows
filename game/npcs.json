@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-22",
+  "last_updated": "2026-09-23",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -1671,6 +1671,38 @@
       "updated_by_session": "operator:personality-expansion",
       "revision": 1,
       "last_updated": "2026-09-14"
+    },
+    {
+      "id": "npc_aldridge",
+      "name": "Aldridge",
+      "faction": "Power",
+      "hub": "Oregon Hill",
+      "hub_id": "hub_oregon_hill",
+      "arc_ids": [
+        "arc-006"
+      ],
+      "status": "active",
+      "role": "Man in his fifties claiming to work for the owners of the burned black sedan; confronted Cristoff about the two dead couriers and demanded prior contact before Cristoff pursues the courier's sender.",
+      "player_interaction": "Met Cristoff at The Nail. Left a face-down phone on the table and drove off in a beige Camry.",
+      "personality": {
+        "moral": 3,
+        "order": 4,
+        "manner": 3,
+        "violence": 3,
+        "voice_note": "Flat and unhurried. Speaks to the room, not always to the person. Says exactly what he means and stops. Watches the mirror, not the door.",
+        "verbosity": 2,
+        "humor_frequency": 1,
+        "humor_style": "Rare or absent; never force a joke.",
+        "contrast_note": "Reads as a talker with a job, not a night-out drinker; ordered soda and left it untouched.",
+        "calibration_note": "Authored from first meeting at The Nail, session_002. No prior history claimed.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Not established; no signals in play."
+      },
+      "last_seen": "session_002",
+      "notes": "Drove a beige Camry. Left a face-down phone on the table at The Nail. Claimed the two dead couriers were his employer's assets. Warned that the open phone line exposed Cristoff's location. Said there is no number and he'll know if Cristoff is looking.",
+      "revision": 1,
+      "last_updated": "2026-09-23",
+      "updated_by_session": "cristoff-lepierre:session_002"
     }
   ]
 }
