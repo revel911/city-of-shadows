@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-22",
+  "last_updated": "2026-09-23",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -766,16 +766,18 @@
       "id": "loc_the_nail",
       "name": "The Nail",
       "hub_id": "hub_oregon_hill",
-      "type": "Bar / information broker",
+      "type": "bar",
       "controller_ids": [
         "npc_priest"
       ],
       "controller_note": "Priest",
       "status": "active",
-      "description": "A bar on Idlewood Avenue where information is charged by the drink.",
-      "atmosphere": "Quiet, watchful, economical",
-      "notes": "Jacob has back-door access.",
-      "last_updated": "2026-08-21"
+      "description": "A corner bar in Oregon Hill. Corner booth against the wall, no window, furthest from the door. TV behind the bar.",
+      "atmosphere": "Quiet, working-hours crowd. Bartender minds his own business.",
+      "notes": "Site of the session_002 meeting between Cristoff and Aldridge.",
+      "last_updated": "2026-09-23",
+      "revision": 1,
+      "updated_by_session": "cristoff-lepierre:session_002"
     },
     {
       "id": "loc_cutlers_gym",
