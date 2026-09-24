@@ -291,7 +291,7 @@ test('manual dice reports identify both dice and reject incomplete or invalid re
   );
   assert.match(
     parseManualRoll('I rolled a 3 on the dice').error,
-    /two-dice total or both dice/i
+    /total of your two dice before modifiers/i
   );
   assert.match(parseManualRoll('I roll a 13').error, /2 to 12/i);
   assert.match(parseManualRoll('regular 7, instinct 1').error, /1 to 6/i);

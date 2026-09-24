@@ -301,5 +301,21 @@
     "must_match": [
       "pending|unresolved|awaiting"
     ]
+  },
+  {
+    "id": "priest_roll_prompt_plain_language",
+    "prompt": "Mechanics depth 3. The player is talking to Priest at the bar to learn what Priest wants from them. They say: Trying to read Priest. The adjudicator has confirmed Figure Someone Out. Establish the approach, request that move, and stop before the outcome.",
+    "must_include": [
+      "<roll_request>",
+      "**Figure Someone Out**",
+      "/roll"
+    ],
+    "must_match": [
+      "total.*before modifiers"
+    ],
+    "must_not_include": [
+      "I rolled an 8",
+      "<close_session>"
+    ]
   }
 ]

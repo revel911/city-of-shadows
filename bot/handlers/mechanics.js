@@ -150,7 +150,7 @@ export function buildMoveAuditContext(turnsWithoutRoll = 0) {
   return [
     '[SYSTEM — REQUIRED MOVE AUDIT]',
     'Before narrating any outcome, compare the player’s present action against every basic move and every exact move on the active character sheet.',
-    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, tell them they may report the 2d6 total, report both dice, or use /roll, and stop before the outcome.',
+    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, tell them they may tell you the total of their two dice before modifiers, report both dice, or use /roll, and stop before the outcome.',
     'Do not demand a roll for routine travel, ordinary questions, passive observation, retrieving gear, or unopposed actions with no meaningful consequence.',
     'Keep Your Cool applies when immediate pressure or danger makes an action or deliberate composure consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
     'Put a Name to a Face requires a person: a name connected to a face or vice versa. Symbols, logos, objects, places, and writing are not this move.',
@@ -169,7 +169,7 @@ export function buildMechanicsGateContext(expectation, depth = 3) {
     '[SYSTEM — REQUIRED MECHANICS GATE]',
     `The player’s declared action clearly triggers ${expectation.move}: ${expectation.reason}.`,
     'Treat their words as intent and method, not as a successful outcome.',
-    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly tell the player they may report the 2d6 total, report both dice, or use /roll, and stop before resolving the triggered action.',
+    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly tell the player they may tell you the total of their two dice before modifiers, report both dice, or use /roll, and stop before resolving the triggered action.',
     depth <= 3
       ? 'The player’s mechanics depth requires you to name the move once in the visible roll prompt.'
       : 'Keep the move name and modifier behind the curtain. The visible prose must still offer a manual total or /roll.',
@@ -192,8 +192,8 @@ function expectedRequest(expectation) {
 
 export function buildMechanicsFallback(expectation, depth = 3) {
   const visible = depth <= 3
-    ? `That triggers **${expectation.move}**. Say \`I rolled an 8\`, report both dice, or use \`/roll\`.`
-    : 'The outcome is uncertain. Report the 2d6 total, report both dice, or use `/roll`.';
+    ? `That triggers **${expectation.move}**. Roll two dice and tell me their total before modifiers, or use \`/roll\`.`
+    : 'The outcome is uncertain. Roll two dice and tell me their total before modifiers, or use `/roll`.';
   return `${visible}\n\n<roll_request>${JSON.stringify(expectedRequest(expectation))}</roll_request>`;
 }
 
@@ -340,7 +340,7 @@ export function parseManualRoll(text) {
 
   if (!instinctMatch) {
     return {
-      error: 'Manual move rolls need a two-dice total or both dice. Try I rolled an 8 or regular 3, instinct 1.',
+      error: 'Tell me the total of your two dice before modifiers, or report both dice like regular 3, instinct 1.',
     };
   }
 
@@ -461,6 +461,18 @@ export function createRollRecord({
     extreme_failure: result === 'miss' && resolvedInstinct === 1,
     rolled_at: rolledAt,
   };
+}
+
+// Normalize move labels at the Discord boundary; leave code and ordinary prose alone.
+export function formatMoveNames(text, additionalMoves = []) {
+  const names = [...Object.keys(BASIC_MOVE_MODIFIERS).map(name => name.replace(/\b\w+/g,
+    word => word === 'npc' ? 'NPC' : ['a', 'an', 'to', 'of', 'or', 'the'].includes(word) ? word : word[0].toUpperCase() + word.slice(1))),
+    ...additionalMoves.filter(Boolean)];
+  const pattern = [...new Set(names)].sort((a, b) => b.length - a.length)
+    .map(name => name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|');
+  const move = new RegExp('(?<![\\w*])(?:\\*\\*)?(' + pattern + ')(?:\\*\\*)?(?![\\w*])', 'g');
+  return String(text || '').split(/(```[\s\S]*?```|`[^`]*`)/g)
+    .map(part => part.startsWith('`') ? part : part.replace(move, '**$1**')).join('');
 }
 
 export function formatRoll(record, depth = 3) {

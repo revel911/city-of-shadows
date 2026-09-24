@@ -38,6 +38,7 @@ import {
   detectMechanicsExpectation,
   deriveActiveArcIds,
   formatRoll,
+  formatMoveNames,
   mergeDebtPatches,
   mechanicsResponseProblems,
   nextSessionId,
@@ -159,7 +160,7 @@ export function contextualManualRoll(session, playerContent) {
     return { roll: explicit };
   }
   if (confirmation?.request === session.pendingRoll) {
-    if (/^(?:yes|yeah|yep|yup|correct|right|sure|affirmative|that's right|that is right)[.!]*$/i.test(input)) {
+    if (/^(?:(?:yes|yeah|yep|yup|correct|right|sure|affirmative|that's right|that is right)(?:,?\s+before modifiers)?|before modifiers)[.!]*$/i.test(input)) {
       session.rollConfirmation = null;
       return { roll: parseManualRoll(`I rolled ${confirmation.total}`) };
     }
@@ -170,7 +171,6 @@ export function contextualManualRoll(session, playerContent) {
   }
   const number = input.match(/^(-?\d+)[.!]?$/);
   if (!number) {
-    session.rollConfirmation = null;
     return { roll: null };
   }
   if (Number.isInteger(session.pendingManualRoll?.rawTotal)) {
@@ -178,10 +178,7 @@ export function contextualManualRoll(session, playerContent) {
     return { roll: parseManualRoll(`instinct ${number[1]}`) };
   }
   session.rollConfirmation = null;
-  const roll = parseManualRoll(`I rolled ${number[1]}`);
-  if (roll.error) return { roll };
-  session.rollConfirmation = { request: session.pendingRoll, total: roll.rawTotal };
-  return { reply: `Was your two-dice total ${roll.rawTotal}, before modifiers? Say yes, give the corrected total, or use \`/roll\`.` };
+  return { roll: parseManualRoll(`I rolled ${number[1]}`) };
 }
 
 export function pendingRollGuard(session, playerContent) {
@@ -190,11 +187,12 @@ export function pendingRollGuard(session, playerContent) {
   if (/^\s*(?:cancel(?: that)?|never mind|nevermind|I (?:do not|don't) do that|change of plan)\s*[.!]?\s*$/i.test(playerContent)) {
     session.pendingRoll = null;
     session.pendingManualRoll = null;
+    session.rollConfirmation = null;
     session.turnsWithoutRoll = 0;
     return 'That action is canceled. Tell me what you do instead.';
   }
   const move = session.mechanicsDepth <= 3 ? ` for **${session.pendingRoll.move}**` : '';
-  return `A move is still waiting${move}. Say \`I rolled an 8\`, report both dice like \`regular 3, instinct 1\`, use \`/roll\`, or say **cancel that**.`;
+  return `A move is still waiting${move}. Tell me the total of your two dice before modifiers, report both dice like \`regular 3, instinct 1\`, use \`/roll\`, or say **cancel that**.`;
 }
 
 function visibleResponseText(response) {
@@ -510,7 +508,7 @@ export async function handleMessage(message) {
         const pendingTotal = session.pendingManualRoll?.rawTotal;
         if (!Number.isInteger(pendingTotal)) {
           await message.channel.send(
-            'Give me the two-dice total, or both dice. Try I rolled an 8 or regular 3, instinct 1.'
+            'Tell me the total of your two dice before modifiers, or report both dice like regular 3, instinct 1.'
           );
           return;
         }
@@ -1081,7 +1079,8 @@ async function postMCResponse(thread, response, session) {
   }
 
   const stripped = close ? stripCloseBlock(response) : response;
-  const { cleaned: visible, leakDetected } = sanitizePlayerFacingText(stripped);
+  const { cleaned, leakDetected } = sanitizePlayerFacingText(stripped);
+  const visible = formatMoveNames(cleaned, [session.pendingRoll?.move, session.rolls?.at(-1)?.move]);
   if (leakDetected) {
     console.warn(
       `[session ${session.threadId}] sanitize stripped structured leak from MC output` +

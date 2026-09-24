@@ -269,7 +269,7 @@ roll_protocol:
     bot reads canonical state, validates or rolls the dice, applies the modifier,
     asks for the Instinct Die only on a manual miss, records the result, and
     injects it into your next turn.
-  prompt_format: "That triggers a move. Say I rolled an 8, report both dice, or use /roll."
+  prompt_format: "That triggers **Move Name**. Roll two dice and tell me their total before modifiers, or use /roll."
   forbidden:
     - asking the player to calculate a modifier or total
     - inventing or changing the bot's result

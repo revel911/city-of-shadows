@@ -33,8 +33,11 @@ When a player action triggers uncertainty:
 <roll_request>{"move":"Keep Your Cool","modifier_type":"stat","modifier_key":"Spirit","circle":null,"forward":0,"reason":"Cross the buckling catwalk before it gives way"}</roll_request>
 ```
 
-3. End the visible prose by offering a manual subtotal such as `I rolled an 8`,
-   both individual dice, or `/roll`.
+3. Bold move names whenever they appear in visible prose. End a roll request
+   with: "Roll two dice and tell me their total before modifiers, or use `/roll`."
+   Accept a bare number as that subtotal without another confirmation. Players
+   may also report both individual dice. Do not require a scripted phrase or
+   suggest a particular roll result.
 4. Stop. Do not narrate an outcome until the bot returns an authoritative result.
 5. The bot reads the modifier from `state.json`. With `/roll`, it rolls 2d6. For
    a manual subtotal, it validates the 2-12 range and applies the canonical

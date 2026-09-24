@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-09-24 - Natural roll replies and consistent move formatting
+
+- Accept bare dice totals immediately and recognize contextual roll confirmations.
+- Ask for the two-dice total in plain language without suggesting a result.
+- Normalize visible move names to bold before posting to Discord.
+
 ## 2026-09-21 — Mechanics clarification follow-through
 
 - Accumulate the original action and follow-up answers while clarifying a move.
