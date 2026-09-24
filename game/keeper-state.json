@@ -1,27 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "e935d3287ae74f6e029df1eeaae0019f43052c5a",
-  "last_successful_run": "2026-09-23T19:23:46.648Z",
+  "last_processed_commit": "8ec7c98949503d3040723235a872dc0a66c60299",
+  "last_successful_run": "2026-09-24T10:34:32.479Z",
   "last_city_turn": "2026-09-23",
   "arc_cooldowns": {
-    "arc-013": 2
+    "arc-013": 1
   },
   "runs": [
-    {
-      "id": "keeper_city_turn_20260824192607",
-      "phase": "city-turn",
-      "completed_at": "2026-08-24T19:26:07.273Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_petra_holt",
-        "arc-002",
-        "hub_university"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "The Overwrite continues to escalate city-wide. The ley line under Monroe Park ran off-tempo again, now detected by unofficial instruments. In Shockoe Bottom, the fae-adjacent specimen's five-day retrieval deadline from April 24th has passed, escalating the situation with Petra Holt's principals. The Collector remains active and may have noticed warehouse activity. The compromised hunter network investigation continues, with the sealed field-research case potentially containing the traitor's name",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260825104202",
       "phase": "publish",
@@ -1123,6 +1108,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-013 (Creighton Court Redevelopment & Temporal Displacement). The pantry discrepancy at the East End Family Resource Center widens; Sister Catherine Burke's cross-checking against older parish records yields a name that matches no living roll, deepening the institutional footprint of the temporal displacement. No player characters affected.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260924103432",
+      "phase": "publish",
+      "completed_at": "2026-09-24T10:34:32.479Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
