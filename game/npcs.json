@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-23",
+  "last_updated": "2026-09-24",
   "npcs": [
     {
       "id": "npc_det_okafor",
@@ -1382,7 +1382,7 @@
         "arc-014"
       ],
       "status": "active",
-      "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact.",
+      "role": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact. She has begun lingering near The Exchange's bar and other Downtown night venues, asking after the ghost more openly, and her persistence has begun to make night-shift staff uneasy.",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -1401,9 +1401,9 @@
       "last_seen": "",
       "notes": "Last name unknown. She knows something she is not telling the ghost yet.",
       "associated_location_ids": [],
-      "updated_by_session": "keeper_city_turn_20260920192010",
-      "revision": 3,
-      "last_updated": "2026-09-20"
+      "updated_by_session": "keeper_city_turn_20260924192301",
+      "revision": 4,
+      "last_updated": "2026-09-24"
     },
     {
       "id": "npc_roz_czerny",

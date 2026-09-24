@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-23",
+  "as_of": "2026-09-24",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -467,7 +467,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "Night Venues",
-        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records. A medium has been seen lingering near the bar, asking after a ghost, and her questions have not gone unnoticed."
+        "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records. A medium has been seen lingering near the bar, asking after a ghost more persistently, and her questions have not gone unnoticed by staff or by parties who track the monster-poaching market."
       },
       "position": {
         "x": 1059,
@@ -1706,9 +1706,9 @@
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact.",
+        "subtype": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact. She has begun lingering near The Exchange's bar and other Downtown night venues, asking after the ghost more openly, and her persistence has begun to make night-shift staff uneasy.",
         "portrait": "",
-        "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact."
+        "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact. She has begun lingering near The Exchange's bar and other Downtown night venues, asking after the ghost more openly, and her persistence has begun to make night-shift staff uneasy."
       },
       "position": {
         "x": 626,
@@ -2126,8 +2126,8 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "personal",
-        "escalation": 1,
-        "details": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has."
+        "escalation": 2,
+        "details": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact."
       },
       "position": {
         "x": 1533,

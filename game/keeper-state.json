@@ -1,21 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "c1fe904d52205400e15494d211faa509fa9e281e",
-  "last_successful_run": "2026-09-24T16:36:43.786Z",
-  "last_city_turn": "2026-09-23",
-  "arc_cooldowns": {},
+  "last_processed_commit": "852b1b8ab4729a99391591cf6a08c5005bc2b43d",
+  "last_successful_run": "2026-09-24T19:23:01.344Z",
+  "last_city_turn": "2026-09-24",
+  "arc_cooldowns": {
+    "arc-014": 2
+  },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260825164410",
-      "phase": "reconcile",
-      "completed_at": "2026-08-25T16:44:10.869Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no session evidence provided; no changes made.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260825192623",
       "phase": "city-turn",
@@ -1117,6 +1108,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied (session_evidence empty). No established changes to apply. City-turn candidate arc-014 is present but this is the reconcile phase, so no world advance is made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260924192301",
+      "phase": "city-turn",
+      "completed_at": "2026-09-24T19:23:01.344Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_vera_medium",
+        "loc_the_exchange",
+        "arc-014",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). The nameless ghost's anchor pull intensifies in Downtown, and Vera (medium) escalates her quiet inquiries, drawing the attention of parties who track the monster-poaching market. No player characters are moved, harmed, or spoken for.",
       "dry_run": false
     }
   ],

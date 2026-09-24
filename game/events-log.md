@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-24] Medium's Persistence Draws Poaching-Market Attention Downtown
+
+**Hubs:** Downtown | **Circles:** Night
+
+A mortal medium known to leave offerings for a nameless ghost has been seen lingering near The Exchange's bar and other Downtown night venues, asking after the ghost's story more persistently than before. Her questions have reportedly drawn the quiet attention of parties who track the monster-poaching market, who are said to be confirming the standing mark's rumored presence in Downtown — the ghost of a dead vampire, something that shouldn't exist twice. No contact has been made, and no link between the mark and the nameless ghost has been confirmed. Night-shift staff at The Exchange describe her presence as unsettling, and the venue's unlogged traffic anomalies continue. The Consilium has not commented.
+
 ## [2026-09-23] Pantry Cross-Check Surfaces Name With No Living Roll
 
 **Hubs:** Creighton Court | **Circles:** Power
