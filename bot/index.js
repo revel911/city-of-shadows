@@ -6,6 +6,8 @@ import { readdir } from 'node:fs/promises';
 import { handleMessage, handleSessionControl } from './handlers/session.js';
 import { handleSelect as handlePlaySelect, SELECT_CUSTOM_ID as PLAY_SELECT_ID } from './commands/play.js';
 
+import { initializeArchive, captureArchiveMessage } from './handlers/archive-runtime.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const client = new Client({
@@ -14,7 +16,7 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
   ],
-  partials: [Partials.Channel],
+  partials: [Partials.Channel, Partials.Message],
 });
 
 client.commands = new Collection();
@@ -27,6 +29,7 @@ for (const file of await readdir(commandsDir)) {
 }
 
 client.once(Events.ClientReady, c => {
+  initializeArchive(c).catch(error => console.error(`[archive] initialization failed: ${error.message}`));
   console.log(`Ready as ${c.user.tag} — ${client.commands.size} commands loaded. revision=${process.env.APP_REVISION || 'unknown'}`);
 });
 
@@ -56,6 +59,7 @@ client.on(Events.InteractionCreate, async interaction => {
 });
 
 client.on(Events.MessageCreate, async message => {
+  await captureArchiveMessage(message).catch(error => console.error(`[archive] capture failed: ${error.message}`));
   if (message.author.bot) return;
   if (!message.channel.isThread()) return;
   try {
@@ -64,6 +68,20 @@ client.on(Events.MessageCreate, async message => {
     console.error('[message]', err);
     await message.channel.send('⚠️ Something went wrong while preparing that reply. Please try once more.').catch(() => {});
   }
+});
+
+client.on(Events.MessageUpdate, async (previous, message) => {
+  try {
+    if (!previous.partial) await captureArchiveMessage(previous);
+    await captureArchiveMessage(message);
+  } catch (error) { console.error(`[archive] edit capture failed: ${error.message}`); }
+});
+client.on(Events.MessageDelete, message => {
+  captureArchiveMessage(message, 'deleted').catch(error => console.error(`[archive] deletion capture failed: ${error.message}`));
+});
+client.on(Events.MessageBulkDelete, messages => {
+  for (const message of messages.values()) captureArchiveMessage(message, 'deleted')
+    .catch(error => console.error(`[archive] deletion capture failed: ${error.message}`));
 });
 
 process.on('unhandledRejection', err => console.error('unhandledRejection:', err));

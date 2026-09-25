@@ -11,6 +11,14 @@ primary_region = "iad"
   NODE_ENV = "production"
   GITHUB_REPO = "city-of-shadows"
   GITHUB_BRANCH = "main"
+  ARCHIVE_GITHUB_OWNER = "revel911"
+  ARCHIVE_GITHUB_REPO = "city-of-shadows-archive"
+  ARCHIVE_GITHUB_BRANCH = "main"
+  ARCHIVE_SPOOL_DIR = "/data/archive-spool"
+
+[mounts]
+  source = "archive_data"
+  destination = "/data"
 
 # Gateway bot — no inbound traffic, just a persistent worker.
 [[vm]]

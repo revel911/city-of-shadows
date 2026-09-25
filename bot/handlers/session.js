@@ -1,3 +1,4 @@
+import { registerArchiveThread } from './archive-runtime.js';
 import { randomUUID } from 'node:crypto';
 import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
 import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, retryableCloseWrites, persistencePayloadProblems } from './lifecycle.js';
@@ -122,6 +123,8 @@ export async function startSession(thread, player) {
   };
   if (session.rulesProfile.isNew) session.messages[0].content += '\n\n' + creationTurnContext(session);
   sessions.set(thread.id, session);
+  await registerArchiveThread(thread, { id: session.draftId, name: player.name })
+    .catch(error => console.error(`[archive] thread registration failed: ${error.message}`));
   await thread.send(sessionControls(session));
 
   await lock(session, async () => {
@@ -1903,6 +1906,8 @@ export async function processSaveOnboarding(thread, session, save) {
   session.rulesProfile = { isNew: progress.status === 'draft', playbook: parsedStatePatch?.playbook || currentState?.playbook || '', wod_extension: parsedStatePatch?.wod_extension || currentState?.wod_extension || '' };
   session.mechanicsSheet = save.sheet;
   await renameSessionThread(thread, displayName);
+  await registerArchiveThread(thread, { id, name: displayName })
+    .catch(error => console.error(`[archive] character registration failed: ${error.message}`));
   if (progress.status === 'ready') await thread.send(sessionControls(session));
   await thread.send(progress.status === 'draft' ? `Draft saved. Next: ${progress.next_step}` : `${displayName} is ready. Your character is saved.`);
   return { success: true };
@@ -2161,6 +2166,8 @@ async function processSessionClose(thread, session, close) {
     // "<username> — new character". Retitle before it's archived so the
     // reviewable record shows the character's name, not the player's username.
     await renameSessionThread(thread, displayName);
+    await registerArchiveThread(thread, { id, name: displayName })
+      .catch(error => console.error(`[archive] character registration failed: ${error.message}`));
     const closeOwnerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
     writes.push(['players-index', updateJSON('players/index.json', (current) => {
       const list = Array.isArray(current) ? current : [];

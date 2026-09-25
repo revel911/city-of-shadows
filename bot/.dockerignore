@@ -11,3 +11,6 @@ fly.toml
 test/
 **/.DS_Store
 **/Thumbs.db
+
+**/.archive-spool
+**/.archive-exports

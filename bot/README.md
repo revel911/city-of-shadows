@@ -21,6 +21,10 @@ between players, the model, and the GitHub-backed world. Start with
 
 | Link | Title | Information within |
 |---|---|---|
+| [archive.js](handlers/archive.js) | Transcript archive | Durable outbox, Discord snapshots, revision deduplication, recovery, and chronological exports |
+| [archive-github.js](handlers/archive-github.js) | Private archive storage | Visibility checks, isolated repository access, and conflict-safe batch writes |
+| [archive-runtime.js](handlers/archive-runtime.js) | Archive runtime | Session registration, event capture, thread discovery, and periodic recovery |
+| [archive.mjs](scripts/archive.mjs) | Archive operator CLI | Private archive status, historical backfill, and Markdown/JSON exports |
 | [lifecycle.js](handlers/lifecycle.js) | Player lifecycle | Explicit save/end routing, draft readiness, creation guidance, and retry-safe close writes |
 | [session.js](handlers/session.js) | Session orchestrator | Session start/turn/roll/close lifecycle, locks, checkpoints, parsing, reconciliation, persistence, and Discord posting |
 | [mc.js](handlers/mc.js) | Model and prompt layer | Stable reference loading, selective playbook/extension retrieval, opening context, compaction, generation, and move adjudication calls |

@@ -98,3 +98,12 @@ Do not treat dated files in `docs/superpowers/` as current contracts.
 - Does the session close patch only fields that changed?
 - Will another player's next opening context observe the result?
 - Do `npm test` and `npm run build:graph` pass?
+
+
+## Transcript storage versus model memory
+
+The private transcript archive captures the published Discord conversation
+independently of `session.messages`. Compaction may replace model history with a
+summary without changing the archive. Neither `buildOpeningContext`, narrator
+reference loading, nor Keeper projection reads archive data. Archive exports and
+backfills are operator tools; they do not change canonical world state.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-09-25 - Private session transcript archive
+
+- Archive published session messages separately from narrator summaries and public world state.
+- Capture edits/deletions with a durable outbox, private-repository checks, retries, and Discord history recovery.
+- Export chronological Markdown and JSON by character, thread, or date, retaining observed revisions.
+- Recover accessible historical sessions without adding transcripts to model context.
+
 ## 2026-09-24 - Natural roll replies and consistent move formatting
 
 - Accept bare dice totals immediately and recognize contextual roll confirmations.

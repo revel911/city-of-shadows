@@ -386,3 +386,69 @@ never chooses that recovery point for the player. Saved reports load on the next
 `/play`, even after a restart; they are retained separately from replaceable
 handoffs and checkpoints. Use player preferences for safety limits rather than
 putting them in continuity notes.
+
+
+## Private session transcript archive
+
+Full Discord transcripts are stored separately from the public world repository.
+The narrator continues to use handoffs, checkpoints, canonical state, and recent
+conversation. Archive files are never loaded by the narrator or City Keeper.
+
+Configure `ARCHIVE_GITHUB_OWNER`, `ARCHIVE_GITHUB_REPO`, and optionally
+`ARCHIVE_GITHUB_BRANCH` (default `main`). The repository must be private and
+separate from the world repository. Give the GitHub token Contents read/write
+access to it. `ARCHIVE_GITHUB_TOKEN` may supply a dedicated token; otherwise the
+existing `GITHUB_TOKEN` is used. An inaccessible or public repository fails closed:
+the bot retains its local queue and retries, without writing transcripts there.
+
+`ARCHIVE_SPOOL_DIR` must point to persistent storage in production. The hosted bot
+uses `/data/archive-spool` on the `archive_data` Fly volume. Before deploying to a
+new app, create that volume in the machine's region:
+
+```console
+fly volumes create archive_data --region iad --size 1
+```
+
+The bot captures published Discord messages, including player input, bot replies,
+dice receipts, edits, and observed deletions. It stores session/character IDs,
+authors, timestamps, attachment links, embeds, and message IDs. It excludes model
+prompts and unpublished drafts. Disk writes precede remote writes, which flush
+in batches every 30 seconds. Failed batches remain on disk across deployments.
+Discord history recovery runs at startup and every 15 minutes, covering active
+and accessible archived bot session threads. Other channels are not archived.
+
+Old threads are associated with a character by stored thread ID or an unambiguous
+character name. Unmatched legacy threads remain in the archive with a null
+character ID and can be exported by thread ID. New threads use the permanent
+character ID supplied by the session runtime.
+
+Run these commands from `bot/` with the archive environment configured:
+
+```console
+node scripts/archive.mjs status
+node scripts/archive.mjs backfill
+node scripts/archive.mjs export --out .archive-exports/book
+node scripts/archive.mjs export --character jacob-boone --from 2026-09-01 --to 2026-09-30 --out .archive-exports/jacob
+node scripts/archive.mjs export --thread DISCORD_THREAD_ID --out .archive-exports/session
+```
+
+Exports produce chronological `transcripts.md` and `transcripts.json`. Markdown
+shows the latest known text and marks edits/deletions; JSON retains every observed
+revision. Explicit OOC and correction prefixes are labeled, not discarded.
+Date filters use the message's original UTC date, inclusively. Manual backfill
+uses a separate persistent `backfill/` spool to avoid competing with the running
+bot; rerun it after failure. The automatic archive runs independently of session
+save/close and never sends transcript exports into Discord.
+
+Recovery cannot recreate messages deleted before capture, intermediate edits
+made while the bot was offline, inaccessible threads, or prior content of an
+uncached message edited before capture. Attachment URLs and metadata are saved;
+attachment file bytes are not backed up and links may expire. Keep private
+exports outside tracked files. Both `.archive-spool/` and `.archive-exports/` are
+excluded from Git and Docker builds. Obtain player agreement before publishing
+session material.
+
+Watch Fly logs for `[archive]` startup/recovery totals or pending retry errors.
+The private repository is the durable transcript backup; retain the Fly volume
+for queued writes. A loss of the volume can lose edits/deletions not yet uploaded,
+although messages still available in Discord can be recovered.

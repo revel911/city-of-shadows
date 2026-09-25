@@ -202,3 +202,18 @@ play creates recovery context; Save & end persists the full canonical close.
 Successful close writes are cached during a live retry so session counters,
 automatic corruption, and shared changes are not applied twice. This retry cache
 is in memory; it is not a multi-file atomic Git transaction.
+
+
+### Private transcript archive (separate repository)
+
+The private archive is not part of canonical world state or model context.
+`threads/<discord-thread-id>/session.json` holds character/thread metadata.
+`threads/<discord-thread-id>/<UTC-date>.json` holds deduplicated message snapshots
+and deletion events, bucketed by the original message date. Both use schema
+version 1. Snapshot IDs hash the visible message fields, excluding observation
+time, so reconnect recovery and write retries are idempotent. Published Discord
+content is archived verbatim; internal model messages are never an archive source.
+Original snapshots remain when edits/deletions occur. The persistent local
+outbox is acknowledged only after the private GitHub write succeeds.
+See the [Operator Guide](OPERATOR.md#private-session-transcript-archive) for setup,
+recovery limits, and exports. Never project archive records into the public graph.
