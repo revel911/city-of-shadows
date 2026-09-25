@@ -1,23 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "d73d25879a18ec9e67835d61b35c785a08aa43c9",
-  "last_successful_run": "2026-09-25T10:34:22.199Z",
+  "last_processed_commit": "40e0fd23416362839a65bc39224ace54cab9aa8c",
+  "last_successful_run": "2026-09-25T16:37:37.529Z",
   "last_city_turn": "2026-09-24",
-  "arc_cooldowns": {
-    "arc-014": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260826104228",
-      "phase": "publish",
-      "completed_at": "2026-08-26T10:42:28.111Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260826164600",
       "phase": "reconcile",
@@ -1120,6 +1107,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260925163737",
+      "phase": "reconcile",
+      "completed_at": "2026-09-25T16:37:37.529Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence supplied. Projection is internally consistent with recent public events; no established facts require repair. No city-turn candidate, so no world advance.",
       "dry_run": false
     }
   ],
