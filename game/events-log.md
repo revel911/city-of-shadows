@@ -7,6 +7,12 @@
 <!-- MC: append new entries above this line using the append_event MCP tool -->
 <!-- Entries are shown newest-first in the dashboard -->
 
+## [2026-09-25] Medium Begins Waiting Through Late Shift at The Exchange
+
+**Hubs:** Downtown | **Circles:** Night
+
+The mortal medium known for leaving offerings to a nameless ghost has begun waiting through the late shift at The Exchange, quietly noting who comes and goes, and has reportedly started leaving her offerings at a second Downtown location as well. Night-shift staff describe her presence as a standing unease, compounding the venue's already-noted unlogged traffic anomalies. Parties who track the monster-poaching market continue their quiet confirmation of a standing mark in Downtown — the ghost of a dead vampire, something that shouldn't exist twice — but no contact has been made and no link between the mark and the nameless ghost has been confirmed. The Consilium has not commented.
+
 ## [2026-09-24] Medium's Persistence Draws Poaching-Market Attention Downtown
 
 **Hubs:** Downtown | **Circles:** Night

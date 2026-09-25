@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-24",
+  "last_updated": "2026-09-25",
   "arcs": [
     {
       "id": "arc-001",
@@ -369,7 +369,7 @@
       "id": "arc-014",
       "title": "A Nameless Ghost — Identity & Anchor",
       "type": "personal",
-      "escalation": 2,
+      "escalation": 3,
       "status": "active",
       "hub_ids": [
         "hub_downtown"
@@ -378,19 +378,19 @@
         "npc_vera_medium"
       ],
       "character_ids": [],
-      "summary": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact.",
+      "summary": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact. She has now begun waiting through the late shift at The Exchange and leaving offerings at a second Downtown location, deepening the pressure without any contact or confirmation of a link.",
       "mc_notes": "Vera owes the ghost 1 Debt. The ghost may be mistaken for a vampire-ghost mark. Finding the anchor/identity may allow him to move on — or may not.",
       "agenda": "Bring A Nameless Ghost — Identity & Anchor into play through an existing connected NPC, hub, or character until opposed.",
       "impulse": "complicate identity, need, loyalty, or obligation",
       "clock": {
-        "current": 2,
+        "current": 3,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-09-24",
+      "revision": 3,
+      "last_updated": "2026-09-25",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260924192301"
+      "last_touched_session": "keeper_city_turn_20260925192241"
     }
   ],
   "schema_version": 2

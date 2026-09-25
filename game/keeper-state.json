@@ -1,21 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "40e0fd23416362839a65bc39224ace54cab9aa8c",
-  "last_successful_run": "2026-09-25T16:37:37.529Z",
-  "last_city_turn": "2026-09-24",
-  "arc_cooldowns": {},
+  "last_processed_commit": "d0da33bcc1e91225b9d66f266502be51ed964823",
+  "last_successful_run": "2026-09-25T19:22:41.463Z",
+  "last_city_turn": "2026-09-25",
+  "arc_cooldowns": {
+    "arc-014": 2
+  },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260826164600",
-      "phase": "reconcile",
-      "completed_at": "2026-08-26T16:46:00.858Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no session evidence provided; no changes made.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260826195521",
       "phase": "city-turn",
@@ -1118,6 +1109,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied. Projection is internally consistent with recent public events; no established facts require repair. No city-turn candidate, so no world advance.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260925192241",
+      "phase": "city-turn",
+      "completed_at": "2026-09-25T19:22:41.463Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_vera_medium",
+        "loc_the_exchange",
+        "arc-014",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). Vera (medium)'s persistent inquiries near The Exchange and Downtown night venues deepen the mistaken-identity pressure, and night-shift staff at The Exchange grow more uneasy. No player characters affected; no secrets revealed.",
       "dry_run": false
     }
   ],
