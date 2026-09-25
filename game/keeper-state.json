@@ -1,27 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "852b1b8ab4729a99391591cf6a08c5005bc2b43d",
-  "last_successful_run": "2026-09-24T19:23:01.344Z",
+  "last_processed_commit": "d73d25879a18ec9e67835d61b35c785a08aa43c9",
+  "last_successful_run": "2026-09-25T10:34:22.199Z",
   "last_city_turn": "2026-09-24",
   "arc_cooldowns": {
-    "arc-014": 2
+    "arc-014": 1
   },
   "runs": [
-    {
-      "id": "keeper_city_turn_20260825192623",
-      "phase": "city-turn",
-      "completed_at": "2026-08-25T19:26:23.482Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_petra_holt",
-        "arc-002",
-        "hub_shockoe_bottom"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn advanced the escalating Fae-Adjacent Specimen arc. Petra Holt's principals, having exhausted the retrieval deadline, now move to direct action. A known associate of Petra Holt is seen near the warehouse, and the specimen's presence becomes a more active problem in Shockoe Bottom.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260826104228",
       "phase": "publish",
@@ -1124,6 +1109,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). The nameless ghost's anchor pull intensifies in Downtown, and Vera (medium) escalates her quiet inquiries, drawing the attention of parties who track the monster-poaching market. No player characters are moved, harmed, or spoken for.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260925103422",
+      "phase": "publish",
+      "completed_at": "2026-09-25T10:34:22.199Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
