@@ -25,8 +25,9 @@ between players, the model, and the GitHub-backed world. Start with
 | [archive-github.js](handlers/archive-github.js) | Private archive storage | Visibility checks, isolated repository access, and conflict-safe batch writes |
 | [archive-runtime.js](handlers/archive-runtime.js) | Archive runtime | Session registration, event capture, thread discovery, and periodic recovery |
 | [archive.mjs](scripts/archive.mjs) | Archive operator CLI | Private archive status, historical backfill, and Markdown/JSON exports |
-| [lifecycle.js](handlers/lifecycle.js) | Player lifecycle | Explicit save/end routing, draft readiness, creation guidance, and retry-safe close writes |
-| [session.js](handlers/session.js) | Session orchestrator | Session start/turn/roll/close lifecycle, locks, checkpoints, parsing, reconciliation, persistence, and Discord posting |
+| [lifecycle.js](handlers/lifecycle.js) | Player lifecycle | Explicit save/end routing, draft readiness, creation guidance, and persistence payload validation |
+| [session.js](handlers/session.js) | Session orchestrator | Session start/turn/roll/close lifecycle, restart resume, parallel move routing, bot-owned roll prompts and buttons, locks, checkpoints, parsing, reconciliation, atomic persistence, and Discord posting |
+| [runtime-store.js](handlers/runtime-store.js) | Live-session snapshots | Per-thread transcript, pending mechanics, and draft snapshots on the private runtime volume for restart resume |
 | [mc.js](handlers/mc.js) | Model and prompt layer | Stable reference loading, selective playbook/extension retrieval, opening context, compaction, generation, and move adjudication calls |
 | [mechanics.js](handlers/mechanics.js) | Deterministic mechanics | Fast trigger gate, roll requests, modifiers, result records, state reconciliation, Debts, arcs, and session audit |
 | [move-adjudicator.js](handlers/move-adjudicator.js) | Semantic move router | Structured triggers, non-triggers, requirements, active character moves, adjudication prompt, and validated decisions |
@@ -37,7 +38,7 @@ between players, the model, and the GitHub-backed world. Start with
 | [scene-director.js](handlers/scene-director.js) | Scene director | Hidden scene-mode selection, variation, player-agency safeguards, and broad non-sensitive playstyle signals |
 | [character-sheet.js](handlers/character-sheet.js) | Sheet contract | Canonical section order, validation, and live-state rendering |
 | [profile.js](handlers/profile.js) | Player profiles | Discord-scoped profile paths, reads/writes, mechanics depth, safety, and ownership |
-| [github.js](handlers/github.js) | GitHub persistence | Contents API reads, optimistic writes, retries, and commit boundaries |
+| [github.js](handlers/github.js) | GitHub persistence | Contents API reads, optimistic writes, atomic multi-file commits through the Git Data API, retries, and commit boundaries |
 | [read-utils.js](handlers/read-utils.js) | Read-command utilities | Character resolution, event parsing, chunking, and world entity formatting |
 
 ## Slash commands
@@ -45,7 +46,7 @@ between players, the model, and the GitHub-backed world. Start with
 | Link | Command | Information within |
 |---|---|---|
 | [play.js](commands/play.js) | /play | Character selection, ownership checks, private thread creation, and session start |
-| [roll.js](commands/roll.js) | /roll | Resolution of the one pending canonical move |
+| [roll.js](commands/roll.js) | /roll | Resolution of the one pending canonical move (the roll prompt's **Roll for me** button does the same) |
 | [prefs.js](commands/prefs.js) | /prefs | Player-scoped mechanics and safety preference surfaces |
 | [sheet.js](commands/sheet.js) | /sheet | Character resolution and rendered sheet output |
 | [state.js](commands/state.js) | /state | Character mechanical-state output |

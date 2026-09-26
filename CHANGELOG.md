@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-09-26 - Faster turns, one-tap rolls, and restart-proof sessions
+
+- The bot now writes every roll prompt itself: move, canonical modifier, and
+  **Roll for me**, **Enter my dice**, and **Cancel action** buttons. The model
+  only emits the roll request, so roll turns no longer regenerate over wording.
+- Players can send both dice in one message, Instinct die first (`4 2`), or use
+  the dice form; totals still work and ask for the Instinct die only on a miss.
+- Ambiguous turns run the move adjudicator alongside the narrator instead of
+  before it. The narration is used as-is unless the adjudicator requires a roll.
+- Play turns no longer wait on GitHub: character state and the world revision are
+  cached, and recovery checkpoints are written after the reply is posted.
+- Session closes and character saves land as one atomic commit instead of 6-9
+  separate commits, so a save is all or nothing and triggers one Pages build.
+- Character creation commits drafts at stage changes, explicit saves, and
+  readiness instead of after every choice, and still confirms each choice in
+  the thread.
+- Live sessions are snapshotted to the bot's private volume after every turn.
+  After a restart or deploy, the next message resumes the exact conversation,
+  pending roll, and draft instead of asking the player to run `/play`.
+- Long replies keep the typing indicator alive and post a short "still working"
+  note after about 25 seconds; closes post the narration before save status.
+- Removed the unreachable roll-confirmation path and the per-file close retry
+  bookkeeping that atomic commits replace.
+
 ## 2026-09-25 - Private session transcript archive
 
 - Archive published session messages separately from narrator summaries and public world state.

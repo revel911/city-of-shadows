@@ -141,7 +141,7 @@ test('pending move blocks narrative bypass while allowing explicit cancellation'
     pendingRoll: { move: 'Keep Your Cool' },
   };
   assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /Keep Your Cool/);
-  assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /regular 3, instinct 1/);
+  assert.match(pendingRollGuard(visibleSession, 'I pull the rope again.'), /Instinct die first/);
   assert.ok(visibleSession.pendingRoll);
   assert.equal(pendingRollGuard(
     visibleSession,
@@ -167,26 +167,21 @@ test('bare totals resolve immediately in pending move context', () => {
   for (let total = 2; total <= 12; total++) {
     const session = { pendingRoll: { move: 'Figure Someone Out' } };
     assert.deepEqual(contextualManualRoll(session, String(total)), { roll: { rawTotal: total } });
-    assert.equal(session.rollConfirmation, null);
   }
   assert.equal(contextualManualRoll({}, '7').roll, null);
 });
 
-test('older confirmations accept contextual replies and preserve unclear answers', () => {
-  for (const answer of ['Before modifiers', 'yes, before modifiers.', 'yep!']) {
-    const request = { move: 'Figure Someone Out' };
-    const session = { pendingRoll: request, rollConfirmation: { request, total: 7 } };
-    assert.deepEqual(contextualManualRoll(session, 'hmm'), { roll: null });
-    assert.equal(session.rollConfirmation.total, 7);
-    assert.deepEqual(contextualManualRoll(session, answer), { roll: { rawTotal: 7 } });
-    assert.equal(session.rollConfirmation, null);
-  }
+test('both dice resolve in one message while a roll is pending', () => {
+  const session = { pendingRoll: { move: 'Keep Your Cool' } };
+  assert.deepEqual(contextualManualRoll(session, '4 2').roll, { instinct: 4, other: 2 });
+  assert.deepEqual(contextualManualRoll(session, '1, 6').roll, { instinct: 1, other: 6 });
+  assert.match(contextualManualRoll(session, '9 2').roll.error, /1 to 6/);
+  assert.equal(contextualManualRoll({}, '4 2').roll, null);
 });
 
 test('contextual rolls allow corrections and preserve validation and die context', () => {
-  const request = { move: 'Keep Your Cool' };
-  const session = { pendingRoll: request, rollConfirmation: { request, total: 9 } };
-  assert.match(contextualManualRoll(session, 'no').reply, /What was your two-dice total/);
+  const session = { pendingRoll: { move: 'Keep Your Cool' } };
+  assert.deepEqual(contextualManualRoll(session, 'no'), { roll: null });
   assert.deepEqual(contextualManualRoll(session, '7').roll, { rawTotal: 7 });
   for (const input of ['1', '13', '-2', '0']) {
     assert.match(contextualManualRoll(session, input).roll.error, /2 to 12/);
@@ -196,10 +191,8 @@ test('contextual rolls allow corrections and preserve validation and die context
   assert.match(contextualManualRoll(session, '9').roll.error, /1 to 6/);
 });
 
-test('confirmation cannot carry over to another move or override an explicit report', () => {
-  const request = { move: 'Keep Your Cool' };
-  const session = { pendingRoll: { move: 'Keep Your Cool' }, rollConfirmation: { request, total: 9 } };
+test('an explicit report always wins over bare-number context', () => {
+  const session = { pendingRoll: { move: 'Keep Your Cool' }, pendingManualRoll: { rawTotal: 4 } };
   assert.equal(contextualManualRoll(session, 'Before modifiers').roll, null);
   assert.deepEqual(contextualManualRoll(session, 'I rolled an 8').roll, { rawTotal: 8 });
-  assert.equal(session.rollConfirmation, null);
 });

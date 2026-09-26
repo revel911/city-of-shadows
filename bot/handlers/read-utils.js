@@ -93,3 +93,11 @@ export async function sendChunked(interaction, content) {
     await interaction.followUp({ content: part });
   }
 }
+
+export function canPlayCharacter(character, discordId, operatorIds = process.env.OPERATOR_DISCORD_IDS || '') {
+  if (!character || character.id === '__new__') return true;
+  if (character.shared === true || !character.owner_id) return true;
+  if (String(character.owner_id) === String(discordId)) return true;
+  const operators = String(operatorIds).split(',').map(value => value.trim()).filter(Boolean);
+  return operators.includes(String(discordId));
+}

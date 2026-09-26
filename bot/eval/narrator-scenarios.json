@@ -4,12 +4,13 @@
     "prompt": "Jacob runs across a collapsing catwalk while debris falls around him. Trigger the correct move. Do not assume any dice result.",
     "must_include": [
       "<roll_request>",
-      "Keep Your Cool",
-      "/roll"
+      "Keep Your Cool"
     ],
     "must_not_include": [
       "<close_session>",
-      "you make it safely"
+      "you make it safely",
+      "/roll",
+      "before modifiers"
     ]
   },
   {
@@ -17,14 +18,15 @@
     "prompt": "An alert driver is watching a warehouse from his truck. Jacob says: I find a long path behind his vehicle, stay out of reflections and mirrors, sneak up on him, then pull him out to question him. Treat this as declared intent. Stop at the first required move and do not narrate success.",
     "must_include": [
       "<roll_request>",
-      "Turn to Violence",
-      "/roll"
+      "Turn to Violence"
     ],
     "must_not_include": [
       "you grab him",
       "you pull him",
       "you restrain him",
-      "he is pinned"
+      "he is pinned",
+      "/roll",
+      "before modifiers"
     ]
   },
   {
@@ -32,14 +34,15 @@
     "prompt": "Jacob stands on wet concrete beside a dark canal with a strong current. A pale hand-shaped object is caught 100 feet away in a lock gate. He says: I throw the rope hoping to loop it so we can pull the thing to us. Stop at the first required move and do not narrate whether the rope catches.",
     "must_include": [
       "<roll_request>",
-      "Keep Your Cool",
-      "/roll"
+      "Keep Your Cool"
     ],
     "must_not_include": [
       "rope catches",
       "loop settles",
       "lands short",
-      "throw again"
+      "throw again",
+      "/roll",
+      "before modifiers"
     ]
   },
   {
@@ -304,18 +307,16 @@
   },
   {
     "id": "priest_roll_prompt_plain_language",
-    "prompt": "Mechanics depth 3. The player is talking to Priest at the bar to learn what Priest wants from them. They say: Trying to read Priest. The adjudicator has confirmed Figure Someone Out. Establish the approach, request that move, and stop before the outcome.",
+    "prompt": "Mechanics depth 3. The player is talking to Priest at the bar to learn what Priest wants from them. They say: Trying to read Priest. The adjudicator has confirmed Figure Someone Out. Establish the approach, request that move, and stop before the outcome. The bot posts the roll prompt and buttons.",
     "must_include": [
       "<roll_request>",
-      "**Figure Someone Out**",
-      "/roll"
-    ],
-    "must_match": [
-      "total.*before modifiers"
+      "Figure Someone Out"
     ],
     "must_not_include": [
       "I rolled an 8",
-      "<close_session>"
+      "<close_session>",
+      "/roll",
+      "before modifiers"
     ]
   }
 ]

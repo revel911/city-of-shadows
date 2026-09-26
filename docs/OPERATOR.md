@@ -204,7 +204,7 @@ the still-pending evidence.
 | Command | Reply visibility | Behavior |
 |---------|------------------|----------|
 | `/play [character]` | ephemeral | Lists owned and explicitly shared characters plus `+ New character`. Operators may override ownership. |
-| `/roll` | public | Resolves the pending move inside an active session and injects the authoritative result back into the MC conversation. |
+| `/roll` | public | Resolves the pending move inside an active session and injects the authoritative result back into the MC conversation. The bot's roll prompt offers the same through **Roll for me**, plus **Enter my dice** and **Cancel action** buttons. |
 
 ### Narrator regression evaluation
 
@@ -408,6 +408,12 @@ new app, create that volume in the machine's region:
 ```console
 fly volumes create archive_data --region iad --size 1
 ```
+
+`RUNTIME_DIR` (`/data/runtime` on the same volume) holds live-session snapshots:
+the in-thread transcript, pending roll or clarification, and unsaved creation
+draft. After a restart or deploy, the next message or button press in a session
+thread resumes from its snapshot. Without one, the bot reloads the scene from the
+roster thread and last saved handoff. Snapshots are deleted when a session ends.
 
 The bot captures published Discord messages, including player input, bot replies,
 dice receipts, edits, and observed deletions. It stores session/character IDs,

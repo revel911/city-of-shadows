@@ -3,7 +3,7 @@ import { Client, Collection, GatewayIntentBits, Events, Partials } from 'discord
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { readdir } from 'node:fs/promises';
-import { handleMessage, handleSessionControl } from './handlers/session.js';
+import { handleMessage, handleRollInteraction, handleSessionControl, ROLL_BUTTON_PREFIX, ROLL_MODAL_ID } from './handlers/session.js';
 import { handleSelect as handlePlaySelect, SELECT_CUSTOM_ID as PLAY_SELECT_ID } from './commands/play.js';
 
 import { initializeArchive, captureArchiveMessage } from './handlers/archive-runtime.js';
@@ -37,6 +37,11 @@ client.on(Events.InteractionCreate, async interaction => {
   try {
     if (interaction.isButton() && interaction.customId.startsWith('session:')) {
       await handleSessionControl(interaction);
+      return;
+    }
+    if ((interaction.isButton() && interaction.customId.startsWith(ROLL_BUTTON_PREFIX))
+        || (interaction.isModalSubmit() && interaction.customId === ROLL_MODAL_ID)) {
+      await handleRollInteraction(interaction);
       return;
     }
     if (interaction.isChatInputCommand()) {

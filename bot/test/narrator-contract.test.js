@@ -15,7 +15,8 @@ test('MC instructions do not import an unsupported XP-on-miss rule', async () =>
   const instructions = await readFile(new URL('../../mc-reference/mc-instructions.md', import.meta.url), 'utf8');
   assert.doesNotMatch(instructions, /mark_xp:\s*true/);
   assert.match(instructions, /bot_integrated_roll/);
-  assert.match(instructions, /player can report the 2d6 subtotal, report both individual dice, or use `\/roll`/);
+  assert.match(instructions, /player can report the 2d6 subtotal, report both individual dice, or use `\/roll` or the roll buttons/);
+  assert.match(instructions, /writing roll instructions, dice totals, or \/roll in visible prose/);
 });
 
 test('output contract includes roll and Debt patches in machine-only blocks', async () => {

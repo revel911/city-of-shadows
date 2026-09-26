@@ -4,9 +4,11 @@ import {
   StringSelectMenuBuilder,
   ActionRowBuilder,
 } from 'discord.js';
-import { startSession, hasLiveSession } from '../handlers/session.js';
+import { ensureSession, startSession, hasLiveSession } from '../handlers/session.js';
 import { listPlayers, readJSON, updateJSON } from '../handlers/github.js';
-import { resolveCharacterFromList } from '../handlers/read-utils.js';
+import { canPlayCharacter, resolveCharacterFromList } from '../handlers/read-utils.js';
+
+export { canPlayCharacter };
 
 const NEW_CHARACTER_VALUE = '__new__';
 export const SELECT_CUSTOM_ID = 'play:select';
@@ -101,14 +103,6 @@ function resolveCharacter(value, players, fallbackName) {
   return resolveCharacterFromList(value, fallbackName, players);
 }
 
-export function canPlayCharacter(character, discordId, operatorIds = process.env.OPERATOR_DISCORD_IDS || '') {
-  if (!character || character.id === NEW_CHARACTER_VALUE) return true;
-  if (character.shared === true || !character.owner_id) return true;
-  if (String(character.owner_id) === String(discordId)) return true;
-  const operators = String(operatorIds).split(',').map(value => value.trim()).filter(Boolean);
-  return operators.includes(String(discordId));
-}
-
 async function openSession(interaction, channel, chosen) {
   // A new character has no character id yet (the MC mints the kebab id partway
   // through onboarding), so its thread can't yet be named per-character — it
@@ -132,7 +126,12 @@ async function openSession(interaction, channel, chosen) {
       if (active.archived) await active.setArchived(false);
       await active.members.add(interaction.user.id);
       await interaction.editReply({ content: `Continue **${chosen.name}**: <#${active.id}>`, components: [] });
-      if (!hasLiveSession(active.id)) await startSession(active, chosen);
+      if (!hasLiveSession(active.id)) {
+        // Prefer the exact runtime snapshot; fall back to a fresh opening.
+        const { session } = await ensureSession(active, interaction.user.id, { snapshotOnly: true });
+        if (session) await active.send('— *Welcome back. Picking up exactly where you left off.* —').catch(() => {});
+        else await startSession(active, chosen);
+      }
       return;
     }
   }

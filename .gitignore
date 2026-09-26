@@ -10,3 +10,4 @@ Thumbs.db
 
 .archive-spool/
 .archive-exports/
+.runtime/

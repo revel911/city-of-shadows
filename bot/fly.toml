@@ -15,6 +15,8 @@ primary_region = "iad"
   ARCHIVE_GITHUB_REPO = "city-of-shadows-archive"
   ARCHIVE_GITHUB_BRANCH = "main"
   ARCHIVE_SPOOL_DIR = "/data/archive-spool"
+  # Live-session snapshots (transcript, pending roll, draft) for restart resume.
+  RUNTIME_DIR = "/data/runtime"
 
 [mounts]
   source = "archive_data"

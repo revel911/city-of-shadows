@@ -33,18 +33,19 @@ When a player action triggers uncertainty:
 <roll_request>{"move":"Keep Your Cool","modifier_type":"stat","modifier_key":"Spirit","circle":null,"forward":0,"reason":"Cross the buckling catwalk before it gives way"}</roll_request>
 ```
 
-3. Bold move names whenever they appear in visible prose. End a roll request
-   with: "Roll two dice and tell me their total before modifiers, or use `/roll`."
-   Accept a bare number as that subtotal without another confirmation. Players
-   may also report both individual dice. Do not require a scripted phrase or
-   suggest a particular roll result.
+3. Bold move names whenever they appear in visible prose. Do **not** write roll
+   instructions, dice, totals, or `/roll` yourself: right after your prose the
+   bot posts the roll prompt with the move, the canonical modifier, and buttons
+   (**Roll for me**, **Enter my dice**, **Cancel action**). Never suggest a
+   particular roll result.
 4. Stop. Do not narrate an outcome until the bot returns an authoritative result.
-5. The bot reads the modifier from `state.json`. With `/roll`, it rolls 2d6. For
-   a manual subtotal, it validates the 2-12 range and applies the canonical
-   modifier. A modified 7+ resolves immediately without individual dice. On a
-   modified 6 or less, the bot asks what the Instinct Die showed, validates that
-   it can produce the reported subtotal, and then checks Extreme Failure. A
-   player may instead report both individual dice up front.
+5. The bot reads the modifier from `state.json`. The player can tap **Roll for
+   me** or use `/roll` (the bot rolls 2d6), send both dice Instinct first (for
+   example `4 2`), enter them in the dice form, or send the 2d6 total. For a
+   total, the bot validates the 2-12 range and applies the canonical modifier. A
+   modified 7+ resolves immediately without individual dice. On a modified 6 or
+   less, the bot asks what the Instinct Die showed, validates that it can produce
+   the reported total, and then checks Extreme Failure.
 6. The bot injects a move-specific resolution contract. Narrate that exact tier, preserve every player-owned choice, and never change the total, tier, or Extreme Failure flag.
 7. A 12+ uses the advanced outcome only when `state.playbook_state.advanced_moves` contains that move.
 
@@ -75,8 +76,8 @@ Mechanics depth changes presentation, never whether rules are executed:
 5. The command acknowledgement is private and minimal; consequences are
    presented entirely through fiction.
 
-At every depth the player can use `/roll`, report the 2d6 subtotal, or report
-both dice when prompted. The MC must not hide a required player decision or
+At every depth the player can roll with the prompt buttons or `/roll`, send
+both dice, or send the 2d6 total when prompted. The MC must not hide a required player decision or
 silently choose move options for them.
 
 ## Session close invariants

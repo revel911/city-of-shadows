@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { lifecycleIntent, lifecyclePrompt, creationProgress, persistencePayloadProblems } from '../handlers/lifecycle.js';
 import { isNarrativeFollowThrough, isOutOfCharacterMessage, buildSceneDirectorContext } from '../handlers/scene-director.js';
-import { processSaveOnboarding, sessionControls, startSession, handleMessage, hasLiveSession } from '../handlers/session.js';
+import { processSaveOnboarding, sessionControls, startSession, handleMessage, hasLiveSession, resetWorldRevisionCache } from '../handlers/session.js';
 import { resetSystemCache, buildOpeningContext } from '../handlers/mc.js';
 import { execute as play } from '../commands/play.js';
 import { CANONICAL_SHEET_SECTIONS } from '../handlers/character-sheet.js';
@@ -19,6 +19,7 @@ function makeThread(id = 'thread-test') {
 function fakeGit(t, initial = {}, { failPath, failTimes = Infinity, responses = [] } = {}) {
   const files = new Map(Object.entries(initial).map(([key, value]) => [key, typeof value === 'string' ? value : JSON.stringify(value)]));
   const writes = [];
+  const git = { commits: 0, pendingTree: null };
   for (const [key, value] of Object.entries({ GITHUB_TOKEN: 'test', GITHUB_OWNER: 'test', GITHUB_REPO: 'test', DEEPSEEK_API_KEY: 'test' })) {
     const before = process.env[key]; process.env[key] = value;
     t.after(() => { if (before === undefined) delete process.env[key]; else process.env[key] = before; });
@@ -31,7 +32,28 @@ function fakeGit(t, initial = {}, { failPath, failTimes = Infinity, responses = 
       if (content === undefined) throw new Error('Unexpected model call');
       return new Response(JSON.stringify({ choices: [{ message: { role: 'assistant', content }, finish_reason: 'stop' }], usage: {} }), { status: 200, headers: { 'Content-Type': 'application/json' } });
     }
-    const path = decodeURIComponent(new URL(url).pathname.split('/contents/')[1]);
+    const pathname = new URL(url).pathname;
+    // Git Data API: batched saves land as one commit via a tree of inline blobs.
+    if (pathname.includes('/git/')) {
+      const json = value => new Response(JSON.stringify(value), { status: 200 });
+      if (/\/git\/ref\/heads\//.test(pathname)) return json({ object: { sha: `head-${git.commits}` } });
+      if (/\/git\/commits\/[^/]+$/.test(pathname) && (init.method || 'GET') === 'GET') return json({ tree: { sha: 'tree-base' } });
+      if (pathname.endsWith('/git/trees')) {
+        const body = JSON.parse(init.body);
+        if (failPath && body.tree.some(entry => entry.path === failPath) && failTimes-- > 0) return new Response('test write failure', { status: 500 });
+        git.pendingTree = body.tree;
+        return json({ sha: 'tree-new' });
+      }
+      if (pathname.endsWith('/git/commits')) return json({ sha: `commit-${git.commits + 1}` });
+      if (/\/git\/refs\/heads\//.test(pathname) && init.method === 'PATCH') {
+        for (const entry of git.pendingTree || []) { files.set(entry.path, entry.content); writes.push(entry.path); }
+        git.pendingTree = null;
+        git.commits += 1;
+        return json({ object: { sha: `commit-${git.commits}` } });
+      }
+      throw new Error(`Unexpected git call ${init.method || 'GET'} ${pathname}`);
+    }
+    const path = decodeURIComponent(pathname.split('/contents/')[1]);
     if (init.method === 'PUT') {
       if (path === failPath && failTimes-- > 0) return new Response('test write failure', { status: 500 });
       const body = JSON.parse(init.body);
@@ -42,8 +64,8 @@ function fakeGit(t, initial = {}, { failPath, failTimes = Infinity, responses = 
     if (!files.has(path)) return new Response('', { status: 404 });
     return new Response(JSON.stringify({ content: Buffer.from(files.get(path)).toString('base64'), sha: 'test' }), { status: 200 });
   };
-  t.after(() => { globalThis.fetch = originalFetch; resetSystemCache(); });
-  return { files, writes };
+  t.after(() => { globalThis.fetch = originalFetch; resetSystemCache(); resetWorldRevisionCache(); });
+  return { files, writes, git };
 }
 
 test('explicit lifecycle requests bypass fictional interpretation, ordinary dialogue does not', () => {
@@ -96,7 +118,9 @@ test('failed draft write leaves creation open and never claims a full save', asy
   assert.equal((await processSaveOnboarding(thread, session, save())).success, false);
   assert.equal(session.rulesProfile.isNew, true);
   assert.equal(thread.archived, false);
-  assert.equal(JSON.parse(git.files.get(`players/${character}/creation.json`)).status, 'draft');
+  // Saves are one atomic commit, so a failure leaves no partial draft behind.
+  assert.equal(git.writes.length, 0);
+  assert.equal(git.files.has(`players/${character}/creation.json`), false);
   assert.ok(!thread.sent.some(text => typeof text === 'string' && text.startsWith('Draft saved.')));
 });
 
@@ -151,6 +175,12 @@ test('save and end archives only after durable writes and preserves unresolved m
   assert.match(git.files.get(`players/${character}/handoff.md`), /unresolved/);
   assert.deepEqual(JSON.parse(git.files.get(`players/${character}/checkpoint.json`)).pending_roll, pending);
   assert.equal(JSON.parse(git.files.get(`players/${character}/state.json`)).last_session, 'session_001');
+  // Handoff, state, ledger, receipt, and checkpoint land as one atomic commit.
+  assert.equal(git.git.commits, 1);
+  assert.ok(git.files.has(`players/${character}/sessions/session_001.json`));
+  // The closing status arrives after the narration, never before it.
+  const sent = thread.sent.filter(value => typeof value === 'string');
+  assert.ok(sent.indexOf('Saving your session…') < sent.indexOf('Session saved. Use /play when you want to continue.'));
 });
 
 test('save and end failure does not archive or lose the active session', async t => {
@@ -167,7 +197,7 @@ test('save and end failure does not archive or lose the active session', async t
 });
 
 
-test('retrying a partial close writes only failed fields and does not increment the session twice', async t => {
+test('a failed close writes nothing, and the retry lands once without double-incrementing the session', async t => {
   const git = fakeGit(t, { [`players/${character}/state.json`]: { ...state, last_session: 'session_000' } }, { failPath: `players/${character}/handoff.md`, failTimes: 1, responses: [
     '**Where we left off**\nOutside the gym, holding the open envelope.',
     `<close_session><character_id>${character}</character_id><handoff>Outside the gym.</handoff><world_impact>{"level":"personal","summary":"Paused","affected_ids":[]}</world_impact></close_session>`,

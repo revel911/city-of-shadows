@@ -1,16 +1,18 @@
 import { registerArchiveThread } from './archive-runtime.js';
 import { randomUUID } from 'node:crypto';
-import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js';
-import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, retryableCloseWrites, persistencePayloadProblems } from './lifecycle.js';
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBuilder, TextInputStyle } from 'discord.js';
+import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, persistencePayloadProblems } from './lifecycle.js';
+import { loadSessionSnapshot, removeSessionSnapshot, saveSessionSnapshot } from './runtime-store.js';
+import { profilePath } from './profile.js';
 import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
-import { adjudicateMove, generate, buildOpeningContext, selectInteractionEcho } from './mc.js';
+import { adjudicateMove, generate, buildOpeningContext, loadCharacterBundle, selectInteractionEcho } from './mc.js';
 import { buildClarificationAdjudicationText } from './move-adjudicator.js';
 import {
   buildMoveResolutionContext,
   withDerivedMysteryState,
 } from './narrative-state.js';
-import { readFile, readJSON, writeFile, updateFile, updateJSON } from './github.js';
-import { chunk } from './read-utils.js';
+import { commitBatch, listPlayers, readFile, readJSON, writeFile, updateJSON } from './github.js';
+import { canPlayCharacter, chunk } from './read-utils.js';
 import { characterSheetProblems } from './character-sheet.js';
 import { readProfile, updateProfile } from './profile.js';
 import {
@@ -35,6 +37,7 @@ import {
   buildMechanicsFallback,
   buildMechanicsGateContext,
   buildMoveAuditContext,
+  buildRollPrompt,
   createRollRecord,
   detectMechanicsExpectation,
   deriveActiveArcIds,
@@ -43,15 +46,18 @@ import {
   mergeDebtPatches,
   mechanicsResponseProblems,
   nextSessionId,
+  parseDicePair,
   parseManualRoll,
   parseRollRequest,
   previewRollTotal,
   reconcileArcs,
   reconcileCharacterState,
+  stripModelRollInstructions,
   stripRollRequest,
 } from './mechanics.js';
 
 const sessions = new Map();
+const restoring = new Map();
 const GENERATION_RETRIES = 2;
 const OPENING_MAX_CHARS = 1400;
 const OPENING_MAX_TOKENS = 450;
@@ -64,33 +70,103 @@ const OOC_MAX_TOKENS = 550;
 // Serializes async work on a single session so concurrent player messages
 // don't interleave generate() calls and produce two consecutive user turns
 // (which the chat-completions API rejects as an alternation error).
+// After each turn the live session is snapshotted to the runtime volume so a
+// restart resumes the exact conversation and pending mechanics.
 function lock(session, fn) {
   const prev = session._chain || Promise.resolve();
-  const next = prev.then(() => fn(), () => fn());
+  const next = prev.then(() => fn(), () => fn()).finally(() => persistRuntime(session));
   session._chain = next.catch(() => {});
   return next;
 }
 
+async function persistRuntime(session) {
+  try {
+    if (sessions.get(session.threadId) === session) await saveSessionSnapshot(session);
+    else await removeSessionSnapshot(session.threadId);
+  } catch (error) {
+    console.error(`[runtime] snapshot failed for ${session.threadId}: ${error.message}`);
+  }
+}
+
+// Background persistence (checkpoints) runs after the reply is posted. It is
+// chained so writes land in order, and a close waits for it before committing.
+function inBackground(session, label, fn) {
+  const prev = session._bg || Promise.resolve();
+  session._bg = prev.then(fn).catch(error => console.error(`[${label}] ${session.threadId}: ${error.message}`));
+  return session._bg;
+}
+
+const TYPING_REFRESH_MS = 8000;
+const STILL_WORKING_MS = 25000;
+
+// Discord's typing indicator lapses after ~10s, and silence makes players
+// think the bot died. Keep it alive and post one visible note on long waits.
+async function withTyping(channel, fn, { note = '— *Still working on it. The city is thinking…* —' } = {}) {
+  const typing = () => channel?.sendTyping?.()?.catch?.(() => {});
+  typing();
+  const timer = setInterval(typing, TYPING_REFRESH_MS);
+  let notice = null;
+  const slow = note ? setTimeout(async () => {
+    notice = await channel?.send?.(note)?.catch?.(() => null);
+  }, STILL_WORKING_MS) : null;
+  timer.unref?.();
+  slow?.unref?.();
+  try {
+    return await fn();
+  } finally {
+    clearInterval(timer);
+    if (slow) clearTimeout(slow);
+    if (notice?.delete) notice.delete().catch(() => {});
+  }
+}
+
+const CANCEL_ACTION_RE = /^\s*(?:cancel(?: that)?|never ?mind|I (?:do not|don't) do that|change of plan)\s*[.!]?\s*$/i;
+
+// World revisions change only on a session close (this process) or a Keeper
+// run (scheduled). Local closes update the cache directly; Keeper changes are
+// picked up within the TTL, so play turns do not wait on GitHub every time.
+const WORLD_META_TTL_MS = 60000;
+let worldMetaCache = { revision: null, at: 0, pending: null };
+
+async function currentWorldRevision() {
+  if (worldMetaCache.revision !== null && Date.now() - worldMetaCache.at < WORLD_META_TTL_MS) return worldMetaCache.revision;
+  worldMetaCache.pending ||= readJSON('game/world-meta.json')
+    .then(meta => {
+      worldMetaCache = { revision: Number.isInteger(meta?.revision) ? meta.revision : 0, at: Date.now(), pending: null };
+      return worldMetaCache.revision;
+    })
+    .catch(error => {
+      worldMetaCache.pending = null;
+      throw error;
+    });
+  return worldMetaCache.pending;
+}
+
+function noteWorldRevision(revision) {
+  worldMetaCache = { revision, at: Date.now(), pending: null };
+}
+
+export function resetWorldRevisionCache() {
+  worldMetaCache = { revision: null, at: 0, pending: null };
+}
+
+async function characterState(session) {
+  if (!session.state) session.state = await readJSON(`players/${session.player.id}/state.json`) || {};
+  return session.state;
+}
+
 export async function startSession(thread, player) {
-  const [
-    opening,
+  const bundle = await loadCharacterBundle(player);
+  const opening = await buildOpeningContext(player, bundle);
+  const {
     profile,
-    openingState,
-    openingInteractions,
+    state: openingState,
+    interactions: openingInteractions,
     worldMeta,
-    mechanicsSheet,
-    savedProgress,
-    savedCheckpoint,
-  ] = await Promise.all([
-    buildOpeningContext(player),
-    player.discord_id ? readProfile(player.discord_id) : null,
-    player.id !== '__new__' ? readJSON(`players/${player.id}/state.json`) : null,
-    player.id !== '__new__' ? readJSON('game/interactions.json') : null,
-    readJSON('game/world-meta.json'),
-    player.id !== '__new__' ? readFile(`players/${player.id}/sheet.md`) : null,
-    player.id !== '__new__' ? readJSON(`players/${player.id}/creation.json`) : null,
-    player.id !== '__new__' ? readJSON(`players/${player.id}/checkpoint.json`) : null,
-  ]);
+    sheet: mechanicsSheet,
+    creation: savedProgress,
+    checkpoint: savedCheckpoint,
+  } = bundle;
   const initialPlaystyleSignals = normalizePlaystyleSignals(profile?.inferred_playstyle);
   const session = {
     player,
@@ -120,6 +196,7 @@ export async function startSession(thread, player) {
     npcMemoryCatalog: null,
     playstyleBaseline: initialPlaystyleSignals,
     playstyleSignals: initialPlaystyleSignals,
+    state: openingState || null,
   };
   if (session.rulesProfile.isNew) session.messages[0].content += '\n\n' + creationTurnContext(session);
   sessions.set(thread.id, session);
@@ -131,9 +208,12 @@ export async function startSession(thread, player) {
     const notice = await thread.send('— *The city is gathering your opening scene. This can take a minute…* —');
     await thread.sendTyping();
     try {
-      const response = await generateSafeResponse(session, { opening: true, maxVisibleChars: session.rulesProfile.isNew ? 700 : OPENING_MAX_CHARS });
+      const response = await withTyping(thread, () => generateSafeResponse(session, { opening: true, maxVisibleChars: session.rulesProfile.isNew ? 700 : OPENING_MAX_CHARS }), { note: null });
       session.messages.push({ role: 'assistant', content: response });
+      const pendingBefore = session.pendingRoll;
       await postMCResponse(thread, response, session);
+      // A roll restored from the checkpoint still needs its prompt and buttons.
+      if (pendingBefore && session.pendingRoll === pendingBefore) await sendRollPrompt(thread, session);
       if (typeof notice?.delete === 'function') notice.delete().catch(() => {});
     } catch (err) {
       console.error(`[opening] failed for ${player.id}: ${err.message}`);
@@ -156,46 +236,32 @@ export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
 export function contextualManualRoll(session, playerContent) {
   const explicit = parseManualRoll(playerContent);
   if (!session?.pendingRoll) return { roll: explicit };
-  const input = String(playerContent || '').trim();
-  const confirmation = session.rollConfirmation;
-  if (explicit) {
-    session.rollConfirmation = null;
-    return { roll: explicit };
-  }
-  if (confirmation?.request === session.pendingRoll) {
-    if (/^(?:(?:yes|yeah|yep|yup|correct|right|sure|affirmative|that's right|that is right)(?:,?\s+before modifiers)?|before modifiers)[.!]*$/i.test(input)) {
-      session.rollConfirmation = null;
-      return { roll: parseManualRoll(`I rolled ${confirmation.total}`) };
-    }
-    if (/^(?:no|nope|nah|incorrect)[.!]*$/i.test(input)) {
-      session.rollConfirmation = null;
-      return { reply: 'What was your two-dice total before modifiers? You can also report both dice or use `/roll`.' };
-    }
-  }
-  const number = input.match(/^(-?\d+)[.!]?$/);
-  if (!number) {
-    return { roll: null };
-  }
+  if (explicit) return { roll: explicit };
+  const pair = parseDicePair(playerContent);
+  if (pair) return { roll: pair };
+  const number = String(playerContent || '').trim().match(/^(-?\d+)[.!]?$/);
+  if (!number) return { roll: null };
   if (Number.isInteger(session.pendingManualRoll?.rawTotal)) {
-    session.rollConfirmation = null;
     return { roll: parseManualRoll(`instinct ${number[1]}`) };
   }
-  session.rollConfirmation = null;
   return { roll: parseManualRoll(`I rolled ${number[1]}`) };
+}
+
+function clearPendingRoll(session) {
+  session.pendingRoll = null;
+  session.pendingManualRoll = null;
+  session.turnsWithoutRoll = 0;
 }
 
 export function pendingRollGuard(session, playerContent) {
   if (!session?.pendingRoll) return null;
   if (parseManualRoll(playerContent)) return null;
-  if (/^\s*(?:cancel(?: that)?|never mind|nevermind|I (?:do not|don't) do that|change of plan)\s*[.!]?\s*$/i.test(playerContent)) {
-    session.pendingRoll = null;
-    session.pendingManualRoll = null;
-    session.rollConfirmation = null;
-    session.turnsWithoutRoll = 0;
+  if (CANCEL_ACTION_RE.test(playerContent)) {
+    clearPendingRoll(session);
     return 'That action is canceled. Tell me what you do instead.';
   }
   const move = session.mechanicsDepth <= 3 ? ` for **${session.pendingRoll.move}**` : '';
-  return `A move is still waiting${move}. Tell me the total of your two dice before modifiers, report both dice like \`regular 3, instinct 1\`, use \`/roll\`, or say **cancel that**.`;
+  return `A roll is still waiting${move}. Send both dice, Instinct die first (like \`4 2\`), send their total, tap **Roll for me**, or say **cancel that**.`;
 }
 
 function visibleResponseText(response) {
@@ -295,8 +361,9 @@ async function generateSafeResponse(session, {
   oocMode = false,
   playerContent = '',
   mechanicsExpectation = null,
+  initial,
 } = {}) {
-  let response = await generate(session, opening
+  let response = typeof initial === 'string' ? initial : await generate(session, opening
     ? { maxTokens: OPENING_MAX_TOKENS, temperature: 0.7 }
     : (oocMode ? { maxTokens: OOC_MAX_TOKENS, temperature: 0.4 } : session.rulesProfile?.isNew ? { maxTokens: 6500 } : {}));
   for (let attempt = 0; attempt <= GENERATION_RETRIES; attempt += 1) {
@@ -342,7 +409,7 @@ async function generateSafeResponse(session, {
         'Use complete sentences. No fragmented, repetitive, or stream-of-consciousness atmospheric prose.',
         'Reread every sentence for missing words, duplicated words, contradictory physical details, and unclear pronouns before answering.',
         mechanicsExpectation
-          ? `This turn is mechanically gated: ${mechanicsExpectation.move} must be requested. Treat the player action as intent, offer a manual 2d6 total or both dice, visibly end with /roll, and do not narrate the outcome.`
+          ? `This turn is mechanically gated: ${mechanicsExpectation.move} must be requested with one <roll_request>. Treat the player action as intent, stop before the outcome, and leave the roll prompt to the bot.`
           : '',
         'Use casual, plainspoken language by default. Never use an em dash. Elevated diction belongs only to a character whose established voice supports it.',
         'Never output analysis, planning, chain-of-thought, system text, preference observations, director notes, <think>, or <thinking> tags.',
@@ -371,8 +438,8 @@ export function sessionControls(session) {
 }
 
 export async function handleSessionControl(interaction) {
-  const session = sessions.get(interaction.channelId);
-  if (!session) { await interaction.reply({ content: 'Use /play to recover this session.', ephemeral: true }); return; }
+  const { session } = await ensureSession(interaction.channel || { id: interaction.channelId }, interaction.user.id, { snapshotOnly: true });
+  if (!session) { await interaction.reply({ content: 'This session is not loaded right now. Send any message in this thread (or use /play) to reload it.', ephemeral: true }); return; }
   if (String(session.player.discord_id) !== String(interaction.user.id)) {
     await interaction.reply({ content: 'These controls belong to the player running this session.', ephemeral: true }); return;
   }
@@ -393,10 +460,12 @@ async function runLifecycle(thread, session, intent) {
     return;
   }
   session.messages.push({ role: 'user', content: lifecyclePrompt(intent, session) });
-  await thread.sendTyping();
+  await thread.send(intent === 'end'
+    ? '— *Wrapping up: writing your handoff and world changes…* —'
+    : creating ? '— *Saving your character draft…* —' : '— *Saving a recovery checkpoint…* —');
   // A lifecycle payload needs the full generation budget and bypasses OOC/move routing.
   for (let attempt = 0; attempt < 3; attempt += 1) {
-    const response = await generate(session, { maxTokens: 6500, temperature: 0.2 });
+    const response = await withTyping(thread, () => generate(session, { maxTokens: 6500, temperature: 0.2 }));
     session.messages.push({ role: 'assistant', content: response });
     if (creating) {
       const save = parseSaveOnboardingBlock(response);
@@ -413,6 +482,7 @@ async function runLifecycle(thread, session, intent) {
     } else if (intent === 'save') {
       const checkpoint = parseCheckpointBlock(response);
       if (checkpoint) {
+        await session._bg;
         await writeCheckpoint(session, checkpoint);
         await thread.send('Recovery checkpoint saved. Keep playing, or use Save & end to finish and record all session changes.');
         return;
@@ -426,22 +496,80 @@ async function runLifecycle(thread, session, intent) {
     }
     session.messages.push({ role: 'user', content: 'The required save payload was missing or invalid. Repair it now. ' + lifecyclePrompt(intent, session) });
   }
+  // The last valid per-choice draft is still a faithful save of the player's choices.
+  if (creating && session.pendingDraft) {
+    const result = await processSaveOnboarding(thread, session, { ...session.pendingDraft, creation_status: 'draft' });
+    if (result.success && intent === 'end') {
+      sessions.delete(session.threadId);
+      await thread.send('Creation paused. Use /play to continue your draft.');
+      await thread.setArchived?.(true);
+    }
+    if (result.success) return;
+  }
   await thread.send('Saving could not be completed. Your session is still open. Use the save control to retry.');
 }
 
+function isSessionThreadName(name) {
+  return typeof name === 'string' && (name.endsWith(' — session') || name.endsWith(' — new character'));
+}
+
+// After a restart or deploy, a thread's live session is rebuilt on its next
+// message or button press: from the runtime snapshot when one exists (exact
+// transcript and pending mechanics), otherwise from the roster's saved thread
+// with a fresh "Where we left off" opening.
+export async function ensureSession(channel, userId, { snapshotOnly = false } = {}) {
+  const live = sessions.get(channel.id);
+  if (live) return { session: live, resumed: null };
+  // Interactions must answer within 3s, so they never wait on a full reload.
+  if (snapshotOnly && !restoring.has(channel.id) && !(await loadSessionSnapshot(channel.id))) return { session: null, resumed: null };
+  if (!restoring.has(channel.id)) {
+    restoring.set(channel.id, restoreSession(channel, userId)
+      .catch(error => {
+        console.error(`[runtime] restore failed for ${channel.id}: ${error.message}`);
+        return { session: null, resumed: null };
+      })
+      .finally(() => restoring.delete(channel.id)));
+  }
+  return restoring.get(channel.id);
+}
+
+async function restoreSession(channel, userId) {
+  const snapshot = await loadSessionSnapshot(channel.id);
+  if (snapshot) {
+    if (snapshot.player?.discord_id && String(snapshot.player.discord_id) !== String(userId)) return { session: null, resumed: null };
+    snapshot.threadId = channel.id;
+    sessions.set(channel.id, snapshot);
+    await registerArchiveThread(channel, { id: snapshot.player.id === '__new__' ? snapshot.draftId : snapshot.player.id, name: snapshot.player.name })
+      .catch(error => console.error(`[archive] thread registration failed: ${error.message}`));
+    console.log(`[runtime] resumed ${channel.id} from snapshot`);
+    return { session: snapshot, resumed: 'snapshot' };
+  }
+  if (!channel?.isThread?.() || !isSessionThreadName(channel.name)) return { session: null, resumed: null };
+  const entry = (await listPlayers()).find(item => item.thread_id === channel.id);
+  if (!entry || !canPlayCharacter(entry, userId)) return { session: null, resumed: null };
+  await channel.send('— *The bot restarted. Reloading your scene from the last save…* —').catch(() => {});
+  await startSession(channel, { ...entry, discord_id: String(userId) });
+  return { session: sessions.get(channel.id) || null, resumed: 'opening' };
+}
+
 export async function handleMessage(message) {
-  const session = sessions.get(message.channel.id);
+  if (!message.content?.trim()) return;
+  const { session, resumed } = await ensureSession(message.channel, message.author?.id);
   if (!session) {
-    // Session thread we no longer have state for — most likely a bot restart.
-    // Tell the player so they don't sit there typing into a void.
+    // Nothing to recover (for example, a brand-new character that was never
+    // saved). Tell the player so they don't type into a void.
     const ch = message.channel;
-    if (ch?.isThread?.() && typeof ch.name === 'string' &&
-        (ch.name.endsWith(' — session') || ch.name.endsWith(' — new character'))) {
-      try { await ch.send('The bot restarted. Use `/play` and choose this character to recover the saved session in this thread.'); } catch {}
+    if (ch?.isThread?.() && isSessionThreadName(ch.name)) {
+      try { await ch.send('The bot restarted and this thread could not be recovered automatically. Use `/play` and choose this character to continue.'); } catch {}
     }
     return;
   }
-  if (!message.content?.trim()) return;
+  if (resumed === 'opening') {
+    // The fresh opening already re-anchored the scene; the earlier message was
+    // written before it, so ask rather than guess whether it still applies.
+    await message.channel.send('If your last message still fits the scene above, send it again.').catch(() => {});
+    return;
+  }
 
   await lock(session, async () => {
     if (session.player.discord_id && String(message.author?.id) !== String(session.player.discord_id)) return;
@@ -469,82 +597,16 @@ export async function handleMessage(message) {
     const oocMode = session.continuityRepair
       || (!hasMechanicsClarification && isOutOfCharacterMessage(message.content, priorPlayerText));
     const contextualRoll = oocMode ? {} : contextualManualRoll(session, message.content);
-    if (contextualRoll.reply) {
-      await message.channel.send(contextualRoll.reply);
-      return;
-    }
     const manualRoll = contextualRoll.roll;
     if (manualRoll) {
-      if (!session.pendingRoll) {
-        await message.channel.send('There is no unresolved move right now. Wait for the MC to request a roll.');
-        return;
-      }
-      if (manualRoll.error) {
-        await message.channel.send(manualRoll.error);
-        return;
-      }
-
-      if (manualRoll.rawTotal !== undefined) {
-        const state = await readJSON('players/' + session.player.id + '/state.json') || {};
-        const preview = previewRollTotal({
-          request: session.pendingRoll,
-          state,
-          rawTotal: manualRoll.rawTotal,
-        });
-        session.lastPlayerText = message.content;
-        if (preview.result === 'miss') {
-          session.pendingManualRoll = { rawTotal: manualRoll.rawTotal };
-          await message.channel.send(
-            'After the canonical modifier, that is a miss (6 or less). What did the Instinct Die show?'
-          );
-          return;
-        }
-        await resolvePendingRoll(session, message.channel, {
-          rawTotal: manualRoll.rawTotal,
-          diceSource: 'manual',
-          acknowledge: content => message.channel.send(content),
-        });
-        return;
-      }
-
-      if (manualRoll.other === undefined) {
-        const pendingTotal = session.pendingManualRoll?.rawTotal;
-        if (!Number.isInteger(pendingTotal)) {
-          await message.channel.send(
-            'Tell me the total of your two dice before modifiers, or report both dice like regular 3, instinct 1.'
-          );
-          return;
-        }
-        const other = pendingTotal - manualRoll.instinct;
-        if (other < 1 || other > 6) {
-          await message.channel.send(
-            'That Instinct Die cannot be part of the reported total. Check the total and die, then try again.'
-          );
-          return;
-        }
-        session.lastPlayerText = message.content;
-        await resolvePendingRoll(session, message.channel, {
-          instinct: manualRoll.instinct,
-          other,
-          rawTotal: pendingTotal,
-          diceSource: 'manual',
-          acknowledge: content => message.channel.send(content),
-        });
-        return;
-      }
-
-      session.lastPlayerText = message.content;
-      await resolvePendingRoll(session, message.channel, {
-        ...manualRoll,
-        diceSource: 'manual',
-        acknowledge: content => message.channel.send(content),
-      });
+      await handleManualRoll(session, message.channel, manualRoll, message.content);
       return;
     }
     const hadPendingRoll = Boolean(session.pendingRoll);
     const pendingGuard = oocMode ? null : pendingRollGuard(session, message.content);
     if (pendingGuard) {
       if (hadPendingRoll && !session.pendingRoll) {
+        await retireRollPrompt(message.channel, session, 'Canceled.');
         session.messages.push({
           role: 'user',
           content: '[SYSTEM — PENDING ACTION CANCELED]\nThe player withdrew the action before rolling. Do not resolve it or apply consequences.',
@@ -577,7 +639,7 @@ export async function handleMessage(message) {
     const mechanicsActive = !session.rulesProfile?.isNew
       && (hasMechanicsClarification || (!oocMode && !isNarrativeFollowThrough(message.content)));
     const clarification = mechanicsActive ? session.pendingMechanicsClarification : null;
-    if (clarification && /^\s*(?:cancel(?: that)?|never ?mind|change of plan)\s*[.!]?\s*$/i.test(message.content)) {
+    if (clarification && CANCEL_ACTION_RE.test(message.content)) {
       session.pendingMechanicsClarification = null;
       session.lastPlayerText = message.content;
       await message.channel.send(`Got it. Tell me what ${session.player.name} does instead.`);
@@ -595,58 +657,6 @@ export async function handleMessage(message) {
     let mechanicsExpectation = mechanicsActive && !clarification
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
-    let mechanicsClarification = null;
-    if (mechanicsActive && !mechanicsExpectation) {
-      await message.channel.sendTyping();
-      try {
-        const adjudication = await adjudicateMove({
-          playerText: adjudicationPlayerText,
-          lastAssistant: clarification?.fictionBeforeClarification || lastAssistant,
-          sheet: session.mechanicsSheet,
-          priorClarificationQuestions: clarification?.exchanges?.map(item => item.question) || [],
-        });
-        session.mechanicsAdjudications += 1;
-        if (adjudication.decision === 'roll') {
-          mechanicsExpectation = adjudication.expectation;
-          session.pendingMechanicsClarification = null;
-        } else if (adjudication.decision === 'clarify') {
-          mechanicsClarification = adjudication.question;
-          if (clarification) {
-            clarification.exchanges.push({ question: adjudication.question, answer: null });
-          } else {
-            session.pendingMechanicsClarification = {
-              originalPlayerText: message.content,
-              fictionBeforeClarification: lastAssistant,
-              exchanges: [{ question: adjudication.question, answer: null }],
-            };
-          }
-        } else {
-          session.pendingMechanicsClarification = null;
-        }
-      } catch (err) {
-        console.warn(`[move-adjudicator] falling back to narrator audit: ${err.message}`);
-      }
-    }
-    if (mechanicsClarification) {
-      session.turnsWithoutRoll += 1;
-      session.messages.push({
-        role: 'user',
-        content: [npcHydration, `[PLAYER MESSAGE]\n${userContent}`]
-          .filter(Boolean)
-          .join('\n\n'),
-      });
-      session.lastPlayerText = message.content;
-      session.messages.push({ role: 'assistant', content: mechanicsClarification });
-      await message.channel.send(mechanicsClarification);
-      return;
-    }
-    if (mechanicsExpectation) {
-      session.mechanicsGateTriggers += 1;
-      session.turnsWithoutRoll = 0;
-      console.log(`[mechanics-gate] session=${session.threadId} move=${mechanicsExpectation.move}`);
-    } else if (mechanicsActive) {
-      session.turnsWithoutRoll += 1;
-    }
     const sceneDirection = buildSceneDirectorContext({
       playerText: message.content,
       priorPlayerText,
@@ -654,31 +664,64 @@ export async function handleMessage(message) {
       forceOoc: Boolean(session.continuityRepair),
       lastAssistant,
     });
-    session.messages.push({
-      role: 'user',
-      content: [
-        npcHydration,
-        session.rulesProfile?.isNew && !oocMode ? creationTurnContext(session) : '',
-        sceneDirection,
-        mechanicsActive ? buildMoveAuditContext(session.turnsWithoutRoll) : '',
-        buildMechanicsGateContext(mechanicsExpectation, session.mechanicsDepth),
-        clarification
-          ? `[PLAYER ACTION WITH CLARIFICATIONS]\n${adjudicationPlayerText}`
-          : `[PLAYER MESSAGE]\n${userContent}`,
-      ]
-        .filter(Boolean)
-        .join('\n\n'),
-    });
+    const turnContent = (expectation, drought) => [
+      npcHydration,
+      session.rulesProfile?.isNew && !oocMode ? creationTurnContext(session) : '',
+      sceneDirection,
+      mechanicsActive ? buildMoveAuditContext(drought) : '',
+      buildMechanicsGateContext(expectation, session.mechanicsDepth),
+      clarification
+        ? `[PLAYER ACTION WITH CLARIFICATIONS]\n${adjudicationPlayerText}`
+        : `[PLAYER MESSAGE]\n${userContent}`,
+    ]
+      .filter(Boolean)
+      .join('\n\n');
+    const noteGate = expectation => {
+      session.mechanicsGateTriggers += 1;
+      session.turnsWithoutRoll = 0;
+      console.log(`[mechanics-gate] session=${session.threadId} move=${expectation.move}`);
+    };
+    const options = {
+      maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
+      oocRecap,
+      oocMode,
+      playerContent: message.content,
+    };
     session.lastPlayerText = message.content;
-    await message.channel.sendTyping();
-    let response;
+    let response = null;
     try {
-      response = await generateSafeResponse(session, {
-        maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
-        oocRecap,
-        oocMode,
-        playerContent: message.content,
-        mechanicsExpectation,
+      response = await withTyping(message.channel, async () => {
+        if (!mechanicsActive || mechanicsExpectation || oocMode) {
+          if (mechanicsExpectation) noteGate(mechanicsExpectation);
+          else if (mechanicsActive) session.turnsWithoutRoll += 1;
+          session.messages.push({ role: 'user', content: turnContent(mechanicsExpectation, session.turnsWithoutRoll) });
+          return generateSafeResponse(session, { ...options, mechanicsExpectation });
+        }
+        // Ambiguous turn: the move router and the narrator run side by side
+        // instead of one after the other. Most turns need no roll, so the
+        // speculative narration is usually the reply.
+        const turn = { role: 'user', content: turnContent(null, session.turnsWithoutRoll + 1) };
+        session.messages.push(turn);
+        const speculative = generate(session).then(text => ({ text }), error => ({ error }));
+        const adjudication = await adjudicateTurn(session, { clarification, adjudicationPlayerText, lastAssistant, playerText: message.content });
+        if (adjudication?.decision === 'clarify') {
+          session.turnsWithoutRoll += 1;
+          await message.channel.send(adjudication.question);
+          await speculative;
+          turn.content = [npcHydration, `[PLAYER MESSAGE]\n${userContent}`].filter(Boolean).join('\n\n');
+          session.messages.push({ role: 'assistant', content: adjudication.question });
+          return null;
+        }
+        const draft = await speculative;
+        if (draft.error) console.warn(`[generation] speculative narration failed: ${draft.error.message}`);
+        if (adjudication?.decision === 'roll') {
+          mechanicsExpectation = adjudication.expectation;
+          noteGate(mechanicsExpectation);
+          turn.content = turnContent(mechanicsExpectation, 0);
+        } else {
+          session.turnsWithoutRoll += 1;
+        }
+        return generateSafeResponse(session, { ...options, mechanicsExpectation, initial: draft.text });
       });
     } catch (err) {
       console.error(`[generation] failed for session ${session.threadId}: ${err.message}`);
@@ -691,9 +734,90 @@ export async function handleMessage(message) {
       await message.channel.send(safeFailure);
       return;
     }
+    if (response === null) return;
     session.messages.push({ role: 'assistant', content: response });
     await postMCResponse(message.channel, response, session);
   });
+}
+
+// Runs the strict move router and records clarification state. Returns null
+// when the router fails, so the narrator's own move audit still applies.
+async function adjudicateTurn(session, { clarification, adjudicationPlayerText, lastAssistant, playerText }) {
+  try {
+    const adjudication = await adjudicateMove({
+      playerText: adjudicationPlayerText,
+      lastAssistant: clarification?.fictionBeforeClarification || lastAssistant,
+      sheet: session.mechanicsSheet,
+      priorClarificationQuestions: clarification?.exchanges?.map(item => item.question) || [],
+    });
+    session.mechanicsAdjudications += 1;
+    if (adjudication.decision === 'clarify') {
+      if (clarification) {
+        clarification.exchanges.push({ question: adjudication.question, answer: null });
+      } else {
+        session.pendingMechanicsClarification = {
+          originalPlayerText: playerText,
+          fictionBeforeClarification: lastAssistant,
+          exchanges: [{ question: adjudication.question, answer: null }],
+        };
+      }
+    } else {
+      session.pendingMechanicsClarification = null;
+    }
+    return adjudication;
+  } catch (err) {
+    console.warn(`[move-adjudicator] falling back to narrator audit: ${err.message}`);
+    return null;
+  }
+}
+
+async function handleManualRoll(session, channel, manualRoll, text) {
+  const say = content => channel.send(content);
+  if (!session.pendingRoll) {
+    await say('There is no roll waiting right now. The MC will ask when a move needs one.');
+    return;
+  }
+  if (manualRoll.error) {
+    await say(manualRoll.error);
+    return;
+  }
+  session.lastPlayerText = text;
+  if (manualRoll.rawTotal !== undefined) {
+    const preview = previewRollTotal({
+      request: session.pendingRoll,
+      state: await characterState(session),
+      rawTotal: manualRoll.rawTotal,
+    });
+    if (preview.result === 'miss') {
+      // The Instinct die only matters on a miss, so ask for it only then.
+      session.pendingManualRoll = { rawTotal: manualRoll.rawTotal };
+      await say('After your modifier that is a miss (6 or less). What did the Instinct die show? Just send the number.');
+      return;
+    }
+    await resolvePendingRoll(session, channel, { rawTotal: manualRoll.rawTotal, diceSource: 'manual', acknowledge: say });
+    return;
+  }
+  if (manualRoll.other === undefined) {
+    const pendingTotal = session.pendingManualRoll?.rawTotal;
+    if (!Number.isInteger(pendingTotal)) {
+      await say('Send both dice, Instinct die first (like `4 2`), or send their total.');
+      return;
+    }
+    const other = pendingTotal - manualRoll.instinct;
+    if (other < 1 || other > 6) {
+      await say('That Instinct die cannot be part of the total you sent. Check the total and die, then try again.');
+      return;
+    }
+    await resolvePendingRoll(session, channel, {
+      instinct: manualRoll.instinct,
+      other,
+      rawTotal: pendingTotal,
+      diceSource: 'manual',
+      acknowledge: say,
+    });
+    return;
+  }
+  await resolvePendingRoll(session, channel, { ...manualRoll, diceSource: 'manual', acknowledge: say });
 }
 
 async function buildNpcMentionHydration(session, text) {
@@ -717,8 +841,7 @@ async function buildNpcMentionHydration(session, text) {
 
 async function refreshSessionWorld(session) {
   if (!session?.player?.id || session.player.id === '__new__') return;
-  const worldMeta = await readJSON('game/world-meta.json');
-  const nextRevision = Number.isInteger(worldMeta?.revision) ? worldMeta.revision : 0;
+  const nextRevision = await currentWorldRevision();
   if (nextRevision <= (session.worldRevision || 0)) return;
   const [state, handoff, events] = await Promise.all([
     readJSON(`players/${session.player.id}/state.json`),
@@ -741,6 +864,7 @@ async function refreshSessionWorld(session) {
     ].join('\n\n'),
   });
   session.worldRevision = nextRevision;
+  if (state) session.state = state;
   session.npcCatalog = null;
   session.npcMemoryCatalog = null;
 }
@@ -757,6 +881,47 @@ export function recoverPendingRoll(session) {
   return expectation;
 }
 
+export const ROLL_BUTTON_PREFIX = 'roll:';
+export const ROLL_MODAL_ID = 'roll:modal';
+
+function rollPromptComponents(disabled = false) {
+  return [new ActionRowBuilder().addComponents(
+    new ButtonBuilder().setCustomId('roll:auto').setLabel('Roll for me').setEmoji('🎲').setStyle(ButtonStyle.Primary).setDisabled(disabled),
+    new ButtonBuilder().setCustomId('roll:manual').setLabel('Enter my dice').setStyle(ButtonStyle.Secondary).setDisabled(disabled),
+    new ButtonBuilder().setCustomId('roll:cancel').setLabel('Cancel action').setStyle(ButtonStyle.Secondary).setDisabled(disabled),
+  )];
+}
+
+// Posted by the bot after every roll request: the move, the canonical
+// modifier, and one-tap ways to roll, so the model never has to phrase it.
+export async function sendRollPrompt(channel, session) {
+  if (!session.pendingRoll) return null;
+  const state = session.player.id === '__new__' ? {} : await characterState(session).catch(() => ({}));
+  const sent = await channel.send({
+    content: buildRollPrompt(session.pendingRoll, state, session.mechanicsDepth),
+    components: rollPromptComponents(),
+  });
+  session.rollPromptMessageId = sent?.id || null;
+  return sent;
+}
+
+// Disables the buttons on the last roll prompt so a resolved or canceled roll
+// cannot be pressed again. Best-effort: a missing message never blocks play.
+async function retireRollPrompt(channel, session, note = null) {
+  const id = session.rollPromptMessageId;
+  session.rollPromptMessageId = null;
+  if (!id || typeof channel?.messages?.fetch !== 'function') return;
+  try {
+    const prompt = await channel.messages.fetch(id);
+    await prompt.edit({
+      content: note ? `${prompt.content}\n*${note}*` : prompt.content,
+      components: rollPromptComponents(true),
+    });
+  } catch (error) {
+    console.warn(`[roll-prompt] could not retire ${id}: ${error.message}`);
+  }
+}
+
 async function resolvePendingRoll(session, channel, {
   instinct,
   other,
@@ -768,7 +933,7 @@ async function resolvePendingRoll(session, channel, {
     throw new Error('There is no unresolved move to resolve.');
   }
   const request = session.pendingRoll;
-  const state = await readJSON('players/' + session.player.id + '/state.json') || {};
+  const state = await characterState(session);
   const record = createRollRecord({
     request,
     state,
@@ -779,42 +944,52 @@ async function resolvePendingRoll(session, channel, {
     sessionId: session.threadId,
     characterId: session.player.id,
   });
-  session.pendingRoll = null;
-  session.pendingManualRoll = null;
-  session.turnsWithoutRoll = 0;
+  clearPendingRoll(session);
+  await retireRollPrompt(channel, session);
   session.rolls.push(record);
   session.messages.push({
     role: 'user',
     content: [
-      '[SYSTEM \u2014 AUTHORITATIVE ROLL RESULT]',
+      '[SYSTEM — AUTHORITATIVE ROLL RESULT]',
       JSON.stringify(record),
       'Resolve this move now. Do not ask the player to repeat the dice and do not alter the total or result tier.',
       buildMoveResolutionContext(record),
     ].join('\n'),
   });
   await acknowledge(formatRoll(record, session.mechanicsDepth));
-  await channel.sendTyping();
-  const response = await generateSafeResponse(session);
+  let response;
+  try {
+    response = await withTyping(channel, () => generateSafeResponse(session));
+  } catch (err) {
+    console.error(`[generation] roll narration failed for session ${session.threadId}: ${err.message}`);
+    const safeFailure = 'The roll is recorded, but I couldn’t narrate it cleanly. Say **“try again”** and I’ll describe what happens.';
+    session.messages.push({ role: 'assistant', content: safeFailure });
+    await channel.send(safeFailure);
+    return;
+  }
   session.messages.push({ role: 'assistant', content: response });
   await postMCResponse(channel, response, session);
 }
 
-export async function resolveSessionRoll(interaction) {
-  const session = sessions.get(interaction.channelId);
+const rollDie = () => 1 + Math.floor(Math.random() * 6);
+
+// Shared ownership/recovery checks for /roll, roll buttons, and the dice form.
+async function rollSessionFor(interaction) {
+  const { session } = await ensureSession(interaction.channel || { id: interaction.channelId }, interaction.user.id, { snapshotOnly: true });
   if (!session) {
-    await interaction.reply({
-      content: 'Use `/roll` inside an active character session.',
-      ephemeral: true,
-    });
-    return;
+    await interaction.reply({ content: 'This session is not loaded right now. Send any message in this thread (or use `/play`) to reload it, then roll again.', ephemeral: true });
+    return null;
   }
   if (session.player.discord_id && String(interaction.user.id) !== String(session.player.discord_id)) {
-    await interaction.reply({
-      content: 'Only the player who owns this session can resolve its pending move.',
-      ephemeral: true,
-    });
-    return;
+    await interaction.reply({ content: 'Only the player who owns this session can resolve its pending move.', ephemeral: true });
+    return null;
   }
+  return session;
+}
+
+export async function resolveSessionRoll(interaction) {
+  const session = await rollSessionFor(interaction);
+  if (!session) return;
   if (!session.pendingRoll) {
     const recovered = recoverPendingRoll(session);
     if (recovered) {
@@ -823,7 +998,7 @@ export async function resolveSessionRoll(interaction) {
   }
   if (!session.pendingRoll) {
     await interaction.reply({
-      content: 'There is no unresolved move right now. Wait for the MC to request a roll.',
+      content: 'There is no roll waiting right now. The MC will ask when a move needs one.',
       ephemeral: true,
     });
     return;
@@ -836,14 +1011,71 @@ export async function resolveSessionRoll(interaction) {
       await interaction.editReply('That move was already resolved.');
       return;
     }
-    const d6 = () => 1 + Math.floor(Math.random() * 6);
     await resolvePendingRoll(session, interaction.channel, {
-      instinct: d6(),
-      other: d6(),
+      instinct: rollDie(),
+      other: rollDie(),
       diceSource: 'bot',
       acknowledge: content => interaction.editReply(content),
     });
   });
+}
+
+// Roll prompt buttons and the "Enter my dice" form.
+export async function handleRollInteraction(interaction) {
+  const action = interaction.isModalSubmit?.() ? 'modal' : interaction.customId.slice(ROLL_BUTTON_PREFIX.length);
+  if (action === 'auto') {
+    await resolveSessionRoll(interaction);
+    return;
+  }
+  const session = await rollSessionFor(interaction);
+  if (!session) return;
+  if (!session.pendingRoll) {
+    await interaction.reply({ content: 'That roll was already resolved or canceled.', ephemeral: true });
+    return;
+  }
+  if (action === 'manual') {
+    const die = (id, label) => new ActionRowBuilder().addComponents(new TextInputBuilder()
+      .setCustomId(id).setLabel(label).setStyle(TextInputStyle.Short).setMinLength(1).setMaxLength(1).setPlaceholder('1-6').setRequired(true));
+    await interaction.showModal(new ModalBuilder()
+      .setCustomId(ROLL_MODAL_ID)
+      .setTitle(`Roll for ${session.mechanicsDepth <= 3 ? session.pendingRoll.move : 'the move'}`.slice(0, 45))
+      .addComponents(die('instinct', 'Instinct die'), die('other', 'Other die')));
+    return;
+  }
+  if (action === 'cancel') {
+    await interaction.deferUpdate();
+    await lock(session, async () => {
+      if (!session.pendingRoll) return;
+      const reply = pendingRollGuard(session, 'cancel that');
+      await retireRollPrompt(interaction.channel, session, 'Canceled.');
+      session.messages.push({
+        role: 'user',
+        content: '[SYSTEM — PENDING ACTION CANCELED]\nThe player withdrew the action before rolling. Do not resolve it or apply consequences.',
+      });
+      session.messages.push({ role: 'assistant', content: reply });
+      await interaction.channel.send(reply);
+    });
+    return;
+  }
+  if (action === 'modal') {
+    const pair = parseDicePair(`${interaction.fields.getTextInputValue('instinct')} ${interaction.fields.getTextInputValue('other')}`);
+    if (!pair || pair.error) {
+      await interaction.reply({ content: 'Each die must be a number from 1 to 6. Tap **Enter my dice** to try again.', ephemeral: true });
+      return;
+    }
+    await interaction.deferReply({ ephemeral: session.mechanicsDepth >= 4 });
+    await lock(session, async () => {
+      if (!session.pendingRoll) {
+        await interaction.editReply('That move was already resolved.');
+        return;
+      }
+      await resolvePendingRoll(session, interaction.channel, {
+        ...pair,
+        diceSource: 'manual',
+        acknowledge: content => interaction.editReply(content),
+      });
+    });
+  }
 }
 
 const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
@@ -970,6 +1202,7 @@ async function postMCResponse(thread, response, session) {
   //    GitHub immediately and mutates session.player out of '__new__'. After
   //    this fires, a subsequent <close_session> only needs the handoff.
   const save = parseSaveOnboardingBlock(response);
+  let draftNote = null;
   if (save) {
     const missing = missingSaveOnboardingFields(save);
     if (save.character_id !== (session.player.id === '__new__' ? session.draftId : session.player.id)) missing.push('permanent character_id supplied by bot');
@@ -977,7 +1210,12 @@ async function postMCResponse(thread, response, session) {
     if (save.sheet?.trim()) {
       missing.push(...characterSheetProblems(save.sheet).map(problem => `sheet ${problem}`));
     }
-    if (missing.length) {
+    if (missing.length && save.creation_status !== 'ready' && session.player.id !== '__new__') {
+      // Routine per-choice drafts are optional snapshots. A malformed one never
+      // blocks the turn; the next valid draft or an explicit save supersedes it.
+      console.warn(`[save-onboarding] skipped malformed draft for ${session.player.id}: ${missing.join(', ')}`);
+      response = stripSaveOnboardingBlock(response);
+    } else if (missing.length) {
       const retries = session._saveRetries || 0;
       if (retries < SAVE_ONBOARDING_MAX_RETRIES) {
         session._saveRetries = retries + 1;
@@ -997,22 +1235,23 @@ async function postMCResponse(thread, response, session) {
       console.error(`[save-onboarding] exhausted retries for ${session.player.name}: missing ${missing.join(', ')}`);
       return;
     } else {
-      await thread.send('Saving your character…');
-      const saved = await processSaveOnboarding(thread, session, save);
-      if (!saved.success) return;
       response = stripSaveOnboardingBlock(response);
-      // Clean save fired — reset the leak retry counter so a future,
-      // unrelated leak gets the full SAVE_ONBOARDING_MAX_RETRIES budget.
       session._saveLeakRetries = 0;
       session._saveRetries = 0;
       cleanSaveFiredThisTurn = true;
+      if (shouldCommitDraft(session, save)) {
+        await thread.send('Saving your character…');
+        await processSaveOnboarding(thread, session, save);
+      } else {
+        // Between stages the draft lives in the session (and its runtime
+        // snapshot); it is committed at the next stage, save, or start.
+        session.pendingDraft = save;
+        session.mechanicsSheet = save.sheet;
+        draftNote = `✓ Draft updated. Next: ${String(save.next_step || 'keep building').trim()}`;
+      }
     }
   }
 
-  if (checkpoint && session.player.id !== '__new__') {
-    try { await writeCheckpoint(session, checkpoint); }
-    catch (err) { console.error(`[checkpoint] write failed for ${session.player.id}: ${err.message}`); }
-  }
   const close = parseCloseBlock(response);
   if (close && persistencePayloadProblems(close).length) {
     console.error('[close] invalid payload', persistencePayloadProblems(close));
@@ -1083,7 +1322,10 @@ async function postMCResponse(thread, response, session) {
 
   const stripped = close ? stripCloseBlock(response) : response;
   const { cleaned, leakDetected } = sanitizePlayerFacingText(stripped);
-  const visible = formatMoveNames(cleaned, [session.pendingRoll?.move, session.rolls?.at(-1)?.move]);
+  const visible = formatMoveNames(
+    rollRequest ? stripModelRollInstructions(cleaned) : cleaned,
+    [session.pendingRoll?.move, session.rolls?.at(-1)?.move],
+  );
   if (leakDetected) {
     console.warn(
       `[session ${session.threadId}] sanitize stripped structured leak from MC output` +
@@ -1096,15 +1338,22 @@ async function postMCResponse(thread, response, session) {
       session._lastTurnSaveLeak = true;
     }
   }
-  if (!close) for (const part of chunk(visible)) {
+  for (const part of chunk(visible)) {
     if (part.trim()) await thread.send(part);
+  }
+  if (draftNote) await thread.send(draftNote);
+  if (rollRequest && session.pendingRoll === rollRequest) await sendRollPrompt(thread, session);
+
+  // Checkpoints are recovery context, so they are written after the reply is
+  // visible. A close supersedes them with its own inactive checkpoint.
+  if (checkpoint && !close && session.player.id !== '__new__') {
+    inBackground(session, 'checkpoint', () => writeCheckpoint(session, checkpoint));
   }
 
   if (close) {
     await thread.send('Saving your session…');
     const result = await processSessionClose(thread, session, close);
     if (result?.success) {
-      for (const part of chunk(visible)) if (part.trim()) await thread.send(part);
       sessions.delete(session.threadId);
       if (typeof thread.setArchived === 'function') {
         thread.setArchived(true).catch(() => {});
@@ -1273,24 +1522,28 @@ export function stripCheckpointBlock(text) {
   return typeof text === 'string' ? text.replace(CHECKPOINT_BLOCK_RE, '').trim() : text;
 }
 
+function checkpointDocument(session, checkpoint, active = true, characterId = session?.player?.id) {
+  return JSON.stringify({
+    schema_version: 1,
+    active,
+    character_id: characterId,
+    world_revision: session.worldRevision || 0,
+    updated_at: new Date().toISOString(),
+    ...checkpoint,
+    thread_id: session.threadId,
+    pending_roll: session.pendingRoll || null,
+    pending_manual_roll: session.pendingManualRoll || null,
+    pending_mechanics_clarification: session.pendingMechanicsClarification || null,
+    rolls: session.rolls || [],
+  }, null, 2) + '\n';
+}
+
 async function writeCheckpoint(session, checkpoint, active = true) {
   const characterId = session?.player?.id;
   if (!characterId || characterId === '__new__') return;
   await writeFile(
     `players/${characterId}/checkpoint.json`,
-    JSON.stringify({
-      schema_version: 1,
-      active,
-      character_id: characterId,
-      world_revision: session.worldRevision || 0,
-      updated_at: new Date().toISOString(),
-      ...checkpoint,
-      thread_id: session.threadId,
-      pending_roll: session.pendingRoll || null,
-      pending_manual_roll: session.pendingManualRoll || null,
-      pending_mechanics_clarification: session.pendingMechanicsClarification || null,
-      rolls: session.rolls || [],
-    }, null, 2) + '\n',
+    checkpointDocument(session, checkpoint, active),
     `[session] checkpoint for ${session.player.name}`
   );
 }
@@ -1347,6 +1600,7 @@ export function parseSaveOnboardingBlock(text) {
     character_id:     grabTag(body, 'character_id'),
     creation_status: grabTag(body, 'creation_status'),
     next_step: grabTag(body, 'next_step'),
+    creation_stage: grabTag(body, 'creation_stage'),
   };
 }
 
@@ -1389,6 +1643,7 @@ const ORPHAN_TAGS = [
   'close_session',
   'save_player',
   'character_id',
+  'creation_stage',
   ...STRUCTURED_BARE_TAGS,
 ];
 
@@ -1397,7 +1652,7 @@ const ORPHAN_TAGS = [
 // legitimate narrative use — they only ever belong inside save_onboarding
 // or close_session containers. Step 3's looksStructured check would miss
 // them (a kebab-case slug is neither JSON-shaped nor a schema-key marker).
-const ALWAYS_STRIP_BARE_TAGS = ['character_id'];
+const ALWAYS_STRIP_BARE_TAGS = ['character_id', 'creation_stage'];
 
 // Schema-key markers used by sanitize step 3 to decide whether a <TAG>body</TAG>
 // payload is structured data. Looking only at first-char {/[ would miss
@@ -1729,7 +1984,45 @@ export function freshCharacterState(id) {
   };
 }
 
-// Persist a complete draft snapshot repeatedly; completion is a separate validated transition.
+const DRAFT_COMMIT_INTERVAL_MS = 10 * 60 * 1000;
+const CREATION_STAGE_PATTERNS = [
+  ['review', /\breview\b/],
+  ['connections', /\b(?:connection|circle|debt|relationship|contact)/],
+  ['abilities', /\b(?:abilit|stat|move|gear|power)/],
+  ['concept', /\b(?:concept|playbook|name|look|archetype)/],
+];
+
+// Which of the four creation stages a draft is in, from the explicit
+// <creation_stage> tag or, failing that, the next_step wording.
+export function creationStage(save) {
+  const explicit = String(save?.creation_stage || '').trim().toLowerCase();
+  if (CREATION_STAGE_PATTERNS.some(([stage]) => stage === explicit)) return explicit;
+  const text = String(save?.next_step || '').toLowerCase();
+  return CREATION_STAGE_PATTERNS.find(([, pattern]) => pattern.test(text))?.[0] || null;
+}
+
+// Per-choice drafts are committed when they matter: the first save (so the
+// character appears in /play), each stage change, readiness, or after a
+// quiet interval. Everything in between lives in the runtime snapshot.
+export function shouldCommitDraft(session, save, now = Date.now()) {
+  if (session.player.id === '__new__' || save.creation_status === 'ready') return true;
+  const stage = creationStage(save);
+  if (stage && stage !== session.draftStage) return true;
+  return now - (session.draftCommittedAt || 0) >= DRAFT_COMMIT_INTERVAL_MS;
+}
+
+class SaveRejected extends Error {
+  constructor(problems) {
+    super(problems.join('; '));
+    this.problems = problems;
+  }
+}
+
+function jsonDocument(value) {
+  return JSON.stringify(value, null, 2) + '\n';
+}
+
+// Persist a complete draft snapshot as one commit; completion is a separate validated transition.
 export async function processSaveOnboarding(thread, session, save) {
   if (persistencePayloadProblems(save).length) {
     console.error('[creation] invalid payload', persistencePayloadProblems(save));
@@ -1747,8 +2040,6 @@ export async function processSaveOnboarding(thread, session, save) {
   }
   const stamp = new Date().toISOString().slice(0, 10);
   const publicSessionId = `${id}:session_000`;
-  const writes = [];
-  const warnings = [];
 
   let parsedStatePatch = null;
   if (save.state_patch) {
@@ -1757,198 +2048,123 @@ export async function processSaveOnboarding(thread, session, save) {
       if (!parsedStatePatch || typeof parsedStatePatch !== 'object' || Array.isArray(parsedStatePatch)) throw new Error('expected a state object');
       delete parsedStatePatch.safety;
       delete parsedStatePatch.profile_patch;
+    } catch (e) {
+      console.error(`[creation] state_patch: ${e.message}`);
+      await thread.send('The draft could not be saved. Use Save progress to retry.');
+      return { success: false };
     }
-    catch (e) { warnings.push(`state_patch: ${e.message}`); }
   }
-
-  const currentState = await readJSON(`players/${id}/state.json`);
-  let progress;
-  try { progress = creationProgress(save, applyPatch(currentState || {}, parsedStatePatch || {})); }
-  catch (err) { await thread.send(err.message); return { success: false }; }
-  if (warnings.length) { await thread.send('The draft could not be saved. Use Save progress to retry.'); return { success: false }; }
-
-  // Persist draft status before any fan-out so partial writes cannot masquerade as a ready character.
-  await writeFile(`players/${id}/creation.json`, JSON.stringify({ schema_version: 1, status: 'draft', next_step: progress.next_step || 'Review your character', updated_at: new Date().toISOString() }, null, 2) + '\n', `[creation] saving draft ${id}`);
-
-  if (save.sheet) {
-    writes.push(['sheet', writeFile(
-      `players/${id}/sheet.md`,
-      save.sheet.endsWith('\n') ? save.sheet : save.sheet + '\n',
-      `[onboarding] sheet for ${id} (${stamp})`
-    )]);
-  }
-
-  // Always write state.json on first save, seeded with the full schema so
-  // missing patch fields keep their template defaults. Dashboard reads
-  // state.json directly with no fallback for most fields — a sparse file
-  // makes circles/harm/xp silently vanish.
-  writes.push(['state', updateJSON(
-    `players/${id}/state.json`,
-    (current) => applyPatch(current || freshCharacterState(id), parsedStatePatch || {}),
-    `[onboarding] state for ${id} (${stamp})`
-  )]);
-
-  if (save.npc_patch && JSON.parse(save.npc_patch).length) {
-    try {
-      const patches = JSON.parse(save.npc_patch);
-      writes.push(['npcs', updateJSON('game/npcs.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: publicSessionId, stamp, allowNameMatch: true });
-        warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
-        return result.doc;
-      }, `[onboarding] npcs (${stamp})`)]);
-    } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
-  }
-
-  if (save.location_patch && JSON.parse(save.location_patch).length) {
-    try {
-      const patches = JSON.parse(save.location_patch);
-      writes.push(['locations', updateJSON('game/locations.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: publicSessionId, stamp, allowNameMatch: true });
-        warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
-        return result.doc;
-      }, `[onboarding] locations (${stamp})`)]);
-    } catch (e) { warnings.push(`location_patch: ${e.message}`); }
-  }
-
-  if (save.relationship_patch && JSON.parse(save.relationship_patch).length) {
-    try {
-      const patches = JSON.parse(save.relationship_patch);
-      writes.push(['relationships', updateJSON('game/relationships.derived.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: publicSessionId, stamp, publicOnly: true });
-        warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
-        return result.doc;
-      }, `[onboarding] relationships (${stamp})`)]);
-    } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
-  }
-
-  if (save.debt_patch && JSON.parse(save.debt_patch).length) {
-    try {
-      const patches = JSON.parse(save.debt_patch);
-      writes.push(['debts', updateJSON('game/debts.json', (doc) => {
-        const result = mergeDebtPatches(doc, patches, { sessionId: publicSessionId, stamp });
-        warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
-        return result.doc;
-      }, `[onboarding] debts (${stamp})`)]);
-    } catch (e) { warnings.push(`debt_patch: ${e.message}`); }
-  }
-
-  if (save.events_append) {
-    const append = save.events_append.trim();
-    writes.push(['events-log', updateFile(
-      'game/events-log.md',
-      (current) => prependPublicEvent(current, append),
-      `[onboarding] events log (${stamp})`
-    )]);
-  }
-
   const displayName = resolveNewCharacterName(parsedStatePatch, save.sheet, id);
   const ownerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
-  writes.push(['players-index', updateJSON('players/index.json', (current) => {
-    const list = Array.isArray(current) ? current : [];
-    const existing = list.find(p => p.id === id);
-    if (existing) {
-      if (ownerId && !existing.owner_id) existing.owner_id = ownerId;
-      existing.name = displayName;
-      existing.creation_status = progress.status;
-      existing.thread_id = thread.id;
-    } else {
-      const entry = { id, name: displayName, creation_status: progress.status, thread_id: thread.id };
-      if (ownerId) entry.owner_id = ownerId;
-      list.push(entry);
-    }
-    return list;
-  }, `[onboarding] register new character ${id} (${stamp})`)]);
+  const patch = (field, collection, idPrefix, extra = {}) => {
+    const raw = save[field];
+    if (!raw) return null;
+    const patches = JSON.parse(raw);
+    return patches.length ? { patches, collection, idPrefix, extra } : null;
+  };
 
-  if (ownerId) {
-    try {
-      await updateProfile(
-        ownerId,
-        (current) => {
+  let outcome;
+  try {
+    outcome = await commitBatch(`[creation] save ${id} (${stamp})`, async tx => {
+      const warnings = [];
+      const statePath = `players/${id}/state.json`;
+      const currentState = await tx.readJSON(statePath);
+      const progress = creationProgress(save, applyPatch(currentState || {}, parsedStatePatch || {}));
+      // Seeded with the full schema so missing patch fields keep their
+      // template defaults; the dashboard reads state.json with no fallback.
+      const nextState = applyPatch(currentState || freshCharacterState(id), parsedStatePatch || {});
+      if (save.sheet) tx.write(`players/${id}/sheet.md`, save.sheet.endsWith('\n') ? save.sheet : save.sheet + '\n');
+      tx.write(statePath, jsonDocument(nextState));
+
+      for (const [file, entry] of [
+        ['game/npcs.json', patch('npc_patch', 'npcs', 'npc_', { allowNameMatch: true })],
+        ['game/locations.json', patch('location_patch', 'locations', 'loc_', { allowNameMatch: true })],
+        ['game/relationships.derived.json', patch('relationship_patch', 'relationships', 'rel_', { publicOnly: true })],
+      ]) {
+        if (!entry) continue;
+        await tx.updateJSON(file, doc => {
+          const result = mergeCanonicalPatches(doc, entry.patches, { collection: entry.collection, idPrefix: entry.idPrefix, sessionId: publicSessionId, stamp, ...entry.extra });
+          warnings.push(...result.rejected.map(message => `${entry.collection}: ${message}`));
+          return result.doc;
+        });
+      }
+      const debts = save.debt_patch ? JSON.parse(save.debt_patch) : [];
+      if (debts.length) {
+        await tx.updateJSON('game/debts.json', doc => {
+          const result = mergeDebtPatches(doc, debts, { sessionId: publicSessionId, stamp });
+          warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
+          return result.doc;
+        });
+      }
+      if (save.events_append?.trim()) {
+        await tx.update('game/events-log.md', current => prependPublicEvent(current, save.events_append.trim()));
+      }
+      await tx.updateJSON('players/index.json', current => {
+        const list = Array.isArray(current) ? current : [];
+        const existing = list.find(p => p.id === id);
+        if (existing) {
+          if (ownerId && !existing.owner_id) existing.owner_id = ownerId;
+          existing.name = displayName;
+          existing.creation_status = progress.status;
+          existing.thread_id = thread.id;
+        } else {
+          const entry = { id, name: displayName, creation_status: progress.status, thread_id: thread.id };
+          if (ownerId) entry.owner_id = ownerId;
+          list.push(entry);
+        }
+        return list;
+      });
+      if (ownerId) {
+        await tx.updateJSON(profilePath(ownerId), current => {
           if (!current) return null;
           const characters = Array.isArray(current.characters) ? current.characters : [];
-          if (characters.includes(id)) return null;
-          return { ...current, characters: [...characters, id] };
-        },
-        `[onboarding] link character ${id} to player ${ownerId} (${stamp})`
-      );
-    } catch (err) {
-      console.error(`[onboarding] failed to link character ${id} to profile ${ownerId}: ${err.message}`);
-    }
-  }
-
-  const results = await Promise.allSettled(writes.map(([, p]) => p));
-  const okNames = [], failNames = [];
-  results.forEach((r, i) => {
-    const name = writes[i][0];
-    if (r.status === 'fulfilled') okNames.push(name);
-    else {
-      const reason = r.reason?.message || r.reason;
-      failNames.push(`${name}: ${reason}`);
-      console.error(`[save-onboarding] write '${name}' failed for ${id} (${stamp}):`, reason);
-    }
-  });
-
-  let success = !failNames.length && !warnings.length;
-  if (success) {
-    try {
-      await writeFile(`players/${id}/creation.json`, JSON.stringify({
-        schema_version: 1, ...progress, updated_at: new Date().toISOString(),
-      }, null, 2) + '\n', `[creation] ${progress.status} for ${id}`);
-    } catch (err) { success = false; console.error('[creation]', err.message); }
-  }
-  if (!success) {
-    console.error('[creation] incomplete save', { failNames, warnings });
-    await thread.send('Your character was not fully saved. This thread is still open. Use Save progress to retry.');
+          return characters.includes(id) ? null : { ...current, characters: [...characters, id] };
+        });
+      }
+      tx.write(`players/${id}/creation.json`, jsonDocument({ schema_version: 1, ...progress, updated_at: new Date().toISOString() }));
+      // All or nothing: a rejected patch leaves the previous draft untouched.
+      if (warnings.length) throw new SaveRejected(warnings);
+      return { progress, nextState };
+    });
+  } catch (err) {
+    if (/required character choices/.test(err.message)) { await thread.send(err.message); return { success: false }; }
+    console.error(`[creation] save failed for ${id}: ${err.message}`);
+    await thread.send('Your character was not saved. This thread is still open. Use Save progress to retry.');
     return { success: false };
   }
+  const { progress, nextState } = outcome.result;
   session.player = { ...session.player, id, name: displayName, creation_status: progress.status };
   session._onboardingSaved = true;
-  session.rulesProfile = { isNew: progress.status === 'draft', playbook: parsedStatePatch?.playbook || currentState?.playbook || '', wod_extension: parsedStatePatch?.wod_extension || currentState?.wod_extension || '' };
+  session.rulesProfile = { isNew: progress.status === 'draft', playbook: nextState.playbook || '', wod_extension: nextState.wod_extension || '' };
   session.mechanicsSheet = save.sheet;
+  session.state = nextState;
+  session.pendingDraft = null;
+  session.draftCommittedAt = Date.now();
+  session.draftStage = creationStage(save) || session.draftStage || null;
   await renameSessionThread(thread, displayName);
   await registerArchiveThread(thread, { id, name: displayName })
     .catch(error => console.error(`[archive] character registration failed: ${error.message}`));
   if (progress.status === 'ready') await thread.send(sessionControls(session));
   await thread.send(progress.status === 'draft' ? `Draft saved. Next: ${progress.next_step}` : `${displayName} is ready. Your character is saved.`);
   return { success: true };
-
 }
 
 async function processSessionClose(thread, session, close) {
   const id = close.character_id || session.player.id;
   if (id === '__new__') {
     await thread.send('⚠️ Cannot write session close for a new character without a character_id in the close block. Skipping writes.');
-    return;
+    return { success: false };
   }
+  // Let any in-flight recovery checkpoint land before the close supersedes it.
+  await session._bg;
   const stamp = new Date().toISOString().slice(0, 10);
-  const writes = [];
-  const warnings = [];
-  const okNames = [];
-  const failNames = [];
-  const recordedConflicts = [];
   const worldImpact = parseWorldImpact(close) || { level: 'personal', summary: 'Missing impact declaration.', affected_ids: [] };
   const baseWorldRevision = session.worldRevision || 0;
-  session.closeAttempt ||= { payload: close, baseState: await readJSON(`players/${id}/state.json`) || freshCharacterState(id) };
-  const stateBeforeClose = session.closeAttempt.baseState;
-  const retry = retryableCloseWrites(session.closeAttempt, { writeFile, updateFile, updateJSON });
-  const logicalSessionId = `${id}:${nextSessionId(stateBeforeClose.last_session)}`;
+  session.closeAttempt ||= { payload: close };
+  const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
+  const isNewCharacter = session.player.id === '__new__';
 
-  if (close.handoff) {
-    writes.push(['handoff', retry.writeFile(
-      `players/${id}/handoff.md`,
-      close.handoff.endsWith('\n') ? close.handoff : close.handoff + '\n',
-      `[session] handoff for ${session.player.name} (${stamp})`
-    )]);
-  }
-
-  if (close.sheet) {
-    writes.push(['sheet', retry.writeFile(
-      `players/${id}/sheet.md`,
-      close.sheet.endsWith('\n') ? close.sheet : close.sheet + '\n',
-      `[session] sheet for ${session.player.name} (${stamp})`
-    )]);
-  }
-
+  const parseWarnings = [];
   let parsedStatePatch = {};
   let profilePatch = null;
   if (close.state_patch) {
@@ -1962,11 +2178,10 @@ async function processSessionClose(thread, session, close) {
         parsedStatePatch = stateOnly;
       }
     } catch (e) {
-      warnings.push(`state_patch: ${e.message}`);
+      parseWarnings.push(`state_patch: ${e.message}`);
       parsedStatePatch = {};
     }
   }
-
   let arcPatches = [];
   if (close.arc_patch) {
     try {
@@ -1974,459 +2189,287 @@ async function processSessionClose(thread, session, close) {
       if (!Array.isArray(parsed)) throw new Error('expected an array');
       arcPatches = parsed;
     } catch (e) {
-      warnings.push(`arc_patch: ${e.message}`);
+      parseWarnings.push(`arc_patch: ${e.message}`);
     }
   }
-
-  // Arcs are reconciled before character state because active_arc_ids is a
-  // derived index. An involved arc ignored for two consecutive sessions gains
-  // one pressure (escalation), while a touched arc resets its ignore counter.
-  let currentArcs = await readJSON('game/arcs.json') || { arcs: [] };
-  const originalArcs = currentArcs;
-  const hadActiveArcs = deriveActiveArcIds(currentArcs, id).length > 0;
-  if (arcPatches.length || hadActiveArcs) {
-    try {
-      await retry.updateJSON('game/arcs.json', (doc) => {
-        currentArcs = reconcileArcs(doc, arcPatches, {
-          characterId: id,
-          sessionId: logicalSessionId,
-          stamp,
-          conflicts: recordedConflicts,
-        });
-        return currentArcs;
-      }, `[session] arcs (${stamp})`);
-      okNames.push('arcs');
-    } catch (e) {
-      currentArcs = originalArcs;
-      failNames.push(`arcs: ${e.message}`);
-      console.error(`[session-close] arc reconciliation failed for ${id}: ${e.message}`);
-    }
-  }
-  if (retry.document('game/arcs.json')) currentArcs = JSON.parse(retry.document('game/arcs.json'));
-  const activeArcIds = deriveActiveArcIds(currentArcs, id);
-
-  // State is always written on a real close. Session numbering, ranges,
-  // Circle marks from recorded rolls, effects containers, and arc membership
-  // are bot-owned invariants rather than model suggestions.
-  let reconciledState = null;
-  try {
-    await retry.updateJSON(`players/${id}/state.json`, (current) => {
-      const result = reconcileCharacterState(current || stateBeforeClose, parsedStatePatch, {
-        characterId: id,
-        activeArcIds,
-        rolls: session.rolls || [],
-      });
-      reconciledState = result.state;
-      warnings.push(...result.warnings);
-      return result.state;
-    }, `[session] state for ${session.player.name} (${stamp})`);
-    reconciledState = JSON.parse(retry.document(`players/${id}/state.json`));
-    okNames.push('state');
-  } catch (e) {
-    failNames.push(`state: ${e.message}`);
-    console.error(`[session-close] state reconciliation failed for ${id}: ${e.message}`);
-  }
-
-  if (close.events_append) {
-    const append = close.events_append.trim();
-    writes.push(['events-log', retry.updateFile(
-      'game/events-log.md',
-      (current) => prependPublicEvent(current, append),
-      `[session] events log (${stamp})`
-    )]);
-  }
-
-  if (close.npc_patch) {
-    try {
-      const patches = JSON.parse(close.npc_patch);
-      writes.push(['npcs', retry.updateJSON('game/npcs.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'npcs', idPrefix: 'npc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
-        warnings.push(...result.rejected.map(message => `npc_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return result.doc;
-      }, `[session] npcs (${stamp})`)]);
-    } catch (e) { warnings.push(`npc_patch: ${e.message}`); }
-  }
-
-  if (close.location_patch) {
-    try {
-      const patches = JSON.parse(close.location_patch);
-      writes.push(['locations', retry.updateJSON('game/locations.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'locations', idPrefix: 'loc_', sessionId: logicalSessionId, stamp, allowNameMatch: true });
-        warnings.push(...result.rejected.map(message => `location_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return result.doc;
-      }, `[session] locations (${stamp})`)]);
-    } catch (e) { warnings.push(`location_patch: ${e.message}`); }
-  }
-
-  if (close.mystery_patch) {
-    try {
-      const patches = JSON.parse(close.mystery_patch);
-      writes.push(['mysteries', retry.updateJSON('game/mysteries.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'mysteries', idPrefix: 'mystery_', sessionId: logicalSessionId, stamp });
-        warnings.push(...result.rejected.map(message => `mystery_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return withDerivedMysteryState(result.doc);
-      }, `[session] mysteries (${stamp})`)]);
-    } catch (e) { warnings.push(`mystery_patch: ${e.message}`); }
-  }
-
-  if (close.npc_memory_patch) {
-    try {
-      const patches = JSON.parse(close.npc_memory_patch);
-      const npcDocForMemory = await readJSON('game/npcs.json');
-      const validNpcIds = new Set((npcDocForMemory?.npcs || []).map(npc => npc.id));
-      writes.push(['npc-character-memory', retry.updateJSON('game/npc-character-memory.json', (doc) => {
-        const result = mergeNpcCharacterMemoryPatches(doc, patches, {
-          characterId: id,
-          validNpcIds,
-          sessionId: logicalSessionId,
-          stamp,
-        });
-        warnings.push(...result.rejected.map(message => `npc_memory_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return result.doc;
-      }, `[session] NPC-character memory (${stamp})`)]);
-    } catch (e) { warnings.push(`npc_memory_patch: ${e.message}`); }
-  }
-
-  if (close.relationship_patch) {
-    try {
-      const patches = JSON.parse(close.relationship_patch);
-      writes.push(['relationships', retry.updateJSON('game/relationships.derived.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'relationships', idPrefix: 'rel_', sessionId: logicalSessionId, stamp, publicOnly: true });
-        warnings.push(...result.rejected.map(message => `relationship_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return result.doc;
-      }, `[session] relationships (${stamp})`)]);
-    } catch (e) { warnings.push(`relationship_patch: ${e.message}`); }
-  }
-
-  if (close.debt_patch) {
-    try {
-      const patches = JSON.parse(close.debt_patch);
-      writes.push(['debts', retry.updateJSON('game/debts.json', (doc) => {
-        const result = mergeDebtPatches(doc, patches, { sessionId: logicalSessionId, stamp });
-        warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
-        return result.doc;
-      }, `[session] debts (${stamp})`)]);
-    } catch (e) { warnings.push(`debt_patch: ${e.message}`); }
-  }
-
-  if (close.hub_patch) {
-    try {
-      const patches = JSON.parse(close.hub_patch);
-      writes.push(['hub-state', retry.updateJSON('game/hub-state.json', (doc) => {
-        const result = mergeCanonicalPatches(doc, patches, { collection: 'hubs', idPrefix: 'hub_', sessionId: logicalSessionId, stamp });
-        warnings.push(...result.rejected.map(message => `hub_patch: ${message}`));
-        recordedConflicts.push(...result.conflicts);
-        return result.doc;
-      }, `[session] hub state (${stamp})`)]);
-    } catch (e) { warnings.push(`hub_patch: ${e.message}`); }
-  }
-
-  if (close.interaction_ops || close.interactions_patch || session.openingEchoId) {
-    try {
-      const operations = close.interaction_ops ? JSON.parse(close.interaction_ops) : null;
-      const emitted = !operations && close.interactions_patch ? JSON.parse(close.interactions_patch) : null;
-      writes.push(['interactions', retry.updateJSON(
-        'game/interactions.json',
-        (current) => {
-          if (operations) {
-            const withOpeningConsume = session.openingEchoId
-              ? [...operations, { op: 'consume', id: session.openingEchoId }]
-              : operations;
-            const result = applyInteractionOperations(current, withOpeningConsume, { stamp, sessionId: logicalSessionId });
-            warnings.push(...result.rejected.map(message => `interaction_ops: ${message}`));
-            return result.doc;
-          }
-          const next = emitted || current || { interactions: [] };
-          const list = Array.isArray(next.interactions) ? next.interactions : [];
-          return {
-            ...next,
-            interactions: session.openingEchoId
-              ? list.filter(item => item.id !== session.openingEchoId)
-              : list,
-          };
-        },
-        `[session] interactions (${stamp})`
-      )]);
-    } catch (e) {
-      warnings.push(`interactions_patch: ${e.message}`);
-    }
-  }
-
-  // Register a brand-new character in players/index.json so /play can find
-  // them in future sessions. Only triggered when the opening flow was a new
-  // character (id was '__new__') and the close block named a concrete id.
-  if (session.player.id === '__new__' && id && id !== '__new__') {
-    const displayName = resolveNewCharacterName(parsedStatePatch, close.sheet, id);
-    // save_onboarding never fired this session, so the thread is still titled
-    // "<username> — new character". Retitle before it's archived so the
-    // reviewable record shows the character's name, not the player's username.
-    await renameSessionThread(thread, displayName);
-    await registerArchiveThread(thread, { id, name: displayName })
-      .catch(error => console.error(`[archive] character registration failed: ${error.message}`));
-    const closeOwnerId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
-    writes.push(['players-index', updateJSON('players/index.json', (current) => {
-      const list = Array.isArray(current) ? current : [];
-      const existing = list.find(p => p.id === id);
-      if (existing) {
-        if (closeOwnerId && !existing.owner_id) existing.owner_id = closeOwnerId;
-      } else {
-        const entry = { id, name: displayName };
-        if (closeOwnerId) entry.owner_id = closeOwnerId;
-        list.push(entry);
-      }
-      return list;
-    }, `[session] register new character ${id} (${stamp})`)]);
-
-    if (closeOwnerId) {
-      try {
-        await updateProfile(
-          closeOwnerId,
-          (current) => {
-            if (!current) return null;
-            const characters = Array.isArray(current.characters) ? current.characters : [];
-            if (characters.includes(id)) return null;
-            return { ...current, characters: [...characters, id] };
-          },
-          `[session] link character ${id} to player ${closeOwnerId} (${stamp})`
-        );
-      } catch (err) {
-        console.error(`[session] failed to link character ${id} to profile ${closeOwnerId}: ${err.message}`);
-      }
-    }
-  }
-
-  const results = await Promise.allSettled(writes.map(([, p]) => p));
-  results.forEach((r, i) => {
-    const name = writes[i][0];
-    if (r.status === 'fulfilled') okNames.push(name);
-    else {
-      const reason = r.reason?.message || r.reason;
-      failNames.push(`${name}: ${reason}`);
-      // Surface to Fly logs too — in-thread message is easy to miss and the
-      // most common silent failure (player created but never indexed) leaves
-      // no trace otherwise.
-      console.error(`[session-close] write '${name}' failed for ${id} (${stamp}):`, reason);
-    }
-  });
-
-  if (recordedConflicts.length) {
-    try {
-      await retry.updateJSON('game/conflicts.json', (current) => {
-        const list = Array.isArray(current?.conflicts) ? [...current.conflicts] : [];
-        for (const conflict of recordedConflicts) {
-          const suffix = `${logicalSessionId}_${conflict.entity_id}_${conflict.fields.join('_')}`.replace(/[^a-zA-Z0-9_]+/g, '_').toLowerCase();
-          const id = `conflict_${suffix}`;
-          if (list.some(item => item.id === id && item.status === 'pending')) continue;
-          list.push({
-            id,
-            status: 'pending',
-            entity_id: conflict.entity_id,
-            expected_revision: conflict.expected_revision,
-            actual_revision: conflict.actual_revision,
-            fields: conflict.fields,
-            proposed_changes: conflict.proposed_changes,
-            evidence_session_ids: [logicalSessionId],
-            created_at: new Date().toISOString(),
-          });
-        }
-        return { ...(current || {}), schema_version: 1, last_updated: stamp, conflicts: list };
-      }, `[session] record continuity conflicts (${stamp})`);
-      okNames.push('conflicts');
-    } catch (e) {
-      failNames.push(`conflicts: ${e.message}`);
-    }
-  }
+  const parsePatch = (field, label = field) => {
+    if (!close[field]) return null;
+    try { return JSON.parse(close[field]); }
+    catch (e) { parseWarnings.push(`${label}: ${e.message}`); return null; }
+  };
+  const npcPatches = parsePatch('npc_patch');
+  const locationPatches = parsePatch('location_patch');
+  const mysteryPatches = parsePatch('mystery_patch');
+  const memoryPatches = parsePatch('npc_memory_patch');
+  const relationshipPatches = parsePatch('relationship_patch');
+  const debtPatches = parsePatch('debt_patch');
+  const hubPatches = parsePatch('hub_patch');
+  const interactionOps = parsePatch('interaction_ops');
+  const emittedInteractions = interactionOps ? null : parsePatch('interactions_patch');
 
   const sharedTouchKeys = [
     'events_append', 'npc_patch', 'location_patch', 'relationship_patch',
     'debt_patch', 'arc_patch', 'mystery_patch', 'npc_memory_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
   ];
   const hasSharedTouches = worldImpact.level === 'shared' || sharedTouchKeys.some(key => Boolean(close[key]));
-  let resultingWorldRevision = session.worldRevision || 0;
-  if (hasSharedTouches) {
-    try {
-      await retry.updateJSON('game/world-meta.json', (current) => {
-        resultingWorldRevision = (Number.isInteger(current?.revision) ? current.revision : 0) + 1;
-        return {
-          ...(current || {}),
-          schema_version: 1,
-          revision: resultingWorldRevision,
-          last_player_update: new Date().toISOString(),
-          maintenance_status: 'open',
-        };
-      }, `[session] world revision ${logicalSessionId} (${stamp})`);
-      session.worldRevision = resultingWorldRevision;
-      okNames.push('world-meta');
-    } catch (e) {
-      failNames.push(`world-meta: ${e.message}`);
-    }
-  }
+  const newName = isNewCharacter ? resolveNewCharacterName(parsedStatePatch, close.sheet, id) : null;
 
+  let outcome;
   try {
-    const ledgerName = `${id}-${nextSessionId(stateBeforeClose.last_session)}`;
-    const ledger = {
-      schema_version: 1,
-      session_id: logicalSessionId,
-      character_id: id,
-      closed_at: new Date().toISOString(),
-      base_world_revision: baseWorldRevision,
-      resulting_world_revision: resultingWorldRevision,
-      world_impact: worldImpact,
-      touched: sharedTouchKeys.filter(key => Boolean(close[key])),
-      public_event: close.events_append || null,
-      conflicts: recordedConflicts.map(item => ({ entity_id: item.entity_id, fields: item.fields })),
-      warnings: [...warnings],
-    };
-    await retry.writeFile(
-      `game/session-ledger/${ledgerName}.json`,
-      JSON.stringify(ledger, null, 2) + '\n',
-      `[session] public ledger ${logicalSessionId} (${stamp})`
-    );
-    okNames.push('session-ledger');
-  } catch (e) {
-    failNames.push(`session-ledger: ${e.message}`);
-  }
+    // Every file a close touches lands in ONE commit: the save is all or
+    // nothing, and a retry after a failure cannot double-apply anything.
+    outcome = await commitBatch(`[session] close ${id} (${stamp})`, async tx => {
+      const warnings = [...parseWarnings];
+      const conflicts = [];
+      const statePath = `players/${id}/state.json`;
+      await tx.prefetch([statePath, 'game/arcs.json', 'game/world-meta.json']);
+      const stateBefore = await tx.readJSON(statePath) || freshCharacterState(id);
+      const nextSession = nextSessionId(stateBefore.last_session);
+      const logicalSessionId = `${id}:${nextSession}`;
+      const merge = async (file, patches, options) => {
+        if (!patches) return;
+        await tx.updateJSON(file, doc => {
+          const result = mergeCanonicalPatches(doc, patches, { sessionId: logicalSessionId, stamp, ...options });
+          warnings.push(...result.rejected.map(message => `${options.collection}: ${message}`));
+          conflicts.push(...(result.conflicts || []));
+          return options.derive ? options.derive(result.doc) : result.doc;
+        });
+      };
 
-  if (reconciledState?.last_session) {
-    const publicRolls = (session.rolls || []).map(roll => ({
-      move: roll.move,
-      modifier_key: roll.modifier_key,
-      circle: roll.circle,
-      instinct_die: roll.instinct_die,
-      other_die: roll.other_die,
-      modifier: roll.modifier,
-      total: roll.total,
-      result: roll.result,
-      advanced_move: roll.advanced_move,
-      extreme_failure: roll.extreme_failure,
-    }));
-    const receipt = {
-      schema_version: 1,
-      session_id: reconciledState.last_session,
-      character_id: id,
-      date: stamp,
-      rolls: publicRolls,
-      active_arc_ids: reconciledState.active_arc_ids || [],
-      touched_arc_ids: arcPatches.map(item => item.id).filter(Boolean),
-      pacing_audit: auditSession({
-        messages: session.messages,
-        rolls: session.rolls,
-        close,
-        mechanicsGateTriggers: session.mechanicsGateTriggers,
-        mechanicsAdjudications: session.mechanicsAdjudications,
-      }),
-    };
-    try {
-      await retry.writeFile(
-        `players/${id}/sessions/${reconciledState.last_session}.json`,
-        JSON.stringify(receipt, null, 2) + '\n',
-        `[session] receipt for ${session.player.name} ${reconciledState.last_session} (${stamp})`
-      );
-      okNames.push('receipt');
-    } catch (e) {
-      failNames.push(`receipt: ${e.message}`);
-      console.error(`[session-close] receipt write failed for ${id}: ${e.message}`);
-    }
-  }
+      if (close.handoff) tx.write(`players/${id}/handoff.md`, close.handoff.endsWith('\n') ? close.handoff : close.handoff + '\n');
+      if (close.sheet) tx.write(`players/${id}/sheet.md`, close.sheet.endsWith('\n') ? close.sheet : close.sheet + '\n');
 
-  if (!failNames.length) {
-    try {
-      await writeCheckpoint(session, {
+      // Arcs are reconciled before character state because active_arc_ids is a
+      // derived index. An involved arc ignored for two consecutive sessions gains
+      // one pressure (escalation), while a touched arc resets its ignore counter.
+      let arcs = await tx.readJSON('game/arcs.json') || { arcs: [] };
+      if (arcPatches.length || deriveActiveArcIds(arcs, id).length) {
+        arcs = reconcileArcs(arcs, arcPatches, { characterId: id, sessionId: logicalSessionId, stamp, conflicts });
+        tx.write('game/arcs.json', jsonDocument(arcs));
+      }
+      const activeArcIds = deriveActiveArcIds(arcs, id);
+
+      // Session numbering, ranges, Circle marks from recorded rolls, effects
+      // containers, and arc membership are bot-owned invariants.
+      const reconciled = reconcileCharacterState(stateBefore, parsedStatePatch, {
+        characterId: id,
+        activeArcIds,
+        rolls: session.rolls || [],
+      });
+      warnings.push(...reconciled.warnings);
+      tx.write(statePath, jsonDocument(reconciled.state));
+
+      if (close.events_append?.trim()) {
+        await tx.update('game/events-log.md', current => prependPublicEvent(current, close.events_append.trim()));
+      }
+      await merge('game/npcs.json', npcPatches, { collection: 'npcs', idPrefix: 'npc_', allowNameMatch: true });
+      await merge('game/locations.json', locationPatches, { collection: 'locations', idPrefix: 'loc_', allowNameMatch: true });
+      await merge('game/mysteries.json', mysteryPatches, { collection: 'mysteries', idPrefix: 'mystery_', derive: withDerivedMysteryState });
+      if (memoryPatches) {
+        const validNpcIds = new Set(((await tx.readJSON('game/npcs.json'))?.npcs || []).map(npc => npc.id));
+        await tx.updateJSON('game/npc-character-memory.json', doc => {
+          const result = mergeNpcCharacterMemoryPatches(doc, memoryPatches, { characterId: id, validNpcIds, sessionId: logicalSessionId, stamp });
+          warnings.push(...result.rejected.map(message => `npc_memory_patch: ${message}`));
+          conflicts.push(...(result.conflicts || []));
+          return result.doc;
+        });
+      }
+      await merge('game/relationships.derived.json', relationshipPatches, { collection: 'relationships', idPrefix: 'rel_', publicOnly: true });
+      if (debtPatches) {
+        await tx.updateJSON('game/debts.json', doc => {
+          const result = mergeDebtPatches(doc, debtPatches, { sessionId: logicalSessionId, stamp });
+          warnings.push(...result.rejected.map(message => `debt_patch: ${message}`));
+          return result.doc;
+        });
+      }
+      await merge('game/hub-state.json', hubPatches, { collection: 'hubs', idPrefix: 'hub_' });
+
+      if (interactionOps || emittedInteractions || session.openingEchoId) {
+        await tx.updateJSON('game/interactions.json', current => {
+          if (interactionOps) {
+            const withOpeningConsume = session.openingEchoId
+              ? [...interactionOps, { op: 'consume', id: session.openingEchoId }]
+              : interactionOps;
+            const result = applyInteractionOperations(current, withOpeningConsume, { stamp, sessionId: logicalSessionId });
+            warnings.push(...result.rejected.map(message => `interaction_ops: ${message}`));
+            return result.doc;
+          }
+          const next = emittedInteractions || current || { interactions: [] };
+          const list = Array.isArray(next.interactions) ? next.interactions : [];
+          return {
+            ...next,
+            interactions: session.openingEchoId ? list.filter(item => item.id !== session.openingEchoId) : list,
+          };
+        });
+      }
+
+      // A brand-new character closed without an onboarding save is registered
+      // here so /play can find it.
+      if (isNewCharacter) {
+        await tx.updateJSON('players/index.json', current => {
+          const list = Array.isArray(current) ? current : [];
+          const existing = list.find(p => p.id === id);
+          if (existing) {
+            if (discordId && !existing.owner_id) existing.owner_id = discordId;
+          } else {
+            list.push({ id, name: newName, ...(discordId ? { owner_id: discordId } : {}) });
+          }
+          return list;
+        });
+      }
+
+      if (conflicts.length) {
+        await tx.updateJSON('game/conflicts.json', current => {
+          const list = Array.isArray(current?.conflicts) ? [...current.conflicts] : [];
+          for (const conflict of conflicts) {
+            const suffix = `${logicalSessionId}_${conflict.entity_id}_${conflict.fields.join('_')}`.replace(/[^a-zA-Z0-9_]+/g, '_').toLowerCase();
+            const conflictId = `conflict_${suffix}`;
+            if (list.some(item => item.id === conflictId && item.status === 'pending')) continue;
+            list.push({
+              id: conflictId,
+              status: 'pending',
+              entity_id: conflict.entity_id,
+              expected_revision: conflict.expected_revision,
+              actual_revision: conflict.actual_revision,
+              fields: conflict.fields,
+              proposed_changes: conflict.proposed_changes,
+              evidence_session_ids: [logicalSessionId],
+              created_at: new Date().toISOString(),
+            });
+          }
+          return { ...(current || {}), schema_version: 1, last_updated: stamp, conflicts: list };
+        });
+      }
+
+      let resultingWorldRevision = baseWorldRevision;
+      if (hasSharedTouches) {
+        await tx.updateJSON('game/world-meta.json', current => {
+          resultingWorldRevision = (Number.isInteger(current?.revision) ? current.revision : 0) + 1;
+          return {
+            ...(current || {}),
+            schema_version: 1,
+            revision: resultingWorldRevision,
+            last_player_update: new Date().toISOString(),
+            maintenance_status: 'open',
+          };
+        });
+      }
+
+      tx.write(`game/session-ledger/${id}-${nextSession}.json`, jsonDocument({
+        schema_version: 1,
+        session_id: logicalSessionId,
+        character_id: id,
+        closed_at: new Date().toISOString(),
+        base_world_revision: baseWorldRevision,
+        resulting_world_revision: resultingWorldRevision,
+        world_impact: worldImpact,
+        touched: sharedTouchKeys.filter(key => Boolean(close[key])),
+        public_event: close.events_append || null,
+        conflicts: conflicts.map(item => ({ entity_id: item.entity_id, fields: item.fields })),
+        warnings: [...warnings],
+      }));
+
+      const reconciledState = reconciled.state;
+      if (reconciledState?.last_session) {
+        tx.write(`players/${id}/sessions/${reconciledState.last_session}.json`, jsonDocument({
+          schema_version: 1,
+          session_id: reconciledState.last_session,
+          character_id: id,
+          date: stamp,
+          rolls: (session.rolls || []).map(roll => ({
+            move: roll.move,
+            modifier_key: roll.modifier_key,
+            circle: roll.circle,
+            instinct_die: roll.instinct_die,
+            other_die: roll.other_die,
+            modifier: roll.modifier,
+            total: roll.total,
+            result: roll.result,
+            advanced_move: roll.advanced_move,
+            extreme_failure: roll.extreme_failure,
+          })),
+          active_arc_ids: reconciledState.active_arc_ids || [],
+          touched_arc_ids: arcPatches.map(item => item.id).filter(Boolean),
+          pacing_audit: auditSession({
+            messages: session.messages,
+            rolls: session.rolls,
+            close,
+            mechanicsGateTriggers: session.mechanicsGateTriggers,
+            mechanicsAdjudications: session.mechanicsAdjudications,
+          }),
+        }));
+      }
+
+      tx.write(`players/${id}/checkpoint.json`, checkpointDocument(session, {
         summary: 'Session closed successfully.',
         location_id: '',
         present_entity_ids: [],
         open_threads: [],
         pending_mechanics: [],
-      }, false);
-      okNames.push('checkpoint');
-    } catch (e) {
-      failNames.push(`checkpoint: ${e.message}`);
-    }
-  }
+      }, false, id));
 
-  if (failNames.length || warnings.length) console.error('[session-close]', { failNames, warnings });
-  await thread.send(failNames.length
-    ? 'Your session was not fully saved. This thread is still open. Use Save & end to retry.'
-    : 'Session saved. Use /play when you want to continue.');
-
-  if (failNames.length) return { success: false, failures: failNames };
-
-  // Player profile follow-ups: apply any `profile_patch` carried inside the
-  // close block's state_patch (already lifted out of parsedStatePatch above),
-  // then fire the one-shot mechanics-depth calibration prompt if the player
-  // still hasn't been calibrated. The profile_patch is OPTIONAL and permissive
-  // — both `safety` and `mechanics_depth` inside it are optional, unknown keys
-  // are ignored, and out-of-range mechanics_depth values are dropped silently.
-  const discordId = session.player && session.player.discord_id ? String(session.player.discord_id) : null;
-  if (discordId) {
-    // Broad play tendencies are learned from concrete player actions. They are
-    // deliberately soft signals, and contain no romance or safety inference.
-    try {
-      await updateProfile(
-        discordId,
-        (current) => current ? {
-          ...current,
-          inferred_playstyle: mergePlaystyleObservations(
-            current.inferred_playstyle,
-            session.playstyleBaseline,
-            session.playstyleSignals,
-          ),
-        } : null,
-        `[session] observed playstyle for ${discordId} (${stamp})`
-      );
-    } catch (err) {
-      console.error(`[session] failed to persist inferred playstyle for ${discordId}: ${err.message}`);
-    }
-
-    // Apply profile_patch via RMW so a /prefs invocation racing this close
-    // doesn't lose its update. The transform reads the latest profile from
-    // GitHub each retry attempt.
-    let postPatchProfile = null;
-    if (profilePatch && typeof profilePatch === 'object') {
-      try {
-        postPatchProfile = await updateProfile(
-          discordId,
-          (current) => {
+      // Player profile follow-ups: link a new character, merge broad play
+      // tendencies (soft signals, no romance or safety inference), and apply
+      // any optional profile_patch lifted out of state_patch above.
+      let profileAfter = null;
+      if (discordId) {
+        const path = profilePath(discordId);
+        if (isNewCharacter) {
+          await tx.updateJSON(path, current => {
             if (!current) return null;
-            let dirty = false;
+            const characters = Array.isArray(current.characters) ? current.characters : [];
+            return characters.includes(id) ? null : { ...current, characters: [...characters, id] };
+          });
+        }
+        profileAfter = await tx.updateJSON(path, current => current ? {
+          ...current,
+          inferred_playstyle: mergePlaystyleObservations(current.inferred_playstyle, session.playstyleBaseline, session.playstyleSignals),
+        } : null);
+        if (profilePatch && typeof profilePatch === 'object') {
+          profileAfter = await tx.updateJSON(path, current => {
+            if (!current) return null;
             const next = { ...current };
             if (profilePatch.safety && typeof profilePatch.safety === 'object') {
-              const nextSafety = { ...current.safety };
-              if (Array.isArray(profilePatch.safety.hard_limits)) nextSafety.hard_limits = profilePatch.safety.hard_limits;
-              if (Array.isArray(profilePatch.safety.soft_limits)) nextSafety.soft_limits = profilePatch.safety.soft_limits;
-              next.safety = nextSafety;
-              dirty = true;
+              next.safety = { ...current.safety };
+              if (Array.isArray(profilePatch.safety.hard_limits)) next.safety.hard_limits = profilePatch.safety.hard_limits;
+              if (Array.isArray(profilePatch.safety.soft_limits)) next.safety.soft_limits = profilePatch.safety.soft_limits;
             }
-            if (
-              typeof profilePatch.mechanics_depth === 'number' &&
-              profilePatch.mechanics_depth >= 1 &&
-              profilePatch.mechanics_depth <= 5
-            ) {
+            if (typeof profilePatch.mechanics_depth === 'number' && profilePatch.mechanics_depth >= 1 && profilePatch.mechanics_depth <= 5) {
               next.mechanics_depth = profilePatch.mechanics_depth;
               next.mechanics_depth_set = true;
-              dirty = true;
             }
-            return dirty ? next : null;
-          },
-          `[session] profile_patch for ${discordId} (${stamp})`
-        );
-      } catch (err) {
-        console.error(`[session] failed to apply profile_patch for ${discordId}: ${err.message}`);
+            return next;
+          }) || profileAfter;
+        }
       }
-    }
+      return { reconciledState, warnings, resultingWorldRevision, profileAfter };
+    });
+  } catch (err) {
+    console.error(`[session-close] commit failed for ${id} (${stamp}): ${err.message}`);
+    await thread.send('Your session was not fully saved. This thread is still open. Use Save & end to retry.');
+    return { success: false, failures: [err.message] };
+  }
 
-    // Fire the one-shot calibration prompt at most once. Use the post-patch
-    // in-memory profile when we just wrote one (avoids the GitHub eventual-
-    // consistency window where a fresh read could still see the pre-write
-    // value). Then set `mechanics_depth_set: true` AFTER sending so we never
-    // re-prompt — the prompt itself is the calibration event, regardless of
-    // whether the player responds.
-    const profile = postPatchProfile || (await readProfile(discordId));
+  const { reconciledState, warnings, resultingWorldRevision, profileAfter } = outcome.result;
+  if (warnings.length) console.error('[session-close]', { warnings });
+  session.state = reconciledState;
+  if (hasSharedTouches) {
+    session.worldRevision = resultingWorldRevision;
+    noteWorldRevision(resultingWorldRevision);
+  }
+  if (isNewCharacter) {
+    // The thread is still titled "<username> — new character"; retitle it so
+    // the reviewable record shows the character's name.
+    await renameSessionThread(thread, newName);
+    await registerArchiveThread(thread, { id, name: newName })
+      .catch(error => console.error(`[archive] character registration failed: ${error.message}`));
+  }
+  await thread.send('Session saved. Use /play when you want to continue.');
+
+  // One-shot mechanics-depth calibration prompt. The prompt itself is the
+  // calibration event, so the flag is set after sending regardless of reply.
+  if (discordId) {
+    const profile = profileAfter || (await readProfile(discordId).catch(() => null));
     if (profile && profile.mechanics_depth_set === false) {
       try {
         await thread.send({
@@ -2436,18 +2479,11 @@ async function processSessionClose(thread, session, close) {
             `to **5** (mechanics fully hidden, pure story). ` +
             `\n\nReply with \`/prefs mechanics N\` (where N is 1–5) and that will be your default going forward.`,
         });
-        try {
-          await updateProfile(
-            discordId,
-            (current) => {
-              if (!current || current.mechanics_depth_set) return null;
-              return { ...current, mechanics_depth_set: true };
-            },
-            `[session] mark mechanics_depth_set after calibration prompt for ${discordId} (${stamp})`
-          );
-        } catch (err) {
-          console.error(`[session] failed to mark mechanics_depth_set for ${discordId}: ${err.message}`);
-        }
+        await updateProfile(
+          discordId,
+          current => (!current || current.mechanics_depth_set) ? null : { ...current, mechanics_depth_set: true },
+          `[session] mark mechanics_depth_set after calibration prompt for ${discordId} (${stamp})`
+        ).catch(err => console.error(`[session] failed to mark mechanics_depth_set for ${discordId}: ${err.message}`));
       } catch (err) {
         console.error(`[session] failed to post calibration prompt: ${err.message}`);
       }
@@ -2466,7 +2502,7 @@ async function processSessionClose(thread, session, close) {
       console.warn('world event post failed:', e.message);
     }
   }
-  return { success: failNames.length === 0, failures: failNames };
+  return { success: true, failures: [] };
 }
 
 // Display name for a freshly-onboarded character. Preference order:

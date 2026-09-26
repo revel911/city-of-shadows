@@ -78,7 +78,7 @@ Discord message in a session thread
  post cleaned narrative to the Discord thread
         │
         ▼  (on close)
- github.js  write fan-out (retrying, read-modify-write)
+ github.js  commitBatch: one atomic commit (rebuilt on conflict)
         │
         ▼
  archive thread; drop in-memory session
@@ -99,11 +99,14 @@ derived state, revisions, and offscreen eligibility. See
 [`NARRATIVE-RULES-WORLD-ENGINE.md`](NARRATIVE-RULES-WORLD-ENGINE.md).
 ### Statelessness
 
-The bot keeps an in-memory `messages[]` array **only while a thread is live**.
-On session close or a bot restart that array is discarded. `/play` uses the
-saved character/thread identity to reconstruct the session in the existing
-thread from canonical records, creation progress, and checkpoint. Pending rolls
-are restored as bot-owned checkpoint fields.
+The bot keeps an in-memory `messages[]` array **only while a thread is live**,
+and snapshots it after every turn to the private runtime volume (`RUNTIME_DIR`,
+`runtime-store.js`) together with the pending roll, clarification, and unsaved
+creation draft. After a restart or deploy, the next message or button press in a
+session thread resumes from that snapshot. Without one, the bot reloads the scene
+from the roster's saved thread using canonical records, creation progress, and
+checkpoint, as `/play` does. Snapshots are private runtime state, never world
+state, and are deleted when a session ends.
 
 Continuity is therefore a property of the *documents*, not the chat log:
 
@@ -205,6 +208,25 @@ re-emit nudge when persistence didn't land.
 ---
 
 ## Cross-cutting concerns
+
+**Turn latency.** Play turns keep GitHub off the reply path: character state is
+cached for the session, the world revision is cached for 60 seconds (and updated
+in-process when this bot commits a close), and recovery checkpoints are written
+after the reply is posted. Ambiguous turns run the move adjudicator and a
+speculative narration concurrently; the draft is used when no roll is needed and
+regenerated only when the adjudicator requires a roll the draft skipped. When a
+move triggers, the model emits only `<roll_request>`; the bot posts the roll
+prompt (move, modifier, **Roll for me** / **Enter my dice** / **Cancel action**)
+and accepts both dice (`4 2`), a total, the dice form, or `/roll`. The typing
+indicator is refreshed during long generations, and a visible note appears if a
+reply takes more than about 25 seconds.
+
+**Atomic saves.** A session close or creation save is one commit built through
+the Git Data API (`commitBatch` in `github.js`): every touched file is staged
+against one snapshot of the branch head and lands together, or nothing lands. If
+another writer moves the branch first, the batch is rebuilt from the new head.
+Per-choice creation drafts are committed at stage changes, explicit saves, and
+readiness; between those they live in the runtime snapshot.
 
 **Concurrency.** A per-session `lock()` serializes turns within a thread so two
 fast messages can't produce two consecutive user turns (which chat-completions

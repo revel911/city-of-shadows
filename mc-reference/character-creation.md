@@ -49,8 +49,9 @@ Begin: "Who do you want to be in this city? A sentence is enough. I can help you
 choose, or you can give me a build you already have in mind."
 
 After each confirmed creation choice, emit a complete `<save_onboarding>` FIRST.
-Include `<creation_status>draft</creation_status>` and `<next_step>` naming the
-next unanswered choice. Use the permanent character ID supplied by the bot;
+Include `<creation_status>draft</creation_status>`, the current
+`<creation_stage>` (concept, abilities, connections, or review), and
+`<next_step>` naming the next unanswered choice. Use the permanent character ID supplied by the bot;
 never ask the player to approve a filename. Preserve the full sheet using TBD
 for unfinished sections. Save only confirmed character fiction and mechanics,
 never player safety preferences or raw chat. The bot acknowledges successful
@@ -295,8 +296,8 @@ remaining required decisions. Offer Start playing, Edit a choice, or Finish late
 
 Use the same repeatable `<save_onboarding>` contract throughout creation. Include
 character_id, a full canonical sheet, state_patch of confirmed choices,
-relationship_patch and debt_patch arrays (empty if none), creation_status, and
-next_step. Include newly established NPC/location records. Follow the exact
+relationship_patch and debt_patch arrays (empty if none), creation_status,
+creation_stage, and next_step. Include newly established NPC/location records. Follow the exact
 sheet headings in character-sheet-template.md. Set state.playbook and
 state.wod_extension when chosen. Do not reset existing values to initial defaults
 on later saves. Never put player safety settings in state_patch.

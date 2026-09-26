@@ -150,7 +150,7 @@ export function buildMoveAuditContext(turnsWithoutRoll = 0) {
   return [
     '[SYSTEM — REQUIRED MOVE AUDIT]',
     'Before narrating any outcome, compare the player’s present action against every basic move and every exact move on the active character sheet.',
-    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request>, tell them they may tell you the total of their two dice before modifiers, report both dice, or use /roll, and stop before the outcome.',
+    'A player declares intent and method, never an uncertain success. If a move triggers, emit one <roll_request> and stop before the outcome. The bot posts the roll prompt and dice buttons itself, so never write roll instructions, dice totals, or /roll in your prose.',
     'Do not demand a roll for routine travel, ordinary questions, passive observation, retrieving gear, or unopposed actions with no meaningful consequence.',
     'Keep Your Cool applies when immediate pressure or danger makes an action or deliberate composure consequentially uncertain. Figure Someone Out applies only to actively reading a person, never an object or place.',
     'Put a Name to a Face requires a person: a name connected to a face or vice versa. Symbols, logos, objects, places, and writing are not this move.',
@@ -169,10 +169,11 @@ export function buildMechanicsGateContext(expectation, depth = 3) {
     '[SYSTEM — REQUIRED MECHANICS GATE]',
     `The player’s declared action clearly triggers ${expectation.move}: ${expectation.reason}.`,
     'Treat their words as intent and method, not as a successful outcome.',
-    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request>, visibly tell the player they may tell you the total of their two dice before modifiers, report both dice, or use /roll, and stop before resolving the triggered action.',
+    'You may establish only the approach and immediate pressure. Emit exactly one valid <roll_request> and stop before resolving the triggered action.',
+    'The bot posts the roll prompt, modifier, and dice buttons right after your prose. Do not write roll instructions, dice, totals, or /roll yourself.',
     depth <= 3
-      ? 'The player’s mechanics depth requires you to name the move once in the visible roll prompt.'
-      : 'Keep the move name and modifier behind the curtain. The visible prose must still offer a manual total or /roll.',
+      ? 'The bot names the move in its prompt; you may name it once in prose if it reads naturally.'
+      : 'Keep the move name and modifier behind the curtain.',
     'Do not substitute a different move unless newly supplied canonical fiction makes this trigger impossible.',
   ].join('\n');
 }
@@ -192,9 +193,42 @@ function expectedRequest(expectation) {
 
 export function buildMechanicsFallback(expectation, depth = 3) {
   const visible = depth <= 3
-    ? `That triggers **${expectation.move}**. Roll two dice and tell me their total before modifiers, or use \`/roll\`.`
-    : 'The outcome is uncertain. Roll two dice and tell me their total before modifiers, or use `/roll`.';
+    ? `That calls for **${expectation.move}**.`
+    : 'The outcome is uncertain.';
   return `${visible}\n\n<roll_request>${JSON.stringify(expectedRequest(expectation))}</roll_request>`;
+}
+
+// The bot, not the model, owns the roll prompt so it is always present and
+// correct, and never costs a regeneration.
+export function buildRollPrompt(request, state = {}, depth = 3) {
+  const how = 'Roll two dice and send both numbers, Instinct die first (like `4 2`), or send their total. Or tap a button below.';
+  if (depth >= 4) return `🎲 Time to roll. ${how}`;
+  let modifier = '';
+  try {
+    const { source, forward, modifier: value } = rollMath(request, state, 2);
+    const label = source.type === 'status_difference' ? 'Status' : source.key;
+    const sign = number => `${number >= 0 ? '+' : '−'}${Math.abs(number)}`;
+    modifier = ` (${label ? `${label} ` : ''}${sign(value)}${forward ? `, including ${sign(forward)} forward` : ''})`;
+  } catch {
+    modifier = '';
+  }
+  return `🎲 Roll for **${request.move}**${modifier}.\n${how}`;
+}
+
+// Models still sometimes write their own roll instructions. The bot prompt
+// replaces them, so those sentences are dropped instead of regenerating.
+const MODEL_ROLL_INSTRUCTION = /\/roll\b|\b(?:roll|report|send|tell me|give me)\b[^.!?\n]*\b(?:dice|die|2d6|total)\b|\bbefore modifiers\b|\bboth dice\b/i;
+export function stripModelRollInstructions(text) {
+  return String(text || '')
+    .split('\n')
+    .map(line => {
+      if (!MODEL_ROLL_INSTRUCTION.test(line)) return line;
+      const sentences = line.match(/[^.!?]+(?:[.!?]+|$)[\s*_`]*/g) || [line];
+      return sentences.filter(sentence => !MODEL_ROLL_INSTRUCTION.test(sentence)).join('').trimEnd();
+    })
+    .join('\n')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
 }
 
 const PREMATURE_OUTCOME_PATTERNS = Object.freeze({
@@ -226,11 +260,6 @@ export function mechanicsResponseProblems(text, expectation, depth = 3) {
     problems.push(`required ${expectation.move} but requested ${request.move}`);
   }
   const visible = stripRollRequest(text).trim();
-  if (!/\/roll\b/i.test(visible)) problems.push('required roll prompt is not visible');
-  if (depth <= 3 && !visible.toLowerCase().includes(String(expectation.move).toLowerCase())) {
-    problems.push('required move name is not visible');
-  }
-  if (!/\/roll[`.!*_\s]*$/i.test(visible)) problems.push('response continues after the required roll prompt');
   const premature = PREMATURE_OUTCOME_PATTERNS[normalizedMove(expectation.move)] || [];
   if (premature.some(pattern => pattern.test(visible))) {
     problems.push(`resolved ${expectation.move} before the roll`);
@@ -359,6 +388,18 @@ export function parseManualRoll(text) {
     return {
       error: 'Each manual die must be a whole number from 1 to 6.',
     };
+  }
+  return { instinct, other };
+}
+
+// "4 2", "4, 2", "4 and 2", "I rolled 4 and 2": both dice, Instinct die first.
+// Only meaningful while a roll is pending, so callers gate on that.
+export function parseDicePair(text) {
+  const match = String(text || '').trim().match(/^(?:i\s+rolled\s+)?(?:an?\s+)?(-?\d+)\s*(?:,|and|&|\+|\/|\s)\s*(?:an?\s+)?(-?\d+)\s*[.!]?$/i);
+  if (!match) return null;
+  const [instinct, other] = [Number(match[1]), Number(match[2])];
+  if (![instinct, other].every(die => Number.isInteger(die) && die >= 1 && die <= 6)) {
+    return { error: 'Each die must be a whole number from 1 to 6. Send the Instinct die first, like `4 2`.' };
   }
   return { instinct, other };
 }

@@ -4,6 +4,7 @@ import {
   auditSession,
   BASIC_MOVE_MODIFIERS,
   buildMechanicsFallback,
+  buildRollPrompt,
   buildMechanicsGateContext,
   buildMoveAuditContext,
   classifyRoll,
@@ -13,11 +14,13 @@ import {
   formatRoll,
   mergeDebtPatches,
   mechanicsResponseProblems,
+  parseDicePair,
   parseManualRoll,
   parseRollRequest,
   previewRollTotal,
   reconcileArcs,
   reconcileCharacterState,
+  stripModelRollInstructions,
   stripRollRequest,
 } from '../handlers/mechanics.js';
 
@@ -119,7 +122,7 @@ function requested(text, request) {
   return text + '\n<roll_request>' + JSON.stringify(request) + '</roll_request>';
 }
 
-test('required move response cannot skip, change, continue past, or pre-resolve the roll', () => {
+test('required move response cannot skip, change, or pre-resolve the roll', () => {
   const expected = detectMechanicsExpectation(warehouseAction);
   assert.match(mechanicsResponseProblems('You pull him from the truck.', expected)[0], /missing required/i);
 
@@ -128,24 +131,48 @@ test('required move response cannot skip, change, continue past, or pre-resolve 
   });
   assert.ok(mechanicsResponseProblems(wrong, expected).some(problem => /required Turn to Violence/i.test(problem)));
 
-  const continued = requested('Your hand reaches the door. Use /roll. Then he spots you.', {
-    move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
-  });
-  assert.ok(mechanicsResponseProblems(continued, expected).includes('response continues after the required roll prompt'));
-
   const premature = requested('You grab him and pull him halfway out. Use /roll.', {
     move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
   });
   assert.ok(mechanicsResponseProblems(premature, expected).some(problem => /resolved Turn to Violence/i.test(problem)));
 });
 
-test('depths one through three visibly name a gated move', () => {
+test('the bot owns the roll prompt, so model prose needs no roll wording', () => {
   const expected = detectMechanicsExpectation(warehouseAction);
-  const unnamed = requested('The driver shifts in his seat. Use /roll.', {
+  const unnamed = requested('The driver shifts in his seat.', {
     move: 'Turn to Violence', modifier_type: 'stat', modifier_key: 'Blood',
   });
-  assert.ok(mechanicsResponseProblems(unnamed, expected, 3).includes('required move name is not visible'));
+  assert.deepEqual(mechanicsResponseProblems(unnamed, expected, 3), []);
   assert.deepEqual(mechanicsResponseProblems(unnamed, expected, 5), []);
+
+  const request = parseRollRequest(unnamed);
+  const state = { stats: { Blood: 2, Heart: 0, Mind: 1, Spirit: -1 } };
+  const visible = buildRollPrompt(request, state, 3);
+  assert.match(visible, /\*\*Turn to Violence\*\*/);
+  assert.match(visible, /Blood \+2/);
+  assert.match(visible, /Instinct die first/);
+  assert.match(buildRollPrompt({ ...request, forward: -1 }, state, 1), /Blood \+1, including −1 forward/);
+  const hidden = buildRollPrompt(request, state, 5);
+  assert.doesNotMatch(hidden, /Turn to Violence|Blood/);
+  assert.match(hidden, /Instinct die first/);
+});
+
+test('model-written roll instructions are removed without touching the fiction', () => {
+  assert.equal(
+    stripModelRollInstructions('The driver turns. You have one chance. Roll two dice and tell me their total before modifiers, or use `/roll`.'),
+    'The driver turns. You have one chance.'
+  );
+  assert.equal(stripModelRollInstructions('That triggers **Keep Your Cool**.\n\nUse /roll.'), 'That triggers **Keep Your Cool**.');
+  assert.equal(stripModelRollInstructions('The dice cup rattles on the bar.'), 'The dice cup rattles on the bar.');
+});
+
+test('both dice parse Instinct first in common shorthand', () => {
+  for (const text of ['4 2', '4, 2', '4 and 2', 'I rolled 4 and 2', '4+2']) {
+    assert.deepEqual(parseDicePair(text), { instinct: 4, other: 2 });
+  }
+  assert.match(parseDicePair('7 2').error, /1 to 6/);
+  assert.equal(parseDicePair('I go left'), null);
+  assert.equal(parseDicePair('8'), null);
 });
 test('valid gated response and deterministic fallback create a canonical pending request', () => {
   const expected = detectMechanicsExpectation(warehouseAction);
@@ -159,7 +186,7 @@ test('valid gated response and deterministic fallback create a canonical pending
 
   const fallback = buildMechanicsFallback(expected, 3);
   assert.match(fallback, /Turn to Violence/);
-  assert.match(fallback, /\/roll/);
+  assert.doesNotMatch(stripRollRequest(fallback), /\/roll|two dice/);
   assert.equal(parseRollRequest(fallback)?.modifier_key, 'Blood');
   assert.doesNotMatch(stripRollRequest(buildMechanicsFallback(expected, 5)), /Turn to Violence/);
 });

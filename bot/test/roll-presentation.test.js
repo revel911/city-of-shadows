@@ -11,9 +11,9 @@ test('move labels are consistently bold without doubling existing Markdown', () 
   assert.equal(formatMoveNames('Try to keep your cool. `Figure Someone Out`'), 'Try to keep your cool. `Figure Someone Out`');
 });
 
-test('fallback requests a subtotal without suggesting a result', () => {
+test('fallback names the move and leaves the roll prompt to the bot without suggesting a result', () => {
   const reply = buildMechanicsFallback({ move: 'Figure Someone Out', modifier_type: 'stat', modifier_key: 'Mind' });
   assert.match(reply, /\*\*Figure Someone Out\*\*/);
-  assert.match(reply, /total before modifiers/);
-  assert.doesNotMatch(reply, /I rolled an 8/);
+  assert.match(reply, /<roll_request>/);
+  assert.doesNotMatch(reply, /I rolled an 8|before modifiers/);
 });

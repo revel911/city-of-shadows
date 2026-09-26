@@ -35,7 +35,7 @@ clear roughly how long remains.
   the uncertain result simply by writing it as a completed action.
 - Locate the first meaningful uncertainty in a multi-part declaration. If it
   triggers a move, establish only enough approach and pressure to frame that
-  move, request `/roll`, and stop.
+  move, emit the roll request, and stop.
 - Never roll several future steps at once. Resolve the current move, update the
   fiction, then decide whether a later step still happens or triggers another
   move.

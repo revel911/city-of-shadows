@@ -203,8 +203,28 @@ export function selectInteractionEcho(document, characterId) {
   ) || null;
 }
 
-async function buildProfileContext(player) {
-  const profile = player.discord_id ? await readProfile(player.discord_id) : null;
+// Everything a session opening needs, fetched once and shared by the opening
+// prompt and the live session.
+export async function loadCharacterBundle(player) {
+  const isNew = player.id === '__new__';
+  const character = read => isNew ? null : read();
+  const [profile, handoff, sheet, state, checkpoint, events, interactions, continuity, creation, worldMeta] = await Promise.all([
+    player.discord_id ? readProfile(player.discord_id) : null,
+    character(() => readFile(`players/${player.id}/handoff.md`)),
+    character(() => readFile(`players/${player.id}/sheet.md`)),
+    character(() => readJSON(`players/${player.id}/state.json`)),
+    character(() => readJSON(`players/${player.id}/checkpoint.json`)),
+    readFile('game/events-log.md'),
+    character(() => readJSON('game/interactions.json')),
+    character(() => readJSON(`players/${player.id}/continuity.json`)),
+    character(() => readJSON(`players/${player.id}/creation.json`)),
+    readJSON('game/world-meta.json'),
+  ]);
+  return { profile, handoff, sheet, state, checkpoint, events, interactions, continuity, creation, worldMeta };
+}
+
+async function buildProfileContext(player, preloaded) {
+  const profile = preloaded !== undefined ? preloaded : player.discord_id ? await readProfile(player.discord_id) : null;
   if (profile) {
     const hard = (profile.safety?.hard_limits || []).join('; ') || '(none)';
     const soft = (profile.safety?.soft_limits || []).join('; ') || '(none)';
@@ -234,13 +254,14 @@ async function buildProfileContext(player) {
   ].join('\n');
 }
 
-export async function buildOpeningContext(player) {
+export async function buildOpeningContext(player, bundle = null) {
   const isNew = player.id === '__new__';
-  const profileContext = await buildProfileContext(player);
+  bundle ||= await loadCharacterBundle(player);
+  const profileContext = await buildProfileContext(player, bundle.profile);
 
   if (isNew) {
-    const [events, worldBible, worldContext] = await Promise.all([
-      readFile('game/events-log.md'),
+    const events = bundle.events;
+    const [worldBible, worldContext] = await Promise.all([
       readFile('game/world-bible.md'),
       buildCanonicalWorldContext(),
     ]);
@@ -266,16 +287,7 @@ export async function buildOpeningContext(player) {
     ].join('\n');
   }
 
-  const [handoff, sheet, state, checkpoint, events, interactions, continuity, creation] = await Promise.all([
-    readFile(`players/${player.id}/handoff.md`),
-    readFile(`players/${player.id}/sheet.md`),
-    readJSON(`players/${player.id}/state.json`),
-    readJSON(`players/${player.id}/checkpoint.json`),
-    readFile('game/events-log.md'),
-    readJSON('game/interactions.json'),
-    readJSON(`players/${player.id}/continuity.json`),
-    readJSON(`players/${player.id}/creation.json`),
-  ]);
+  const { handoff, sheet, state, checkpoint, events, interactions, continuity, creation } = bundle;
   const worldContext = await buildRelevantWorldContext({
     characterId: player.id,
     state: state || {},

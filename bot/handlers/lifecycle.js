@@ -39,41 +39,10 @@ export function creationTurnContext(session) {
   return [
     '[SYSTEM — CHARACTER CREATION PROGRESS]',
     `Permanent character_id: ${session.player.id === '__new__' ? session.draftId : session.player.id}. Use exactly this ID in every save; never ask the player to approve it.`,
-    'For each confirmed creation choice, emit <save_onboarding> FIRST with the full current canonical sheet, state_patch of confirmed choices, relationship_patch and debt_patch arrays, creation_status (draft or ready), and next_step (one short question or remaining choice). Preserve earlier answers. Never serialize player safety settings into character files.',
+    'For each confirmed creation choice, emit <save_onboarding> FIRST with the full current canonical sheet, state_patch of confirmed choices, relationship_patch and debt_patch arrays, creation_status (draft or ready), creation_stage (concept, abilities, connections, or review), and next_step (one short question or remaining choice). Preserve earlier answers. Never serialize player safety settings into character files.',
     'Keep creation_status draft until the player explicitly chooses to start play after reviewing the character and all required choices are filled. Saving a draft does not finish creation. Do not claim saved; the bot supplies the receipt.',
     'Show only one of four stages: Concept, Abilities, Connections, Review. Ask one useful question, offer at most three relevant options plus access to the full list. Accept multiple answers and edits; invalidate dependent choices when needed. OOC questions never advance creation.',
   ].join('\n');
-}
-
-
-// A retry in this live session repeats only writes that failed. This prevents
-// duplicate session increments, automatic corruption, events, and arc pressure.
-export function retryableCloseWrites(attempt, io) {
-  attempt.completed ||= new Map();
-  attempt.documents ||= new Map();
-  async function once(path, operation) {
-    if (attempt.completed.has(path)) return attempt.completed.get(path);
-    const result = await operation();
-    attempt.completed.set(path, result);
-    return result;
-  }
-  const writeFile = (path, content, message) => once(path, async () => {
-    const result = await io.writeFile(path, content, message);
-    attempt.documents.set(path, content);
-    return result;
-  });
-  const updateFile = (path, transform, message) => once(path, async () => {
-    let next;
-    const result = await io.updateFile(path, async current => {
-      next = await transform(current);
-      return next;
-    }, message);
-    attempt.documents.set(path, next);
-    return result;
-  });
-  const updateJSON = (path, transform, message) => updateFile(path, async text =>
-    JSON.stringify(await transform(text ? JSON.parse(text) : null), null, 2) + '\n', message);
-  return { writeFile, updateFile, updateJSON, document: path => attempt.documents.get(path) };
 }
 
 
