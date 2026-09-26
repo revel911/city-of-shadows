@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-09-25",
+  "last_updated": "2026-09-26",
   "hubs": [
     {
       "state": "The ley line under Monroe Park ran off-tempo for the fourth time in seven weeks, now detected by unofficial instruments. Dr. Olave's closed meetings continue, and the engineered Awakening program remains secret.",
@@ -20,9 +20,9 @@
     {
       "note": "Increased hunter network activity near The Exchange.",
       "id": "hub_downtown",
-      "revision": 12,
-      "last_updated": "2026-09-25",
-      "updated_by_session": "keeper_city_turn_20260925192241",
+      "revision": 13,
+      "last_updated": "2026-09-26",
+      "updated_by_session": "keeper_city_turn_20260926192138",
       "condition": "Night-shift unease at The Exchange has sharpened: a mortal medium has begun waiting through the late shift and leaving offerings at a second Downtown location, and staff continue to log unlogged traffic no known network claims."
     },
     {

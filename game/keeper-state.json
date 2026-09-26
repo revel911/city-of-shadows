@@ -1,21 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "1853b501e6e38fcd1177b60b44ad4bb906562a71",
-  "last_successful_run": "2026-09-26T16:35:46.277Z",
-  "last_city_turn": "2026-09-25",
-  "arc_cooldowns": {},
+  "last_processed_commit": "1b9020a87334231fde539469a7fded5dc2fbd8d5",
+  "last_successful_run": "2026-09-26T19:21:38.442Z",
+  "last_city_turn": "2026-09-26",
+  "arc_cooldowns": {
+    "arc-014": 2
+  },
   "runs": [
-    {
-      "id": "keeper_reconcile_20260827195643",
-      "phase": "reconcile",
-      "completed_at": "2026-08-27T19:56:43.602Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no changes required; all evidence already consistent.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260827223412",
       "phase": "city-turn",
@@ -1121,6 +1112,22 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence or pending conflicts were supplied. The projection's derived state (NPC roles, hub conditions, locations, arcs, debts, events) is internally consistent with the public event log and requires no corrective patches. City-turn candidate is null, so no world advance is made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260926192138",
+      "phase": "city-turn",
+      "completed_at": "2026-09-26T19:21:38.442Z",
+      "changed": true,
+      "touched_ids": [
+        "npc_vera_medium",
+        "loc_the_exchange",
+        "arc-014",
+        "hub_downtown"
+      ],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). The mortal medium Vera continues her late-shift vigil at The Exchange and her offerings have now been observed at a second Downtown location, deepening the pressure without contact or confirmation. No NPC harm, movement, or player-character action occurs off-screen.",
       "dry_run": false
     }
   ],

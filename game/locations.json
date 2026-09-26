@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-25",
+  "last_updated": "2026-09-26",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -326,12 +326,12 @@
       "controller_ids": [],
       "controller_note": "",
       "status": "active",
-      "description": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records. A medium has been seen lingering near the bar, asking after a ghost more persistently, and her questions have not gone unnoticed by staff or by parties who track the monster-poaching market. She has now begun waiting through the late shift, and staff describe her presence as a standing unease.",
+      "description": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records. A medium has been seen lingering near the bar, asking after a ghost more persistently, and her questions have not gone unnoticed by staff or by parties who track the monster-poaching market. She has now begun waiting through the late shift, and staff describe her presence as a standing unease; her vigil has settled into the venue's nightly rhythm, with staff quietly tracking when she arrives and leaves.",
       "atmosphere": "",
       "notes": "",
-      "last_updated": "2026-09-25",
-      "revision": 6,
-      "updated_by_session": "keeper_city_turn_20260925192241"
+      "last_updated": "2026-09-26",
+      "revision": 7,
+      "updated_by_session": "keeper_city_turn_20260926192138"
     },
     {
       "id": "loc_the_club_at_101",
