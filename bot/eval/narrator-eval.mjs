@@ -35,7 +35,9 @@ const client = new OpenAI({ baseURL: 'https://api.deepseek.com', apiKey: process
 function assess(scenario, text) {
   const missing = scenario.must_include.filter(value => !text.toLowerCase().includes(value.toLowerCase()));
   const visible = text.replace(/<(save_onboarding|close_session|checkpoint)>[\s\S]*?<\/\1>/g, '').trim();
-  const forbidden = scenario.must_not_include.filter(value => (['Saved.', 'Session saved'].includes(value) ? visible : text).toLowerCase().includes(value.toLowerCase()));
+  // Phrase checks ignore the hidden roll request itself ("</roll_request>" contains "/roll").
+  const prose = text.replace(/<roll_request>[\s\S]*?<\/roll_request>/g, '');
+  const forbidden = scenario.must_not_include.filter(value => (['Saved.', 'Session saved'].includes(value) ? visible : value.startsWith('<') ? text : prose).toLowerCase().includes(value.toLowerCase()));
   for (const pattern of scenario.must_match || []) if (!new RegExp(pattern, 'i').test(text)) missing.push(`pattern ${pattern}`);
   if (scenario.max_characters && visible.length > scenario.max_characters) forbidden.push(`visible text exceeds ${scenario.max_characters} characters`);
   if (scenario.id.startsWith('end_')) {
