@@ -1,25 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "d0da33bcc1e91225b9d66f266502be51ed964823",
-  "last_successful_run": "2026-09-25T19:22:41.463Z",
+  "last_processed_commit": "89b2a8cb7a76a97f44452239301e887420e3b8a5",
+  "last_successful_run": "2026-09-26T10:31:44.879Z",
   "last_city_turn": "2026-09-25",
   "arc_cooldowns": {
-    "arc-014": 2
+    "arc-014": 1
   },
   "runs": [
-    {
-      "id": "keeper_city_turn_20260826195521",
-      "phase": "city-turn",
-      "completed_at": "2026-08-26T19:55:21.284Z",
-      "changed": true,
-      "touched_ids": [
-        "arc-002"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "The city-turn advances the escalating Fae-Adjacent Specimen arc: Petra Holt's principals, having sent an associate to surveil the warehouse, now escalate to direct contact. The associate leaves a marked envelope at the warehouse entrance, signaling a shift from observation to action. No player characters are involved.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260827140655",
       "phase": "publish",
@@ -1125,6 +1112,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). Vera (medium)'s persistent inquiries near The Exchange and Downtown night venues deepen the mistaken-identity pressure, and night-shift staff at The Exchange grow more uneasy. No player characters affected; no secrets revealed.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260926103144",
+      "phase": "publish",
+      "completed_at": "2026-09-26T10:31:44.879Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
