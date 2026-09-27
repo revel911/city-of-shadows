@@ -1,23 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "de479745a1fe1bf53744b302f4cb3e457c73a628",
-  "last_successful_run": "2026-09-27T10:32:29.959Z",
+  "last_processed_commit": "f5e8c4c1522f8fe41e560c944124119ed08be587",
+  "last_successful_run": "2026-09-27T16:36:04.693Z",
   "last_city_turn": "2026-09-26",
-  "arc_cooldowns": {
-    "arc-014": 1
-  },
+  "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260828142853",
-      "phase": "publish",
-      "completed_at": "2026-08-28T14:28:53.714Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260828202226",
       "phase": "reconcile",
@@ -1124,6 +1111,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20260927163604",
+      "phase": "reconcile",
+      "completed_at": "2026-09-27T16:36:04.693Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence or pending conflicts were supplied. The projection's derived state (NPC roles, hub conditions, arc summaries, and recent public events) is internally consistent with the established public record. No entity patches, memory merges, or conflict resolutions are warranted. City-turn candidate is null, so no world advance is made.",
       "dry_run": false
     }
   ],
