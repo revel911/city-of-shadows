@@ -1,27 +1,12 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "1b9020a87334231fde539469a7fded5dc2fbd8d5",
-  "last_successful_run": "2026-09-26T19:21:38.442Z",
+  "last_processed_commit": "de479745a1fe1bf53744b302f4cb3e457c73a628",
+  "last_successful_run": "2026-09-27T10:32:29.959Z",
   "last_city_turn": "2026-09-26",
   "arc_cooldowns": {
-    "arc-014": 2
+    "arc-014": 1
   },
   "runs": [
-    {
-      "id": "keeper_city_turn_20260827223412",
-      "phase": "city-turn",
-      "completed_at": "2026-08-27T22:34:12.525Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_petra_holt",
-        "arc-001",
-        "hub_shockoe_bottom"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "The Collector's pressure escalates as its presence becomes more tangible in Shockoe Bottom, with a marked envelope left at the warehouse entrance hinting at imminent approach.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260828142853",
       "phase": "publish",
@@ -1128,6 +1113,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "City-turn advance on arc-014 (A Nameless Ghost — Identity & Anchor). The mortal medium Vera continues her late-shift vigil at The Exchange and her offerings have now been observed at a second Downtown location, deepening the pressure without contact or confirmation. No NPC harm, movement, or player-character action occurs off-screen.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20260927103229",
+      "phase": "publish",
+      "completed_at": "2026-09-27T10:32:29.959Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
