@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f94e0a70ec9a600ee1b2fc866843af73745b9d38",
-  "last_successful_run": "2026-09-28T16:38:11.156Z",
-  "last_city_turn": "2026-09-27",
+  "last_processed_commit": "39d763daab9d7cb650398c07a976070f2d9ad17b",
+  "last_successful_run": "2026-09-28T19:24:18.166Z",
+  "last_city_turn": "2026-09-28",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_reconcile_20260829163206",
-      "phase": "reconcile",
-      "completed_at": "2026-08-29T16:32:06.705Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconciliation complete. No changes required; all supplied evidence is consistent with current world state.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260829191902",
       "phase": "city-turn",
@@ -1117,6 +1106,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence or pending conflicts were supplied. All public-safe projection data already reflects established events; no entity revisions, memories, relationships, debts, arcs, mysteries, hubs, interactions, or conflicts require repair. City-turn candidate is null, so no world advance is made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20260928192418",
+      "phase": "city-turn",
+      "completed_at": "2026-09-28T19:24:18.166Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "City-turn phase: no world advance. The projection supplies a null city_turn_candidate, so no arc may receive arc_patch changes and no public event is emitted. No reconciliation changes are warranted from the supplied public-safe projection.",
       "dry_run": false
     }
   ],
