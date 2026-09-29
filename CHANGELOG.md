@@ -14,6 +14,8 @@
 - Recovered Aldridge's documented interaction with Cristoff as a relationship
   memory; unestablished attitudes remain neutral and demands are not promises.
 - Keeper turns with no eligible pressure cannot advance NPCs, places, or events.
+- Applied compatible dependency fixes for the five production audit findings;
+  the production dependency audit now reports zero vulnerabilities.
 - Removed obsolete dashboard helpers, cleaned up graph listeners between routes,
   refreshed search data on reload, and made Markdown sanitization fail closed.
 
