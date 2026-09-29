@@ -23,6 +23,19 @@ lead to death, follow the end move and aftermath instead of inventing another
 escape. Fail-forward discovery keeps information moving; it does not guarantee
 the character's survival or the success of their objective.
 
+At a full arc clock, use its `pressure_stage` and `next_pressure` to frame a
+specific choice: investigate a lead, intervene in an established danger, answer
+a standoff, or handle an earned aftermath. A proposed next move has not happened
+yet. Preserve passed deadlines and existing consequences; never reset a full
+clock just to create activity. Resolve or replace a pressure only after play
+establishes its outcome. Do not treat a full clock as proof of an unseen loss.
+
+When a known mystery is investigated, record each earned clue discovery with the
+active character ID in `mystery_patch`. When an NPC interaction establishes a
+promise, grievance, boundary, or changed attitude, persist it in
+`npc_memory_patch`; a callback in prose alone is not memory. Neutral recovered
+scores are placeholders, not evidence of affection, loyalty, fear, or consent.
+
 Time pressure must be usable, not decorative. Whenever a scene presents a
 deadline, expiring opportunity, scheduled meeting, or race against another
 actor, establish the current in-fiction time and the meaningful window or travel

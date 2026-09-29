@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-26",
+  "last_updated": "2026-09-29",
   "arcs": [
     {
       "id": "arc-001",
@@ -18,17 +18,20 @@
       "character_ids": [],
       "summary": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity.",
       "mc_notes": "Players don't know The Collector and the compromised hunter network are potentially separate threats — or are they? The Collector noticed the warehouse. It may have noticed a recent investigator. Petra Holt's principals may have a connection.",
-      "agenda": "Bring The Collector into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Preserve access to supernatural witnesses and things that remember before the Collector can take them.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 2,
-      "last_updated": "2026-08-27",
+      "revision": 3,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260827223412"
+      "last_touched_session": "keeper_city_turn_20260827223412",
+      "pressure_stage": "intervention",
+      "next_pressure": "Choose a known witness or memory-bearing object connected to the warehouse and establish how to protect it.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-002",
@@ -48,16 +51,18 @@
       "mc_notes": "Fae/court/monarch lore integration with WoD Supplement v2 still pending — do not proceed with fae contact establishment until lore is confirmed. Specimen carries an unresolved-questions weakness usable against it. 5-day deadline is from 2026-04-24.",
       "ignored_sessions": 0,
       "last_touched_session": "keeper_city_turn_20260826195521",
-      "last_updated": "2026-09-14",
-      "revision": 5,
-      "agenda": "Bring The Fae-Adjacent Specimen into play through an existing connected NPC, hub, or character until opposed.",
+      "last_updated": "2026-09-29",
+      "revision": 6,
+      "agenda": "Settle the outstanding retrieval demand around the specimen without conflating it with the demon-heart box.",
       "impulse": "complicate identity, need, loyalty, or obligation",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "updated_by_session": "operator:continuity-repair"
+      "updated_by_session": "operator:playability-review",
+      "pressure_stage": "confrontation",
+      "next_pressure": "Use the retrieved envelope to decide whether to contact Petra, protect the warehouse, or challenge the retrieval demand."
     },
     {
       "id": "arc-003",
@@ -75,17 +80,20 @@
       "character_ids": [],
       "summary": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently confirmed a mathematical pattern in the fragment suggesting a third participant, and has begun quietly cross-referencing University archival records to try to identify them — moving the circle closer to institutional attention without yet naming anyone.",
       "mc_notes": "The other two circle members are unknown. Recent investigative searches into Vera Solis, Asha Tremblay, Maren Voss, or Petra Holt may have been noticed — someone is now aware these threads are being pulled.",
-      "agenda": "Bring Maren Voss's Ritual Circle into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Trace the surviving ritual evidence before institutional attention closes access to it.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 5,
-      "last_updated": "2026-09-10",
+      "revision": 6,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260910191957"
+      "last_touched_session": "keeper_city_turn_20260910191957",
+      "pressure_stage": "investigation",
+      "next_pressure": "Follow the Cabell Library field-note fragment, approach Prof. Tanaka about the pattern, or compare the warehouse evidence.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-004",
@@ -103,17 +111,20 @@
       "character_ids": [],
       "summary": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem. The deadline has passed; the associate retrieved the marked envelope and reported back. Direct action is imminent.",
       "mc_notes": "Petra meeting at Gild was scheduled 9am the day after the most recent session. She agreed without pushing. She did not ask what the name was. Principals unknown — board connection to a rival Power faction.",
-      "agenda": "Bring Petra Holt & Unnamed Principals into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Bring the principals’ overdue containment demand to an answer through Petra.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-08-30",
+      "revision": 4,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260830191913"
+      "last_touched_session": "keeper_city_turn_20260830191913",
+      "pressure_stage": "confrontation",
+      "next_pressure": "Approach Petra about the expired demand and the marked envelope.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-005",
@@ -133,17 +144,20 @@
       "character_ids": [],
       "summary": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting, and the exclusion list has widened again, deepening the internal fracture; a smaller, hand-picked meeting now convenes alongside the larger one, and Overwrite-related files are being quietly reassigned away from excluded members. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified, and her quiet checks have now reached restricted University archival material — she has requested a second, narrower set of restricted records and been seen leaving with unlogged copies.",
       "mc_notes": "Ingrid Voss's secret is known to at least one outside party who has kept quiet; she owes that party 1 Debt. Nadia Vasek Awakened 8 months ago — timing matches Maren Voss's death. Declan Morrow connection: gave Nadia a Scar on her left palm.",
-      "agenda": "Bring Consilium Politics & the Engineered Awakening Program into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Follow the widening institutional exclusions and reassigned records.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-13",
+      "revision": 5,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260913192011"
+      "last_touched_session": "keeper_city_turn_20260913192011",
+      "pressure_stage": "investigation",
+      "next_pressure": "Approach an excluded faculty member or investigate the reassignment of Overwrite files.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-006",
@@ -163,18 +177,21 @@
       "character_ids": [],
       "summary": "Someone senior inside a Richmond hunter network accessed an operative's father's operational files and weaponized them to send the operative to kill a protected woman. A parallel inside-investigation is underway. The handler failed to produce the agreed password on the night of the warehouse op — compromised or impostor. A sealed field-research case from the elder Voss may contain the traitor's name.",
       "mc_notes": "Sealed case (Voss's field research) is in the operative's possession. Combination lock. Unopened. Handler couldn't produce password. Unknown text sender knows the operative's name and position. Network knows the operative was on-site at the warehouse the night of the op.",
-      "agenda": "Bring The Compromised Hunter Network into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Identify who compromised the hunter network using the existing evidence.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-23",
+      "revision": 4,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
       "note": "Henrik Vael surfaced in Downtown, drawing hunter network attention; Roz Czerny is wary.",
-      "last_touched_session": "cristoff-lepierre:session_002"
+      "last_touched_session": "cristoff-lepierre:session_002",
+      "pressure_stage": "investigation",
+      "next_pressure": "Pursue the failed password, the sealed research case, or an established hunter contact.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-007",
@@ -192,17 +209,20 @@
       "character_ids": [],
       "summary": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals.",
       "mc_notes": "The warehouse flagged by the hunter network is likely the same Shockoe Bottom warehouse a practitioner investigated — confirm in play. Whoever sent the operative there wanted Pham dead. The network address may have been false bait.",
-      "agenda": "Bring The Tobacco Warehouse Operation into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Preserve a usable account of the warehouse operation while its records shift.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-01",
+      "revision": 4,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260901192208"
+      "last_touched_session": "keeper_city_turn_20260901192208",
+      "pressure_stage": "intervention",
+      "next_pressure": "Compare a surviving warehouse record with the site or seek Linh Pham’s account.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-008",
@@ -218,17 +238,20 @@
       "character_ids": [],
       "summary": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them, and night-shift staff have begun quietly comparing notes. Still unidentified and unresponded to.",
       "mc_notes": "Pending response. Identity fully unknown — could be ally, enemy, or something else. They demonstrated surveillance capability and knowledge of the network.",
-      "agenda": "Bring The Unknown Text Sender into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Trace the unclaimed messages without assuming the sender is an ally or enemy.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-17",
+      "revision": 5,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260917192243"
+      "last_touched_session": "keeper_city_turn_20260917192243",
+      "pressure_stage": "investigation",
+      "next_pressure": "Respond to the original contact or compare the unlogged messages with night-shift staff.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-009",
@@ -243,17 +266,20 @@
       "character_ids": [],
       "summary": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market. Those parties have now moved from rumor to quiet confirmation of the mark's presence in Downtown, positioning the mark and the mistaken identity nearer to each other without naming either or making contact.",
       "mc_notes": "The hunter is a wanted man in the mortal system. A nameless ghost may be mistaken for this mark — manifested wrong near the hunter once. Market window closes if something else finds it first. The General's coup leverage situation creates a volatile backdrop.",
-      "agenda": "Bring The Ghost of a Dead Vampire into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Expose or prevent the mistaken-identity danger around the market’s standing mark.",
       "impulse": "complicate identity, need, loyalty, or obligation",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-20",
+      "revision": 5,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260920192010"
+      "last_touched_session": "keeper_city_turn_20260920192010",
+      "pressure_stage": "intervention",
+      "next_pressure": "Investigate the mark through an established Downtown contact or check the medium’s account.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-010",
@@ -270,17 +296,20 @@
       "character_ids": [],
       "summary": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions. He has now begun tightening his grip on Downtown night venues, making his move unmistakable.",
       "mc_notes": "The General's name is TBD. A Debt is owed to The General. Situation is a standoff — the wolf needs to act before the General stops cooperating and starts retaliating.",
-      "agenda": "Bring The General's Coup into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Force an answer to the existing leverage standoff at The Exchange.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-03",
+      "revision": 4,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260903192123"
+      "last_touched_session": "keeper_city_turn_20260903192123",
+      "pressure_stage": "confrontation",
+      "next_pressure": "Choose whether to negotiate with the General, test the leverage, or withdraw from the standoff.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-011",
@@ -297,17 +326,20 @@
       "character_ids": [],
       "summary": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown. Serrano has discovered fresh signs of intrusion near a previously sealed access point, prompting him to further seal sections and increase patrols.",
       "mc_notes": "Serrano's location is known to Declan Morrow; access costs a Debt. Serrano's domain connects Shockoe Bottom to Downtown via the canal tunnels.",
-      "agenda": "Bring The Breach in Serrano's Domain into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Learn what crossed the sealed tunnel access before more routes disappear.",
       "impulse": "escalate toward concrete harm through existing connections",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 3,
-      "last_updated": "2026-09-05",
+      "revision": 4,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260905191934"
+      "last_touched_session": "keeper_city_turn_20260905191934",
+      "pressure_stage": "investigation",
+      "next_pressure": "Seek Serrano’s terms for access or compare the security guard’s observations with the known breach.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-012",
@@ -328,15 +360,18 @@
       "mc_notes": "The Revisionists (Mortalis faction in Shockoe Bottom) are cataloguing Overwrite discrepancies rather than correcting them. The same Overwrite signature has been encountered in Shockoe Bottom at least twice. Hollywood Cemetery shows new sections Emmett Daye does not remember, including a grave with a recent date for a living person.",
       "ignored_sessions": 0,
       "last_touched_session": "keeper_city_turn_20260823192418",
-      "last_updated": "2026-08-26",
-      "revision": 2,
-      "agenda": "Bring The Overwrite into play through an existing connected NPC, hub, or character until opposed.",
+      "last_updated": "2026-09-29",
+      "revision": 3,
+      "agenda": "Make one local consequence of the Overwrite testable and actionable.",
       "impulse": "alter a connected hub and make the change publicly observable",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
-      }
+      },
+      "pressure_stage": "intervention",
+      "next_pressure": "Choose one already recorded discrepancy and a way to preserve or compare it.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-013",
@@ -353,17 +388,20 @@
       "character_ids": [],
       "summary": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. Her cross-check of the anomalous entries against older parish records has now surfaced a name that appears in the parish archive but matches no living resident roll, making the discrepancy harder to dismiss as clerical error.",
       "mc_notes": "No PC direct involvement yet. Could connect to the broader Overwrite arc or develop independently.",
-      "agenda": "Bring Creighton Court Redevelopment & Temporal Displacement into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Establish how the pantry discrepancy connects present intake with older parish records.",
       "impulse": "advance through institutions, routines, and relationships",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-23",
+      "revision": 5,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260923192346"
+      "last_touched_session": "keeper_city_turn_20260923192346",
+      "pressure_stage": "investigation",
+      "next_pressure": "Ask Sister Catherine for permission to compare an anomalous voucher, its parish record, and the current resident roll.",
+      "updated_by_session": "operator:playability-review"
     },
     {
       "id": "arc-014",
@@ -380,17 +418,20 @@
       "character_ids": [],
       "summary": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact. She has now begun waiting through the late shift at The Exchange and leaving offerings at a second Downtown location; her vigil has become a fixture of the venue's late hours, deepening the pressure without any contact or confirmation of a link.",
       "mc_notes": "Vera owes the ghost 1 Debt. The ghost may be mistaken for a vampire-ghost mark. Finding the anchor/identity may allow him to move on — or may not.",
-      "agenda": "Bring A Nameless Ghost — Identity & Anchor into play through an existing connected NPC, hub, or character until opposed.",
+      "agenda": "Give the nameless ghost a choice about the medium’s persistent search.",
       "impulse": "complicate identity, need, loyalty, or obligation",
       "clock": {
         "current": 4,
         "max": 4,
         "warning_at": 3
       },
-      "revision": 4,
-      "last_updated": "2026-09-26",
+      "revision": 5,
+      "last_updated": "2026-09-29",
       "ignored_sessions": 0,
-      "last_touched_session": "keeper_city_turn_20260926192138"
+      "last_touched_session": "keeper_city_turn_20260926192138",
+      "pressure_stage": "intervention",
+      "next_pressure": "Meet the medium during her established vigil at The Exchange, observe from a distance, or investigate the anchor through Downtown records.",
+      "updated_by_session": "operator:playability-review"
     }
   ],
   "schema_version": 2

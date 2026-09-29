@@ -5,7 +5,7 @@ import { ROOT, readJSON, writeJSON, unique } from './world-utils.mjs';
 import { mergeCanonicalPatches, mergeNpcCharacterMemoryPatches, applyInteractionOperations } from '../bot/handlers/world-state.js';
 import { mergeDebtPatches, reconcileArcs } from '../bot/handlers/mechanics.js';
 import { buildKeeperProjection } from './keeper-projection.mjs';
-import { selectCityTurnPressure, withDerivedMysteryState } from '../bot/handlers/narrative-state.js';
+import { selectCityTurnPressure, withDerivedMysteryState, guardCityTurnOutput } from '../bot/handlers/narrative-state.js';
 
 const phaseArg = process.argv.find(arg => arg.startsWith('--phase='));
 const phaseIndex = process.argv.indexOf('--phase');
@@ -104,6 +104,7 @@ function parseModelJSON(text) {
 }
 
 async function callKeeper(context) {
+  if (context.phase === 'city-turn' && !selectCityTurnPressure(context.arcs?.arcs || [], context.keeper?.arc_cooldowns || {})) return guardCityTurnOutput();
   const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) throw new Error('DEEPSEEK_API_KEY is required for scheduled keeper model phases');
   const cityTurnCandidate = selectCityTurnPressure(context.arcs?.arcs || [], context.keeper?.arc_cooldowns || {});
@@ -186,9 +187,10 @@ function applyResolutions(conflictDoc, resolutions) {
 }
 
 async function applyOutput(context, rawOutput) {
-  const output = keeperLimits(rawOutput || {});
+  let output = keeperLimits(rawOutput || {});
   if (phase === 'city-turn') {
     const candidate = selectCityTurnPressure(context.arcs?.arcs || [], context.keeper?.arc_cooldowns || {});
+    output = guardCityTurnOutput(output, candidate);
     const proposed = output.arc_patch;
     output.arc_patch = candidate ? proposed.filter(patch => (patch?.id || patch?.changes?.id) === candidate.id).slice(0, 1) : [];
     if (proposed.length !== output.arc_patch.length) {

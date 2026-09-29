@@ -8,6 +8,7 @@ or private character knowledge.
 |---|---|---|
 | [index.html](index.html) | Dashboard shell | Page structure, navigation, content regions, scripts, and stylesheet order |
 | [app.js](app.js) | Dashboard application | Repository data loading, views, entity rendering, filters, graph interaction, and public mystery presentation |
+| [chronicle.js](chronicle.js) | Chronicle helpers | Complete dated event parsing, canonical entity routes, event mentions, and pressure-stage labels |
 | [style.css](style.css) | Base styles | Layout tokens, cards, tables, lists, badges, responsive behavior, and shared visual rules |
 | [graph-controls.css](graph-controls.css) | Graph controls | Network filter and control presentation |
 | [layout-fixes.css](layout-fixes.css) | Layout fixes | Narrow corrective overrides for dashboard geometry |

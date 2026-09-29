@@ -2,6 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   BASIC_MOVE_RESOLUTIONS,
+  guardCityTurnOutput,
   buildMoveResolutionContext,
   buildScenePressureCandidates,
   deriveKnowledgeRecords,
@@ -124,4 +125,24 @@ test('arc pressure migration keeps the clock synchronized with escalation', () =
   assert.deepEqual(result.doc.arcs[0].clock, { current: 2, max: 4, warning_at: 3 });
   assert.match(result.doc.arcs[0].agenda, /Pressure/);
   assert.match(result.doc.arcs[0].impulse, /concrete harm/);
+});
+test('full clocks retain concrete opportunities in intersecting scene candidates', () => {
+  const arcs = [
+    { id: 'arc-001', title: 'Records', status: 'active', escalation: 4, pressure_stage: 'investigation', next_pressure: 'Compare the parish record.', hub_ids: ['hub_a'] },
+    { id: 'arc-002', title: 'Vigil', status: 'active', escalation: 4, pressure_stage: 'intervention', next_pressure: 'Meet the waiting witness.', hub_ids: ['hub_a'] },
+  ];
+  const candidate = buildScenePressureCandidates({ arcs })[0];
+  assert.match(candidate.why_now, /Compare the parish record/);
+  assert.match(candidate.why_now, /Meet the waiting witness/);
+  assert.deepEqual(candidate.source_stages, ['investigation', 'intervention']);
+  assert.equal(selectCityTurnPressure(arcs), null);
+  assert.equal(withStructuredArcPressure({arcs}).doc.arcs[0].escalation, 4);
+});
+
+test('no eligible city pressure blocks every world mutation, including events and side-channel patches', () => {
+  const proposal = {npc_patch: [{id: 'npc_a'}], location_patch: [{id: 'loc_a'}], arc_patch: [{id: 'arc-001'}], events_append: 'Invented advance', interaction_ops: [{op: 'add'}], conflict_resolutions: [{id:'c',status:'resolved'}]};
+  const result = guardCityTurnOutput(proposal, null);
+  for (const key of ['npc_patch','location_patch','arc_patch','interaction_ops','conflict_resolutions']) assert.deepEqual(result[key], []);
+  assert.equal(result.events_append, null);
+  assert.equal(guardCityTurnOutput(proposal, {id:'arc-001'}), proposal);
 });

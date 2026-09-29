@@ -29,6 +29,9 @@ There must be one authoritative definition for each fact. In particular:
   describe a social tie but are not a Debt ledger.
 - Mystery questions, revelations, clue availability, derived stage, and progress live in `game/mysteries.json`.
 - A character’s knowledge of a mystery is derived from clue `discovered_by` IDs; it is not duplicated into another public file.
+- Optional arc `pressure_stage` is `developing`, `investigation`, `intervention`,
+  `confrontation`, or `aftermath`. A staged arc requires concrete `next_pressure`;
+  these describe a possible next scene, never proof that it already occurred.
 - Arc pressure lives in `game/arcs.json`: escalation is canonical, while agenda, impulse, next pressure, and clock metadata make behavior explicit when present.
 - Character mechanics live under `players/<character-id>/`.
 

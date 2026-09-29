@@ -75,7 +75,7 @@
         <input id="search-input" type="search" placeholder="Search NPCs, arcs, hubs, characters…" autocomplete="off" spellcheck="false" />
         <kbd id="search-esc-hint">Esc</kbd>
       </div>
-      <div id="search-results" role="listbox"></div>
+      <div id="search-results" role="group" aria-label="Search results"></div>
     </div>
   </div>
 
@@ -117,6 +117,6 @@
           integrity="sha384-S/hEiU9V48awIFrhtOYkLWEqSLw7EvRFdJy3fVABLPNP0xU2gavrud66pkpp3f7m"
           crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/cytoscape@3.34.1/dist/cytoscape.min.js"></script>
-  <script src="app.js"></script>
+  <script type="module" src="app.js"></script>
 </body>
 </html>

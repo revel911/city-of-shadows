@@ -1,5 +1,22 @@
 # Changelog
 
+## 2026-09-29 - Enter the city and follow its consequences
+
+- Added a Discord entry path, three-step introduction, and sample exchange.
+- Fixed the newest-first event feed; full dated entries link to canonical records.
+- Search opens individual NPC, place, hub, arc, and mystery records with nearby
+  connections and recent mentions; atlas links select and highlight that entity.
+- Reviewed all fourteen full-pressure arcs without resetting clocks or inventing
+  resolutions. Concrete opportunities and distinct scene stages replace generic
+  agendas, including in intersecting scene candidates.
+- Seeded The Names at the Pantry from established public Creighton Court reports,
+  with three independent investigative routes and no invented hidden solution.
+- Recovered Aldridge's documented interaction with Cristoff as a relationship
+  memory; unestablished attitudes remain neutral and demands are not promises.
+- Keeper turns with no eligible pressure cannot advance NPCs, places, or events.
+- Removed obsolete dashboard helpers, cleaned up graph listeners between routes,
+  refreshed search data on reload, and made Markdown sanitization fail closed.
+
 ## 2026-09-26 - Faster turns, one-tap rolls, and restart-proof sessions
 
 - The bot now writes every roll prompt itself: move, canonical modifier, and

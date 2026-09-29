@@ -132,7 +132,9 @@ Terminal clocks cannot advance without player-facing warning and a chance to
 respond.
 
 A City Keeper turn receives exactly one deterministic eligible arc candidate.
-Maxed, resolved, failed, closed, or cooling-down arcs are excluded. Output for a
+Maxed, resolved, failed, closed, or cooling-down arcs are excluded. With no
+eligible candidate, the Keeper skips model generation and rejects every world
+patch and public event, including side-channel NPC/location changes. Output for a
 different arc is rejected, and a touched arc receives a two-turn cooldown.
 Reconciliation never invents new mystery truth.
 

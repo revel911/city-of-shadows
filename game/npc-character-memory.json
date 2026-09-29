@@ -1,5 +1,32 @@
 {
   "schema_version": 1,
-  "last_updated": "2026-09-26",
-  "memories": []
+  "last_updated": "2026-09-29",
+  "memories": [
+    {
+      "id": "memory_aldridge__cristoff_lepierre",
+      "revision": 1,
+      "npc_id": "npc_aldridge",
+      "character_id": "cristoff-lepierre",
+      "relationship_state": "Unresolved transactional confrontation",
+      "disposition": 0,
+      "trust": 0,
+      "fear": 0,
+      "respect": 0,
+      "last_interaction": "Met Cristoff at The Nail, confronted him about the two dead couriers, demanded contact before he pursued their sender, then left a face-down phone and departed.",
+      "promises": [],
+      "grievances": [
+        "Aldridge confronted Cristoff about two dead couriers he described as his employer’s assets."
+      ],
+      "boundaries": [
+        "Aldridge demanded prior contact before Cristoff pursues the courier’s sender; this was a demand, not an accepted promise."
+      ],
+      "key_moments": [
+        "Aldridge deliberately left a face-down phone at The Nail after meeting Cristoff."
+      ],
+      "npc_believes_about_character": [],
+      "notes": "Recovered from the existing public npc_aldridge role and player_interaction record. The employer’s identity, any network connection, and Cristoff’s response remain unestablished here. Scores are neutral placeholders, not inferred trust, fear, or respect.",
+      "last_updated": "2026-09-29",
+      "updated_by_session": "operator:playability-review"
+    }
+  ]
 }

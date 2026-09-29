@@ -1,5 +1,5 @@
 {
-  "as_of": "2026-09-26",
+  "as_of": "2026-09-29",
   "derived_through": "2026-08-21",
   "nodes": [
     {
@@ -1919,7 +1919,9 @@
         "status": "escalating",
         "subtype": "threat",
         "escalation": 4,
-        "details": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity."
+        "details": "An entity that catalogs things-that-remember — living artifacts, creatures with memory, and supernatural witnesses. Killed graduate student Maren Voss eight months ago. Still active in the city. The specimen in the Shockoe Bottom warehouse was hiding from it, and it may have noticed the warehouse activity.",
+        "pressure_stage": "intervention",
+        "next_pressure": "Choose a known witness or memory-bearing object connected to the warehouse and establish how to protect it."
       },
       "position": {
         "x": 703,
@@ -1935,7 +1937,9 @@
         "status": "escalating",
         "subtype": "personal",
         "escalation": 4,
-        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach. Continuity repair: Cristoff retrieved the marked envelope. The separately reported box containing a demon heart was taken by a cleanup crew after the gym fire; no link to the fae-adjacent specimen is established."
+        "details": "The fae-adjacent specimen's five-day retrieval deadline (from 2026-04-24) has passed. It remains in the warehouse, but the situation is more urgent. Petra Holt's principals have now moved to direct action, sending an associate to the warehouse vicinity. The associate left a marked envelope at the warehouse entrance, indicating an imminent approach. Continuity repair: Cristoff retrieved the marked envelope. The separately reported box containing a demon heart was taken by a cleanup crew after the gym fire; no link to the fae-adjacent specimen is established.",
+        "pressure_stage": "confrontation",
+        "next_pressure": "Use the retrieved envelope to decide whether to contact Petra, protect the warehouse, or challenge the retrieval demand."
       },
       "position": {
         "x": -784,
@@ -1951,7 +1955,9 @@
         "status": "active",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently confirmed a mathematical pattern in the fragment suggesting a third participant, and has begun quietly cross-referencing University archival records to try to identify them — moving the circle closer to institutional attention without yet naming anyone."
+        "details": "Maren Voss was one of three practitioners who ran a folk-practice ritual in the warehouse. The other two are unnamed and unwarned. They do not know what they started. Maren's dying message: keep them out of it if you can. A student researcher at Cabell Library uncovered a fragment of Maren's field notes, drawing renewed academic interest in her work. Prof. Tanaka has independently confirmed a mathematical pattern in the fragment suggesting a third participant, and has begun quietly cross-referencing University archival records to try to identify them — moving the circle closer to institutional attention without yet naming anyone.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Follow the Cabell Library field-note fragment, approach Prof. Tanaka about the pattern, or compare the warehouse evidence."
       },
       "position": {
         "x": 800,
@@ -1967,7 +1973,9 @@
         "status": "escalating",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem. The deadline has passed; the associate retrieved the marked envelope and reported back. Direct action is imminent."
+        "details": "Petra Holt arrived at Gild coffee shop with institutional backing and a six-day retrieval deadline for the specimen. She knows enough to use the word 'containment' correctly. Her unnamed principals are connected to a rival Power faction. If the deadline passes, they become an active problem. The deadline has passed; the associate retrieved the marked envelope and reported back. Direct action is imminent.",
+        "pressure_stage": "confrontation",
+        "next_pressure": "Approach Petra about the expired demand and the marked envelope."
       },
       "position": {
         "x": -197,
@@ -1983,7 +1991,9 @@
         "status": "active",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting, and the exclusion list has widened again, deepening the internal fracture; a smaller, hand-picked meeting now convenes alongside the larger one, and Overwrite-related files are being quietly reassigned away from excluded members. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified, and her quiet checks have now reached restricted University archival material — she has requested a second, narrower set of restricted records and been seen leaving with unlogged copies."
+        "details": "Dr. Olave holds closed Consilium meetings that exclude some Power faction members — the hierarchy is shifting, and the exclusion list has widened again, deepening the internal fracture; a smaller, hand-picked meeting now convenes alongside the larger one, and Overwrite-related files are being quietly reassigned away from excluded members. Simultaneously, Councilor Marcus Voss runs a secretive program to engineer Awakenings in promising VCU students. Councilor Ingrid Voss is hiding the fact that her own Awakening was engineered decades ago by something she has never fully identified, and her quiet checks have now reached restricted University archival material — she has requested a second, narrower set of restricted records and been seen leaving with unlogged copies.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Approach an excluded faculty member or investigate the reassignment of Overwrite files."
       },
       "position": {
         "x": 1317,
@@ -1999,7 +2009,9 @@
         "status": "escalating",
         "subtype": "threat",
         "escalation": 4,
-        "details": "Someone senior inside a Richmond hunter network accessed an operative's father's operational files and weaponized them to send the operative to kill a protected woman. A parallel inside-investigation is underway. The handler failed to produce the agreed password on the night of the warehouse op — compromised or impostor. A sealed field-research case from the elder Voss may contain the traitor's name."
+        "details": "Someone senior inside a Richmond hunter network accessed an operative's father's operational files and weaponized them to send the operative to kill a protected woman. A parallel inside-investigation is underway. The handler failed to produce the agreed password on the night of the warehouse op — compromised or impostor. A sealed field-research case from the elder Voss may contain the traitor's name.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Pursue the failed password, the sealed research case, or an established hunter contact."
       },
       "position": {
         "x": 61,
@@ -2015,7 +2027,9 @@
         "status": "active",
         "subtype": "threat",
         "escalation": 4,
-        "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals."
+        "details": "A tobacco warehouse on the Canal Walk edge of Shockoe Bottom was flagged by the hunter network under suspicious circumstances. Dr. Linh Pham fled it before being intercepted. Whatever was happening inside was not finished when the operative withdrew. It overlaps with the Overwrite activity and the fae specimen site. The Overwrite has begun rewriting the warehouse's administrative records, making its history unstable and drawing renewed attention from Petra Holt's principals.",
+        "pressure_stage": "intervention",
+        "next_pressure": "Compare a surviving warehouse record with the site or seek Linh Pham’s account."
       },
       "position": {
         "x": 734,
@@ -2031,7 +2045,9 @@
         "status": "active",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them, and night-shift staff have begun quietly comparing notes. Still unidentified and unresponded to."
+        "details": "An unknown third party texted an operative their own name and warned them they were watching the wrong door on the night of the warehouse op. They have not been responded to. Identity unknown. They know the operative's name and operational position. A second, unlogged contact surfaced through ordinary institutional channels in Downtown and Shockoe Bottom, indicating the sender is tracking established routines rather than only the original night. The pattern has now extended into the night-shift routines of Downtown venues and the Canal Walk, where unlogged messages and deliveries continue to appear without any known network claiming them, and night-shift staff have begun quietly comparing notes. Still unidentified and unresponded to.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Respond to the original contact or compare the unlogged messages with night-shift staff."
       },
       "position": {
         "x": 780,
@@ -2047,7 +2063,9 @@
         "status": "active",
         "subtype": "personal",
         "escalation": 4,
-        "details": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market. Those parties have now moved from rumor to quiet confirmation of the mark's presence in Downtown, positioning the mark and the mistaken identity nearer to each other without naming either or making contact."
+        "details": "A current mark on the monster-poaching market — the ghost of a dead vampire, something that shouldn't exist twice. Whatever it leaves behind is worth money. Not yet engaged. A nameless ghost in the same hub has been mistaken for it once already. A mortal medium who can see the nameless ghost has begun quietly asking after its story among Downtown night contacts, and word of her questions has reached parties who track the poaching market. Those parties have now moved from rumor to quiet confirmation of the mark's presence in Downtown, positioning the mark and the mistaken identity nearer to each other without naming either or making contact.",
+        "pressure_stage": "intervention",
+        "next_pressure": "Investigate the mark through an established Downtown contact or check the medium’s account."
       },
       "position": {
         "x": 794,
@@ -2063,7 +2081,9 @@
         "status": "escalating",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions. He has now begun tightening his grip on Downtown night venues, making his move unmistakable."
+        "details": "A wolf holds damaging information on a vampire faction leader (The General) and is using it to manipulate them with coup bait. The General is volatile. If they call the bluff or move first, the wolf is in serious danger. The General has recently made a public show of force at The Exchange, consolidating control and escalating tensions. He has now begun tightening his grip on Downtown night venues, making his move unmistakable.",
+        "pressure_stage": "confrontation",
+        "next_pressure": "Choose whether to negotiate with the General, test the leverage, or withdraw from the standoff."
       },
       "position": {
         "x": 1474,
@@ -2079,7 +2099,9 @@
         "status": "escalating",
         "subtype": "threat",
         "escalation": 4,
-        "details": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown. Serrano has discovered fresh signs of intrusion near a previously sealed access point, prompting him to further seal sections and increase patrols."
+        "details": "Something came through a sealed access point in Aldric Serrano's tunnel domain beneath Downtown. He has been defensive and secretive, sealing off entire sections of the canal tunnels. The nature of what breached is unknown. Serrano has discovered fresh signs of intrusion near a previously sealed access point, prompting him to further seal sections and increase patrols.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Seek Serrano’s terms for access or compare the security guard’s observations with the known breach."
       },
       "position": {
         "x": -27,
@@ -2095,7 +2117,9 @@
         "status": "escalating",
         "subtype": "city",
         "escalation": 4,
-        "details": "A city-wide supernatural phenomenon rewriting physical and historical reality across all of Richmond's hubs. Shockoe Bottom: buildings appear/disappear, street signs shift. Downtown: legal records rewrite themselves. Creighton Court: temporal displacement, different eras coexist. The University: impossible research results, contradictory academic records. Oregon Hill: industrial echoes, phantom work shifts."
+        "details": "A city-wide supernatural phenomenon rewriting physical and historical reality across all of Richmond's hubs. Shockoe Bottom: buildings appear/disappear, street signs shift. Downtown: legal records rewrite themselves. Creighton Court: temporal displacement, different eras coexist. The University: impossible research results, contradictory academic records. Oregon Hill: industrial echoes, phantom work shifts.",
+        "pressure_stage": "intervention",
+        "next_pressure": "Choose one already recorded discrepancy and a way to preserve or compare it."
       },
       "position": {
         "x": 728,
@@ -2111,7 +2135,9 @@
         "status": "active",
         "subtype": "slow-burn",
         "escalation": 4,
-        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. Her cross-check of the anomalous entries against older parish records has now surfaced a name that appears in the parish archive but matches no living resident roll, making the discrepancy harder to dismiss as clerical error."
+        "details": "RRHA's Renaissance redevelopment is displacing East End families while the Overwrite's temporal displacement anomaly makes different eras of Creighton Court coexist simultaneously. Demolished buildings cast shadows, children play on removed equipment, residents encounter neighbors who died or moved away years ago. The displacement has now begun reaching the neighborhood's ordinary institutional routines: the East End Family Resource Center's pantry intake is logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke has started keeping a separate, unshared ledger for them. Her cross-check of the anomalous entries against older parish records has now surfaced a name that appears in the parish archive but matches no living resident roll, making the discrepancy harder to dismiss as clerical error.",
+        "pressure_stage": "investigation",
+        "next_pressure": "Ask Sister Catherine for permission to compare an anomalous voucher, its parish record, and the current resident roll."
       },
       "position": {
         "x": -712,
@@ -2127,11 +2153,30 @@
         "status": "active",
         "subtype": "personal",
         "escalation": 4,
-        "details": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact. She has now begun waiting through the late shift at The Exchange and leaving offerings at a second Downtown location; her vigil has become a fixture of the venue's late hours, deepening the pressure without any contact or confirmation of a link."
+        "details": "A nameless ghost has no memory of life. An anchor place pulls at him somewhere in Downtown — he hasn't found it. The Overwrite's administrative anomaly in Downtown shifts identities and records, creating a particular danger for a ghost with no name. Vera (NPC medium) can see him clearly and is waiting for something he doesn't know he has. Her quiet inquiries have grown more persistent, and she has begun lingering near The Exchange and other Downtown night venues, asking after the ghost's story more openly. Her questions have drawn the attention of parties who track the monster-poaching market, who are quietly confirming the standing mark's rumored presence in Downtown — bringing the medium and the mistaken identity closer together without contact. She has now begun waiting through the late shift at The Exchange and leaving offerings at a second Downtown location; her vigil has become a fixture of the venue's late hours, deepening the pressure without any contact or confirmation of a link.",
+        "pressure_stage": "intervention",
+        "next_pressure": "Meet the medium during her established vigil at The Exchange, observe from a distance, or investigate the anchor through Downtown records."
       },
       "position": {
         "x": 1533,
         "y": 39
+      }
+    },
+    {
+      "data": {
+        "id": "mystery_creighton_pantry_records",
+        "label": "The Names at the Pantry",
+        "kind": "mystery",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "hook",
+        "details": "Why do the pantry records include a name found in an older parish archive but absent from the current resident roll?",
+        "discovered_clues": 0,
+        "total_clues": 3
+      },
+      "position": {
+        "x": -843,
+        "y": 780
       }
     }
   ],
@@ -3824,6 +3869,36 @@
         "type": "involves",
         "label": "Involves",
         "layer": "arc"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_mystery_creighton_pantry_records_arc-013",
+        "source": "mystery_creighton_pantry_records",
+        "target": "arc-013",
+        "type": "mystery_link",
+        "label": "Connected",
+        "layer": "mystery"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_mystery_creighton_pantry_records_hub_creighton_court",
+        "source": "mystery_creighton_pantry_records",
+        "target": "hub_creighton_court",
+        "type": "mystery_link",
+        "label": "Connected",
+        "layer": "mystery"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_mystery_creighton_pantry_records_npc_sister_catherine_burke",
+        "source": "mystery_creighton_pantry_records",
+        "target": "npc_sister_catherine_burke",
+        "type": "mystery_link",
+        "label": "Connected",
+        "layer": "mystery"
       }
     },
     {

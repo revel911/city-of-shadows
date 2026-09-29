@@ -1,3 +1,5 @@
+import { parseEvents, entityRoute, eventEntities, pressureStage } from './chronicle.js';
+
 // ── Config — set your GitHub username and repo ───────────────────────
 const CONFIG = {
   GITHUB_RAW: 'https://raw.githubusercontent.com/revel911/city-of-shadows/main',
@@ -14,7 +16,7 @@ async function cached(key, fn) {
   return result;
 }
 
-function clearCache() { _cache.clear(); _fetchToken = Date.now(); }
+function clearCache() { _cache.clear(); _fetchToken = Date.now(); document.dispatchEvent(new Event('chronicle:refresh')); }
 
 // ── GitHub raw file fetchers ──────────────────────────────────────────
 
@@ -97,6 +99,7 @@ async function getAllNPCRoster() {
     const data = await ghJSON('game/npcs.json');
     const raw  = data ? (data.npcs || []) : [];
     const npcs = raw.map(n => ({
+      id:                n.id,
       name:              n.name  || '',
       status:            n.status || 'active',
       faction:           n.faction || '',
@@ -121,14 +124,6 @@ async function getLocations() {
 
 async function getWorldGraph() {
   return cached('world-graph', () => deployedJSON('data/world-graph.json'));
-}
-
-async function getWorldMeta() {
-  return cached('world-meta', () => ghJSON('game/world-meta.json').then(value => value || {}));
-}
-
-async function getConflicts() {
-  return cached('conflicts', () => ghJSON('game/conflicts.json').then(value => value?.conflicts || []));
 }
 
 async function getThreatsDoc() {
@@ -173,16 +168,6 @@ function parsePlaybook(text) {
   return m ? m[1].trim() : '';
 }
 
-function recentLines(text, n = 8) {
-  return text.split('\n')
-    .map(l => l.trim())
-    .filter(l => l.length > 20 && !l.startsWith('#') && !l.startsWith('---'))
-    .slice(-n)
-    .reverse();
-}
-
-// ── Stats from state.json (preferred over text parsing) ──────────────
-
 function statsFromState(state) {
   if (!state || !state.stats) return null;
   const ORDER = ['Blood','Heart','Mind','Spirit'];
@@ -215,7 +200,7 @@ function renderNPCRoster(npcs) {
     const isGone = npc.status === 'deceased' || npc.status === 'gone';
     return `
     <div class="npc-card${isGone ? ' npc-card-gone' : ''}">
-      <div class="npc-name">${esc(npc.name)}</div>
+      <a class="npc-name entity-link" href="#${entityRoute(npc.id)}">${esc(npc.name)}</a>
       ${npc.hub ? `<div class="npc-hub">${esc(npc.hub)}</div>` : ''}
       ${npc.role ? `<div class="npc-role">${esc(npc.role)}</div>` : ''}
       <div class="npc-badges">
@@ -288,7 +273,7 @@ function md(text) {
   const html = marked.parse(text);
   // Files are written by the MC but embed player-supplied text (handoff intent,
   // NPC player_interaction, sheet bio). Sanitize before injecting via innerHTML.
-  return typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(html) : html;
+  return typeof DOMPurify !== 'undefined' ? DOMPurify.sanitize(html) : `<pre>${esc(text)}</pre>`;
 }
 
 function statPills(stats) {
@@ -311,6 +296,7 @@ function circleBlock(label, obj) {
 }
 
 // ── DOM refs ──────────────────────────────────────────────────────────
+let cleanupGraph = null;
 const $content = document.getElementById('content');
 const $sideNav = document.getElementById('side-nav');
 
@@ -356,14 +342,65 @@ function updateTopNav() {
 }
 
 // ── Page: Summary ─────────────────────────────────────────────────────
+function focusRecord(id) {
+  const target = document.getElementById(id);
+  if (!target) return;
+  target.classList.add('selected-record');
+  target.tabIndex = -1;
+  target.focus({ preventScroll: true });
+  target.scrollIntoView({ block: 'center' });
+}
+
+function renderEventCards(events, nodes = [], compact = false) {
+  if (!events.length) return '<p class="empty-note">No public events recorded yet.</p>';
+  return `<div class="event-feed">${events.map(event => {
+    const related = eventEntities(event, nodes).slice(0, 5);
+    const preview = event.body.length > 260 ? event.body.slice(0, 257).trimEnd() + '…' : event.body;
+    return `<article class="event-card" id="event-${esc(event.id)}">
+      <time datetime="${esc(event.date)}">${esc(event.date)}</time>
+      <h3><a href="#/events/${encodeURIComponent(event.id)}">${esc(event.title)}</a></h3>
+      ${compact ? `<p>${esc(preview)}</p>` : `<div class="prose">${md(event.body)}</div>`}
+      ${related.length ? `<nav class="entity-tags" aria-label="Related people and places">${related.map(({ data }) => `<a href="#${entityRoute(data.id)}">${esc(data.label)}</a>`).join('')}</nav>` : ''}
+    </article>`;
+  }).join('')}</div>`;
+}
+
+async function renderEntity(id) {
+  setSideNav([]);
+  showLoading('Opening the city record…');
+  try {
+    const graph = await getWorldGraph();
+    const node = graph.nodes.find(item => item.data.id === id)?.data;
+    if (!node) { showError('Record not found', 'This record may have moved. Search the chronicle to find it.'); return; }
+    const [events, threats, mysteries] = await Promise.all([getEventsLog(), getThreatsDoc(), getMysteries()]);
+    const arc = parseThreats(threats).find(item => item.canonicalId === id);
+    const mystery = mysteries.find(item => item.id === id);
+    const discovered = (mystery?.clues || []).filter(clue => clue.status === 'discovered');
+    const byId = new Map(graph.nodes.map(item => [item.data.id, item.data]));
+    const connections = graph.edges.filter(({ data }) => data.source === id || data.target === id).map(({ data }) => ({
+      node: byId.get(data.source === id ? data.target : data.source), label: data.label || data.type, outgoing: data.source === id,
+    })).filter(item => item.node);
+    const relatedEvents = parseEvents(events).filter(event => eventEntities(event, [{ data: node }]).length).slice(0, 5);
+    document.title = `${node.label} - City of Shadows`;
+    $content.innerHTML = `<header class="page-header"><span class="page-kicker">${esc(node.kind)}${node.faction ? ' · ' + esc(node.faction) : ''}</span><h1>${esc(node.label)}</h1><p>${esc(node.subtype || '')}</p></header>
+      <div class="page-stack"><section class="card selected-record" id="entity-record" tabindex="-1"><h2>At a glance</h2><p>${esc(node.details || 'No public details recorded.')}</p>
+      ${arc ? `<p class="pressure-stage">${esc(pressureStage(arc))} · Pressure ${esc(arc.escalation || '0')}/4</p><p><strong>Next opportunity:</strong> ${esc(arc.nextPressure || 'Follow the established situation in play.')}</p>` : ''}
+      ${mystery ? `<p>${discovered.length} / ${(mystery.clues || []).length} clues discovered</p>${discovered.map(clue => `<p>${esc(clue.player_summary || clue.description)}</p>`).join('')}<p><strong>Where to begin:</strong> ${esc(mystery.next_pressure || 'Follow an established lead in play.')}</p>` : ''}
+      <a class="card-footer-link" href="#/relationships/${encodeURIComponent(id)}">Locate in the atlas &rarr;</a></section>
+      <section class="card"><h2>Connected people, places &amp; stories</h2>${connections.length ? `<ul class="connection-list">${connections.map(item => `<li><span>${esc(item.outgoing ? node.label : item.node.label)} — ${esc(item.label)} → ${esc(item.outgoing ? item.node.label : node.label)}</span><a href="#${entityRoute(item.node.id)}">Open ${esc(item.node.label)} &rarr;</a></li>`).join('')}</ul>` : '<p class="empty-note">No connections recorded yet.</p>'}</section>
+      <section class="card"><h2>Recent mentions</h2>${renderEventCards(relatedEvents, graph.nodes, true)}</section></div>`;
+    focusRecord('entity-record');
+  } catch (error) { showError('Could not load this record', error.message); }
+}
+
 async function renderSummary() {
   setSideNav([]);
   showLoading('Reading the city&hellip;');
 
-  let players = [], events = '', hubs = [], npcs = [], graph = null, worldMeta = {}, conflicts = [], err = '';
+  let players = [], events = '', hubs = [], npcs = [], graph = null, threats = '', err = '';
   try {
-    [players, events, hubs, npcs, graph, worldMeta, conflicts] = await Promise.all([
-      getPlayers(), getEventsLog(), getHubDocs(), getAllNPCRoster(), getWorldGraph(), getWorldMeta(), getConflicts(),
+    [players, events, hubs, npcs, graph, threats] = await Promise.all([
+      getPlayers(), getEventsLog(), getHubDocs(), getAllNPCRoster(), getWorldGraph(), getThreatsDoc(),
     ]);
   } catch (e) { err = e.message; }
 
@@ -404,17 +441,9 @@ async function renderSummary() {
       <div class="char-grid">${charCards}</div>
     </section>` : '';
 
-  const eventItems = recentLines(events);
-  const eventHtml = eventItems.length
-    ? `<div class="timeline">${eventItems.map((event, index) => `
-        <div class="timeline-item">
-          <div class="timeline-num">${String(eventItems.length - index).padStart(3, '0')}</div>
-          <div class="timeline-text">${esc(event)}</div>
-        </div>`).join('')}</div>`
-    : '<p class="empty-note">Events log not loaded.</p>';
-
-  const edgeCount = graph?.edges?.length || 0;
-  const pendingConflicts = conflicts.filter(item => item.status === 'pending').length;
+  const eventItems = parseEvents(events).slice(0, 3);
+  const eventHtml = renderEventCards(eventItems, graph?.nodes || [], true);
+  const activeArcs = parseThreats(threats).filter(arc => !['resolved', 'closed', 'failed'].includes(arc.status.toLowerCase()));
   $content.innerHTML = `
     ${errorHtml}
     <header class="page-header summary-hero">
@@ -422,14 +451,20 @@ async function renderSummary() {
       <h1>Richmond, Virginia</h1>
       <p>The city breathes. The city bleeds. The city remembers.</p>
       <div class="ornament" aria-hidden="true"></div>
+      <p class="hero-explainer">Play one character in a shared supernatural Richmond. Your choices leave marks on the city, even when other players are offline.</p>
+      <a class="play-button" href="https://discord.gg/f8VCHxVAqj" target="_blank" rel="noopener noreferrer">Start playing on Discord &rarr;</a>
+      <p class="play-caption">A Discord account is all you need. Play at your own pace.</p>
     </header>
+    <section class="card start-guide" aria-labelledby="start-guide-title">
+      <h2 id="start-guide-title">Your first night in Richmond</h2>
+      <ol class="start-steps"><li><strong>Join Discord</strong><span>Enter the shared city.</span></li><li><strong>Run <code>/play</code></strong><span>Choose + New character. Creation takes about 15 minutes; you can save partway through.</span></li><li><strong>Make your first choice</strong><span>The MC guides you in a private thread. No rules experience needed.</span></li></ol>
+      <details class="play-example"><summary>What does playing look like?</summary><p><strong>You:</strong> I ask the night clerk why my name is already in the visitor book.</p><p><strong>MC:</strong> She turns it toward you. The signature is yours. Tomorrow's date is beside it. "You asked me not to let you upstairs." The lift opens behind her. What do you do?</p><p class="empty-note">Illustrative exchange. Your story follows your choices. Use OOC for questions, Quick recap to catch up, and Save &amp; end when you're done.</p></details>
+    </section>
     <div class="world-vitals" aria-label="World at a glance">
       <div class="world-vital"><strong>${chars.length}</strong><span>Player characters</span></div>
       <div class="world-vital"><strong>${npcs.length}</strong><span>Known faces</span></div>
       <div class="world-vital"><strong>${hubs.length}</strong><span>City hubs</span></div>
-      <div class="world-vital"><strong>${edgeCount}</strong><span>Visible ties</span></div>
-      <div class="world-vital"><strong>${worldMeta.revision ?? 0}</strong><span>World revision</span></div>
-      <div class="world-vital"><strong>${pendingConflicts}</strong><span>Continuity alerts</span></div>
+      <div class="world-vital"><strong>${activeArcs.length}</strong><span>Open story threads</span></div>
     </div>
     ${recentCharSection}
     <section class="atlas-callout" role="link" tabindex="0" data-nav="/relationships" aria-labelledby="atlas-callout-title">
@@ -797,27 +832,6 @@ async function renderCity() {
 
 // ── Active Threats ────────────────────────────────────────────────────
 
-function splitMarkdownSections(text) {
-  const bySep = text.split(/\n\s*-{3,}\s*\n/).map(s => s.trim()).filter(Boolean);
-  if (bySep.length > 1) return { preamble: '', sections: bySep };
-  const lines = text.split('\n');
-  const preambleLines = [], sections = [];
-  let cur = null;
-  for (const line of lines) {
-    if (/^#{1,3}\s/.test(line)) {
-      if (cur !== null && cur.some(l => l.trim())) sections.push(cur.join('\n').trim());
-      cur = [line];
-    } else if (cur !== null) {
-      cur.push(line);
-    } else {
-      preambleLines.push(line);
-    }
-  }
-  if (cur !== null && cur.some(l => l.trim())) sections.push(cur.join('\n').trim());
-  if (sections.length >= 2) return { preamble: preambleLines.join('\n').trim(), sections };
-  return { preamble: '', sections: [text] };
-}
-
 function parseThreats(text) {
   if (!text || !text.trim()) return [];
   try {
@@ -825,6 +839,8 @@ function parseThreats(text) {
     const raw = Array.isArray(data) ? data : (data.arcs || []);
     const cap = s => s ? s.charAt(0).toUpperCase() + s.slice(1) : '';
     return raw.map(arc => ({
+      canonicalId: arc.id,
+      pressureStage: arc.pressure_stage || '',
       id:          (arc.id || '').replace(/^arc[-_]0*/i, '').padStart(3, '0'),
       name:        arc.title || arc.name || '',
       type:        cap(arc.type || ''),
@@ -847,17 +863,17 @@ function parseThreats(text) {
 
 // Map numeric escalation (1-4) to a label
 function escalationLabel(val) {
-  const map = { '1': 'Simmering', '2': 'Elevated', '3': 'Critical', '4': 'Catastrophic' };
+  const map = { '1': 'Simmering', '2': 'Elevated', '3': 'Critical', '4': 'At the brink' };
   return map[String(val)] || val || 'Unknown';
 }
 
 function renderThreats(arcs) {
   if (!arcs.length) return '<p class="empty-note">No active threats found.</p>';
 
-  const TIER_ORDER = ['Catastrophic', 'Critical', 'Elevated', 'Simmering'];
+  const TIER_ORDER = ['Face a standoff', 'Intervene', 'Follow a lead', 'Deal with the aftermath', 'Developing', 'Resolved'];
   const groups = new Map();
   for (const arc of arcs) {
-    const tier = escalationLabel(arc.escalation);
+    const tier = pressureStage(arc);
     if (!groups.has(tier)) groups.set(tier, []);
     groups.get(tier).push(arc);
   }
@@ -871,7 +887,7 @@ function renderThreats(arcs) {
 
   const arcCard = arc => {
     const tierLabel = escalationLabel(arc.escalation);
-    const slug = tierLabel.toLowerCase();
+    const slug = Number(arc.escalation) >= 3 ? 'critical' : tierLabel.toLowerCase();
     const meta = [arc.type, arc.status].filter(Boolean)
       .map(s => `<span class="threat-meta-item">${esc(s)}</span>`).join('<span class="threat-meta-sep">·</span>');
     const tags = [
@@ -883,13 +899,13 @@ function renderThreats(arcs) {
     <div class="threat-card threat-escalation-${slug}">
       <div class="threat-header">
         <span class="threat-id">Arc-${arc.id}</span>
-        <span class="threat-name">${esc(arc.name)}</span>
+        <a class="threat-name entity-link" href="#${entityRoute(arc.canonicalId)}">${esc(arc.name)}</a>
         <span class="threat-badge threat-badge-${slug}">${esc(tierLabel)}</span>
       </div>
       ${meta ? `<div class="threat-meta">${meta}</div>` : ''}
       ${arc.description ? `<div class="threat-desc">${esc(arc.description)}</div>` : ''}
       ${arc.agenda ? `<div class="threat-desc"><strong>Agenda:</strong> ${esc(arc.agenda)}</div>` : ''}
-      ${arc.nextPressure ? `<div class="threat-desc"><strong>Next pressure:</strong> ${esc(arc.nextPressure)}</div>` : ''}
+      ${arc.nextPressure ? `<div class="threat-desc"><strong>Next opportunity:</strong> ${esc(arc.nextPressure)}</div>` : ''}
       ${tags ? `<div class="threat-tags">${tags}</div>` : ''}
     </div>`;
   };
@@ -902,7 +918,7 @@ function renderThreats(arcs) {
 }
 
 // ── Page: Events ──────────────────────────────────────────────────────
-async function renderEvents() {
+async function renderEvents(eventId = '') {
   setSideNav([{ title: 'Events', items: [
     { href: '#', label: 'Active Threats', scrollTo: 'events-threats' },
     { href: '#', label: 'Events Log',     scrollTo: 'events-log'     },
@@ -913,42 +929,17 @@ async function renderEvents() {
   try { [log, threatsDoc, mysteries] = await Promise.all([getEventsLog(), getThreatsDoc(), getMysteries()]); }
   catch (e) { showError('Could not load events', e.message); return; }
 
-  let body = '';
-  if (!log.trim()) {
-    body = '<p class="empty-note">Events log is empty.</p>';
-  } else {
-    const { preamble, sections } = splitMarkdownSections(log);
-    if (sections.length > 1) {
-      const parts = preamble ? [preamble, ...sections] : sections;
-      body = `<div class="prose events-prose">${md(parts.join('\n\n---\n\n'))}</div>`;
-    } else {
-      const normalized = log.replace(/\r\n/g, '\n').replace(/([^\n])\n(?!\n)/g, '$1\n\n').trim();
-      const grafs = normalized.split(/\n{2,}/).map(g => g.trim()).filter(Boolean);
-      if (grafs.length < 3) {
-        body = `<div class="prose events-prose">${md(normalized)}</div>`;
-      } else {
-        const chunks = [];
-        let chunk = [];
-        grafs.forEach((g, i) => {
-          const looksLikeTitle = i > 0 && g.length <= 80 && !g.endsWith('.');
-          if (looksLikeTitle && chunk.length) { chunks.push(chunk); chunk = []; }
-          chunk.push(g);
-        });
-        if (chunk.length) chunks.push(chunk);
-        const rendered = (chunks.length > 1 ? chunks : [grafs])
-          .map(c => `<div class="events-entry">${md(c.join('\n\n'))}</div>`).join('');
-        body = `<div class="prose events-prose">${rendered}</div>`;
-      }
-    }
-  }
+  let graph = null;
+  try { graph = await getWorldGraph(); } catch { /* Events remain readable without the atlas. */ }
+  const body = renderEventCards(parseEvents(log), graph?.nodes || []);
 
-  const arcs = parseThreats(threatsDoc);
+  const arcs = parseThreats(threatsDoc).filter(arc => !['resolved', 'closed', 'failed'].includes(arc.status.toLowerCase()));
   const mysteryHtml = mysteries.length ? mysteries.map(mystery => {
     const progress = mystery.progress || {};
     const discovered = (mystery.clues || []).filter(clue => clue.status === 'discovered');
     return `<div class="threat-card">
       <div class="threat-header">
-        <span class="threat-name">${esc(mystery.title || mystery.id)}</span>
+        <a class="threat-name entity-link" href="#${entityRoute(mystery.id)}">${esc(mystery.title || mystery.id)}</a>
         <span class="threat-badge">${esc(progress.stage || mystery.stage || 'hook')}</span>
       </div>
       ${mystery.question ? `<div class="threat-desc">${esc(mystery.question)}</div>` : ''}
@@ -966,6 +957,7 @@ async function renderEvents() {
     <div class="page-stack">
       <div class="card" id="events-threats">
         <h2>Active Threats &amp; Story Arcs</h2>
+        <p class="empty-note">Choose a thread by the opportunity it offers. Full pressure means a response is overdue; it does not mean the outcome has already been decided.</p>
         ${renderThreats(arcs)}
       </div>
       <div class="card" id="events-mysteries">
@@ -977,10 +969,11 @@ async function renderEvents() {
         ${body}
       </div>
     </div>`;
+  if (eventId) focusRecord(`event-${eventId}`);
 }
 
 // ── Page: Connections ────────────────────────────────────────────────────────
-async function renderRelationships() {
+async function renderRelationships(selectedId = '') {
   setSideNav([]);
   showLoading('Tracing the city&rsquo;s connections&hellip;');
 
@@ -1306,10 +1299,17 @@ async function renderRelationships() {
   });
   document.addEventListener('fullscreenchange', updateFullscreenControl);
   document.addEventListener('webkitfullscreenchange', updateFullscreenControl);
+  cleanupGraph = () => {
+    clearTimeout(searchTimer);
+    activeLayout?.stop();
+    document.removeEventListener('fullscreenchange', updateFullscreenControl);
+    document.removeEventListener('webkitfullscreenchange', updateFullscreenControl);
+    cy.destroy();
+  };
   if (!graphShell.requestFullscreen && !graphShell.webkitRequestFullscreen) fullscreenButton.hidden = true;
 
-  cy.on('tap', 'node', event => {
-    const node = event.target;
+  function selectNode(node) {
+    if (!node.length) return;
     const neighborhood = node.closedNeighborhood().filter(element => !element.hasClass('context-hidden') && !element.hasClass('filter-hidden'));
     cy.elements().addClass('dimmed').removeClass('focused');
     neighborhood.removeClass('dimmed');
@@ -1321,20 +1321,48 @@ async function renderRelationships() {
       <h2>${esc(data.label)}</h2>
       ${data.subtype ? '<p class="graph-detail-role">' + esc(data.subtype) + '</p>' : ''}
       <p>${esc(data.details || 'No public details recorded.')}</p>
+      <a class="card-footer-link" href="#${entityRoute(data.id)}">Open full record &rarr;</a>
       ${connected.length ? '<div class="graph-detail-links"><strong>Connections</strong>' + connected.map(label => '<span>' + esc(label) + '</span>').join('') + '</div>' : ''}`;
-  });
+  }
+  cy.on('tap', 'node', event => selectNode(event.target));
   cy.on('tap', event => {
     if (event.target === cy) cy.elements().removeClass('dimmed focused');
   });
 
-  applyFilters({ fit: true, reflow: true });
+  if (selectedId && cy.getElementById(selectedId).length) {
+    scope.value = 'city';
+    restoreScopePositions();
+    applyFilters();
+    const selected = cy.getElementById(selectedId);
+    selectNode(selected);
+    cy.fit(selected.closedNeighborhood(), 100);
+  } else {
+    applyFilters({ fit: true, reflow: true });
+  }
 }
+
 
 // ── Router ────────────────────────────────────────────────────────────
 function getRoute() { return window.location.hash.replace(/^#/, '') || '/'; }
 function navigate(path) { window.location.hash = path; }
 
+let rendering = false;
+let renderRequested = false;
 async function render() {
+  renderRequested = true;
+  if (rendering) return;
+  rendering = true;
+  try {
+    while (renderRequested) {
+      renderRequested = false;
+      try { await renderRoute(); }
+      catch (error) { showError('Could not open this page', error.message); }
+    }
+  } finally { rendering = false; }
+}
+
+async function renderRoute() {
+  cleanupGraph?.(); cleanupGraph = null;
   const route = getRoute();
   updateTopNav();
   document.body.dataset.route = route.split('/')[1] || 'summary';
@@ -1344,8 +1372,9 @@ async function render() {
   else if (route === '/characters')        { await renderCharacters(); }
   else if (route.startsWith('/characters/')){ await renderCharacter(decodeURIComponent(route.replace('/characters/', ''))); }
   else if (route === '/city')              { await renderCity(); }
-  else if (route === '/events')            { await renderEvents(); }
-  else if (route === '/relationships')     { await renderRelationships(); }
+  else if (route === '/events' || route.startsWith('/events/')) { await renderEvents(decodeURIComponent(route.slice(8))); }
+  else if (route === '/relationships' || route.startsWith('/relationships/')) { await renderRelationships(decodeURIComponent(route.slice(15))); }
+  else if (route.startsWith('/entity/')) { await renderEntity(decodeURIComponent(route.slice(8))); }
   else { $content.innerHTML = '<p class="empty-note">Page not found.</p>'; }
 }
 
@@ -1406,13 +1435,14 @@ render();
 
   let _index = null, _building = false, _debounce = null;
 
+  document.addEventListener('chronicle:refresh', () => { _index = null; });
   async function buildIndex() {
     if (_index) return _index;
     if (_building) return null;
     _building = true;
     try {
-      const [npcs, threatsText, hubDocs, players, locations] = await Promise.all([
-        getAllNPCRoster(), getThreatsDoc(), getHubDocs(), getPlayers(), getLocations(),
+      const [npcs, threatsText, hubDocs, players, locations, mysteries] = await Promise.all([
+        getAllNPCRoster(), getThreatsDoc(), getHubDocs(), getPlayers(), getLocations(), getMysteries(),
       ]);
       _index = [];
       for (const npc of npcs) {
@@ -1420,7 +1450,7 @@ render();
           type: 'npc', title: npc.name,
           sub: [npc.hub, npc.faction, npc.status !== 'active' ? npc.status : ''].filter(Boolean).join(' · '),
           haystack: [npc.name, npc.hub, npc.faction, npc.role, npc.playerInteraction, npc.status].join(' ').toLowerCase(),
-          nav: '/city', scrollTo: 'city-npcs',
+          nav: entityRoute(npc.id),
         });
       }
       for (const arc of parseThreats(threatsText)) {
@@ -1429,22 +1459,25 @@ render();
           sub: [escalationLabel(arc.escalation), arc.type].filter(Boolean).join(' · '),
           haystack: [arc.name, arc.escalation, arc.type, arc.status, arc.description,
             ...arc.hubs, ...arc.players, ...arc.keyNpcs].join(' ').toLowerCase(),
-          nav: '/events', scrollTo: 'events-threats',
+          nav: entityRoute(arc.canonicalId),
         });
       }
       for (const hub of hubDocs) {
         _index.push({
           type: 'hub', title: hub.name, sub: 'Location',
           haystack: hub.name.toLowerCase(),
-          nav: '/city',
-          scrollTo: 'hub-' + hub.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''),
+          nav: entityRoute(hub.id),
         });
+      }
+      for (const mystery of mysteries.filter(item => item.status !== 'resolved')) {
+        _index.push({ type: 'mystery', title: mystery.title, sub: mystery.progress?.stage || mystery.stage || 'hook',
+          haystack: [mystery.title, mystery.question].join(' ').toLowerCase(), nav: entityRoute(mystery.id) });
       }
       for (const location of locations) {
         _index.push({
           type: 'location', title: location.name, sub: location.type || 'Location',
           haystack: [location.name, location.type, location.atmosphere, location.description, location.hub_id].filter(Boolean).join(' ').toLowerCase(),
-          nav: '/relationships', scrollTo: null,
+          nav: entityRoute(location.id),
         });
       }
       for (const p of players) {
@@ -1482,7 +1515,7 @@ render();
     if (results === null) { $results.innerHTML = `<div class="search-loading">Indexing…</div>`; return; }
     if (!query.trim()) { $results.innerHTML = ''; return; }
     if (!results.length) { $results.innerHTML = `<div class="search-empty">No results for &ldquo;${esc(query)}&rdquo;</div>`; return; }
-    const ORDER = ['character', 'npc', 'location', 'arc', 'hub'];
+    const ORDER = ['character', 'npc', 'location', 'arc', 'mystery', 'hub'];
     const groups = new Map();
     for (const item of results) { if (!groups.has(item.type)) groups.set(item.type, []); groups.get(item.type).push(item); }
     const sorted = [...groups.entries()].sort(([a], [b]) => ORDER.indexOf(a) - ORDER.indexOf(b));
@@ -1501,9 +1534,9 @@ render();
 
   function openSearch() {
     $overlay.classList.add('open'); $input.value = ''; $results.innerHTML = ''; $input.focus();
-    buildIndex().then(() => { if ($input.value.trim()) runSearch($input.value); });
+    buildIndex().then(() => { if ($input.value.trim()) runSearch($input.value); }).catch(() => { $results.innerHTML = '<p class="search-empty">Search could not load. Close it and try again.</p>'; });
   }
-  function closeSearch() { $overlay.classList.remove('open'); $input.blur(); }
+  function closeSearch() { $overlay.classList.remove('open'); $btn.focus(); }
   function runSearch(query) { renderResults(search(query), query); }
 
   $btn.addEventListener('click', () => $overlay.classList.contains('open') ? closeSearch() : openSearch());

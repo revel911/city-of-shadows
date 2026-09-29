@@ -102,6 +102,8 @@ for (const arc of arcDoc.arcs || []) {
   if (!arc.agenda || typeof arc.agenda !== 'string') errors.push(`${arc.id}.agenda is required`);
   if (!arc.impulse || typeof arc.impulse !== 'string') errors.push(`${arc.id}.impulse is required`);
   if (!arc.clock || arc.clock.current !== arc.escalation || arc.clock.max !== 4) errors.push(`${arc.id}.clock must mirror escalation with max 4`);
+  if (arc.pressure_stage != null && !['developing', 'investigation', 'intervention', 'confrontation', 'aftermath'].includes(arc.pressure_stage)) errors.push(`${arc.id}.pressure_stage is invalid`);
+  if (arc.pressure_stage && (typeof arc.next_pressure !== 'string' || !arc.next_pressure.trim())) errors.push(`${arc.id}.next_pressure is required for a staged arc`);
   if (arc.ignored_sessions != null && (!Number.isInteger(arc.ignored_sessions) || arc.ignored_sessions < 0 || arc.ignored_sessions > 1)) errors.push(`${arc.id}.ignored_sessions must be 0-1`);
 }
 

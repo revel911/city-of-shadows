@@ -454,3 +454,32 @@ button { border-radius: 0; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Entry path and readable, directly linked chronicle records. */
+.hero-explainer { max-width: 42rem; margin: 1rem 0; }
+.play-button { display: inline-flex; align-items: center; min-height: 48px; padding: .8rem 1.3rem; background: var(--blood); border: 1px solid var(--blood-light); color: var(--parchment); font-weight: 500; }
+.play-button:hover { background: var(--blood-bright); }
+.summary-hero .play-caption { font-size: .85rem; margin-top: .7rem; }
+.start-guide { margin: 0 0 1.5rem; }
+.start-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; padding-left: 1.4rem; }
+.start-steps strong, .start-steps span { display: block; }
+.start-steps span { margin-top: .4rem; color: var(--faded); font-size: .9rem; }
+.play-example { margin-top: 1.2rem; border-top: 1px solid var(--border); padding-top: 1rem; }
+.play-example summary { cursor: pointer; color: var(--gold-light); }
+.play-example p { margin: .8rem 0; line-height: 1.65; }
+.event-card { padding: 1.2rem 0; border-bottom: 1px solid var(--border); scroll-margin-top: 6rem; overflow-wrap: anywhere; }
+.event-card:last-child { border-bottom: 0; }
+.event-card time { color: var(--gold-light); font-size: .8rem; }
+.event-card h3 { font: 500 1.05rem/1.5 'DM Sans', sans-serif; margin: .4rem 0; }
+.event-card p { color: var(--faded); font-size: .95rem; line-height: 1.7; }
+.entity-link:hover, .event-card h3 a:hover { color: var(--gold-light); text-decoration: underline; }
+.entity-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .8rem; }
+.entity-tags a { border: 1px solid var(--border); padding: .4rem .6rem; font-size: .8rem; }
+.entity-tags a:hover { border-color: var(--gold-light); }
+.selected-record { border-left: 3px solid var(--gold-light); padding-left: 1rem; background: rgba(184,146,74,.06); }
+.connection-list { list-style: none; padding: 0; }
+.connection-list li { padding: .8rem 0; border-bottom: 1px solid var(--border); overflow-wrap: anywhere; }
+.connection-list a { display: block; color: var(--gold-light); margin-top: .3rem; }
+.pressure-stage { color: var(--gold-light); margin: 1rem 0; }
+body[data-route='entity'] .page-header h1 { font-size: clamp(2rem, 5vw, 4rem); overflow-wrap: anywhere; }
+@media (max-width: 639px) { .start-steps { grid-template-columns: 1fr; gap: 1rem; } .play-button { width: 100%; justify-content: center; } }

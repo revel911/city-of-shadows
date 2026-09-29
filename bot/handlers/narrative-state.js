@@ -250,6 +250,7 @@ export function buildScenePressureCandidates({
       score: arcScore(item, characterId, active),
       links: pressureLinks(item),
       why_now: item.next_pressure || item.agenda || item.summary || '',
+      pressure_stage: item.pressure_stage || 'developing',
       clock: { current: Number(item.clock?.current ?? item.escalation) || 0, max: Number(item.clock?.max) || 4 },
     })),
     ...mysteries.filter(item => item.status !== 'resolved').map(item => ({
@@ -274,7 +275,8 @@ export function buildScenePressureCandidates({
         title: `${sources[i].title} × ${sources[j].title}`,
         score: sources[i].score + sources[j].score + 8,
         shared_ids: shared,
-        why_now: `Both pressures can act through ${shared.join(', ')} now.`,
+        why_now: `${sources[i].why_now} ${sources[j].why_now}`,
+        source_stages: [sources[i].pressure_stage || 'investigation', sources[j].pressure_stage || 'investigation'],
       });
     }
   }
@@ -326,6 +328,14 @@ export function selectCityTurnPressure(arcs = [], cooldowns = {}) {
       || a.id.localeCompare(b.id)
     )[0] || null;
 }
+// A terminal or cooling-down city cannot advance through side-channel patches.
+export function guardCityTurnOutput(output = {}, candidate = null) {
+  if (candidate) return output;
+  const guarded = { ...output, events_append: null, summary: 'No eligible pressure: the city awaits an established response.' };
+  for (const key of ['npc_patch', 'npc_memory_patch', 'location_patch', 'relationship_patch', 'debt_patch', 'arc_patch', 'mystery_patch', 'hub_patch', 'interaction_ops', 'conflict_resolutions']) guarded[key] = [];
+  return guarded;
+}
+
 export function formatScenePressureContext(options = {}) {
   const candidates = buildScenePressureCandidates(options);
   return [
@@ -333,6 +343,7 @@ export function formatScenePressureContext(options = {}) {
     'Choose from these candidates before inventing a new hook. Prefer an intersection when it supports the player’s present goal and location.',
     'For the chosen source, silently answer: Why now? What changes if the character does nothing? Which existing person, place, mystery, obligation, or clock carries it?',
     'Do not advance a terminal clock without prior player-facing warning and an opportunity to respond.',
+    'A full clock is unresolved pressure, not proof that its final outcome occurred. Use pressure_stage and next_pressure to offer a concrete lead, intervention, standoff, or aftermath. Do not reset a clock or declare an arc resolved without established play. A next opportunity is a proposal, not a completed event.',
     JSON.stringify(candidates),
   ].join('\n');
 }

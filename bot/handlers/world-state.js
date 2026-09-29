@@ -132,6 +132,7 @@ function compactArc(arc) {
     agenda: arc.agenda || '',
     impulse: arc.impulse || '',
     next_pressure: arc.next_pressure || '',
+    pressure_stage: arc.pressure_stage || 'developing',
     clock: arc.clock || { current: Number.isInteger(arc.escalation) ? arc.escalation : 0, max: 4 },
     mc_notes: arc.mc_notes || '',
   };

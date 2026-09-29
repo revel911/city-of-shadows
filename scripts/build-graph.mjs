@@ -67,7 +67,8 @@ for (const arc of arcDoc.arcs || []) {
     data: {
       id: arc.id, label: arc.title, kind: 'arc', hub_id: hubId,
       status: arc.status || 'active', subtype: arc.type || 'arc',
-      escalation: arc.escalation || 0, details: arc.summary || ''
+      escalation: arc.escalation || 0, details: arc.summary || '',
+      pressure_stage: arc.pressure_stage || 'developing', next_pressure: arc.next_pressure || ''
     },
     position: positionNear(hubId, arc.id, 560, 120)
   });

@@ -1,5 +1,93 @@
 {
   "schema_version": 2,
-  "last_updated": "2026-09-26",
-  "mysteries": []
+  "last_updated": "2026-09-29",
+  "mysteries": [
+    {
+      "id": "mystery_creighton_pantry_records",
+      "revision": 1,
+      "title": "The Names at the Pantry",
+      "status": "active",
+      "arc_id": "arc-013",
+      "question": "Why do the pantry records include a name found in an older parish archive but absent from the current resident roll?",
+      "hub_ids": [
+        "hub_creighton_court"
+      ],
+      "npc_ids": [
+        "npc_sister_catherine_burke"
+      ],
+      "character_ids": [],
+      "themes": [
+        "community",
+        "memory",
+        "displacement"
+      ],
+      "motifs": [
+        "vouchers",
+        "names",
+        "contradictory records"
+      ],
+      "agenda": "Follow the documented discrepancy through independent records and let the player decide who needs help.",
+      "next_pressure": "Choose a route through pantry intake, Sister Catherine’s parish comparison, or the current resident roll. Ask permission and preserve another route if access is refused.",
+      "revelations": [
+        {
+          "id": "revelation_cross_era_records",
+          "text": "The same discrepancy spans current pantry intake, an older parish entry, and a missing current resident entry. It needs an explanation across records, not simply a corrected spelling.",
+          "required": true,
+          "status": "hidden",
+          "clue_ids": [
+            "clue_pantry_voucher",
+            "clue_parish_match",
+            "clue_resident_roll"
+          ],
+          "support": 0,
+          "threshold": 3
+        }
+      ],
+      "clues": [
+        {
+          "id": "clue_pantry_voucher",
+          "description": "Inspect an anomalous pantry voucher or ask an intake witness to explain the entry. The existing public report establishes names and vouchers that do not match current RRHA records.",
+          "player_summary": "Pantry intake contains a legible entry that does not match the current resident records.",
+          "source_id": "loc_east_end_family_resource_center",
+          "status": "available",
+          "discovered_by": [],
+          "revelation_ids": [
+            "revelation_cross_era_records"
+          ]
+        },
+        {
+          "id": "clue_parish_match",
+          "description": "Ask Sister Catherine to explain or corroborate her parish cross-check. Her publicly reported comparison found an anomalous name in an older parish archive; access to her separate ledger still requires her agreement.",
+          "player_summary": "Sister Catherine’s cross-check ties an anomalous intake name to an older parish record.",
+          "source_id": "npc_sister_catherine_burke",
+          "status": "available",
+          "discovered_by": [],
+          "revelation_ids": [
+            "revelation_cross_era_records"
+          ]
+        },
+        {
+          "id": "clue_resident_roll",
+          "description": "Compare the reported name with current RRHA resident records through a credible records request or a knowledgeable neighborhood witness. Do not invent a named official or a specific identity in advance.",
+          "player_summary": "The current resident roll has no living entry matching the reported parish name.",
+          "source_id": "hub_creighton_court",
+          "status": "available",
+          "discovered_by": [],
+          "revelation_ids": [
+            "revelation_cross_era_records"
+          ]
+        }
+      ],
+      "notes": "Seeded only from public events dated 2026-09-21 through 2026-09-26 and canonical arc-013. These are available investigative routes, not completed player discoveries. No identity or hidden solution has been invented.",
+      "last_updated": "2026-09-29",
+      "stage": "hook",
+      "progress": {
+        "stage": "hook",
+        "discovered_clues": 0,
+        "total_clues": 3,
+        "discovered_revelations": 0,
+        "total_revelations": 1
+      }
+    }
+  ]
 }

@@ -81,3 +81,12 @@ Treat a missing entity revision as revision 0. Always include every output key:
   hubs/*.md.
 - All output is public. Omit secrets and private player information.
 - If uncertain, add a warning and make no change.
+
+## Concrete pressure and earned outcomes
+
+Treat `pressure_stage` as scene guidance: investigation, intervention,
+confrontation, or aftermath. `next_pressure` describes a possible next beat,
+not a completed event. Never reset a full clock, invent a resolution, or repeat
+an already published warning to make the city appear active. With no eligible
+city-turn candidate, emit no world advance. Reconciliation may record a resolved
+arc or an earned aftermath only when supplied session evidence establishes it.
