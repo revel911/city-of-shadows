@@ -78,4 +78,4 @@ location records.
 
 ## Adaptation Notes
 
-The Fan runs on dreams: chasing them, and the quiet tragedy of the ones that do not come true. Let that tug at every scene, whether it is a mural half-finished, a band one gig from breaking, or a gallery owner who has already moved on to the next face. NPCs here promise quickly and deliver slowly, so let favors arrive late. Wild NPCs with real standing are oddly easy to approach, since they spend their evenings scouting whoever might be rising next.
+Everyone in the Fan is working on something: the album, the gallery show, the row house restoration that eats every paycheck. Let ambition be the weather here, and let some of it sour, like the mural left half-painted when the grant fell through or the band that played its best set to twelve people. Favors in the Fan are generous on the porch and slow in the mail; an NPC will say yes tonight and mean next month. Wild NPCs with real standing hold court at openings and house shows because they are always hunting the next talent, which makes them easier to reach than their Status suggests.

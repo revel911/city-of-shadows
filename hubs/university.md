@@ -87,4 +87,4 @@ location records.
 
 ## Adaptation Notes
 
-The University is less a single district than a set of overlapping interests that happen to share a map. Set well-funded projects against the scrounging ones run out of borrowed lab time and favors. High-Status NPCs tend to be wrapped up in their own work until something disrupts it, and then they notice everything. Low-Status NPCs are hungry for any opening that could put them back in the running.
+VCU and the medical campus have grown block by block until it is hard to say where the University stops: a parking garage here, a research tower there, a hospital wing where somebody's street used to be. Power in this hub follows grant money and lab space, so let scenes turn on who has funding this cycle and who is running experiments on borrowed equipment after hours. Senior faculty and Consilium elders ignore the players until their own project is threatened, and then they become very interested very quickly. Adjuncts, postdocs and junior members will trade almost anything for a line on a grant, a key to a lab, or a seat at the next closed meeting.

@@ -32,14 +32,14 @@ one serves the central conflict: the Overwrite. Use them when a Circle's NPCs or
 
 ### Richmond Mortalis Moves
 - Produce a record (a deed, a police file, a census line) that contradicts what everyone remembers.
-- Close ranks around a neighborhood institution against an outsider, calling in Debts on their allies.
+- Have a church auxiliary, a civic league or a union local quietly stop returning someone's calls, and let the silence spread down the block.
 - Let a mortal official see something they can't unsee, and make them choose who to tell.
 - Push the redevelopment machine forward on schedule, no matter who it costs.
 
 ### Richmond Night Moves
 - Redraw a feeding territory overnight and make someone pay the toll to cross it.
 - Use the canal tunnels to put someone where they should not be able to be.
-- Offer protection from the day world in exchange for an unreasonable future favor.
+- Shelter someone through the daylight hours in a Church Hill cellar, then let them learn what the host wrote down about them while they slept.
 - Let an old grudge between elders land on their lowest-Status people.
 
 ### Richmond Power Moves

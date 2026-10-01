@@ -3060,7 +3060,7 @@
       "associated_location_ids": [
         "loc_richmond_city_hall"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "keep the office's oldest files out of the shredder before the move to the new records system, and learn who ordered the purge"
@@ -3095,7 +3095,7 @@
         "loc_richmond_city_hall",
         "loc_virginia_state_capitol"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "save every original tape and learn who is rewriting the afternoon transcripts"
@@ -3130,7 +3130,7 @@
         "loc_general_assembly_building",
         "loc_capitol_square"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "win one committee vote for a rural water bill before the session ends, without ever making anyone owe her"
@@ -3164,7 +3164,7 @@
       "associated_location_ids": [
         "loc_virginia_state_capitol"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "see that one last vote he remembers being cast is finally counted correctly"
@@ -3199,7 +3199,7 @@
         "loc_general_assembly_building",
         "loc_richmond_city_hall"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "get a tenants' petition onto a committee calendar before a technicality kills it"
@@ -3233,7 +3233,7 @@
       "associated_location_ids": [
         "loc_richmond_city_hall"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "learn who or what is revising the vault's records, and keep a true copy of each before it changes"
@@ -3267,7 +3267,7 @@
       "associated_location_ids": [
         "loc_capitol_square"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
+      "updated_by_session": "operator:us-city-guide",
       "revision": 1,
       "last_updated": "2026-10-01",
       "drive": "collect enough small debts to buy a seat at the table where the real deals are made"
@@ -3280,7 +3280,7 @@
       "hub_id": "hub_capitol_city_hall",
       "arc_ids": [],
       "status": "active",
-      "role": "Changeling page in the General Assembly, a college senior who carries messages between rooms, and sometimes the wrong ones",
+      "role": "Changeling committee runner in the General Assembly, an adult session aide who carries messages between rooms, and sometimes the wrong ones",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -3297,12 +3297,12 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1. A changeling who took the page job for the corridors, the hours and the free lunch, and stayed because the building talks to him. Adult, bright, and moving between the chambers faster than anyone can follow. New-character Debt hook: Owes you because you covered his shift when something strange kept him from the floor.",
+      "notes": "Status: Wild 1. A changeling in his late twenties who took a session job running papers for a committee for the corridors, the hours and the free lunch, and stayed because the building talks to him. Bright, and moving between the chambers faster than anyone can follow. New-character Debt hook: Owes you because you covered his shift when something strange kept him from the floor.",
       "associated_location_ids": [
         "loc_general_assembly_building"
       ],
-      "updated_by_session": "operator:us-hubs-expansion",
-      "revision": 1,
+      "updated_by_session": "operator:us-city-guide",
+      "revision": 2,
       "last_updated": "2026-10-01",
       "drive": "find out why one particular corridor in the General Assembly Building is longer at night, before the session ends"
     }

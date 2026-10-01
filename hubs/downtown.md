@@ -116,4 +116,4 @@ A new character rooted here may choose one resident who owes them a Debt (see `m
 
 ## Adaptation Notes
 
-Night does not merely rule Downtown, it seeps into it. Show the ordinary bars, restaurants and late-night counters that give people a reason to be here after dark, so the supernatural has a crowd to hide in. Residents glance over their shoulders more than they admit. Anyone who arrives with something genuinely new, rather than another version of an old offer, earns attention fast.
+Downtown keeps a night schedule even at noon: the decisions that matter are made after the office towers empty, so a daylight scene should feel like the city holding its breath. Fill the dark with ordinary Richmond, from the late kitchens off Main Street to the Canal Walk joggers and the bartender who closes at two and knows every regular, so the supernatural always has a crowd to stand behind. Everyone here keeps one eye on the door and a short list of who might turn on them. Old money and older blood have heard every pitch twice; what moves them is leverage they cannot already buy.
