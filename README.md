@@ -16,9 +16,9 @@ The city is shared. Other people are playing other characters in the same world.
 
 ## Playing
 
-You only need a Discord account.
+This city runs on a private, invite-only Discord server for the host's friends. You need a Discord account and an invite from the host.
 
-1. Join the server → **https://discord.gg/f8VCHxVAqj**
+1. Join the server with the invite the host sends you.
 2. Run `/play` in any channel. The bot replies with a menu — pick an existing character, or `+ New character` to onboard a new one (about 15 minutes; the MC walks you through playbook → stats → moves → gear → first scene).
 3. The bot opens a private thread with you and the MC. Play happens there.
 
