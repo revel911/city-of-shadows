@@ -352,6 +352,16 @@ export function findMentionedNpcs(text, npcs = [], excludeIds = []) {
   }).slice(0, 3);
 }
 
+// NPCs named in the current exchange. A first name shared across the catalog
+// (two Tommys) resolves to the NPC already met in this session, if only one was.
+export function findScenePresentNpcs(text, npcs = [], metIds = []) {
+  const met = new Set(metIds);
+  const found = new Map();
+  for (const npc of findMentionedNpcs(text, npcs)) found.set(npc.id, npc);
+  for (const npc of findMentionedNpcs(text, npcs.filter(n => met.has(n.id)))) found.set(npc.id, npc);
+  return [...found.values()].slice(0, 3);
+}
+
 // A faction is "Status-3-led" when its leader NPC's notes open with the
 // world-bible convention "Status: <Circle> N" and N is 3 or more.
 const LEADER_STATUS_RE = /^\s*Status:\s*(?:Mortalis|Night|Power|Wild)\s+(\d)\b/i;

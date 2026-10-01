@@ -122,8 +122,13 @@ response_style:
   prose_model: noir_pulp
   sentence_cap: 3_per_beat_unless_action_demands_more
   visible_length:
-    normal_turn: at_most_1400_characters
-    player_input_120_characters_or_less: at_most_900_characters
+    turn_ceiling: 100_plus_150_times_Y_of_the_chattiest_present_npc
+    Y: verbosity_plus_order_plus_humor_frequency
+    split: separate_narration_and_dialogue_budgets_chattier_scenes_give_dialogue_more
+    narration: the_director_gives_a_usual_band_well_under_its_budget
+    ceiling_is_ability_not_target: go_long_only_when_the_moment_earns_it
+    rhythm: after_a_long_reply_keep_the_next_noticeably_shorter
+    character_creation: whole_reply_900_short_input_1400_otherwise
     opening_scene: at_most_1400_characters
   stop_rule: >
     Resolve only the action the player actually declared. Stop as soon as the
@@ -134,6 +139,8 @@ response_style:
     - adverb_stacking
     - over_describing_feelings
     - restating_what_player_just_did
+    - closing_recap_of_what_the_player_now_knows
+    - npc_explaining_stakes_beyond_their_verbosity
     - explaining_the_stakes
     - fragmented_stream_of_consciousness
     - multiple_unprompted_scene_transitions

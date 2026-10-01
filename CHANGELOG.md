@@ -1,5 +1,15 @@
 # Changelog
 
+## 2026-10-01 - Reply length follows the NPCs in the scene
+
+- Narration is leaner. Each scene's length ceiling comes from the chattiest NPC
+  present (verbosity + order + humor) and is split between narration and
+  dialogue, so quiet characters stay brief and talkative ones can run long.
+- The ceiling is reached only when the moment earns it, and a long reply is
+  followed by a shorter one.
+- A shared first name such as "Tommy" now resolves to the NPC already met in
+  the session.
+
 ## 2026-10-01 - New hubs, factions, and five new playbooks
 
 - Hub moves are live in play. The roll router offers a hub's moves only when the

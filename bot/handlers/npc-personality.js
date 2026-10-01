@@ -30,6 +30,37 @@ export function personalityWithDefaults(p = {}) {
   };
 }
 
+// Turn ceiling = X + Y x Z, where Y = verbosity + order + humor_frequency (3-15)
+// of the chattiest present NPC. The ceiling is what a scene can reach when the
+// moment earns it, not a length to fill.
+export const TURN_BASE_CHARS = 100;
+export const CHARS_PER_WEIGHT = 150;
+export const UNKNOWN_SPEAKER_WEIGHT = 6;
+export function dialogueWeight(p) {
+  const value = personalityWithDefaults(p);
+  const score = key => (Number.isInteger(value[key]) ? value[key] : 3);
+  return score('verbosity') + score('order') + score('humor_frequency');
+}
+
+// Chattier scenes give dialogue the larger share; quiet ones lean on narration.
+export function turnBudget(weight = UNKNOWN_SPEAKER_WEIGHT) {
+  const total = TURN_BASE_CHARS + weight * CHARS_PER_WEIGHT;
+  const dialogue = Math.round(total * weight / (weight + 6));
+  return { total, dialogue, narration: total - dialogue };
+}
+
+// Hard limit leaves slack because the model cannot count characters exactly.
+export function budgetLimit(chars) {
+  return Math.ceil(chars * 1.1);
+}
+
+export function talkativeness(weight) {
+  if (weight <= 5) return 'terse';
+  if (weight <= 8) return 'measured';
+  if (weight <= 11) return 'talkative';
+  return 'expansive';
+}
+
 export function socialBehavior(p) {
   const value = personalityWithDefaults(p);
   const length = {

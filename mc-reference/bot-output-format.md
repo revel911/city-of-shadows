@@ -31,8 +31,14 @@ current in-fiction time and enough travel or timing context for the player to
 judge the choice.
 
 For every normal turn, resolve one consequential beat and stop at the next
-player decision. Stay under 1400 visible characters; when the player's message
-is 120 characters or less, stay under 900. Never narrate a chain of actions or
+player decision. Each scene has a length ceiling of 100 + 150 × Y, where Y is
+verbosity + order + humor frequency of the chattiest NPC present. It is split
+into a narration budget (everything outside quoted dialogue) and a dialogue
+budget, and chattier scenes give dialogue the larger share. The per-turn scene
+direction gives the usual narration band and how talkative each present NPC
+is. The ceiling is what a scene can reach when the moment earns it, not a
+length to fill: most replies stay well under it, and a long reply is followed
+by a shorter one. Never narrate a chain of actions or
 scene transitions on the player's behalf. Structured save, close, roll, and
 checkpoint blocks do not count toward this visible limit.
 

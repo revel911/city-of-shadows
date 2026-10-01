@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  narrationText,
   playerFacingTurnLimit,
   pendingRollGuard,
   contextualManualRoll,
@@ -28,13 +29,13 @@ test('rejects known internal planning markers on every turn', () => {
   assert.ok(responseSafetyProblems('THOUGHTS APPLIED, now draft it.').includes('internal planning marker'));
 });
 
-test('normal player-facing turns have a hard visible length limit', () => {
-  assert.ok(responseSafetyProblems('x'.repeat(1401)).includes('visible turn exceeds 1400 characters'));
+test('normal player-facing turns have a hard narration limit', () => {
+  assert.ok(responseSafetyProblems('x'.repeat(551)).includes('narration exceeds 550 characters'));
+  assert.ok(!responseSafetyProblems('x'.repeat(550)).some(problem => problem.includes('exceeds')));
 });
 
-test('short player input receives the stricter turn limit', () => {
-  assert.equal(playerFacingTurnLimit('I open the door.'), 900);
-  assert.equal(playerFacingTurnLimit('x'.repeat(121)), 1400);
+test('without a scene budget, in-character turns use the default narration limit', () => {
+  assert.equal(playerFacingTurnLimit('I open the door.'), 550);
 });
 
 test('short OOC character recap receives the dedicated recap allowance', () => {
@@ -195,4 +196,27 @@ test('an explicit report always wins over bare-number context', () => {
   const session = { pendingRoll: { move: 'Keep Your Cool' }, pendingManualRoll: { rawTotal: 4 } };
   assert.equal(contextualManualRoll(session, 'Before modifiers').roll, null);
   assert.deepEqual(contextualManualRoll(session, 'I rolled an 8').roll, { rawTotal: 8 });
+});
+
+test('dialogue does not count toward the narration limit', () => {
+  const monologue = `He leans back. "${'word '.repeat(300)}"`;
+  assert.ok(!responseSafetyProblems(monologue, { maxVisibleChars: 600, maxDialogueChars: 2000 }).some(problem => problem.includes('narration')));
+  const multiParagraph = `She waits.
+
+"${'a '.repeat(400)}
+
+"${'b '.repeat(400)}"`;
+  assert.equal(narrationText(multiParagraph), 'She waits.');
+  assert.ok(responseSafetyProblems(`${'x'.repeat(601)} "Fine."`, { maxVisibleChars: 600 }).includes('narration exceeds 600 characters'));
+});
+
+test('dialogue is capped by the chattiest present NPC', () => {
+  const speech = `"${'y'.repeat(500)}"`;
+  assert.ok(responseSafetyProblems(speech, { maxDialogueChars: 400 }).includes('dialogue exceeds 400 characters'));
+  assert.ok(!responseSafetyProblems(speech, { maxDialogueChars: 775 }).some(problem => problem.includes('exceeds')));
+});
+
+test('openings and OOC replies still count every visible character', () => {
+  assert.ok(responseSafetyProblems(`"${'z'.repeat(1500)}"`, { opening: true }).includes('opening exceeds 1400 characters'));
+  assert.ok(responseSafetyProblems(`"${'z'.repeat(1900)}"`, { oocMode: true, maxVisibleChars: 1800 }).includes('visible turn exceeds 1800 characters'));
 });

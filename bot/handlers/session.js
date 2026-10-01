@@ -23,16 +23,19 @@ import {
   isOutOfCharacterMessage,
   mergePlaystyleObservations,
   normalizePlaystyleSignals,
+  SHORT_PLAYER_INPUT_CHARS,
   updatePlaystyleSignals,
 } from './scene-director.js';
 import {
   applyInteractionOperations,
   buildRelevantWorldContext,
   findMentionedNpcs,
+  findScenePresentNpcs,
   formatNpcHydrationContext,
   mergeCanonicalPatches,
   mergeNpcCharacterMemoryPatches,
 } from './world-state.js';
+import { budgetLimit, dialogueWeight, talkativeness, turnBudget, UNKNOWN_SPEAKER_WEIGHT } from './npc-personality.js';
 import {
   auditSession,
   buildMechanicsFallback,
@@ -62,10 +65,11 @@ const restoring = new Map();
 const GENERATION_RETRIES = 2;
 const OPENING_MAX_CHARS = 1400;
 const OPENING_MAX_TOKENS = 450;
-const TURN_MAX_CHARS = 1400;
-const SHORT_TURN_MAX_CHARS = 900;
-const SHORT_PLAYER_INPUT_CHARS = 120;
+const DEFAULT_TURN_BUDGET = turnBudget(UNKNOWN_SPEAKER_WEIGHT);
 const OOC_MAX_CHARS = 1800;
+// Character creation is menus and choices, so it keeps whole-reply limits.
+const CREATION_MAX_CHARS = 1400;
+const CREATION_SHORT_MAX_CHARS = 900;
 const OOC_MAX_TOKENS = 550;
 
 // Serializes async work on a single session so concurrent player messages
@@ -227,11 +231,13 @@ export async function startSession(thread, player) {
   });
 }
 
-export function playerFacingTurnLimit(playerContent, priorPlayerContent = '') {
+export function creationTurnLimit(playerContent) {
+  return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS ? CREATION_SHORT_MAX_CHARS : CREATION_MAX_CHARS;
+}
+
+export function playerFacingTurnLimit(playerContent, priorPlayerContent = '', budget = DEFAULT_TURN_BUDGET) {
   if (isOutOfCharacterMessage(playerContent, priorPlayerContent)) return OOC_MAX_CHARS;
-  return String(playerContent || '').trim().length <= SHORT_PLAYER_INPUT_CHARS
-    ? SHORT_TURN_MAX_CHARS
-    : TURN_MAX_CHARS;
+  return budgetLimit(budget.narration);
 }
 
 export function contextualManualRoll(session, playerContent) {
@@ -263,6 +269,19 @@ export function pendingRollGuard(session, playerContent) {
   }
   const move = session.mechanicsDepth <= 3 ? ` for **${session.pendingRoll.move}**` : '';
   return `A roll is still waiting${move}. Send both dice, Instinct die first (like \`4 2\`), send their total, tap **Roll for me**, or say **cancel that**.`;
+}
+
+// Removes quoted dialogue. A quote left open runs to the end of its paragraph,
+// matching multi-paragraph speech that reopens each paragraph with a quote.
+export function narrationText(visible) {
+  return String(visible || '')
+    .split(/\n\s*\n/)
+    .map(paragraph => paragraph
+      .replace(/"[^"]*"|“[^”]*”/g, '')
+      .replace(/["“][\s\S]*$/, '')
+      .trim())
+    .filter(Boolean)
+    .join('\n\n');
 }
 
 function visibleResponseText(response) {
@@ -316,6 +335,8 @@ function openingDeadlineLacksCurrentTime(value) {
 export function responseSafetyProblems(response, {
   opening = false,
   maxVisibleChars,
+  maxDialogueChars,
+  wholeTurn = false,
   oocMode = false,
   playerContent = '',
   mechanicsExpectation = null,
@@ -342,10 +363,18 @@ export function responseSafetyProblems(response, {
       problems.push('out-of-character response asks a question without answering');
     }
   }
-  const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
-  const visibleLength = visible.length;
-  if (visibleLength > visibleLimit) {
-    problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
+  const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : budgetLimit(DEFAULT_TURN_BUDGET.narration));
+  if (opening || oocMode || wholeTurn) {
+    if (visible.length > visibleLimit) {
+      problems.push(`${opening ? 'opening' : 'visible turn'} exceeds ${visibleLimit} characters`);
+    }
+  } else {
+    // In play, narration and dialogue each have a share of the scene's budget.
+    const narrationLength = narrationText(visible).length;
+    if (narrationLength > visibleLimit) problems.push(`narration exceeds ${visibleLimit} characters`);
+    const dialogueLength = visible.length - narrationLength;
+    const dialogueCap = maxDialogueChars || budgetLimit(DEFAULT_TURN_BUDGET.dialogue);
+    if (dialogueLength > dialogueCap) problems.push(`dialogue exceeds ${dialogueCap} characters`);
   }
   if (opening && openingDeadlineLacksCurrentTime(visible)) {
     problems.push('opening deadline lacks the current in-fiction time');
@@ -358,6 +387,8 @@ export function responseSafetyProblems(response, {
 async function generateSafeResponse(session, {
   opening = false,
   maxVisibleChars,
+  maxDialogueChars,
+  wholeTurn = false,
   oocRecap = false,
   oocMode = false,
   playerContent = '',
@@ -371,6 +402,8 @@ async function generateSafeResponse(session, {
     const problems = responseSafetyProblems(response, {
       opening,
       maxVisibleChars,
+      maxDialogueChars,
+      wholeTurn,
       oocMode,
       playerContent,
       mechanicsExpectation,
@@ -389,14 +422,16 @@ async function generateSafeResponse(session, {
       }
       throw new Error(`unsafe response after ${GENERATION_RETRIES + 1} attempts: ${problems.join('; ')}`);
     }
-    const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : TURN_MAX_CHARS);
+    const visibleLimit = maxVisibleChars || (opening ? OPENING_MAX_CHARS : budgetLimit(DEFAULT_TURN_BUDGET.narration));
     session.messages.push({ role: 'assistant', content: '[Rejected draft omitted.]' });
     session.messages.push({
       role: 'user',
       content: [
         '[SYSTEM — RESPONSE CORRECTION]',
         `The previous response was rejected: ${problems.join('; ')}.`,
-        `Keep player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters. Preserve required hidden save and mechanics blocks.`,
+        opening || oocMode || wholeTurn
+          ? `Keep player-facing text in 1–3 clear, concrete paragraphs, at most ${visibleLimit} characters. Preserve required hidden save and mechanics blocks.`
+          : `Keep narration outside quoted dialogue lean, at most ${visibleLimit} characters. Keep quoted dialogue within ${maxDialogueChars || budgetLimit(DEFAULT_TURN_BUDGET.dialogue)} characters; quiet NPCs say less. Preserve required hidden save and mechanics blocks.`,
         session.rulesProfile?.isNew && !opening && !oocMode ? creationTurnContext(session) : '',
         opening
           ? (session.rulesProfile?.isNew
@@ -658,12 +693,14 @@ export async function handleMessage(message) {
     let mechanicsExpectation = mechanicsActive && !clarification
       ? detectMechanicsExpectation(message.content, { lastAssistant })
       : null;
+    const length = sceneLength(session, `${lastAssistant}\n${message.content}`, lastAssistant);
     const sceneDirection = buildSceneDirectorContext({
       playerText: message.content,
       priorPlayerText,
       playstyleSignals: session.playstyleSignals,
       forceOoc: Boolean(session.continuityRepair),
       lastAssistant,
+      length,
     });
     const turnContent = (expectation, drought) => [
       npcHydration,
@@ -683,7 +720,11 @@ export async function handleMessage(message) {
       console.log(`[mechanics-gate] session=${session.threadId} move=${expectation.move}`);
     };
     const options = {
-      maxVisibleChars: playerFacingTurnLimit(message.content, priorPlayerText),
+      maxVisibleChars: session.rulesProfile?.isNew && !oocMode
+        ? creationTurnLimit(message.content)
+        : playerFacingTurnLimit(message.content, priorPlayerText, length.budget),
+      maxDialogueChars: budgetLimit(length.budget.dialogue),
+      wholeTurn: Boolean(session.rulesProfile?.isNew && !oocMode),
       oocRecap,
       oocMode,
       playerContent: message.content,
@@ -821,6 +862,19 @@ async function handleManualRoll(session, channel, manualRoll, text) {
     return;
   }
   await resolvePendingRoll(session, channel, { ...manualRoll, diceSource: 'manual', acknowledge: say });
+}
+
+// The chattiest NPC in the current exchange sets the scene's length budget.
+// lastRanLong steers the next reply shorter so no one maxes out every turn.
+export function sceneLength(session, text, lastAssistant = '') {
+  const met = session.hydratedNpcIds instanceof Set ? [...session.hydratedNpcIds] : [];
+  const npcVoices = findScenePresentNpcs(text, session.npcCatalog || [], met)
+    .map(npc => ({ name: npc.name, weight: dialogueWeight(npc.personality) }))
+    .sort((a, b) => b.weight - a.weight)
+    .map(voice => ({ ...voice, talk: talkativeness(voice.weight) }));
+  const budget = turnBudget(npcVoices[0]?.weight ?? UNKNOWN_SPEAKER_WEIGHT);
+  const lastRanLong = visibleResponseText(lastAssistant).length > budget.total * 0.75;
+  return { budget, npcVoices, lastRanLong };
 }
 
 async function buildNpcMentionHydration(session, text) {

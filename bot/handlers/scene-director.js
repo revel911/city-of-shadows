@@ -1,6 +1,7 @@
 const MODES = ['action', 'investigation', 'social', 'exploration', 'reflection'];
 const MAX_SCORE = 50;
 const RECENT_LIMIT = 8;
+export const SHORT_PLAYER_INPUT_CHARS = 120;
 
 const MODE_PATTERNS = {
   action: /\b(?:attack|fight|hit|shoot|stab|chase|run after|tackle|kick|punch|grab|break in|rush|charge|escape|flee|transform)\b/i,
@@ -146,8 +147,32 @@ function selectMode(playerText, signals) {
     .find(mode => !recent.has(mode)) || 'social';
 }
 
-export function buildSceneDirectorContext({ playerText, priorPlayerText = '', playstyleSignals, lastAssistant = '', forceOoc = false } = {}) {
-  if (!forceOoc && isNarrativeFollowThrough(playerText)) return '[SYSTEM ? COMPLETE THE UNRESOLVED BEAT]\n' + MC_AUTHORSHIP_CONTRACT;
+// The usual narration band sits well under the budget, so a scene reaches its
+// ceiling only when the moment earns it. Short player input gets the lower band.
+export function typicalNarrationRange(playerText, narrationBudget) {
+  const [low, high] = String(playerText || '').trim().length <= SHORT_PLAYER_INPUT_CHARS ? [0.3, 0.55] : [0.4, 0.7];
+  const round = n => Math.round(n / 50) * 50;
+  return [round(narrationBudget * low), round(narrationBudget * high)];
+}
+
+function lengthGuidance(playerText, { budget, npcVoices = [], lastRanLong = false } = {}) {
+  if (!budget) return '';
+  const [low, high] = typicalNarrationRange(playerText, budget.narration);
+  const speakers = npcVoices.length
+    ? `Present speakers: ${npcVoices.map(v => `${v.name} (${v.talk})`).join('; ')}. That is how much each can say, not how much they must; a talkative NPC may still answer with a look.`
+    : 'No named NPC is present; unnamed voices stay brief.';
+  return [
+    `Narration (everything outside quoted dialogue): usually ${low}–${high} characters, never over ${budget.narration}. Small beats land short.`,
+    'Narration stays lean: two or three decisive details, no restating what just happened.',
+    speakers,
+    'Go long only when the moment earns it: a confession, a pitch, a story told, a threat laid out. Most replies, even with a talkative NPC, stay well short of their ceiling.',
+    lastRanLong ? 'The last reply ran long. Keep this one noticeably shorter unless the player asked for more.' : '',
+    'Do not close with a recap of what the player now knows. No NPC explains the stakes beyond what their verbosity and voice allow.',
+  ].filter(Boolean).join('\n');
+}
+
+export function buildSceneDirectorContext({ playerText, priorPlayerText = '', playstyleSignals, lastAssistant = '', forceOoc = false, length = null } = {}) {
+  if (!forceOoc && isNarrativeFollowThrough(playerText)) return '[SYSTEM ? COMPLETE THE UNRESOLVED BEAT]\n' + MC_AUTHORSHIP_CONTRACT + '\n' + lengthGuidance(playerText, length || {});
   if (isCharacterRecapRequest(playerText, priorPlayerText)) {
     return [
       '[SYSTEM — OUT-OF-CHARACTER CHARACTER RECAP]',
@@ -200,6 +225,7 @@ export function buildSceneDirectorContext({ playerText, priorPlayerText = '', pl
       ? 'The message contains a possible romantic cue. Treat it as an invitation to clarify or reciprocate in fiction, not blanket consent; keep agency reversible and check before escalation.'
       : 'Do not introduce or escalate romance merely because of inferred preferences. Romance requires present-fiction signals and ongoing consent.',
     'Resolve exactly one consequential beat and stop where the player can make the next meaningful choice.',
+    lengthGuidance(playerText, length || {}),
   ].join('\n');
 }
 

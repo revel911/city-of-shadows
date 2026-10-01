@@ -102,3 +102,4 @@ test('short clarifications inherit OOC mode after a direct question', () => {
   assert.match(direction, /consistent observable details/i);
   assert.match(direction, /current time/i);
 });
+
