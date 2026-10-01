@@ -11,3 +11,6 @@ Thumbs.db
 .archive-spool/
 .archive-exports/
 .runtime/
+
+# Purchased rulebook PDFs and text (licensed; never publish)
+Additional Resources/
