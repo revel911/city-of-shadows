@@ -931,6 +931,90 @@
       "atmosphere": "Waterlogged, candlelit, ringing with a bell that has no tower.",
       "notes": "The Overwrite here writes an older port over the new one. It is only reachable on the tide, and the way out is not always the way in.",
       "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_viaduct_camp",
+      "name": "The Viaduct Camp",
+      "hub_id": "hub_the_valley",
+      "type": "Encampment",
+      "controller_ids": [],
+      "controller_note": "Self-governed by the people who live there; Pepper keeps the gate",
+      "status": "active",
+      "description": "Tents, pallet porches and a shared kitchen tarp tucked under the I-95 viaduct, run by house rules the residents wrote themselves: quiet hours, a tool library, a rotating night watch, and a rule that nobody gets moved along without a vote.",
+      "atmosphere": "Orderly and lived-in; a radio, a charging strip, someone's tomato buckets, and the roar of the road overhead.",
+      "notes": "Home to people with jobs, appeals pending and plans for spring. Treat it as a neighborhood with rules, never as a hazard to be survived. A mural on the pillar weeps ash when Night business is done nearby, and the viaduct's shadow keeps 1958: phones and clocks read that hour under it.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_valley_courts",
+      "name": "Valley Courts Annex",
+      "hub_id": "hub_the_valley",
+      "type": "Courthouse annex",
+      "controller_ids": [],
+      "controller_note": "Contested; clerks and bailiffs run it, brokers work the hallway",
+      "status": "active",
+      "description": "A fictional courthouse annex: a security line, a clerk's counter, hard benches and a hallway where the day's docket decides whether a family keeps a car or a job.",
+      "atmosphere": "Fluorescent, hushed, smelling of floor wax and old coffee.",
+      "notes": "Court dates are the pulse of the Valley. People arrive hours early in their one good outfit. Night and Power both watch the docket; the ordinary people in line are just trying to get through it.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_valley_intake_center",
+      "name": "Valley Resource Center",
+      "hub_id": "hub_the_valley",
+      "type": "Intake office",
+      "controller_ids": [
+        "npc_yolanda_price"
+      ],
+      "controller_note": "A fictional nonprofit intake office; Yolanda Price runs the evening desk",
+      "status": "active",
+      "description": "A fictional intake office on Lamplighter Way offering ID help, mail, showers, a computer bank and a caseworker line that moves on its own time. It stands in for the real service providers of the area, none of which appear in play.",
+      "atmosphere": "Warm and overworked; a ticket machine, a coffee urn and a bulletin board thick with job flyers.",
+      "notes": "Waiting rooms here fill with people who have a plan and are one form short of it. The evening desk is staffed by a vampire who feeds only on volunteers who have said yes, never on clients.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_night_shift_jail_wing",
+      "name": "The Night Wing",
+      "hub_id": "hub_the_valley",
+      "type": "Jail wing",
+      "controller_ids": [
+        "npc_gideon_marsh"
+      ],
+      "controller_note": "Warden Gideon Marsh runs it; the county's paperwork thinks it is routine",
+      "status": "active",
+      "description": "A fictional night wing of a fictional regional jail, reached by a sally port off Lamplighter Way. Lights stay half up, and everyone inside is somebody's brother, mother or coworker waiting on a hearing.",
+      "atmosphere": "Humming, cold and slow; keys, count calls, a tired hush after midnight.",
+      "notes": "Never the real facility. What happens inside stays offscreen; show the visiting line, the commissary deposit, the phone call that cuts off at fifteen minutes. The people inside have lawyers to find, cases to understand and families to reach.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_highway_motel_strip",
+      "name": "Richmond Highway Motel Strip",
+      "hub_id": "hub_the_valley",
+      "type": "Motel corridor",
+      "controller_ids": [],
+      "controller_note": "No one; each lot answers to a different manager",
+      "status": "active",
+      "description": "A fictional cluster of extended-stay motels along the Richmond Highway (US-1) corridor south of the river: weekly rates, hot plates, kids on bikes in the lots and a laundromat that never closes. A corridor, not a neighborhood.",
+      "atmosphere": "Neon and cracked asphalt; ice machines humming, a pressure cooker going in room 14.",
+      "notes": "Many people here are one deposit short of a lease, and they know it, and they are working it. Families, night-shift workers and retirees live beside the transients. Word travels room to room faster than any phone.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_red_lantern_motor_inn",
+      "name": "The Red Lantern Motor Inn",
+      "hub_id": "hub_the_valley",
+      "type": "Motel and bar",
+      "controller_ids": [
+        "npc_mr_lacey"
+      ],
+      "controller_note": "Mr. Lacey holds the end stool; the owner holds the lease",
+      "status": "active",
+      "description": "A faded motor inn whose lounge has outlasted three owners. A red paper lantern over the door, a jukebox that still takes quarters, and a payphone in the lot where something fae is said to be trapped.",
+      "atmosphere": "Dim, smoky, kind; the most welcome room on the strip.",
+      "notes": "Neutral ground in practice. Fiddler Rook plays the back booth, and the bartender will keep your coat if you promise to come back for it.",
+      "last_updated": "2026-10-01"
     }
   ]
 }

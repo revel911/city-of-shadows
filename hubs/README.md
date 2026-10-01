@@ -17,6 +17,7 @@ threads. Named places themselves are canonical in
 | [carytown.md](carytown.md) | Carytown | Mortalis commercial/residential district focused on public routines, familiar vulnerability, locations, and open threads |
 | [memorial-district.md](memorial-district.md) | Memorial District | Night-dominant west bluff of graves, war memorials, and civic martyrdom over the James; city history as currency |
 | [river-docks.md](river-docks.md) | River & Docks | Wild-dominant working James: the Deepwater port, Manchester floodwall, Rocketts, and Belle Isle; a thin place for goods, secrets, and deals |
+| [the-valley.md](the-valley.md) | The Valley | Night-dominant Shockoe Valley service-and-court corridor under the I-95 viaduct, plus the Richmond Highway motel strip; necessity, survival, and everyone's plan to get out |
 
 ## Adding a hub
 

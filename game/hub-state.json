@@ -69,6 +69,21 @@
         "An ex-Power leader was seen meeting Night enforcers at Rocketts.",
         "A street preacher on the Mayo Bridge promises the river will 'reform' the city."
       ]
+    },
+    {
+      "id": "hub_the_valley",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "conditions": [],
+      "rumors": [
+        "A ghost cook in a soup line feeds people memories they never had.",
+        "A mural under the viaduct weeps ash when Night business is done nearby.",
+        "Power people are offering a bed to anyone who has had a particular dream.",
+        "Something fae is trapped in the last payphone on the strip.",
+        "A free clinic is trading Debts for supplies.",
+        "Pills cut with something that glows are going around."
+      ]
     }
   ]
 }

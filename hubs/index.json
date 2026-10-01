@@ -48,5 +48,10 @@
     "id": "hub_river_docks",
     "name": "River & Docks",
     "file": "river-docks.md"
+  },
+  {
+    "id": "hub_the_valley",
+    "name": "The Valley",
+    "file": "the-valley.md"
   }
 ]
