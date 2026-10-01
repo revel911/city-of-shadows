@@ -56,14 +56,14 @@ location records.
 - **7-9:** You learn something useful but choose 1 from above.
 - **Miss:** The memories are painful, and sharing them opens old wounds or creates new problems.
 
-### Pull Up, Right Now
-When you call the Creighton tenant patrol to come help you immediately, roll with Mortalis.
-- **10+:** They come with numbers. Choose 1 complication below.
-- **7-9:** They come. Choose 2 complications below.
-  - They escalate past what you wanted, loudly.
-  - They show up unready for what is actually here.
-  - They want to see you go first before they commit.
-- **Miss:** The patrol starts asking whether *you* are the problem on their block.
+### Call the Patrol
+When you phone the Creighton tenant patrol and need them on the block now, roll with Mortalis.
+- **10+:** They turn out in force. Choose 1 complication below.
+- **7-9:** They turn out. Choose 2 complications below.
+  - Somebody on the patrol turns the volume up and makes it bigger than it was.
+  - They came ready for a different kind of trouble than the one in front of them.
+  - Before they step in, they want you to take the first risk yourself.
+- **Miss:** The patrol hangs back at the corner and keeps its eyes on you instead.
 
 ### The Lot Has Everything
 When you work the weekend night market in the Nine Mile Road lot for something rare or uncanny, roll with Mind.
@@ -80,9 +80,9 @@ When you work the weekend night market in the Nine Mile Road lot for something r
 | `npc_lorenzo_pugh` | Mortalis | Deacon Lorenzo Pugh runs the tenant patrol. |
 | `npc_marisol_echevarria` | Mortalis | Marisol Echevarría, tenant-council secretary, a changeling raised mortal who doesn't fully know it. |
 | `npc_scrapheap` | Wild | Scrapheap, spirit of the Nine Mile Road scrap lot, hoards what people throw away. |
-| `npc_miss_odessa` | Wild | Miss Odessa, a demon who trades porch gossip for small favors. |
-| `npc_renata_kwan` | Power | Renata Kwan, redevelopment liaison, quietly on a Consilium retainer. |
-| `npc_tobias_mensah` | Power | Tobias Mensah, fix-it man whose boiler repairs are also wards. |
+| `npc_miss_odessa` | Wild | Miss Odessa, a retired cafeteria manager whose rooftop hives hum in whichever year the bees remember. |
+| `npc_bettina_sorrells` | Power | Bettina Sorrells, redevelopment liaison, secretly retained by the Consilium. |
+| `npc_tobias_mensah` | Power | Tobias Mensah, night-bus operator whose route still stops at addresses on no current map. |
 | `npc_little_andre` | Night | Little Andre, a ghost only children and the very old can see. |
 | `npc_midnight_truck` | Night | The Midnight Truck, an urban legend: an ice-cream truck that runs after 2am. |
 

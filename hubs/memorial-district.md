@@ -50,13 +50,13 @@ When you refuse to honor a Debt because the city's need outweighs it, and you sa
 
 | ID | Circle | Resident |
 |---|---|---|
-| `npc_samira_aziz` | Wild | Samira Aziz, a jinn who keeps Hollywood's lost-and-found of things left on graves. |
-| `npc_knuckles_okoro` | Wild | "Knuckles" Okoro, muscle for a demon-backed crew on the Belvidere corridor. |
-| `npc_abernathy_vale` | Power | Abernathy Vale, antiquarian whose Belvidere curio shop sells memorial relics. |
+| `npc_nadira_haddad` | Wild | Nadira Haddad, a jinn who keeps Hollywood's lost-and-found of things left on graves. |
+| `npc_kelechi_nwosu` | Wild | Kelechi Nwosu, a tow-truck driver bound by a demon's contract to haul whatever it marks. |
+| `npc_felix_marchbanks` | Power | Felix Marchbanks, an estate appraiser who returns the possessions of the dead to their families. |
 | `npc_the_pallbearer` | Power | The Pallbearer, a spectre bound to the War Memorial's wall of names. |
 | `npc_hester_byrd` | Night | Hester Byrd, vampire elder who claims the cemetery as neutral ground. |
 | `npc_ruthie_calhoun` | Night | Ruthie Calhoun, a ghoul who restores headstones and paints portraits of the dead. |
-| `npc_amos_freeman` | Mortalis | Amos Freeman, a man who came back from a death the city marked as a martyrdom. |
+| `npc_loretta_banfield` | Mortalis | Loretta Banfield, a Gold Star mother who leads the War Memorial's volunteer guides. |
 | `npc_gail_brannock` | Mortalis | Gail Brannock, ex-bodyguard, now on the cemetery night security shift. |
 
 A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).

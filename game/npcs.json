@@ -1808,39 +1808,39 @@
       "hub_id": "hub_creighton_court",
       "arc_ids": [],
       "status": "active",
-      "role": "Demon who trades porch gossip for small favors",
+      "role": "Retired school-cafeteria manager turned rooftop beekeeper; her hives hum in whichever year the bees last remember",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 2,
-        "order": 2,
-        "manner": 5,
-        "violence": 3,
-        "voice_note": "Sweet-tea porch drawl with a bookkeeper's precision; calls everyone baby, remembers every price.",
+        "moral": 4,
+        "order": 3,
+        "manner": 4,
+        "violence": 1,
+        "voice_note": "Brisk lunch-line authority softened by a laugh; gives directions as if handing out trays.",
         "verbosity": 5,
         "humor_frequency": 4,
-        "humor_style": "Affectionate teasing that doubles as a probe.",
-        "contrast_note": "Honey-warm while fishing, flat and exact the instant a deal is named.",
-        "flirtatiousness": 3,
-        "intimacy_style": "Playful and teasing, trading attention like gossip; never gives it free.",
+        "humor_style": "Warm, teasing nicknames from the old lunch line.",
+        "contrast_note": "Grandmotherly at the garden gate, but reads land surveys and zoning code faster than the city's own planners.",
+        "flirtatiousness": 2,
+        "intimacy_style": "Warm and plain-spoken; trust comes as a jar of honey with your year on the label.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2. Keeps a mental ledger of who owes whom a story. New-character Debt hook: Owes you for a secret you kept off her ledger.",
+      "notes": "Status: Wild 2. Keeps six hives on the community-garden shed roof and sells honey by the jar, labelled by year instead of season. Ran the cafeteria at a school that was torn down and still knows every child it fed by name. Reads the comb to tell which timeline a displaced neighbor slipped into. Has the survey, the signatures and a lawyer's number ready for the garden deed. New-character Debt hook: Owes you because you carried her hives down the ladder the night the shed roof flooded.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "fill her ledger with one more secret than any other porch on the block holds"
+      "drive": "get the community garden deeded to the tenant council before Renaissance Phase B paves it"
     },
     {
-      "id": "npc_renata_kwan",
-      "name": "Renata Kwan",
+      "id": "npc_bettina_sorrells",
+      "name": "Bettina Sorrells",
       "faction": "Power",
       "hub": "Creighton Court",
       "hub_id": "hub_creighton_court",
       "arc_ids": [],
       "status": "active",
-      "role": "Redevelopment contractor's community liaison, quietly on a Consilium retainer",
+      "role": "Redevelopment contractor's community liaison, secretly retained by the Consilium",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -1857,7 +1857,7 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Her site walk-throughs double as Consilium surveys. New-character Debt hook: Owes you for cleaning up a mess on her site.",
+      "notes": "Status: Power 2. Runs the site walk-throughs and the Thursday community meetings; the walk-throughs double as Consilium surveys of what the Overwrite is doing to the ground. Grew up two exits up I-64 and still drives her aunt to church on Sundays. New-character Debt hook: Owes you for cleaning up a mess on her site.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
@@ -1872,29 +1872,29 @@
       "hub_id": "hub_creighton_court",
       "arc_ids": [],
       "status": "active",
-      "role": "Fix-it man whose boiler repairs are also wards",
+      "role": "Night-bus operator whose route still stops at addresses on no current map; keeping those stops open is his working",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
         "manner": 3,
-        "violence": 4,
-        "voice_note": "Mutters to the machine, not the customer; explains a repair by talking through what the pipe wants.",
+        "violence": 2,
+        "voice_note": "Calls stops like a conductor and greets each rider by the year they got on.",
         "verbosity": 2,
         "humor_frequency": 2,
-        "humor_style": "Wry, gallows-tinged complaints about landlords.",
-        "contrast_note": "Terse with people, but talkative and tender when describing how a valve works.",
+        "humor_style": "Wry, gallows-tinged complaints about the transit schedule.",
+        "contrast_note": "Terse with the dispatch office, patient and tender with any rider lost in the wrong decade.",
         "flirtatiousness": 2,
-        "intimacy_style": "Reserved and practical; shows care by fixing something without being asked.",
+        "intimacy_style": "Reserved and practical; shows care by holding the bus an extra minute for you.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 1. Wards are in the weld seams and the way he bleeds a radiator. New-character Debt hook: Owes you for the part you found him.",
+      "notes": "Status: Power 1. Drives the last route out of the East End after midnight. Some of his stops serve blocks that were demolished years ago, and riders from those years get on. Logs every fare in a pocket notebook and has never once let a rider off in the wrong year. New-character Debt hook: Owes you because you rode the whole route with him the night it nearly closed for good.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "hand-build a ward into every boiler in the court before winter"
+      "drive": "keep the old-route stops open long enough to bring displaced families back for the Renaissance return vote"
     },
     {
       "id": "npc_little_andre",
@@ -1961,8 +1961,8 @@
       "drive": "pick up the one rider who will not get out where they were headed"
     },
     {
-      "id": "npc_samira_aziz",
-      "name": "Samira Aziz",
+      "id": "npc_nadira_haddad",
+      "name": "Nadira Haddad",
       "faction": "Wild",
       "hub": "Memorial District",
       "hub_id": "hub_memorial_district",
@@ -1985,7 +1985,7 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2. Keeps a shed of things left on graves, each tagged. New-character Debt hook: Owes you for returning what was taken from a grave.",
+      "notes": "Status: Wild 2. Keeps a shed of things left on graves, each tagged with the grave and the date, and pours tea for anyone who comes to reclaim something. New-character Debt hook: Owes you for returning what was taken from a grave.",
       "associated_location_ids": [
         "loc_hollywood_cemetery"
       ],
@@ -1995,68 +1995,68 @@
       "drive": "return every left-behind thing to the grave it came from before the autumn thaw shifts the stones"
     },
     {
-      "id": "npc_knuckles_okoro",
-      "name": "\"Knuckles\" Okoro",
+      "id": "npc_kelechi_nwosu",
+      "name": "Kelechi Nwosu",
       "faction": "Wild",
       "hub": "Memorial District",
       "hub_id": "hub_memorial_district",
       "arc_ids": [],
       "status": "active",
-      "role": "Muscle for a demon-backed crew on the Belvidere corridor",
+      "role": "Tow-truck driver on the Belvidere corridor, bound by a demon's contract to haul away whatever it marks",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 2,
+        "moral": 4,
         "order": 3,
-        "manner": 2,
-        "violence": 5,
-        "voice_note": "Flat, economical phrasing; says the price and then waits.",
+        "manner": 3,
+        "violence": 2,
+        "voice_note": "Patient and economical; explains the fee schedule first and the loophole second.",
         "verbosity": 2,
         "humor_frequency": 2,
-        "humor_style": "Deadpan understatement about his own bruised hands.",
-        "contrast_note": "Gentle with strays and old women, brutal with anyone who owes his boss.",
+        "humor_style": "Deadpan understatement about what people leave in towed cars.",
+        "contrast_note": "Easygoing in the cab, iron-hard about the letter of a contract, his own included.",
         "flirtatiousness": 2,
         "intimacy_style": "Guarded and slow; shows care by quietly fixing a problem, never by talking about it.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1. Collects for a crew that answers to something with a contract. New-character Debt hook: Owes you for not testifying.",
+      "notes": "Status: Wild 1. Works nights for a towing outfit that answers to something with a contract; when it marks a car, a cart or a crate, he has to haul it. He hauls slowly and tips the owners off first. Takes accounting classes at night, coaches his niece's softball team on Saturdays, and has read his contract more times than its author. New-character Debt hook: Owes you because you vouched for him when a tow went wrong.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "quietly buy out his crew's contract before the boss notices he is stalling on collections"
+      "drive": "find the clause in his contract that lets him buy his way out, before the demon marks something he cannot bring himself to tow"
     },
     {
-      "id": "npc_abernathy_vale",
-      "name": "Abernathy Vale",
+      "id": "npc_felix_marchbanks",
+      "name": "Felix Marchbanks",
       "faction": "Power",
       "hub": "Memorial District",
       "hub_id": "hub_memorial_district",
       "arc_ids": [],
       "status": "active",
-      "role": "Antiquarian whose Belvidere curio shop sells memorial relics",
+      "role": "Estate appraiser who catalogues the possessions of the dead and returns what belongs to families",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 3,
+        "moral": 4,
         "order": 4,
         "manner": 5,
-        "violence": 2,
-        "voice_note": "Fussy, courtly, catalogue-voice; gives every object a provenance, true or not.",
+        "violence": 1,
+        "voice_note": "Courtly, precise catalogue-voice; names who owned a thing before saying what it is worth.",
         "verbosity": 4,
         "humor_frequency": 3,
-        "humor_style": "Arch dry wit about forgers and the gullible.",
-        "contrast_note": "Charming and generous with the room, ruthless in a negotiation over a piece he wants.",
+        "humor_style": "Arch dry wit about forgers and greedy heirs.",
+        "contrast_note": "Gentle and generous with grieving families, ruthless with anyone trying to sell a dead stranger's things.",
         "flirtatiousness": 3,
-        "intimacy_style": "Courtly and indirect; flattery first, trust only after a shared secret about a fake.",
+        "intimacy_style": "Courtly and indirect; trust comes after he shows you a letter he has never priced.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Sells flags, buttons, bricks and bell fragments, some genuine. New-character Debt hook: Owes you for authenticating a fake before a buyer found out.",
+      "notes": "Status: Power 2. Runs a probate appraisal office off Belvidere that values what families inherit: letters, photographs, wedding silver, service medals. Refuses Confederate and Lost Cause memorabilia outright; he will not appraise, sell or broker it. Some objects remember their owners, and he can hear which ones. New-character Debt hook: Owes you for spotting a forged will before the family signed.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "corner the market on genuine bluff-era relics before the estate auctions open"
+      "drive": "return a box of service medals to the families they belong to before an estate auction scatters them"
     },
     {
       "id": "npc_the_pallbearer",
@@ -2080,10 +2080,10 @@
         "contrast_note": "Solemn and orderly, but each unclaimed name makes its patience thinner.",
         "flirtatiousness": null,
         "intimacy_style": null,
-        "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
+        "calibration_note": "Authored starting social profile for a non-human entity; it shapes how it presents, not past events or consent. Speech is only as the entity's nature allows."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Bound to the wall; cannot leave the memorial grounds. Non-human spectre, so no romantic profile. New-character Debt hook: Owes you for the name you added.",
+      "notes": "Status: Power 2. A bound entity tied to the wall, so no romantic profile; it cannot leave the memorial grounds. Speaks to almost no one but Loretta Banfield. New-character Debt hook: Owes you for the name you added.",
       "associated_location_ids": [
         "loc_virginia_war_memorial"
       ],
@@ -2161,38 +2161,38 @@
       "drive": "finish a portrait of every nameless grave in the old section before the frost"
     },
     {
-      "id": "npc_amos_freeman",
-      "name": "Amos Freeman",
+      "id": "npc_loretta_banfield",
+      "name": "Loretta Banfield",
       "faction": "Mortalis",
       "hub": "Memorial District",
       "hub_id": "hub_memorial_district",
       "arc_ids": [],
       "status": "active",
-      "role": "A man who came back from a death the city marked as a martyrdom",
+      "role": "Gold Star mother who leads the volunteer guides at the War Memorial, and the only living person the Pallbearer speaks to",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 4,
-        "order": 3,
-        "manner": 3,
-        "violence": 2,
-        "voice_note": "Careful, newly sure of ordinary words; keeps checking that he is really heard.",
+        "moral": 5,
+        "order": 4,
+        "manner": 5,
+        "violence": 1,
+        "voice_note": "Calm docent's voice; reads names aloud slowly and correctly, every one.",
         "verbosity": 2,
         "humor_frequency": 2,
-        "humor_style": "Wry about being famous for dying.",
-        "contrast_note": "Gentle and bewildered with strangers, hard-edged with anyone who calls him a symbol.",
-        "flirtatiousness": 2,
-        "intimacy_style": "Tentative and honest; trust grows when someone treats him as a person and not a monument.",
+        "humor_style": "Gentle, motherly teasing of the young volunteers.",
+        "contrast_note": "Soft and welcoming with visitors, unbending with anyone who treats the wall as a curiosity.",
+        "flirtatiousness": 1,
+        "intimacy_style": "Warm and maternal; trust is an invitation to read a name with her.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. His name is carved on the wall; his family keeps the vigil. New-character Debt hook: Owes you because you were there when he woke.",
+      "notes": "Status: Mortalis 1. Leads the weekend volunteer guides on Gambles Hill and knows the wall by heart, starting with her son's name. Treats every visiting family as her own, and is the one who notices each morning's new name before the staff do. New-character Debt hook: Owes you because you stood with her at the wall on her son's anniversary.",
       "associated_location_ids": [
         "loc_virginia_war_memorial"
       ],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "get his name taken off the wall without his family losing the only honor the city ever gave them"
+      "drive": "learn who is adding unrecorded names to the wall before a grieving family finds a stranger's name beside their own"
     },
     {
       "id": "npc_gail_brannock",
@@ -2236,24 +2236,24 @@
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "Longshoreman who hunts fae smugglers on the side",
+      "role": "Longshoreman and union shop steward organizing the terminal crews",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 3,
+        "moral": 4,
         "order": 3,
-        "manner": 2,
-        "violence": 4,
-        "voice_note": "Short, tired sentences; talks in tonnage and tide tables.",
+        "manner": 3,
+        "violence": 3,
+        "voice_note": "Short, tired sentences; talks in tonnage, tide tables and contract clauses.",
         "verbosity": 2,
         "humor_frequency": 2,
         "humor_style": "Gallows humor about what turns up in the containers.",
-        "contrast_note": "Easygoing on the dock, merciless with anything that smells of the Wild and a stolen crate.",
+        "contrast_note": "Easygoing on the dock, immovable at the bargaining table.",
         "flirtatiousness": 2,
         "intimacy_style": "Gruff and practical; shows trust by handing you a thermos.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 2. Works the terminal gang. New-character Debt hook: Owes you for an alibi.",
+      "notes": "Status: Mortalis 2. Works the terminal gang at berth four and keeps the crew roster, the grievance file and the coffee. Someone pays the night crews in cash that smells of the Night, and he wants it on paper; he is quietly feeding the reporter what he can prove. Coaches a Southside rec-league team and has a bad shoulder he will not report. New-character Debt hook: Owes you for an alibi the night a foreman got hurt.",
       "associated_location_ids": [
         "loc_richmond_marine_terminal",
         "loc_commerce_road_yards"
@@ -2261,7 +2261,7 @@
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "catch the fae smuggler moving goods through berth four before the next barge clears"
+      "drive": "get the crews a written contract that names who really pays the night shift, before the next barge clears"
     },
     {
       "id": "npc_dee_ashby",
@@ -2271,24 +2271,24 @@
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "Tug captain quietly arming dock crews",
+      "role": "Tug captain who runs the river's unofficial rescue and recovery",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 3,
+        "moral": 4,
         "order": 4,
         "manner": 3,
-        "violence": 3,
+        "violence": 2,
         "voice_note": "Clipped captain's cadence; every answer is a heading and a distance.",
         "verbosity": 3,
         "humor_frequency": 2,
         "humor_style": "Dry nautical understatement about weather and bureaucrats.",
-        "contrast_note": "Courteous and by the book on deck, a quiet arms broker off it.",
+        "contrast_note": "Courteous and by the book on deck, stubborn past reason once someone is in the water.",
         "flirtatiousness": 2,
         "intimacy_style": "Measured; trust arrives as an invitation aboard.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 3. Her tug sits at the same mooring every week. New-character Debt hook: Owes you for a shipment you did not report.",
+      "notes": "Status: Mortalis 3. Her tug sits at the same mooring every week and goes out for anyone the river takes: swimmers, barge hands, the odd thing that should not float. Keeps a logbook of who the river gave back and who it kept. The south-bank boat fires have her furious, and she does not believe the Wild set them. New-character Debt hook: Owes you because you went into the water after one of her crew.",
       "associated_location_ids": [
         "loc_manchester_floodwall",
         "loc_richmond_marine_terminal"
@@ -2296,7 +2296,7 @@
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "finish arming the dock crews before the next Night squeeze on the berths"
+      "drive": "prove who is setting the south-bank boat fires before the crews take it out on the Wild"
     },
     {
       "id": "npc_lady_of_the_falls",
@@ -2306,7 +2306,7 @@
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "River fae of the fall line who drowns the careless",
+      "role": "River fae of the fall line who holds the city to its old promises",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -2320,10 +2320,10 @@
         "contrast_note": "Gracious, even tender, until a promise breaks and she goes still.",
         "flirtatiousness": null,
         "intimacy_style": null,
-        "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
+        "calibration_note": "Authored starting social profile for a non-human entity; it shapes how it presents, not past events or consent. Speech is only as the entity's nature allows."
       },
       "last_seen": "",
-      "notes": "Status: Wild 4. Non-human river fae, so no romantic profile. Bound to the fall line. New-character Debt hook: Owes you for a promise you kept to her.",
+      "notes": "Status: Wild 4. A bound entity of the fall line, so no romantic profile. Gracious to anyone who keeps faith with the river; the careless who break a promise to it are another matter. New-character Debt hook: Owes you for a promise you kept to her.",
       "associated_location_ids": [
         "loc_belle_isle",
         "loc_warwick_beneath"
@@ -2341,14 +2341,14 @@
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "Catfisherman who reads omens in the current",
+      "role": "Salvage diver, the only one who came back up from the Warwick wreck",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 2,
         "manner": 4,
         "violence": 2,
-        "voice_note": "Slow river drawl; speaks in weather, line and bait.",
+        "voice_note": "Slow river drawl; speaks in weather, depth and air left in the tank.",
         "verbosity": 4,
         "humor_frequency": 4,
         "humor_style": "Folksy, self-deprecating jokes about the one that got away.",
@@ -2358,32 +2358,32 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2. Fishes the same stretch daily. New-character Debt hook: Owes you for pulling him out in a flood.",
+      "notes": "Status: Wild 2. Went down to the drowned town with a salvage crew and surfaced alone hours later, with river silt in his lungs that never clears. Now he hears the current and knows when Warwick's streets will open. Fishes the Belle Isle rocks while he waits, and calls his daughter in nursing school every Sunday. New-character Debt hook: Owes you for pulling him out of the water the day he surfaced.",
       "associated_location_ids": [
-        "loc_belle_isle",
-        "loc_mayo_bridge_south"
+        "loc_warwick_beneath",
+        "loc_belle_isle"
       ],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "read the current well enough to warn the crews before the river turns"
+      "drive": "get the rest of his salvage crew back up from Warwick before the tide closes its streets for the season"
     },
     {
-      "id": "npc_queenie_marchetti",
-      "name": "Queenie Marchetti",
+      "id": "npc_odalys_ferreira",
+      "name": "Odalys Ferreira",
       "faction": "Power",
       "hub": "River & Docks",
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "Forges customs paperwork and arcane provenance",
+      "role": "Licensed customs broker who also stamps arcane provenance",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
         "order": 3,
         "manner": 5,
         "violence": 1,
-        "voice_note": "Smooth, brisk, rolls the stamp and the compliment together.",
+        "voice_note": "Smooth and brisk; delivers the stamp and the compliment in one motion.",
         "verbosity": 4,
         "humor_frequency": 3,
         "humor_style": "Wry, quick banter at the expense of inspectors.",
@@ -2393,7 +2393,7 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 3. Her office is a rented bay on the Commerce Road. New-character Debt hook: Owes you for a client you sent her.",
+      "notes": "Status: Power 3. Works from a rented bay on Commerce Road with a real license, a real bond, and a second set of stamps that make strange cargo look ordinary to every eye that matters. Sings in her church choir on Sundays and is putting her nephew through community college. New-character Debt hook: Owes you for a client you sent her.",
       "associated_location_ids": [
         "loc_commerce_road_yards",
         "loc_richmond_marine_terminal"
@@ -2401,7 +2401,7 @@
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "forge clean provenance for the next arcane shipment before a real inspector looks"
+      "drive": "clear provenance for the next arcane shipment before a real inspector looks"
     },
     {
       "id": "npc_lionel_petty",
@@ -2428,7 +2428,7 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. A ghost; lingers at the old customs desk. New-character Debt hook: Owes you for finding his missing ledger page.",
+      "notes": "Status: Power 2. A ghost in a 1940 uniform at the old customs desk at Rocketts. Clears manifests that surface from decades past and stamps them in ink that dries the color of river water. Polite to the living, appalled by anything undeclared. New-character Debt hook: Owes you for finding his missing ledger page.",
       "associated_location_ids": [
         "loc_rocketts_landing",
         "loc_richmond_marine_terminal"
@@ -2446,7 +2446,7 @@
       "hub_id": "hub_river_docks",
       "arc_ids": [],
       "status": "active",
-      "role": "Vampire informant who feeds only on livestock off the barges",
+      "role": "Vampire bookkeeper who pays out the dock crews' Night money",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
@@ -2456,14 +2456,14 @@
         "voice_note": "Quiet, pressed, a tailor's politeness; every sentence ends in a pause.",
         "verbosity": 3,
         "humor_frequency": 2,
-        "humor_style": "Rueful, restrained wit about his unglamorous diet.",
-        "contrast_note": "Refined and hushed, but protective to the point of menace about his secret.",
+        "humor_style": "Rueful, restrained wit about doing a dead man's accounting.",
+        "contrast_note": "Refined and hushed, protective to the point of menace about his books.",
         "flirtatiousness": 3,
         "intimacy_style": "Reserved and formal; closeness is shared silence on the dock at night.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Night 2. Keeps his feeding secret from the Court. New-character Debt hook: Owes you for keeping his diet secret.",
+      "notes": "Status: Night 2. Keeps the books for the cash Night quietly puts into the docks and pays the crews himself, in envelopes, on the dock at 3am. Feeds only from a few willing regulars and pays them better than the Court would like. The reporter's questions are getting close to his ledgers, and he has started to wonder whether answering them would be worse than being found out. New-character Debt hook: Owes you for steering the reporter away from his ledgers once.",
       "associated_location_ids": [
         "loc_commerce_road_yards",
         "loc_rocketts_landing"
@@ -2471,7 +2471,7 @@
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "keep the Court from learning his diet while he sells them the docks' secrets"
+      "drive": "keep the reporter off his ledgers while he decides whether to hand them over himself"
     },
     {
       "id": "npc_warwick_bellman",
@@ -2495,10 +2495,10 @@
         "contrast_note": "Solemn and orderly until the bell is taken, then relentless.",
         "flirtatiousness": null,
         "intimacy_style": null,
-        "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
+        "calibration_note": "Authored starting social profile for a non-human entity; it shapes how it presents, not past events or consent. Speech is only as the entity's nature allows."
       },
       "last_seen": "",
-      "notes": "Status: Night 2. Bound to the bell of Warwick. Non-human ghost, so no romantic profile. New-character Debt hook: Owes you for a bell you returned.",
+      "notes": "Status: Night 2. A bound entity tied to the bell of burned Warwick, so no romantic profile. Rings when the river spirit is threatened, and the sound carries up through the terminal pilings. New-character Debt hook: Owes you for a bell you returned.",
       "associated_location_ids": [
         "loc_warwick_beneath"
       ],
@@ -2549,48 +2549,48 @@
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Fixer who brokers ghost day-labor to contractors",
+      "role": "Ghoul who runs a free late-release ride service from the courts annex",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 2,
         "manner": 3,
         "violence": 2,
-        "voice_note": "Quick, friendly, always counting; says \"put it on the tally.\"",
+        "voice_note": "Quick and friendly, always counting heads; asks \"everybody buckled?\" before every answer.",
         "verbosity": 4,
         "humor_frequency": 3,
-        "humor_style": "Self-mocking hustler patter.",
-        "contrast_note": "Cheerful and fair about pay, ruthless with a contractor who stiffs a crew. Studies part-time for a paralegal certificate.",
+        "humor_style": "Self-mocking road-trip patter.",
+        "contrast_note": "Cheerful and chatty behind the wheel, stone silent the moment her patron asks about a rider.",
         "flirtatiousness": 3,
-        "intimacy_style": "Open and talkative; trust means he tells you his real rate.",
+        "intimacy_style": "Open and talkative; trust means she gives you the front seat.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Night 2. Runs the hallway at the courts annex. New-character Debt hook: Owes you for settling a crew's unpaid wages.",
+      "notes": "Status: Night 2. When the annex releases people after midnight with no bus running, her van is waiting at the curb and the ride is free. Her vampire patron pays for the gas and wants the passenger list; she keeps it in her head and has never written it down. Studies part-time for a paralegal certificate. New-character Debt hook: Owes you for a ride home the night her van broke down.",
       "associated_location_ids": [
         "loc_valley_courts"
       ],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "build a ledger of every unpaid contractor so he can bring wage claims on his crews' behalf"
+      "drive": "get everyone released after midnight home safe, and keep the passenger list out of her patron's hands"
     },
     {
-      "id": "npc_deuce_hayes",
-      "name": "Darnell \"Deuce\" Hayes",
+      "id": "npc_darnell_hayes",
+      "name": "Darnell Hayes",
       "faction": "Mortalis",
       "hub": "The Valley",
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Burned-out hunter selling arcane pills",
+      "role": "Retired hunter who sells arcane pills off a motel-lot bench to pay for his mother's care",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 2,
         "manner": 3,
         "violence": 2,
-        "voice_note": "Low and dry, long pauses; talks in dosage and decimals.",
+        "voice_note": "Low and dry, long pauses; talks in doses, decimals and bike-chain sizes.",
         "verbosity": 2,
         "humor_frequency": 2,
         "humor_style": "Wry, deadpan, aimed at himself.",
@@ -2600,7 +2600,7 @@
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Keeps a bench near the motel lots. New-character Debt hook: Owes you for an overdose you talked him through.",
+      "notes": "Status: Mortalis 1. Keeps a bench near the motel lots and a dose card for every buyer. Hunted for twenty years before his knees and nerves gave out; now he fixes bicycles for the kids on the strip for free, reads his mother the paper over the phone every morning, and is two classes from a peer-recovery-coach certificate. The pills are his plan and his trade, not his whole life. New-character Debt hook: Owes you for an overdose you talked him through.",
       "associated_location_ids": [
         "loc_highway_motel_strip"
       ],
@@ -2651,24 +2651,24 @@
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Possessed pit bull who guards the viaduct camp",
+      "role": "Camp dog with a bound spirit looking out from behind her eyes; keeps the viaduct camp's gate",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 4,
         "manner": 2,
         "violence": 2,
-        "voice_note": "Does not speak; tail, ears and one sharp bark. A spirit looks out of her eyes only when the camp is threatened.",
+        "voice_note": "Does not speak; tail, ears and one sharp bark. The bound spirit looks out of her eyes only when the camp is threatened.",
         "verbosity": 1,
         "humor_frequency": 1,
         "humor_style": "Play-bows and stolen socks.",
         "contrast_note": "Gentle with every child and neighbor, unmovable against anyone who comes without being asked in.",
         "flirtatiousness": null,
         "intimacy_style": null,
-        "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
+        "calibration_note": "Authored starting social profile for a non-human entity; it shapes how it presents, not past events or consent. Speech is only as the entity's nature allows."
       },
       "last_seen": "",
-      "notes": "Status: Wild 1. Non-human; no romantic profile. Camp gate guard by choice. New-character Debt hook: Owes you because you fed it and asked nothing.",
+      "notes": "Status: Wild 1. A gray-muzzled shepherd mix carrying a bound entity, so no romantic profile. Keeps the camp gate by her own choice. New-character Debt hook: Owes you because you fed her and asked nothing.",
       "associated_location_ids": [
         "loc_viaduct_camp"
       ],
@@ -2678,38 +2678,38 @@
       "drive": "keep her people together and the gate quiet, and see that anyone who needs watching over gets in"
     },
     {
-      "id": "npc_fiddler_rook",
-      "name": "Fiddler Rook",
+      "id": "npc_mavis_thorne",
+      "name": "Mavis Thorne",
       "faction": "Wild",
       "hub": "The Valley",
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Fae violinist whose songs curse whoever does not pay; keeps a Debt ledger",
+      "role": "Fae who runs the strip's all-night laundromat; whatever spins in her dryers comes back changed",
       "player_interaction": "None yet",
       "personality": {
-        "moral": 2,
-        "order": 3,
+        "moral": 3,
+        "order": 4,
         "manner": 4,
-        "violence": 2,
-        "voice_note": "Courteous and archaic; sentences end like cadences.",
+        "violence": 1,
+        "voice_note": "Soft, old-fashioned courtesy over the hum of the machines; never hurries a sentence.",
         "verbosity": 3,
         "humor_frequency": 3,
-        "humor_style": "Playful, cutting, always at the expense of the unpaid.",
-        "contrast_note": "Charming and meticulous; curses only those who took without paying, and forgives anyone who tells the truth.",
+        "humor_style": "Playful, cutting remarks about what people leave in their pockets.",
+        "contrast_note": "Kind and unhurried with everyone, but nobody leaves her shop with a promise unpaid.",
         "flirtatiousness": 3,
-        "intimacy_style": "Courtly; trust is a request for a tune.",
+        "intimacy_style": "Courtly; trust is her folding your laundry while you talk.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2. Plays the back booth of the Red Lantern; keeps a ledger of what everyone owes. New-character Debt hook: Owes you for a verse you paid for in full.",
+      "notes": "Status: Wild 2. Owns the laundromat that never closes on the motel strip. Clothes left overnight come back clean and carrying a little luck, good or bad, depending on what their owner owes. She pins a lost sock to the corkboard for every promise made in her shop and keeps count of who has paid. New-character Debt hook: Owes you because you sat up with her machines the night the power went out.",
       "associated_location_ids": [
-        "loc_red_lantern_motor_inn"
+        "loc_highway_motel_strip"
       ],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "collect every song owed on the strip before the season turns, and keep the ledger honest"
+      "drive": "match every sock on the corkboard to a kept promise before the season turns"
     },
     {
       "id": "npc_mr_lacey",
@@ -2719,7 +2719,7 @@
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Immortal barfly at the Red Lantern who has seen every era of the strip",
+      "role": "The Red Lantern's elderly night clerk; a mage whose guest register hides anyone he signs in",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -2730,13 +2730,13 @@
         "verbosity": 3,
         "humor_frequency": 3,
         "humor_style": "Dry reminiscence that always lands on the same joke.",
-        "contrast_note": "Genial and unhurried, with a memory sharp enough to cut a lie; quiet gatekeeper of the strip's secrets.",
+        "contrast_note": "Genial and unhurried, with a memory sharp enough to cut a lie; quiet keeper of the strip's secrets.",
         "flirtatiousness": 2,
         "intimacy_style": "Friendly and unforced; trust is a seat beside him.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Keeps the end stool; people tell him things. New-character Debt hook: Owes you for a drink on the right night.",
+      "notes": "Status: Power 2. Has kept the night desk at the Red Lantern longer than anyone can date. Anyone he signs into the register in his own pen cannot be found by whoever is hunting them, for as long as they stay. He charges nothing for it and asks a great deal about why. New-character Debt hook: Owes you because you signed his register honestly when a lie would have been easier.",
       "associated_location_ids": [
         "loc_red_lantern_motor_inn"
       ],
@@ -2802,7 +2802,7 @@
         "contrast_note": "Utterly impartial about balances, but oddly insistent on getting small figures right.",
         "flirtatiousness": null,
         "intimacy_style": null,
-        "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
+        "calibration_note": "Authored starting social profile for a non-human entity; it shapes how it presents, not past events or consent. Speech is only as the entity's nature allows."
       },
       "last_seen": "",
       "notes": "Status: Power 3. Appears as an entry that was already on the page. New-character Debt hook: Owes you for an entry you corrected.",
@@ -2845,14 +2845,14 @@
       "drive": "win a game against someone who has never lost, and price a very old thing off the table afterward"
     },
     {
-      "id": "npc_persephone_doyle",
-      "name": "Persephone Doyle",
+      "id": "npc_ambrose_kettering",
+      "name": "Ambrose Kettering",
       "faction": "Wild",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Demon whose old pact binds the street's fortunes",
+      "role": "Demon who holds the lease on the drained canal locks under Main Street and rents their dry chambers as vaults",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
@@ -2863,50 +2863,50 @@
         "verbosity": 4,
         "humor_frequency": 2,
         "humor_style": "Wry, legalistic puns.",
-        "contrast_note": "Gracious host who never says a thing she can be held to.",
+        "contrast_note": "Gracious host who never says a thing he can be held to.",
         "flirtatiousness": 3,
-        "intimacy_style": "Slow, formal courtship; she notices who reads the fine print.",
+        "intimacy_style": "Slow, formal courtship; he notices who reads the fine print.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 3. Her contract is read at the start of every Main Street fiscal year. New-character Debt hook: Owes you for a loophole you didn't use.",
+      "notes": "Status: Wild 3. Rents the sealed lock chambers beneath Main Street to anyone who needs a vault nobody can subpoena, and keeps every key on one iron ring. Someone opened one of his chambers without a key, and he wants to know who. New-character Debt hook: Owes you because you returned a key he did not know was missing.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "find a clause that ends the pact without losing the fortunes it protects"
+      "drive": "find out who opened one of his lock chambers without his key"
     },
     {
-      "id": "npc_velvet",
-      "name": "Velvet",
+      "id": "npc_bram_oduya",
+      "name": "Bram Oduya",
       "faction": "Wild",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Fae doorman at a members-only club",
+      "role": "Fae coat-check attendant at a Main Street hotel ballroom who keeps a little of whatever you check with him",
       "player_interaction": "None yet",
       "personality": {
         "moral": 3,
         "order": 4,
         "manner": 3,
         "violence": 3,
-        "voice_note": "Unhurried, low, courteous; never raises his voice or the rope.",
+        "voice_note": "Unhurried, low, courteous; never raises his voice, never loses a ticket.",
         "verbosity": 2,
         "humor_frequency": 2,
-        "humor_style": "Dry understatement at the velvet rope.",
-        "contrast_note": "Immaculately polite and utterly unmovable; honest guests get a surprising warmth.",
+        "humor_style": "Dry understatement across the coat-check counter.",
+        "contrast_note": "Immaculately polite and utterly unhurried; honest guests get a surprising warmth.",
         "flirtatiousness": 2,
-        "intimacy_style": "Reserved and amused; interest shows as the rope lifting a moment sooner.",
+        "intimacy_style": "Reserved and amused; interest shows as a ticket with your name already on it.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Wild 2. Judges guests by how they arrive, not what they wear. New-character Debt hook: Owes you because you got in the honest way.",
+      "notes": "Status: Wild 2. Works every gala the downtown hotels host. Hands back your coat with something missing you will not notice for a week (a habit, a worry, a name) and returns it if you ask properly. Honest guests get their whole selves back, and a warning. New-character Debt hook: Owes you because you checked your coat without lying about what was in the pockets.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "find out who keeps sending people in with forged invitations, and let them in as a lesson"
+      "drive": "find out who keeps checking in coats with someone else's name in the pocket"
     },
     {
       "id": "npc_lucien_fairbanks",
@@ -2941,36 +2941,36 @@
       "drive": "find a patron whose ambition is big enough to be worth a lifetime of pouring"
     },
     {
-      "id": "npc_lottie_sweeney",
-      "name": "Lottie Sweeney",
+      "id": "npc_ida_corliss",
+      "name": "Ida Corliss",
       "faction": "Night",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Ghost entertainer hired for bank galas",
+      "role": "Ghost elevator operator in a Main Street bank tower that has more floors than it should",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
         "order": 3,
         "manner": 4,
         "violence": 2,
-        "voice_note": "Showgirl warmth with a tired edge; calls everyone darling.",
+        "voice_note": "Crisp, cheerful operator's patter; announces every floor, even the ones that are not there.",
         "verbosity": 4,
         "humor_frequency": 4,
-        "humor_style": "Self-mocking stage banter.",
-        "contrast_note": "Radiant when the lights are on, wistful and sharp in the empty hall.",
+        "humor_style": "Self-mocking jokes about sixty years in the same small room.",
+        "contrast_note": "Bright and proper on the ride, wistful and sharp when the doors close on an empty car.",
         "flirtatiousness": 3,
-        "intimacy_style": "Warm and theatrical; closeness is someone staying past the last number.",
+        "intimacy_style": "Warm and old-fashioned; closeness is someone riding all the way up and back with her.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Night 1. Sings at the galas and walks through the walls after. New-character Debt hook: Owes you for an encore she was promised.",
+      "notes": "Status: Night 1. Has run the brass elevator since the 1950s and still wears the gloves. She will take you to floors that are not on the directory, if you ask politely and know the number. There is one button she has never been allowed to press. New-character Debt hook: Owes you because you rode down with her the night the cable sang.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "get the encore she was promised sixty years ago, in front of a full room"
+      "drive": "find out what waits on the one floor she has never been allowed to stop at"
     },
     {
       "id": "npc_kidane_haile",
@@ -3005,36 +3005,36 @@
       "drive": "get his guitar back and find out who has been betting on his songs"
     },
     {
-      "id": "npc_shreya_desai",
-      "name": "Shreya Desai",
+      "id": "npc_imani_rowe",
+      "name": "Imani Rowe",
       "faction": "Mortalis",
       "hub": "Downtown",
       "hub_id": "hub_downtown",
       "arc_ids": [],
       "status": "active",
-      "role": "Runs an augmented-reality game across downtown that keeps finding real anomalies",
+      "role": "Court stenographer who keeps her own shorthand of transcripts that rewrite themselves",
       "player_interaction": "None yet",
       "personality": {
         "moral": 4,
-        "order": 3,
+        "order": 4,
         "manner": 4,
         "violence": 2,
-        "voice_note": "Quick, enthusiastic developer's rhythm; talks in patch notes.",
+        "voice_note": "Fast and exact; repeats your last sentence back to you word for word.",
         "verbosity": 4,
         "humor_frequency": 4,
-        "humor_style": "Nerdy, self-aware bug-report jokes.",
-        "contrast_note": "Bubbly and generous about the game, quietly frightened of what it keeps finding.",
+        "humor_style": "Dry jokes about lawyers who talk faster than she can type.",
+        "contrast_note": "Unflappable in the courtroom, quietly frightened of what her notebooks prove.",
         "flirtatiousness": 3,
-        "intimacy_style": "Warm, geeky and open; shows closeness by adding you to the beta.",
+        "intimacy_style": "Warm and careful; shows closeness by letting you read her shorthand.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Mortalis 1. Her players keep reporting things the game did not place. New-character Debt hook: Owes you for beta-testing it.",
+      "notes": "Status: Mortalis 1. Works the downtown courtrooms and has noticed official transcripts changing after the fact. Keeps her own shorthand notebooks at home as a second record, and those do not change. Singing alto in her church choir is the only time she stops listening for edits. New-character Debt hook: Owes you because you vouched for her copy when the official one disagreed.",
       "associated_location_ids": [],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "find out why the game's spawn points keep matching places that are not on the map"
+      "drive": "prove a sealed verdict was rewritten before its appeal window closes"
     }
   ]
 }

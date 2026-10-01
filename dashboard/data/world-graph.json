@@ -2209,9 +2209,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Demon who trades porch gossip for small favors",
+        "subtype": "Retired school-cafeteria manager turned rooftop beekeeper; her hives hum in whichever year the bees last remember",
         "portrait": "",
-        "details": "Demon who trades porch gossip for small favors"
+        "details": "Retired school-cafeteria manager turned rooftop beekeeper; her hives hum in whichever year the bees last remember"
       },
       "position": {
         "x": 694,
@@ -2220,19 +2220,19 @@
     },
     {
       "data": {
-        "id": "npc_renata_kwan",
-        "label": "Renata Kwan",
+        "id": "npc_bettina_sorrells",
+        "label": "Bettina Sorrells",
         "kind": "npc",
         "hub_id": "hub_creighton_court",
         "faction": "Power",
         "status": "active",
-        "subtype": "Redevelopment contractor's community liaison, quietly on a Consilium retainer",
+        "subtype": "Redevelopment contractor's community liaison, secretly retained by the Consilium",
         "portrait": "",
-        "details": "Redevelopment contractor's community liaison, quietly on a Consilium retainer"
+        "details": "Redevelopment contractor's community liaison, secretly retained by the Consilium"
       },
       "position": {
-        "x": 691,
-        "y": 32
+        "x": 423,
+        "y": -32
       }
     },
     {
@@ -2243,9 +2243,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Power",
         "status": "active",
-        "subtype": "Fix-it man whose boiler repairs are also wards",
+        "subtype": "Night-bus operator whose route still stops at addresses on no current map; keeping those stops open is his working",
         "portrait": "",
-        "details": "Fix-it man whose boiler repairs are also wards"
+        "details": "Night-bus operator whose route still stops at addresses on no current map; keeping those stops open is his working"
       },
       "position": {
         "x": 767,
@@ -2288,8 +2288,8 @@
     },
     {
       "data": {
-        "id": "npc_samira_aziz",
-        "label": "Samira Aziz",
+        "id": "npc_nadira_haddad",
+        "label": "Nadira Haddad",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Wild",
@@ -2299,42 +2299,42 @@
         "details": "Jinn who keeps Hollywood's lost-and-found of things left on graves"
       },
       "position": {
-        "x": -624,
-        "y": 664
+        "x": -1252,
+        "y": -155
       }
     },
     {
       "data": {
-        "id": "npc_knuckles_okoro",
-        "label": "\"Knuckles\" Okoro",
+        "id": "npc_kelechi_nwosu",
+        "label": "Kelechi Nwosu",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Muscle for a demon-backed crew on the Belvidere corridor",
+        "subtype": "Tow-truck driver on the Belvidere corridor, bound by a demon's contract to haul away whatever it marks",
         "portrait": "",
-        "details": "Muscle for a demon-backed crew on the Belvidere corridor"
+        "details": "Tow-truck driver on the Belvidere corridor, bound by a demon's contract to haul away whatever it marks"
       },
       "position": {
-        "x": -335,
-        "y": 478
+        "x": -1280,
+        "y": -105
       }
     },
     {
       "data": {
-        "id": "npc_abernathy_vale",
-        "label": "Abernathy Vale",
+        "id": "npc_felix_marchbanks",
+        "label": "Felix Marchbanks",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Power",
         "status": "active",
-        "subtype": "Antiquarian whose Belvidere curio shop sells memorial relics",
+        "subtype": "Estate appraiser who catalogues the possessions of the dead and returns what belongs to families",
         "portrait": "",
-        "details": "Antiquarian whose Belvidere curio shop sells memorial relics"
+        "details": "Estate appraiser who catalogues the possessions of the dead and returns what belongs to families"
       },
       "position": {
-        "x": -421,
-        "y": 475
+        "x": -832,
+        "y": -460
       }
     },
     {
@@ -2390,19 +2390,19 @@
     },
     {
       "data": {
-        "id": "npc_amos_freeman",
-        "label": "Amos Freeman",
+        "id": "npc_loretta_banfield",
+        "label": "Loretta Banfield",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "A man who came back from a death the city marked as a martyrdom",
+        "subtype": "Gold Star mother who leads the volunteer guides at the War Memorial, and the only living person the Pallbearer speaks to",
         "portrait": "",
-        "details": "A man who came back from a death the city marked as a martyrdom"
+        "details": "Gold Star mother who leads the volunteer guides at the War Memorial, and the only living person the Pallbearer speaks to"
       },
       "position": {
-        "x": -560,
-        "y": 546
+        "x": -422,
+        "y": -204
       }
     },
     {
@@ -2430,9 +2430,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Longshoreman who hunts fae smugglers on the side",
+        "subtype": "Longshoreman and union shop steward organizing the terminal crews",
         "portrait": "",
-        "details": "Longshoreman who hunts fae smugglers on the side"
+        "details": "Longshoreman and union shop steward organizing the terminal crews"
       },
       "position": {
         "x": -1003,
@@ -2447,9 +2447,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Tug captain quietly arming dock crews",
+        "subtype": "Tug captain who runs the river's unofficial rescue and recovery",
         "portrait": "",
-        "details": "Tug captain quietly arming dock crews"
+        "details": "Tug captain who runs the river's unofficial rescue and recovery"
       },
       "position": {
         "x": -220,
@@ -2464,9 +2464,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Wild",
         "status": "active",
-        "subtype": "River fae of the fall line who drowns the careless",
+        "subtype": "River fae of the fall line who holds the city to its old promises",
         "portrait": "",
-        "details": "River fae of the fall line who drowns the careless"
+        "details": "River fae of the fall line who holds the city to its old promises"
       },
       "position": {
         "x": -1041,
@@ -2481,9 +2481,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Catfisherman who reads omens in the current",
+        "subtype": "Salvage diver, the only one who came back up from the Warwick wreck",
         "portrait": "",
-        "details": "Catfisherman who reads omens in the current"
+        "details": "Salvage diver, the only one who came back up from the Warwick wreck"
       },
       "position": {
         "x": -1041,
@@ -2492,19 +2492,19 @@
     },
     {
       "data": {
-        "id": "npc_queenie_marchetti",
-        "label": "Queenie Marchetti",
+        "id": "npc_odalys_ferreira",
+        "label": "Odalys Ferreira",
         "kind": "npc",
         "hub_id": "hub_river_docks",
         "faction": "Power",
         "status": "active",
-        "subtype": "Forges customs paperwork and arcane provenance",
+        "subtype": "Licensed customs broker who also stamps arcane provenance",
         "portrait": "",
-        "details": "Forges customs paperwork and arcane provenance"
+        "details": "Licensed customs broker who also stamps arcane provenance"
       },
       "position": {
-        "x": -907,
-        "y": 139
+        "x": -640,
+        "y": -824
       }
     },
     {
@@ -2532,9 +2532,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Night",
         "status": "active",
-        "subtype": "Vampire informant who feeds only on livestock off the barges",
+        "subtype": "Vampire bookkeeper who pays out the dock crews' Night money",
         "portrait": "",
-        "details": "Vampire informant who feeds only on livestock off the barges"
+        "details": "Vampire bookkeeper who pays out the dock crews' Night money"
       },
       "position": {
         "x": -802,
@@ -2583,9 +2583,9 @@
         "hub_id": "hub_the_valley",
         "faction": "Night",
         "status": "active",
-        "subtype": "Fixer who brokers ghost day-labor to contractors",
+        "subtype": "Ghoul who runs a free late-release ride service from the courts annex",
         "portrait": "",
-        "details": "Fixer who brokers ghost day-labor to contractors"
+        "details": "Ghoul who runs a free late-release ride service from the courts annex"
       },
       "position": {
         "x": -890,
@@ -2594,19 +2594,19 @@
     },
     {
       "data": {
-        "id": "npc_deuce_hayes",
-        "label": "Darnell \"Deuce\" Hayes",
+        "id": "npc_darnell_hayes",
+        "label": "Darnell Hayes",
         "kind": "npc",
         "hub_id": "hub_the_valley",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Burned-out hunter selling arcane pills",
+        "subtype": "Retired hunter who sells arcane pills off a motel-lot bench to pay for his mother's care",
         "portrait": "",
-        "details": "Burned-out hunter selling arcane pills"
+        "details": "Retired hunter who sells arcane pills off a motel-lot bench to pay for his mother's care"
       },
       "position": {
-        "x": -649,
-        "y": -1121
+        "x": -554,
+        "y": -126
       }
     },
     {
@@ -2634,9 +2634,9 @@
         "hub_id": "hub_the_valley",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Possessed pit bull who guards the viaduct camp",
+        "subtype": "Camp dog with a bound spirit looking out from behind her eyes; keeps the viaduct camp's gate",
         "portrait": "",
-        "details": "Possessed pit bull who guards the viaduct camp"
+        "details": "Camp dog with a bound spirit looking out from behind her eyes; keeps the viaduct camp's gate"
       },
       "position": {
         "x": -694,
@@ -2645,19 +2645,19 @@
     },
     {
       "data": {
-        "id": "npc_fiddler_rook",
-        "label": "Fiddler Rook",
+        "id": "npc_mavis_thorne",
+        "label": "Mavis Thorne",
         "kind": "npc",
         "hub_id": "hub_the_valley",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Fae violinist whose songs curse whoever does not pay; keeps a Debt ledger",
+        "subtype": "Fae who runs the strip's all-night laundromat; whatever spins in her dryers comes back changed",
         "portrait": "",
-        "details": "Fae violinist whose songs curse whoever does not pay; keeps a Debt ledger"
+        "details": "Fae who runs the strip's all-night laundromat; whatever spins in her dryers comes back changed"
       },
       "position": {
-        "x": -51,
-        "y": -334
+        "x": 49,
+        "y": -998
       }
     },
     {
@@ -2668,9 +2668,9 @@
         "hub_id": "hub_the_valley",
         "faction": "Power",
         "status": "active",
-        "subtype": "Immortal barfly at the Red Lantern who has seen every era of the strip",
+        "subtype": "The Red Lantern's elderly night clerk; a mage whose guest register hides anyone he signs in",
         "portrait": "",
-        "details": "Immortal barfly at the Red Lantern who has seen every era of the strip"
+        "details": "The Red Lantern's elderly night clerk; a mage whose guest register hides anyone he signs in"
       },
       "position": {
         "x": -453,
@@ -2730,36 +2730,36 @@
     },
     {
       "data": {
-        "id": "npc_persephone_doyle",
-        "label": "Persephone Doyle",
+        "id": "npc_ambrose_kettering",
+        "label": "Ambrose Kettering",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Demon whose old pact binds the street's fortunes",
+        "subtype": "Demon who holds the lease on the drained canal locks under Main Street and rents their dry chambers as vaults",
         "portrait": "",
-        "details": "Demon whose old pact binds the street's fortunes"
+        "details": "Demon who holds the lease on the drained canal locks under Main Street and rents their dry chambers as vaults"
       },
       "position": {
-        "x": 1253,
-        "y": -480
+        "x": 843,
+        "y": 138
       }
     },
     {
       "data": {
-        "id": "npc_velvet",
-        "label": "Velvet",
+        "id": "npc_bram_oduya",
+        "label": "Bram Oduya",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Fae doorman at a members-only club",
+        "subtype": "Fae coat-check attendant at a Main Street hotel ballroom who keeps a little of whatever you check with him",
         "portrait": "",
-        "details": "Fae doorman at a members-only club"
+        "details": "Fae coat-check attendant at a Main Street hotel ballroom who keeps a little of whatever you check with him"
       },
       "position": {
-        "x": 118,
-        "y": -397
+        "x": 1165,
+        "y": 6
       }
     },
     {
@@ -2781,19 +2781,19 @@
     },
     {
       "data": {
-        "id": "npc_lottie_sweeney",
-        "label": "Lottie Sweeney",
+        "id": "npc_ida_corliss",
+        "label": "Ida Corliss",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Night",
         "status": "active",
-        "subtype": "Ghost entertainer hired for bank galas",
+        "subtype": "Ghost elevator operator in a Main Street bank tower that has more floors than it should",
         "portrait": "",
-        "details": "Ghost entertainer hired for bank galas"
+        "details": "Ghost elevator operator in a Main Street bank tower that has more floors than it should"
       },
       "position": {
-        "x": 1144,
-        "y": -42
+        "x": 660,
+        "y": -890
       }
     },
     {
@@ -2815,19 +2815,19 @@
     },
     {
       "data": {
-        "id": "npc_shreya_desai",
-        "label": "Shreya Desai",
+        "id": "npc_imani_rowe",
+        "label": "Imani Rowe",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Runs an augmented-reality game across downtown that keeps finding real anomalies",
+        "subtype": "Court stenographer who keeps her own shorthand of transcripts that rewrite themselves",
         "portrait": "",
-        "details": "Runs an augmented-reality game across downtown that keeps finding real anomalies"
+        "details": "Court stenographer who keeps her own shorthand of transcripts that rewrite themselves"
       },
       "position": {
-        "x": 397,
-        "y": -788
+        "x": 299,
+        "y": -14
       }
     },
     {
@@ -4395,8 +4395,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_renata_kwan_hub_creighton_court",
-        "source": "npc_renata_kwan",
+        "id": "edge_npc_bettina_sorrells_hub_creighton_court",
+        "source": "npc_bettina_sorrells",
         "target": "hub_creighton_court",
         "type": "based_in",
         "label": "Based in",
@@ -4435,8 +4435,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_samira_aziz_hub_memorial_district",
-        "source": "npc_samira_aziz",
+        "id": "edge_npc_nadira_haddad_hub_memorial_district",
+        "source": "npc_nadira_haddad",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4445,8 +4445,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_knuckles_okoro_hub_memorial_district",
-        "source": "npc_knuckles_okoro",
+        "id": "edge_npc_kelechi_nwosu_hub_memorial_district",
+        "source": "npc_kelechi_nwosu",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4455,8 +4455,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_abernathy_vale_hub_memorial_district",
-        "source": "npc_abernathy_vale",
+        "id": "edge_npc_felix_marchbanks_hub_memorial_district",
+        "source": "npc_felix_marchbanks",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4495,8 +4495,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_amos_freeman_hub_memorial_district",
-        "source": "npc_amos_freeman",
+        "id": "edge_npc_loretta_banfield_hub_memorial_district",
+        "source": "npc_loretta_banfield",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4555,8 +4555,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_queenie_marchetti_hub_river_docks",
-        "source": "npc_queenie_marchetti",
+        "id": "edge_npc_odalys_ferreira_hub_river_docks",
+        "source": "npc_odalys_ferreira",
         "target": "hub_river_docks",
         "type": "based_in",
         "label": "Based in",
@@ -4615,8 +4615,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_deuce_hayes_hub_the_valley",
-        "source": "npc_deuce_hayes",
+        "id": "edge_npc_darnell_hayes_hub_the_valley",
+        "source": "npc_darnell_hayes",
         "target": "hub_the_valley",
         "type": "based_in",
         "label": "Based in",
@@ -4645,8 +4645,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_fiddler_rook_hub_the_valley",
-        "source": "npc_fiddler_rook",
+        "id": "edge_npc_mavis_thorne_hub_the_valley",
+        "source": "npc_mavis_thorne",
         "target": "hub_the_valley",
         "type": "based_in",
         "label": "Based in",
@@ -4695,8 +4695,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_persephone_doyle_hub_downtown",
-        "source": "npc_persephone_doyle",
+        "id": "edge_npc_ambrose_kettering_hub_downtown",
+        "source": "npc_ambrose_kettering",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4705,8 +4705,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_velvet_hub_downtown",
-        "source": "npc_velvet",
+        "id": "edge_npc_bram_oduya_hub_downtown",
+        "source": "npc_bram_oduya",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4725,8 +4725,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_lottie_sweeney_hub_downtown",
-        "source": "npc_lottie_sweeney",
+        "id": "edge_npc_ida_corliss_hub_downtown",
+        "source": "npc_ida_corliss",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4745,8 +4745,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_shreya_desai_hub_downtown",
-        "source": "npc_shreya_desai",
+        "id": "edge_npc_imani_rowe_hub_downtown",
+        "source": "npc_imani_rowe",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",

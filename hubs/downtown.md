@@ -55,20 +55,20 @@ location records.
 - **7-9:** You get where you're going but choose 1 from above.
 - **Miss:** The tunnels have their own agenda. You encounter something that doesn't want you there.
 
-### Climb the Ladder
-When you beg a favor from a Status-3 member of another Circle on Main Street, roll with Heart. On a hit they treat you as one of their own, resources included, once you bring them what they ask (their choice among: a Debt from a Status-2+ member of your Circle; a secret about one of their enemies; something precious).
-- **10+:** They want one.
-- **7-9:** They want two.
-- **Miss:** They want all three, and you take -1 ongoing with their Circle until you deliver.
+### A Seat at Their Table
+When you go hat in hand to a Status-3 power broker of another Circle on Main Street, roll with Heart. On a hit, they take up your cause as if you were family and put their people and money behind it, but first they set a price from this list: a Debt owed to you by a Status-2+ member of your own Circle; leverage on someone they count as an enemy; an object of real worth that you hand over for good.
+- **10+:** They name one.
+- **7-9:** They name two.
+- **Miss:** They name all three, and you take -1 ongoing with their Circle until the price is paid.
 
 ### Gala Season
-When you announce an exclusive party on Main Street, roll with Mind when time passes.
+When you send out invitations to a private evening on Main Street, roll with Mind when time passes.
 - **10+:** All three below.
 - **7-9:** Choose 1.
-  - A Status-3 NPC arrives bearing gifts.
-  - A Status-2 NPC offers you a Debt for an invitation.
-  - A Status-1 NPC of your choice is shut out of Main Street society for good.
-- **Miss:** The party draws exactly the wrong guests.
+  - A Status-3 NPC of your choice comes, with a present worth the room.
+  - A Status-2 NPC of your choice trades you a Debt for a place on the list.
+  - A Status-1 NPC of your choice is frozen out of Main Street society for good.
+- **Miss:** The night is remembered for the guests you least wanted.
 
 ---
 
@@ -84,12 +84,12 @@ Main Street is the old "Wall Street of the South," and the Federal Reserve Bank 
 |---|---|---|
 | `npc_the_ledger` | Power | The Ledger, an entity that tracks every transaction of consequence in the city. |
 | `npc_priya_vance` | Power | Priya Vance, artifact dealer who sets prices by games of chance. |
-| `npc_persephone_doyle` | Wild | Persephone Doyle, a demon whose old pact binds the street's fortunes. |
-| `npc_velvet` | Wild | Velvet, fae doorman at a members-only club. |
+| `npc_ambrose_kettering` | Wild | Ambrose Kettering, a demon who rents the drained canal locks under Main Street as vaults. |
+| `npc_bram_oduya` | Wild | Bram Oduya, a fae coat-check attendant who keeps a little of whatever you check with him. |
 | `npc_lucien_fairbanks` | Night | Lucien Fairbanks, vampire bartender who sips ambition, not blood. |
-| `npc_lottie_sweeney` | Night | Lottie Sweeney, ghost entertainer hired for bank galas. |
+| `npc_ida_corliss` | Night | Ida Corliss, a ghost elevator operator in a bank tower with more floors than it should have. |
 | `npc_kidane_haile` | Mortalis | Kidane Haile, busker at Kanawha Plaza whose songs predict the markets. |
-| `npc_shreya_desai` | Mortalis | Shreya Desai, runs an augmented-reality game across downtown that keeps finding real anomalies. |
+| `npc_imani_rowe` | Mortalis | Imani Rowe, a court stenographer whose shorthand keeps the transcripts that rewrite themselves honest. |
 
 A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
 
