@@ -140,3 +140,14 @@ test('every hub Residents entry is an NPC in that hub carrying a New-character D
   }
   assert.ok(checked >= 40, `only ${checked} residents checked`);
 });
+
+test('Richmond Circle moves exist for all four Circles and are MC moves, not rollable moves', async () => {
+  const text = await readFile(new URL('../../mc-reference/reference/mc-moves.md', import.meta.url), 'utf8');
+  const section = text.slice(text.indexOf('## Richmond Circle Moves'), text.indexOf('## Instinct Die'));
+  for (const circle of ['Mortalis', 'Night', 'Power', 'Wild']) {
+    const block = section.slice(section.indexOf(`### Richmond ${circle} Moves`));
+    assert.ok(section.includes(`### Richmond ${circle} Moves`), circle);
+    assert.ok((block.match(/^- /gm) || []).length >= 4, `${circle} needs 4 moves`);
+  }
+  assert.doesNotMatch(section, /roll with/i);
+});

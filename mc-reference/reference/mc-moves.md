@@ -25,6 +25,35 @@
 | Power | Impose a cost for the greater good; Mystically foreshadow a conflict or challenge; Act in opposition to chaos or change; Snap up magical resources vulnerable or exposed |
 | Wild | Challenge the PCs with alien expectations and traditions; Offer extraordinary assistance for a sticky price; Pull something from one realm into another; Escalate conflict for reasons mysterious or opaque |
 
+## Richmond Circle Moves
+
+City-specific moves you make on behalf of a Circle, layered on the generic Circle moves above. Each
+one serves the central conflict: the Overwrite. Use them when a Circle's NPCs or factions act.
+
+### Richmond Mortalis Moves
+- Produce a record (a deed, a police file, a census line) that contradicts what everyone remembers.
+- Close ranks around a neighborhood institution against an outsider, calling in Debts on their allies.
+- Let a mortal official see something they can't unsee, and make them choose who to tell.
+- Push the redevelopment machine forward on schedule, no matter who it costs.
+
+### Richmond Night Moves
+- Redraw a feeding territory overnight and make someone pay the toll to cross it.
+- Use the canal tunnels to put someone where they should not be able to be.
+- Offer protection from the day world in exchange for an unreasonable future favor.
+- Let an old grudge between elders land on their lowest-Status people.
+
+### Richmond Power Moves
+- Convene a closed meeting and leave someone important uninvited.
+- Claim jurisdiction over an Overwrite site with paperwork, wards, or academic standing.
+- Reveal that a breakthrough was engineered, not discovered.
+- Trade knowledge for a Debt that will come due in the next crisis.
+
+### Richmond Wild Moves
+- Open a door that used to lead somewhere safe onto somewhere wrong.
+- Have something from "the prior version of the city" step through and ask for help.
+- Let art, music, or graffiti rewrite what a witness remembers.
+- Bring a bargain made in good faith due on fae terms.
+
 ## Instinct Die
 
 Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a different color from the regular die). If a roll results in a failure (6 or lower) AND the Instinct Die shows a 1, it triggers an Extreme Failure unique to each playbook.
