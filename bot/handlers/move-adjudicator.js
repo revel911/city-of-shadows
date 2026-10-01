@@ -129,7 +129,7 @@ export function extractRollableCharacterMoves(sheet = '') {
   return candidates;
 }
 
-export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sheet = '' } = {}) {
+export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sheet = '', hubMoves = [] } = {}) {
   const basic = Object.entries(BASIC_MOVE_SEMANTICS).map(([move, semantics]) => {
     const source = BASIC_MOVE_MODIFIERS[move];
     return [
@@ -145,6 +145,17 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
         `- ${move.name} [${move.modifier_key || move.circle || move.modifier_type}]: ${move.trigger}`
       ).join('\n')
     : '(none found)';
+  const sheetNames = new Set(characterMoves.map(move => normalizedMove(move.name)));
+  const hubRollable = hubMoves.filter(move => move.rollable && !sheetNames.has(normalizedMove(move.name)));
+  const hubLines = hubRollable.length
+    ? [
+        '',
+        'HUB MOVES (only when the current scene is inside that hub; character moves take precedence)',
+        hubRollable.map(move =>
+          `- ${move.name} [${move.modifier_key || move.circle}] (${move.hub_id}): ${move.trigger}`
+        ).join('\n'),
+      ]
+    : [];
   return [
     'Decide the first Urban Shadows move triggered on this turn before a narrator writes any outcome.',
     'Return exactly one JSON object and no Markdown.',
@@ -174,6 +185,7 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
     '',
     'ACTIVE CHARACTER ROLLABLE MOVES',
     custom,
+    ...hubLines,
     '',
     'IMMEDIATE PRIOR FICTION',
     String(lastAssistant || '').slice(-2400) || '(none)',
@@ -224,7 +236,7 @@ function jsonObjectFromText(text) {
   return null;
 }
 
-export function parseMoveAdjudication(text, { sheet = '' } = {}) {
+export function parseMoveAdjudication(text, { sheet = '', hubMoves = [] } = {}) {
   const raw = jsonObjectFromText(text);
   const decision = String(raw?.decision || '').trim().toLowerCase();
   if (decision === 'none') {
@@ -244,7 +256,8 @@ export function parseMoveAdjudication(text, { sheet = '' } = {}) {
   const requestedMove = normalizedMove(raw.move);
   const basicKey = Object.keys(BASIC_MOVE_MODIFIERS).find(move => move === requestedMove);
   const custom = extractRollableCharacterMoves(sheet)
-    .find(move => normalizedMove(move.name) === requestedMove);
+    .find(move => normalizedMove(move.name) === requestedMove)
+    || hubMoves.find(move => move.rollable && normalizedMove(move.name) === requestedMove);
   if (!basicKey && !custom) return null;
 
   const source = basicKey ? BASIC_MOVE_MODIFIERS[basicKey] : custom;

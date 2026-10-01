@@ -161,3 +161,41 @@ test('repeated clarification questions compare without punctuation or case', () 
   );
   assert.equal(sameClarificationQuestion('Which person?', 'What do you want to learn?'), false);
 });
+
+const hubMoves = [
+  { hub_id: 'hub_creighton_court', name: 'Community Network', trigger: 'When you need help navigating bureaucracy.', modifier_type: 'stat', modifier_key: 'Heart', circle: null, rollable: true, text: '' },
+  { hub_id: 'hub_shockoe_bottom', name: 'Come Out of the Woodwork', trigger: 'When you contact the old networks, roll with Mortalis.', modifier_type: 'circle', modifier_key: null, circle: 'Mortalis', rollable: true, text: '' },
+  { hub_id: 'hub_x', name: 'An Event For All Seasons', trigger: 'When you announce a party', modifier_type: 'stat', modifier_key: 'Mind', circle: null, rollable: false, text: '' },
+];
+
+test('hub moves are listed for the router with their hub, and unrollable ones are omitted', () => {
+  const prompt = buildMoveAdjudicationPrompt({ playerText: 'x', hubMoves });
+  assert.match(prompt, /HUB MOVES/);
+  assert.match(prompt, /Community Network \[Heart\] \(hub_creighton_court\)/);
+  assert.doesNotMatch(prompt, /An Event For All Seasons/);
+});
+
+test('a hub-move roll parses into a normal expectation', () => {
+  const stat = parseMoveAdjudication('{"decision":"roll","move":"Community Network","circle":null,"creditor_status":null,"reason":"asks the tenants council"}', { hubMoves });
+  assert.equal(stat.expectation.move, 'Community Network');
+  assert.equal(stat.expectation.modifier_type, 'stat');
+  assert.equal(stat.expectation.modifier_key, 'Heart');
+  const circle = parseMoveAdjudication('{"decision":"roll","move":"Come Out of the Woodwork","circle":null,"creditor_status":null,"reason":"r"}', { hubMoves });
+  assert.equal(circle.expectation.circle, 'Mortalis');
+});
+
+test('unrollable hub moves and unknown names are still rejected', () => {
+  assert.equal(parseMoveAdjudication('{"decision":"roll","move":"An Event For All Seasons","reason":"r"}', { hubMoves }), null);
+  assert.equal(parseMoveAdjudication('{"decision":"roll","move":"Invented Move","reason":"r"}', { hubMoves }), null);
+});
+
+test('a sheet move beats a hub move with the same name', () => {
+  const sheet = '## MOVES\n- **Community Network** — when you rally neighbors, roll with Spirit\n';
+  const result = parseMoveAdjudication('{"decision":"roll","move":"Community Network","reason":"r"}', { sheet, hubMoves });
+  assert.equal(result.expectation.modifier_key, 'Spirit');
+});
+
+test('existing callers without hubMoves behave exactly as before', () => {
+  const before = parseMoveAdjudication('{"decision":"roll","move":"Community Network","reason":"r"}');
+  assert.equal(before, null);
+});
