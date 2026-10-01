@@ -100,6 +100,28 @@ The city sits on overlapping versions of itself. Sometimes they bleed together. 
 
 The MC should let this surface slowly. Discrepancies in the Public Events Log. NPCs who contradict each other on facts about the past. A location that appears different in two players' accounts of visiting it. The Overwrite is not a villain — it is a condition.
 
+### Then
+
+Richmond has rewritten itself before, and each time the rewrite was done by people with the power to do it. The fire of 1811 and the Evacuation Fire of 1865 burned the old city down to the ground it would be rebuilt on. War, defeat and Reconstruction changed who owned the streets, who was named in the record, and which stories got a monument. Urban renewal and highway building were the same act with a plan attached. The Downtown Expressway and the interstate were cut through Jackson Ward, one of the most prosperous Black business and cultural districts in the country, taking homes, shops, churches and a community that was never put back together. That was real harm done to real families, and the city still lives with it. These are the precedents the Overwrite builds on: a city that has always decided what to keep, what to bury, and who gets to remember.
+
+### Now
+
+Today the symptoms are small, public and easy to deny. One line each:
+
+- Across the city (`arc-012`): street signs shift, buildings appear and vanish, legal and academic records contradict themselves, and old industrial work-shifts replay on Oregon Hill.
+- Creighton Court (`arc-013`): demolished buildings still cast shadows, and the pantry intake keeps logging names that match no current housing record.
+- Downtown (`arc-011`, `arc-014`): sealed canal tunnels have been sealed further, and a nameless ghost is lost in a city where identities and records slide.
+- Downtown at night: a contract reads differently from the week before, and staff keep logging after-hours traffic that no known network claims.
+- The University: the ley line under Monroe Park is running off its usual tempo, and the people who track it are watching who is still invited to which meetings.
+
+### To Come
+
+What follows depends on which Circle ends up holding the pen. None of these has happened, and any of them might not.
+
+- If Power claims it, the Overwrite could become an institution: licensed, catalogued and administered by whoever holds the credentials. The city might become more orderly and less honest, with an official version that no one is allowed to dispute.
+- If Night hides in it, the Overwrite could become cover: elders editing their own pasts, and the city's blood debts quietly rewritten out of the record. The streets might stay calm while those who remember become the only witnesses left.
+- If Wild opens it, the Overwrite could become a doorway: earlier drafts of Richmond walking into the present, for better and for worse. Some of what comes through might be a second chance, and some might be hungry.
+
 ---
 
 ## The Hubs
