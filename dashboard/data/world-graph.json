@@ -1870,6 +1870,142 @@
     },
     {
       "data": {
+        "id": "npc_lorenzo_pugh",
+        "label": "Deacon Lorenzo Pugh",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Runs the Creighton tenant patrol; a deacon who organizes the night shifts and keeps the roster in his head",
+        "portrait": "",
+        "details": "Runs the Creighton tenant patrol; a deacon who organizes the night shifts and keeps the roster in his head"
+      },
+      "position": {
+        "x": -564,
+        "y": 670
+      }
+    },
+    {
+      "data": {
+        "id": "npc_marisol_echevarria",
+        "label": "Marisol Echevarría",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Tenant-council secretary; a changeling raised mortal who doesn't fully know it",
+        "portrait": "",
+        "details": "Tenant-council secretary; a changeling raised mortal who doesn't fully know it"
+      },
+      "position": {
+        "x": -392,
+        "y": 329
+      }
+    },
+    {
+      "data": {
+        "id": "npc_scrapheap",
+        "label": "Scrapheap",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Spirit of the Nine Mile Road scrap lot; hoards what people throw away",
+        "portrait": "",
+        "details": "Spirit of the Nine Mile Road scrap lot; hoards what people throw away"
+      },
+      "position": {
+        "x": -598,
+        "y": 738
+      }
+    },
+    {
+      "data": {
+        "id": "npc_miss_odessa",
+        "label": "Miss Odessa",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Demon who trades porch gossip for small favors",
+        "portrait": "",
+        "details": "Demon who trades porch gossip for small favors"
+      },
+      "position": {
+        "x": 105,
+        "y": 238
+      }
+    },
+    {
+      "data": {
+        "id": "npc_renata_kwan",
+        "label": "Renata Kwan",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Redevelopment contractor's community liaison, quietly on a Consilium retainer",
+        "portrait": "",
+        "details": "Redevelopment contractor's community liaison, quietly on a Consilium retainer"
+      },
+      "position": {
+        "x": 102,
+        "y": 301
+      }
+    },
+    {
+      "data": {
+        "id": "npc_tobias_mensah",
+        "label": "Tobias Mensah",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Fix-it man whose boiler repairs are also wards",
+        "portrait": "",
+        "details": "Fix-it man whose boiler repairs are also wards"
+      },
+      "position": {
+        "x": 178,
+        "y": 290
+      }
+    },
+    {
+      "data": {
+        "id": "npc_little_andre",
+        "label": "Little Andre",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "A ghost only children and the very old can see",
+        "portrait": "",
+        "details": "A ghost only children and the very old can see"
+      },
+      "position": {
+        "x": 523,
+        "y": 650
+      }
+    },
+    {
+      "data": {
+        "id": "npc_midnight_truck",
+        "label": "The Midnight Truck",
+        "kind": "npc",
+        "hub_id": "hub_creighton_court",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "An urban legend: an ice-cream truck that runs after 2am",
+        "portrait": "",
+        "details": "An urban legend: an ice-cream truck that runs after 2am"
+      },
+      "position": {
+        "x": 280,
+        "y": 1286
+      }
+    },
+    {
+      "data": {
         "id": "jacob-boone",
         "label": "Jacob Boone",
         "kind": "pc",
@@ -3226,6 +3362,86 @@
         "id": "edge_npc_aldridge_hub_oregon_hill",
         "source": "npc_aldridge",
         "target": "hub_oregon_hill",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_lorenzo_pugh_hub_creighton_court",
+        "source": "npc_lorenzo_pugh",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marisol_echevarria_hub_creighton_court",
+        "source": "npc_marisol_echevarria",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_scrapheap_hub_creighton_court",
+        "source": "npc_scrapheap",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_miss_odessa_hub_creighton_court",
+        "source": "npc_miss_odessa",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_renata_kwan_hub_creighton_court",
+        "source": "npc_renata_kwan",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_tobias_mensah_hub_creighton_court",
+        "source": "npc_tobias_mensah",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_little_andre_hub_creighton_court",
+        "source": "npc_little_andre",
+        "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_midnight_truck_hub_creighton_court",
+        "source": "npc_midnight_truck",
+        "target": "hub_creighton_court",
         "type": "based_in",
         "label": "Based in",
         "layer": "structural"

@@ -56,6 +56,44 @@ location records.
 - **7-9:** You learn something useful but choose 1 from above.
 - **Miss:** The memories are painful, and sharing them opens old wounds or creates new problems.
 
+### Pull Up, Right Now
+When you call the Creighton tenant patrol to come help you immediately, roll with Mortalis.
+- **10+:** They come with numbers. Choose 1 complication below.
+- **7-9:** They come. Choose 2 complications below.
+  - They escalate past what you wanted, loudly.
+  - They show up unready for what is actually here.
+  - They want to see you go first before they commit.
+- **Miss:** The patrol starts asking whether *you* are the problem on their block.
+
+### The Lot Has Everything
+When you work the weekend night market in the Nine Mile Road lot for something rare or uncanny, roll with Mind.
+- **10+:** A vendor has something close to it and wants a fair trade, and they have badly underpriced it. Take it cheap.
+- **7-9:** A vendor has something close to it, for a trade of equal value.
+- **Miss:** A local crew notices what you are hunting for and steps in to ask why.
+
+---
+
+## Residents
+
+| ID | Circle | Resident |
+|---|---|---|
+| `npc_lorenzo_pugh` | Mortalis | Deacon Lorenzo Pugh runs the tenant patrol. |
+| `npc_marisol_echevarria` | Mortalis | Marisol Echevarría, tenant-council secretary, a changeling raised mortal who doesn't fully know it. |
+| `npc_scrapheap` | Wild | Scrapheap, spirit of the Nine Mile Road scrap lot, hoards what people throw away. |
+| `npc_miss_odessa` | Wild | Miss Odessa, a demon who trades porch gossip for small favors. |
+| `npc_renata_kwan` | Power | Renata Kwan, redevelopment liaison, quietly on a Consilium retainer. |
+| `npc_tobias_mensah` | Power | Tobias Mensah, fix-it man whose boiler repairs are also wards. |
+| `npc_little_andre` | Night | Little Andre, a ghost only children and the very old can see. |
+| `npc_midnight_truck` | Night | The Midnight Truck, an urban legend: an ice-cream truck that runs after 2am. |
+
+A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
+
+---
+
+## Adaptation Notes
+
+The Block layer stresses that the community holds its own ground, and every Circle is nibbling at the edges. No one here is neutral. Residents are people with plans, not victims or props.
+
 ---
 
 ## Threats & Complications

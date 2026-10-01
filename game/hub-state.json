@@ -28,9 +28,17 @@
     {
       "condition": "Temporal displacement continues to surface through ordinary institutional routines. The East End Family Resource Center's pantry intake keeps logging names and vouchers that don't match current RRHA records, and Sister Catherine Burke's separate ledger for them has grown as she cross-checks the entries against older parish records.",
       "id": "hub_creighton_court",
-      "revision": 3,
-      "last_updated": "2026-09-23",
-      "updated_by_session": "keeper_city_turn_20260923192346"
+      "revision": 4,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "rumors": [
+        "A fae noble is offering a reward for a stolen egg nobody will describe.",
+        "Somebody at the free clinic heals by touch, but only after dark.",
+        "A lowrider on Nine Mile has been seen driving itself.",
+        "A hunter is asking around for an apprentice who knows the block.",
+        "The Midnight Truck has started stopping at a house it never stopped at before.",
+        "A psychic on the tenant council blames a Night crew for the missing kids' dreams."
+      ]
     }
   ]
 }
