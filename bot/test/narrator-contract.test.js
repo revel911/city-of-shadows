@@ -112,8 +112,31 @@ test('MC instructions carry the dangerous-content principles', async () => {
 test('creation phase 11 offers a hub resident Debt to new characters only', async () => {
   const creation = await readFile(new URL('../../mc-reference/character-creation.md', import.meta.url), 'utf8');
   const phase = creation.slice(creation.indexOf('## Phase 11'), creation.indexOf('## Phase 12'));
-  assert.match(phase, /## Residents/);
+  assert.match(phase, /hub_id/);
+  assert.match(phase, /New-character Debt hook/);
+  assert.doesNotMatch(phase, /## Residents/);
   assert.match(phase, /owes? (?:the character|you) a Debt/i);
   assert.match(phase, /debt_patch/);
   assert.match(phase, /never (?:applied|offered) to existing characters/i);
+});
+
+test('every hub Residents entry is an NPC in that hub carrying a New-character Debt hook', async () => {
+  const hubs = JSON.parse(await readFile(new URL('../../hubs/index.json', import.meta.url), 'utf8'));
+  const { npcs } = JSON.parse(await readFile(new URL('../../game/npcs.json', import.meta.url), 'utf8'));
+  let checked = 0;
+  for (const hub of hubs) {
+    const markdown = await readFile(new URL(`../../hubs/${hub.file}`, import.meta.url), 'utf8');
+    const start = markdown.search(/^## Residents\s*$/m);
+    if (start < 0) continue;
+    const rest = markdown.slice(start + 1);
+    const section = rest.slice(0, rest.search(/^## /m) > 0 ? rest.search(/^## /m) : rest.length);
+    for (const [, id] of section.matchAll(/^\|\s*`(npc_[a-z0-9_]+)`/gm)) {
+      const npc = npcs.find(n => n.id === id);
+      assert.ok(npc, `${hub.file} lists missing NPC ${id}`);
+      assert.equal(npc.hub_id, hub.id, id);
+      assert.match(npc.notes, /New-character Debt hook:/, id);
+      checked += 1;
+    }
+  }
+  assert.ok(checked >= 40, `only ${checked} residents checked`);
 });
