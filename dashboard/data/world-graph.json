@@ -3061,9 +3061,9 @@
         "hub_id": "hub_capitol_city_hall",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Changeling page in the General Assembly, a college senior who carries messages between rooms, and sometimes the wrong ones",
+        "subtype": "Changeling committee runner in the General Assembly, an adult session aide who carries messages between rooms, and sometimes the wrong ones",
         "portrait": "",
-        "details": "Changeling page in the General Assembly, a college senior who carries messages between rooms, and sometimes the wrong ones"
+        "details": "Changeling committee runner in the General Assembly, an adult session aide who carries messages between rooms, and sometimes the wrong ones"
       },
       "position": {
         "x": -525,
@@ -3078,7 +3078,7 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "Power",
-        "details": "The city's Awakened mages, organized as a loose Consilium with Dr. Sebastian Olave as its unofficial Hierarch. They hide behind university and hospital cover, and they want a formal claim over investigating the Overwrite before anyone else makes one. The faction is fracturing: junior members feel shut out of the recent closed meetings."
+        "details": "The city's Awakened mages, organized as a loose Consilium. They hide behind university and hospital cover, and they want a formal claim over investigating the Overwrite before anyone else makes one. The faction is fracturing: junior members feel shut out of the recent closed meetings."
       },
       "position": {
         "x": 1420,
@@ -3093,7 +3093,7 @@
         "hub_id": "hub_university",
         "status": "active",
         "subtype": "Power",
-        "details": "The Richmond reach of the Silver Ladder, the order that believes the Awakened should guide the sleeping world. It works through council seats and procedure, favors order and hierarchy, and holds its position rather than risking it. Its senior figure is Councilor Ingrid Voss."
+        "details": "The Richmond reach of the Silver Ladder, the order that believes the Awakened should guide the sleeping world. It works through council seats and procedure, favors order and hierarchy, and holds its position rather than risking it."
       },
       "position": {
         "x": 1286,
@@ -3108,7 +3108,7 @@
         "hub_id": "hub_downtown",
         "status": "active",
         "subtype": "Night",
-        "details": "The Kindred who keep the old canal tunnels and quietly own a good share of Downtown through legitimate business fronts. They want stable feeding grounds, which gentrification in the Bottom has disrupted. Aldric Serrano, their patriarch, wants to be left alone. Serrano and Mireille Fontenot have not spoken in six months, and the strain shows as territory tension."
+        "details": "The Kindred who keep the old canal tunnels and quietly own a good share of Downtown through legitimate business fronts. They want stable feeding grounds, which gentrification in the Bottom has disrupted, and a cold standoff with rival Kindred there shows up as territory tension."
       },
       "position": {
         "x": 86,
@@ -3138,7 +3138,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "Mortalis",
-        "details": "A small, loose Mortalis circle inside city planning and the local historical societies: three core members and a dozen contacts. They know about the Overwrite and believe it must be managed rather than stopped, cataloguing discrepancies instead of correcting them. A recent easement delays development at the Old Market Site for eighteen months, with no reason given."
+        "details": "A small, loose Mortalis circle working through the city planning office and local historical societies. Few people outside it could name a member. It recently filed an easement that delays development at the Old Market Site for eighteen months, with no reason given."
       },
       "position": {
         "x": -392,
@@ -3153,7 +3153,7 @@
         "hub_id": "hub_shockoe_bottom",
         "status": "active",
         "subtype": "Mortalis",
-        "details": "A family business with supernatural reach, anchored by Celestine Morrow with Declan as the bagman. Neutral between Night and Mortalis after three generations of doing business with both; pragmatic, and survives by being useful to everyone."
+        "details": "A family business with supernatural reach, three generations deep in the Bottom. Neutral between Night and Mortalis after decades of doing business with both; pragmatic, and survives by being useful to everyone."
       },
       "position": {
         "x": 91,
@@ -3183,7 +3183,7 @@
         "hub_id": "hub_memorial_district",
         "status": "active",
         "subtype": "Night",
-        "details": "An uneasy alliance of the bluff's caretakers of the dead: a Kindred elder who claims the cemetery as neutral ground, the crematory's keeper of unclaimed names, volunteer memorial guides and a stonemason who recuts old lettering. They agree that names must be kept right and disagree on whose version of the past counts, so the alliance is steady but touchy while names on the wall and in the graves keep changing."
+        "details": "An uneasy alliance of the bluff's caretakers of the dead, Kindred and mortal alike, who look after the cemetery, the crematory's records, the memorial wall and its lettering. They agree that names must be kept right and disagree on whose version of the past counts, so the alliance is steady but touchy while names on the wall and in the graves keep changing."
       },
       "position": {
         "x": -90,
@@ -3197,8 +3197,8 @@
         "kind": "faction",
         "hub_id": "hub_river_docks",
         "status": "active",
-        "subtype": "Wild",
-        "details": "The working river's own web: terminal and rail crews under their shop steward, the tug captain who runs unofficial rescue, a customs broker, a harbor dispatcher and the Night bookkeeper who pays the crews. They move cargo by day and quieter goods by night, answer to the tide, and trade favors for a price. Recurring friction comes over who stamps the paperwork."
+        "subtype": "Mortalis",
+        "details": "The working river's own web: terminal and rail crews, tug hands, the people who stamp the paperwork and the Night money that pays the late shifts. They move cargo by day and quieter goods by night, answer to the tide, and trade favors for a price. Recurring friction comes over who stamps the paperwork."
       },
       "position": {
         "x": -102,
@@ -3213,7 +3213,7 @@
         "hub_id": "hub_the_valley",
         "status": "active",
         "subtype": "Mortalis",
-        "details": "The Valley's own safety net: a church van, a meal line, a free ride service for late releases, a bike stand on the motel lots and a court interpreter who helps off the clock. Everyone in it has an angle, and the group works to keep people from being moved around any more than they already are. It strains against the annex and holding center, which would prefer people stay unseen."
+        "details": "The Valley's own safety net: a church van, a meal line, a free ride service for late releases, a bike stand on the motel lots and off-the-clock interpreting at the courts. Everyone in it has an angle, and the group works to keep people from being moved around any more than they already are. It strains against the annex and holding center, which would prefer people stay unseen."
       },
       "position": {
         "x": -1288,
@@ -3228,7 +3228,7 @@
         "hub_id": "hub_capitol_city_hall",
         "status": "active",
         "subtype": "Mortalis",
-        "details": "The permanent staff of Richmond's government: aides, stenographers and records clerks, who do the work in the open and clock in every day. Informal, practical and gossip-wired, they know where every file lives and who owes whom. They want the machinery to keep running, even as the records change between sessions and only the stenographers notice."
+        "details": "The permanent staff of Richmond's government, aides, stenographers and records clerks, together with the go-betweens who work the gap between that staff and everyone else. Informal, practical and gossip-wired, they know where every file lives and who owes whom, and anyone who needs a door opened can buy an introduction, paid in Debt. They want the machinery to keep running, even as the records change between sessions and only the people who keep the originals notice."
       },
       "position": {
         "x": -477,
@@ -5592,6 +5592,16 @@
       "data": {
         "id": "edge_npc_ambrose_calder_faction_city_hall_clerks",
         "source": "npc_ambrose_calder",
+        "target": "faction_city_hall_clerks",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_calloway_fenn_faction_city_hall_clerks",
+        "source": "npc_calloway_fenn",
         "target": "faction_city_hall_clerks",
         "type": "member",
         "label": "Member of",
