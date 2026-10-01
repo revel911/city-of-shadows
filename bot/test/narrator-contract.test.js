@@ -108,3 +108,12 @@ test('MC instructions carry the dangerous-content principles', async () => {
     assert.match(section, rule);
   }
 });
+
+test('creation phase 11 offers a hub resident Debt to new characters only', async () => {
+  const creation = await readFile(new URL('../../mc-reference/character-creation.md', import.meta.url), 'utf8');
+  const phase = creation.slice(creation.indexOf('## Phase 11'), creation.indexOf('## Phase 12'));
+  assert.match(phase, /## Residents/);
+  assert.match(phase, /owes? (?:the character|you) a Debt/i);
+  assert.match(phase, /debt_patch/);
+  assert.match(phase, /never (?:applied|offered) to existing characters/i);
+});

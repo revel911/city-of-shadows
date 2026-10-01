@@ -284,6 +284,12 @@ Walk advance list using `reference/rules.md` advancement rules. For each advance
 
 **Where it goes:** Sheet `GEAR & RESOURCES` section; first handoff `tension_threads` if appropriate.
 
+**Resident Debt (optional):** If a chosen hub has a `## Residents` section, offer it: "One person
+there owes you a Debt. Pick one and tell me why." Use the hook on the resident's line as a starting
+point, but let the player's answer decide. Record it as one `debt_patch` (the resident owes the character
+1 Debt), putting the player's reason in the Debt's note. Resident Debts are part of new-character
+creation only and are never applied to existing characters.
+
 ---
 
 ## Phase 12 — Review
