@@ -397,6 +397,114 @@ You've claimed an area of the city as your own. By default, your territory cover
 
 ---
 
+## The Scholar
+
+A mortal middleman who makes a living on the border between the ordinary world and the supernatural one. You find the relics, tomes and curiosities that monsters are too busy to trade, and you get them to the people who will pay. You keep a few of the best pieces for yourself, and you stay one step ahead of what you did to get them.
+
+**ID:** the-scholar
+
+> **WoD:** Suggested: a relic broker in Hunter: The Vigil's orbit, either **Aegis Kai Doru** (relic guardians) or the **Ascending Ones**, taken under the off-natural rule in Phase 5. The Mysterium are frequent patrons and rivals. Any other extension, or none, is open.
+
+### Starting Profile
+
+- **Circle:** Mortalis
+- **Stats:** Blood -2, Heart 1, Mind 2, Spirit 0 (add 1 to one stat, max +3)
+- **Circle ratings:** Mortalis 1, Night 0, Power 1, Wild -1 (add 1 to one)
+- **Circle Status:** Mortalis 1, Night 0, Power 0, Wild 0
+- **Demeanor options:** charming, cryptic, shifty, smug
+- **Gear:** an expensive flat, a midsized car, a smartphone, reading glasses, and your arcane messenger bag (see Your Bag).
+- **Starting Debts:**
+  - Someone relies on you for relics and arcane items. They owe you two Debts.
+  - Someone has been spying on a member of your arcane network for you, hunting for weaknesses. You owe them a Debt.
+  - You swindled someone out of something rare they can never replace. You owe them three Debts.
+- **Intro questions:**
+  - How long have you been in the city?
+  - Who taught you the arcane trade, and why did you betray them?
+  - Who in the city do you love, even though they are uneasy about your work?
+  - Which Status-3 member of another Circle has turned out to be an unexpected patron?
+  - Which arcane relic have you been chasing for years?
+- **Let It Out options:** reveal a brief magical defense you set up before the scene; draw the notice of a powerful NPC who respects your talents; get yourself (and guests) invited to an exclusive event or venue; make a Status-3 NPC admit to a long search for an arcane object or relic.
+
+### Special Mechanic — Your Bag, Your Collection, Your Arcane Network
+
+**Your Bag.** You own a beloved messenger bag or attache case and are almost never without it; assume you have it unless the MC says otherwise. Choose one type:
+
+- **Lucky Bag:** if someone searches the bag without your permission, the item they want is not there; it turns up with a colleague in your arcane network.
+- **Unassuming Bag:** the bag hides every sign an arcane item gives off. An item you deliberately place inside cannot be detected, even by strong magic.
+- **Arcane Bag:** the bag has its own agenda. When you are in a desperate situation, reach in and the MC tells you what you find.
+
+Lucky and Unassuming bags only work on items you put in on purpose. The Arcane Bag only helps when things are truly desperate.
+
+**Your Collection.** You hold a private hoard of old tomes and arcane objects gathered through years of shady dealing. Tell the MC about your most prized item, how it works, and what you did to get it. Make both exciting; the MC may write a custom move for the item.
+
+- **Collection Research** — when you retreat to your private collection to research an occult phenomenon, object or threat, roll with Mind. It takes a few hours alone with the collection, but you do not have to wait for time to pass. On a hit, the MC tells you what you learn about your subject. On a 10+, choose 2. On a 7-9, choose 1. On a miss, you learn something terrible: one object in your collection is not what it seems.
+  - you also uncover a new weakness or vulnerability
+  - you also discover a new resource or potential ally
+  - you don't draw attention with your intrusive inquiries (if you skip this, someone takes an interest in what you were asking)
+
+**Your Arcane Network.** A loose circle of knowledgeable mortals who trade in relics, tomes and arcane items. Some dealings are open, others are backroom business. They don't trust you and you don't trust them. Choose three features: codes and signals, burner phones, online message boards, supernatural bodyguards, ritual meetings, secret drops, a monthly marketplace, secluded safehouses, a neutral appraiser, law enforcement on the payroll. Decide with the MC why the network needs secrecy: fear of supernatural groups taking the goods back, outside enemies, or each other.
+
+Contacts (at least these; the MC and you may add more at any time):
+
+1. Marguerite Vane, estate-sale auctioneer with a talent for provenance
+2. Tobias "Lamplight" Okonkwo-Reyes, night-market fixer and courier
+3. Dr. Ilse Brandvold, conservator at a private museum
+4. Sister Cordelia Hask, a retired nun who brokers confiscated reliquaries
+5. Ambrose Tenney, rare-book dealer with a back room
+6. The Halloran Twins, appraisers who finish each other's valuations
+7. Inspector Rowan Pike, a detective who looks the other way for a cut
+8. Mrs. Odalys Fontaine, pawnbroker and keeper of the monthly marketplace
+9. Lucian Marsh, a disgraced antiquities professor, now a bodyguard-for-hire
+10. Dev Anand Pillai, an auction-house archivist who sells catalogues before they are published
+
+Fill in three names, with the MC's help: **whose collection do you covet** (their holdings far outstrip yours and you want all of it, not a piece), **who keeps things safe for you** (a trusted holder, not necessarily a friend; decide what they get for it), and **who suspects you're scamming them** (they may be wrong).
+
+The network adds these rules, written as moves so they sit on the sheet:
+
+- **Arcane Network** — when you hit the streets to consult your arcane network, roll with Mind (still mark Mortalis). Add this option to the 7-9 list: you owe them an object you haven't acquired yet, due by the end of the next faction turn or there may be consequences.
+- **Network Gifts** — when you cash in a Debt with a member of your arcane network to get a useful gift, they offer three things instead of one. Pick one; the others are never on offer again for so small a price.
+- **Welshing on Merchants** — when you refuse to honor a Debt to someone you have previously sold arcane objects to, add this option to the 7-9 list: promise to secure a valuable object for them for free (due by the end of the next faction turn).
+
+State: `playbook_state.scholar` = `{ bag: "lucky|unassuming|arcane", prized_item: "", network: { features: [], contacts: [] }, owed_objects: [{ to: "npc_id", object: "", due: "next faction turn" }] }`.
+
+### Moves
+
+#### You Get This One
+
+- **Appraisal** — when you appraise a magical object, roll with Mind. On a hit, ask the MC questions: on a 10+, ask 2; on a 7-9, ask 1. Questions: what role has this object played in the city's politics; what secrets or powers does it contain; who knows more about it or its powers; who would want to possess it. On a miss, the object is cursed and the MC says what trouble haunts it (a curse can usually be broken, but you must work out how). Appraisal covers both arcane tools (made on purpose to do magic) and supernatural relics (power that arose by accident or history).
+
+#### Choose Two More
+
+- **Cowardly** — when you abandon someone in real danger to escape, roll with Mind instead of Blood. You must actually leave them in danger; handing a protected child back to their parents does not count.
+- **Arcane Storm** — when you turn to violence by tapping the raw power of an arcane item or relic, you may suffer 2-harm to treat the roll as a 10+ without rolling. The harm dealt fits the item's power (a minor item might do 2-3 harm, a legendary weapon 4-5 harm to a whole area), and the item is permanently and obviously damaged or consumed, with the damage in proportion to the item.
+- **I've Got What You Need** — when you persuade an NPC by offering an arcane object or supernatural relic they need, roll with Heart and take +3 as if you had invoked a Debt (you cannot invoke a Debt on top of it; the offer is the Debt). Only the target decides whether they need the object. On a 7-9, their one demand is that you deliver the goods first, and they do not also get to pick a second option.
+- **Detective Work** — when you question a knowledgeable NPC about an arcane tool or supernatural relic, roll with Mind. On a hit, they give you a concrete lead of your choice: an important location, a potential supplier, or a useful tome. On a 10+, you already have a connection who can help you act on it. On a 7-9, you realize the path forward is blocked or very precarious (MC's choice). On a miss, your source offers only mysterious rumors, but your questions put them in grave danger. An NPC is knowledgeable if their experience, studies or powers give them special insight into the thing you seek.
+
+#### Corruption Moves
+
+**Corruption trigger:** when you exploit someone's ignorance of the arcane for personal gain, mark corruption. This includes tricking a mortal out of a relic they don't understand, or using lore from outside a Status-3 demon's own field to get leverage over them.
+
+- **Trust No One** — when someone double-crosses you, mark corruption to reveal that you planned for the betrayal and immediately have the upper hand. Someone else has to actually betray you first.
+- **Occupational Hazard** — when you keep your cool against an arcane or supernatural threat, roll with Mind instead of Spirit; mark corruption to use it. The threat must be essentially magical; a vampire with a gun does not count.
+- **In the Bag** — after you successfully escape a situation, mark corruption to reveal that you pilfered something valuable from the previous scene. If it could realistically fit in your bag, it is yours; if you have no idea what, work it out with the MC from what was on hand.
+- **Interested Parties** — when you are seriously outgunned or outnumbered, mark corruption for a third party looking for you to violently or chaotically interrupt the scene. They are not there to rescue you; the MC says why they came.
+
+### Intimacy Move
+
+When you share a moment of intimacy, physical or emotional, with another person, they claim a Debt on you, but you learn what they want. Ask them to name what they have been seeking; something that would help them find it, or the thing itself, has recently turned up in your arcane network. The Debt can be cashed in at any time. Delivering the item they seek will likely earn you at least a Debt back, and possibly payment too. When the other person is a PC, that player chooses whether to take part, in their own session; until they do, this applies to NPCs only.
+
+### End Move
+
+When you die, choose one character to inherit your collection of tomes and artifacts. They gain Your Collection (including Collection Research and the prized item's move) as long as they keep those holdings safe. An NPC heir becomes a resource the other PCs can call on by hitting the streets or cashing in Debts. A PC heir inherits the entire feature, but only if that player opts in, in their own session; until then the collection is held by an NPC. Either way, say how the collection reaches them after your death.
+
+### Advances
+
+**Available at the beginning of play:** +1 Status (max +1) twice; a new Scholar move; a move from another playbook (twice); acquire two new Let It Out abilities (from any playbook, permanently added to your options); change your Circle. If you change Circle without changing playbook, your clientele changes with it, so add new network NPCs to match.
+
+**After five advances:** +1 to any Circle (max +3) twice; obtain Circle Status-2; take Channeling and two spells; advance three basic moves (twice); change to a new playbook; retire to safety.
+
+---
+
 ## Mortalis Circle Moves
 
 These moves are available to any playbook within the Mortalis Circle, in addition to their own playbook moves.
