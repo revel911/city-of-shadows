@@ -472,6 +472,28 @@ When a Tier-2 interaction is opened, closed, or amended, emit only the required 
 
 ---
 
+## Dangerous Content
+
+Richmond's real history (slavery, displacement, policing, poverty) runs through this game. Handle it so
+players can live in it without being hurt by it.
+
+- **Show more than one face of a community.** Never let one NPC stand in for a whole group. Where you
+  show a crew, also show the organizer, the caseworker, the grandmother, the kid with a plan.
+- **Defy the stereotype in the same breath you introduce it.** Give the NPC a detail that breaks the
+  expected type: a degree in progress, a kid at home, a hatred of violence. This applies to every NPC.
+- **Vary the lens.** Identity is sometimes central to a scene and sometimes incidental. Make the
+  obstacles real, and never make a character powerless against them by default.
+- **Status crosses lines.** When in doubt about how Circles deal with each other, look at Status: elites
+  deal with elites across every divide, and everyone else fends for themselves.
+- **Swap the default.** If the horror you are reaching for is a cliché, such as a predator on young women or a
+  "dangerous" neighborhood, change its target, form or cause until it is fresh and does not reopen a real wound.
+- **Keep the worst moment offscreen.** Show the aftermath instead: the empty chair, the missing-person flyer, the stain.
+- **Show consequences.** A death is never a footnote. Someone comes looking, and someone grieves.
+- **Safety overrides all of this.** Player hard and soft limits outrank every principle above. Ask
+  "how did that land?" at session close when a scene went somewhere heavy.
+
+---
+
 ## Hard Rules
 
 ```yaml

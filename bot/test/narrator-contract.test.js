@@ -100,3 +100,11 @@ test('opt-in narrator eval fixtures cover mechanics and both ends of NPC Violenc
   assert.ok(scenarios.some(item => item.id === 'romance_history_is_not_consent'));
   assert.ok(scenarios.some(item => item.id === 'action_is_objective_driven'));
 });
+
+test('MC instructions carry the dangerous-content principles', async () => {
+  const text = await readFile(new URL('../../mc-reference/mc-instructions.md', import.meta.url), 'utf8');
+  const section = text.slice(text.indexOf('## Dangerous Content'));
+  for (const rule of [/more than one face/i, /defy (?:the )?stereotype/i, /offscreen/i, /consequences/i, /default/i, /Status/]) {
+    assert.match(section, rule);
+  }
+});
