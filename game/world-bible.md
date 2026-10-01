@@ -118,6 +118,12 @@ The MC should let this surface slowly. Discrepancies in the Public Events Log. N
 
 - **Oregon Hill** (Mortalis-dominant) — Historic working-class neighborhood overlooking the James River, built by Tredegar Iron Works employees in the 1840s. Wedged between Hollywood Cemetery, VCU campus, and the Downtown Expressway. Industrial echo: phantom factory shifts, spectral workers continuing labor that ended 150 years ago. The neighborhood resists change with the same stubbornness it always has.
 
+- **Memorial District** (Night-dominant) — The west bluff above the James where Richmond keeps its dead: Hollywood Cemetery, the Virginia War Memorial, Gambles Hill and the Tredegar riverbank. Everyone tends a version of the past and is certain theirs counts. Night holds the ground after dusk, and the Overwrite edits names, dates and monuments to match a city no one agreed on.
+
+- **River & Docks** (Wild-dominant) — The working James: the Marine Terminal, the Commerce Road rail corridor, the Manchester floodwall, Rocketts Landing and Belle Isle. Cargo moves by day and secrets by night, and everything is for sale if you know what you will owe. An older port writes itself over the new one, and on certain tides the burned colonial town of Warwick can be walked.
+
+- **The Valley** (Night-dominant) — The Shockoe Valley intake offices, court annex and jail under the I-95 viaduct, with a spur down the Richmond Highway motel strip. It is where Richmond sends the people it does not know what to do with, and where they run their own city inside it; everyone has a plan to get out, or to get someone else out. Under the viaduct, every clock and phone reads 1958.
+
 ---
 
 ## Factions (City-Spanning)
