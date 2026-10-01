@@ -505,6 +505,86 @@ When you die, choose one character to inherit your collection of tomes and artif
 
 ---
 
+## The Witch
+
+A mortal practitioner of hedge magic and old kitchen alchemy, whose craft is skill and patience more than raw will. You run a shop that anyone can walk into, you belong to a coven that is your family, and you use what you can do to protect people the city's powerful would rather not see. The hard part is that justice and revenge look alike from the inside.
+
+**ID:** the-witch
+
+> **WoD:** Suggested: a hedge witch, a Sleepwalker or Proximus family practitioner. **Ancestral Legacy** means one Consilium order (default: the Mysterium) knows the bloodline. The **Malleus Maleficarum** (hunter.md) are the hunters of the coven's history. A Witch who has Awakened can take Mage: The Awakening at creation under the off-natural rule. Any other extension, or none, is open.
+
+### Starting Profile
+
+- **Circle:** Mortalis
+- **Stats:** Blood -2, Heart 2, Mind 0, Spirit 1 (add 1 to one stat, max +3)
+- **Circle ratings:** Mortalis 1, Night 0, Power 1, Wild -1 (add 1 to one)
+- **Circle Status:** Mortalis 1, Night 0, Power 0, Wild 0
+- **Demeanor options:** cryptic, ingenuous, surly, weary
+- **Gear:** your shop (see Your Shop), a battered car that will not die, an outdated phone, and a handful of esoteric books and working tools.
+- **Starting Debts:**
+  - Someone once shielded you and your coven from a lethal threat. Ask what it was and what terrible thing they did to save you. You owe them a Debt.
+  - You exposed someone's dark secret for your own purposes, whatever it cost them. You owe them a Debt.
+  - You recently cast dangerous magic to help someone. Tell them what they needed, and ask how it changed their life for good or ill. They owe you a Debt.
+- **Intro questions:**
+  - Who taught you to work magic, and why?
+  - How do you serve your community with your gifts?
+  - Who are you protecting from a sinister, magical danger?
+  - What keeps you trying to make the city better?
+- **Let It Out options:** banish something unnatural or aberrant from your presence; summon a malignant being to protect you or someone close; enter the dreams of a sleeper nearby, as a witness only; keep someone from harming you (or another) for the scene.
+
+### Special Mechanic — Your Coven, Your Shop, Your Hedge Magic
+
+**Your Coven.** The coven is your family. You can never claim a Debt on a coven member and they can never claim one on you. If a coven member's need is true (the MC decides), you cannot refuse, and they cannot refuse you. Break this code and you mark 2 corruption. Choose what the coven is made of: blood family across generations; a legacy of witches trained from birth; a found family; friends old and new called together; or an uneasy alliance of rivals sworn to a common purpose. Choose who nearly hunted you to extinction: mortals doing what they see as religious duty; demons sworn to vengeance over a broken deal; fae who want your ancestry's descendants; wizards after your knowledge; or vampires who want your coven under their control. Detail about six members and a Status-3 leader.
+
+At character creation the coven becomes a `faction_patch` record in `game/factions.json`: `character_ids` is this character only, Size 1, Strength 3, Circle Mortalis, `stance: striving`. The leader is created in the same save with `npc_patch`, so the faction can name them. At the first session close the MC emits an `arc_patch` (`type: personal`) naming the coven.
+
+**Your Shop.** A fixed place where people find you and where your coven gathers: a new-age shop with a bit of everything, an apothecary of tinctures and poultices, a bookstore of old texts and new, a bar or cafe that serves potions and spells to those in the know, or a nursery that grows healing (and dangerous) plants. You are easy to find, keep regular hours, and keep the doors open to strangers. Decide with the MC how the shop runs and when the coven meets there. At character creation the shop is a `location_patch` in the character's home hub.
+
+**Your Hedge Magic.** Magic comes in three tiers. Benign magic makes small shifts, such as a lucky coincidence or easier access to information. Dangerous magic bends nature, such as setting a bone at once or dragging a deep secret into the open. Forbidden magic rewrites nature, such as raising the dead or curing a werewolf. In your shop you can work benign magic freely, and simple benign magic usually needs no roll; you roll only when you are straining. Outside the shop you can strain once on what you have on hand, then must restock at the shop before straining again. The three tiers are written as sheet moves, so they route like any other roll:
+
+- **Benign Magic (strained)** — when you strain yourself casting benign magic, with too little time, safety or materials, roll with Heart. On a hit it works. On a 7-9 it is short-lived or unstable, your choice. On a miss you come up short; only blood freely given (2-harm) can finish the spell, and the result is still unstable. Outside your shop you can do this once until you restock there.
+- **Dangerous Magic** — when you cast dangerous magic at your shop, sacrifice something precious (it is lost for good) and roll with Spirit. On a hit it is done by the skin of your teeth, and the MC tells you the flaw built into it. On a 10+ you also see a path to perfection: mark corruption to fix the magic completely. On a miss the magic slips out of control, and the result is close to what you wanted but twisted, broken or unholy. Dangerous magic cannot change something's basic nature; that needs forbidden magic.
+- **Forbidden Magic** — locked until you take the "gain forbidden magic" advance. When you cast forbidden magic at your shop, mark corruption and roll with Mind. On a hit you break the limits of reality: say what you accomplish, and the MC tells you the terrible cost of keeping it. On a 7-9 the magic also drains you: take -1 ongoing until time passes. On a miss your pride lets something hungry and monstrous slip through into this world.
+
+State: `playbook_state.witch` = `{ coven: { faction_id: "faction_<slug>", composition: "", nearly_destroyed_by: "" }, shop: { location_id: "", type: "" }, strained_outside_shop: false, forbidden_unlocked: false, soulguard_object: null, devilry_tokens: [] }`. The faction's own Size, Strength and assets live only in the faction record, never in `playbook_state`.
+
+### Moves
+
+#### You Get This One
+
+- **Meddlesome Hag** — when you are tending your shop and listening to your people as time passes, or at the start of the game, roll with Heart. On a hit, someone tells you about a Status-2 source of strife that is hurting them, someone who has been preying on others, and asks for your help. You are never obliged to get involved. On a 10+ pick 1; on a 7-9 pick 2: the enemy is an old foe, and the MC says how they thwarted you before; the need is immediate, and the MC says what dark fate is close; you cannot face this alone, and the MC says what help you need. On a miss, all three, and the source of their pain is someone you owe a Debt; tell the MC why.
+
+#### Choose One More
+
+- **Ancestral Legacy** — your lineage is known to a Power faction as a source of sound advice. You can earn up to Status-2 in Power, and you make one extra city move each faction turn using that Status. When you use the extra move, the MC tells you afterward how your meddling draws the notice of your enemies. All of Power, not just that faction, treats you as one of their own, so when a move targets you by Circle (such as lend a hand or get in the way) you choose whether Mortalis or Power applies.
+- **Fur Black as Black** — you have a familiar. Choose an animal and say what the bonding ritual cost. The familiar is an NPC with its own personality, needs and opinions, created with `npc_patch`, and it tells you when it thinks you are making a mistake. It runs simple errands, fetching and spying. Take +1 ongoing to let it out whenever the familiar is touching you. It will die for you unless you tell it to hold back, and you take a scar if it dies.
+- **Secrets Only Witches Know** — when you put your nose in an NPC's business by consuming a sympathetic token tied to them (hair, nails, a treasured book or doll; eaten, or burned and swallowed), roll with Heart. On a hit you are in the right place at the right time to witness something unseemly. On a 7-9 choose one; on a 10+ get both: you learn a dangerous secret about their political ties or activities; you learn something useful about a problem you are working on. On a miss you land in the middle of their business with no clean way out. The NPC does not know you know unless you reveal it.
+
+#### Corruption Moves
+
+**Corruption trigger:** when you use magic to take vengeance instead of seeking justice, mark corruption. Justice is proportionate, measured and strategic; a response out of proportion to the harm is revenge, even when the target deserves punishment.
+
+- **Season of the Witch** — when you cast dangerous magic, mark corruption to offer a sacrifice taken from someone who owes you a Debt, something precious to them that you already hold. You do not need their consent.
+- **Devilry Dancing in Blood** — mark corruption to make a token imbued with an ability from a playbook of another Circle. Spend the token to use that ability for the rest of the scene. Only you can use your tokens, each works once, and you may make several and use them back to back.
+- **Soulguard** — when time passes, mark corruption to place a piece of your soul in an object. If you die, anyone holding the object knows the simple ritual that brings you back. You can hold only one such object at a time; you may make a new one after you come back.
+- **Twist the Bones** — mark corruption to incapacitate, disable or kill a vulnerable NPC in your presence. Ordinary mortals are nearly always vulnerable; an ancient immortal or elder vampire must first be weakened some other way.
+
+### Intimacy Move
+
+When you share a moment of intimacy, physical or emotional, ask the other person a question you can tell they want to avoid; you feel it in your bones even if you have only just met. If they answer truthfully, roll with Heart instead of Spirit the next time you cast dangerous magic to protect them. If they refuse, they owe you a Debt. When the other person is a PC, that player chooses whether to take part, in their own session; until they do, this applies to NPCs only.
+
+### End Move
+
+When you die, name an NPC you failed to bring to justice. Someone you helped in the past brings them low, strips their power, or ends their life, your choice. You can name anyone, including a Status-3 figure who is otherwise out of reach, but the MC decides who delivers the justice and what form it takes. Whoever you name faces disaster or ruin and is changed for good by the person who humbles them.
+
+### Advances
+
+**Available at the beginning of play:** +1 Status (max +1) three times; a new Witch move; advance three basic moves; a move from another playbook (twice); obtain Circle Status-2.
+
+**After five advances:** +1 to any Circle (max +3) three times; gain forbidden magic (sets `forbidden_unlocked` and unlocks the Forbidden Magic sheet move); advance three basic moves; erase a scar; retire to safety; change to a new playbook (your coven membership will almost certainly end, though some witch allies may remain).
+
+---
+
 ## Mortalis Circle Moves
 
 These moves are available to any playbook within the Mortalis Circle, in addition to their own playbook moves.
