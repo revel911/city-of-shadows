@@ -75,3 +75,7 @@ location records.
 - Monument Avenue's ghost statues can be seen in reflections, shadows, and peripheral vision. They show different figures than the Confederate generals who once stood there.
 - Marcus's documentation project is a growing archive of "proof" that the city used to be different. Some of his pieces change themselves to match whatever the current reality becomes.
 - The Tobacco Exchange Building that Mireille is buying has basement levels that don't appear on any official plans. Local historians insist it was never connected to the old canal system, but Mireille seems to think otherwise.
+
+## Adaptation Notes
+
+The Fan runs on dreams: chasing them, and the quiet tragedy of the ones that do not come true. Let that tug at every scene, whether it is a mural half-finished, a band one gig from breaking, or a gallery owner who has already moved on to the next face. NPCs here promise quickly and deliver slowly, so let favors arrive late. Wild NPCs with real standing are oddly easy to approach, since they spend their evenings scouting whoever might be rising next.

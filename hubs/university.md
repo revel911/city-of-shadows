@@ -84,3 +84,7 @@ location records.
 - **Chris Caustes** (Wizard, Silver Ladder) — home hub. Sanctum in his apartment near campus. Ward: Nadia Vasek (19, second-year VCU student).
 - **Nadia Vasek** — awakened 8 months ago during a late-night study session. Timing coincides with Maren Voss's death. Under Chris's care by assignment from Councilor Ingrid Voss.
 - **Maren Voss** (deceased) — VCU Folklore and Mythology graduate student. Died 8 months ago. Her supervisor, Dr. Linh Pham, has since also died. The graduate student and faculty connections here run through arcs active in Shockoe Bottom.
+
+## Adaptation Notes
+
+The University is less a single district than a set of overlapping interests that happen to share a map. Set well-funded projects against the scrounging ones run out of borrowed lab time and favors. High-Status NPCs tend to be wrapped up in their own work until something disrupts it, and then they notice everything. Low-Status NPCs are hungry for any opening that could put them back in the running.

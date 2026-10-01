@@ -113,3 +113,7 @@ A new character rooted here may choose one resident who owes them a Debt (see `m
 - Recent flooding in the tunnel system wasn't from the river — something was deliberately opened to wash out evidence of the breach.
 - John Smith (PC ghost) has an anchor place somewhere in Downtown that he hasn't found yet. The pull is real.
 - Benjamin Grey (PC) operates out of St. Angust Parish in this hub as a parish priest cover.
+
+## Adaptation Notes
+
+Night does not merely rule Downtown, it seeps into it. Show the ordinary bars, restaurants and late-night counters that give people a reason to be here after dark, so the supernatural has a crowd to hide in. Residents glance over their shoulders more than they admit. Anyone who arrives with something genuinely new, rather than another version of an old offer, earns attention fast.
