@@ -1,4 +1,5 @@
 // bot/handlers/hub-moves.js
+import { readFile, readJSON } from './github.js';
 // Hub Markdown is the single owner of hub moves; this module only reads it.
 const STATS = ['Blood', 'Heart', 'Mind', 'Spirit'];
 const CIRCLES = ['Mortalis', 'Night', 'Power', 'Wild'];
@@ -48,4 +49,27 @@ export function extractHubMoves(markdown, hubId) {
     moves.push({ hub_id: hubId, name, trigger, ...parseRoll(body), text: body });
   }
   return moves;
+}
+
+let _hubMovesCache = null;
+
+export function resetHubMovesCache() {
+  _hubMovesCache = null;
+}
+
+// Hub Markdown changes by commit, not mid-session, so one read per process
+// (or per resetSystemCache) is enough. Always resolves to an array.
+export async function loadHubMoves({ read = readFile, readIndex = readJSON } = {}) {
+  if (_hubMovesCache) return _hubMovesCache;
+  const loaded = await readIndex('hubs/index.json');
+  const index = Array.isArray(loaded) ? loaded : [];
+  const files = await Promise.all(index.map(async hub => {
+    try {
+      return [hub, await read(`hubs/${hub.file}`)];
+    } catch {
+      return [hub, null];
+    }
+  }));
+  _hubMovesCache = files.flatMap(([hub, markdown]) => (markdown ? extractHubMoves(markdown, hub.id) : []));
+  return _hubMovesCache;
 }

@@ -7,6 +7,7 @@ import { profilePath } from './profile.js';
 import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
 import { adjudicateMove, generate, buildOpeningContext, loadCharacterBundle, selectInteractionEcho } from './mc.js';
 import { buildClarificationAdjudicationText } from './move-adjudicator.js';
+import { loadHubMoves } from './hub-moves.js';
 import {
   buildMoveResolutionContext,
   withDerivedMysteryState,
@@ -744,11 +745,13 @@ export async function handleMessage(message) {
 // when the router fails, so the narrator's own move audit still applies.
 async function adjudicateTurn(session, { clarification, adjudicationPlayerText, lastAssistant, playerText }) {
   try {
+    const hubMoves = await loadHubMoves().catch(() => []);
     const adjudication = await adjudicateMove({
       playerText: adjudicationPlayerText,
       lastAssistant: clarification?.fictionBeforeClarification || lastAssistant,
       sheet: session.mechanicsSheet,
       priorClarificationQuestions: clarification?.exchanges?.map(item => item.question) || [],
+      hubMoves,
     });
     session.mechanicsAdjudications += 1;
     if (adjudication.decision === 'clarify') {

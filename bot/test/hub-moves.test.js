@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { extractHubMoves } from '../handlers/hub-moves.js';
+import { extractHubMoves, loadHubMoves, resetHubMovesCache } from '../handlers/hub-moves.js';
 
 const creightonStyle = [
   '# Hub — Example', '', '## Hub Moves', '',
@@ -59,4 +59,29 @@ test('moves the engine cannot resolve live are kept for narration but not rollab
 
 test('a hub without a Hub Moves section yields no moves', () => {
   assert.deepEqual(extractHubMoves('# Hub: Carytown\n## Flavor\nQuiet.', 'hub_carytown'), []);
+});
+
+test('loader reads every indexed hub, skips unreadable files, and caches', async () => {
+  resetHubMovesCache();
+  let reads = 0;
+  const files = {
+    'hubs/a.md': '## Hub Moves\n### Alpha\nWhen you knock, roll with Heart.\n',
+    'hubs/b.md': null, // missing file must not break play
+  };
+  const readIndex = async () => [{ id: 'hub_a', file: 'a.md' }, { id: 'hub_b', file: 'b.md' }];
+  const read = async path => { reads += 1; return files[path]; };
+  const first = await loadHubMoves({ read, readIndex });
+  const second = await loadHubMoves({ read, readIndex });
+  assert.deepEqual(first.map(m => [m.hub_id, m.name]), [['hub_a', 'Alpha']]);
+  assert.equal(second, first);
+  assert.equal(reads, 2);
+  resetHubMovesCache();
+});
+
+test('loader always resolves to an array, even for a missing or malformed index', async () => {
+  resetHubMovesCache();
+  assert.deepEqual(await loadHubMoves({ read: async () => null, readIndex: async () => null }), []);
+  resetHubMovesCache();
+  assert.deepEqual(await loadHubMoves({ read: async () => null, readIndex: async () => ({}) }), []);
+  resetHubMovesCache();
 });

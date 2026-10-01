@@ -7,6 +7,7 @@ import {
 } from './move-adjudicator.js';
 import { readFile, readJSON } from './github.js';
 import { readProfile } from './profile.js';
+import { resetHubMovesCache } from './hub-moves.js';
 import { buildCanonicalWorldContext, buildRelevantWorldContext } from './world-state.js';
 
 // DeepSeek-V4.1-Flash; override explicitly when changing deployed models.
@@ -56,6 +57,7 @@ export async function adjudicateMove({
   lastAssistant = '',
   sheet = '',
   priorClarificationQuestions = [],
+  hubMoves = [],
 } = {}) {
   const messages = [
     {
@@ -64,7 +66,7 @@ export async function adjudicateMove({
     },
     {
       role: 'user',
-      content: buildMoveAdjudicationPrompt({ playerText, lastAssistant, sheet }),
+      content: buildMoveAdjudicationPrompt({ playerText, lastAssistant, sheet, hubMoves }),
     },
   ];
   for (let attempt = 0; attempt <= MOVE_ADJUDICATION_RETRIES; attempt += 1) {
@@ -76,7 +78,7 @@ export async function adjudicateMove({
       temperature: 0,
     });
     const raw = resp.choices[0]?.message?.content || '';
-    const decision = parseMoveAdjudication(raw, { sheet });
+    const decision = parseMoveAdjudication(raw, { sheet, hubMoves });
     const repeatsAnsweredClarification = decision?.decision === 'clarify'
       && priorClarificationQuestions.some(question =>
         sameClarificationQuestion(question, decision.question)
@@ -185,6 +187,7 @@ export async function getSystemPrompt(profile = {}) {
 export function resetSystemCache() {
   _coreSystemCache = null;
   _referenceCache.clear();
+  resetHubMovesCache();
 }
 
 function tail(text, n) {
