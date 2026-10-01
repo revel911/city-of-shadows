@@ -249,6 +249,8 @@ Apply rules:
 
 **Say:** "Your playbook's home Circle starts at +1 Status. Others start at 0 unless the playbook says otherwise. Ratings start at 0 for everyone unless changed by advances."
 
+If the playbook has a `### Starting Profile`, use its Circle ratings and Circle Status instead of these defaults.
+
 **Capture:** `circle_ratings` and `circle_status` blocks.
 
 **Where it goes:** Sheet `CIRCLES & STATUS` table; `state.json.circle_ratings`, `state.json.circle_status`.
@@ -266,7 +268,7 @@ Apply rules:
 - 1–2 NPCs who owe the character
 - 2–3 Anchors (people / objects / places)
 
-Expansion playbooks that come with a faction (Angel's Enemy, Dragon's Ordo Draconis, Witch's coven, the Immortal's own faction) create it as one `faction_patch` record with `character_ids` = this character only, the playbook's Size/Strength/Assets, `stance: striving`, and its leader created in the same save via `npc_patch`. Store only its `faction_id` in `playbook_state`. At the first session close, emit an `arc_patch` (`type: personal` or `threat`) that names the faction.
+Expansion playbooks that come with a faction (Angel's Enemy, Dragon's Ordo Draconis, Witch's coven, the Immortal's own faction; the Immortal is its own leader) create it as one `faction_patch` record with `character_ids` = this character only, the playbook's Size/Strength/Assets, `stance: striving`, and its leader created in the same save via `npc_patch`. Store only its `faction_id` in `playbook_state`. At the first session close, emit an `arc_patch` (`type: personal` or `threat`) that names the faction.
 
 **Capture:** Debts list (both directions), Anchors list. **Every new NPC introduced here must go into the close-block `<npc_patch>` with a complete personality-engine profile: core scores, voice_note, verbosity, humor frequency/style, contextual contrast, calibration note, and authored adult flirtation/intimacy traits (null when inapplicable)** (see `npc-personality-engine.md`).
 

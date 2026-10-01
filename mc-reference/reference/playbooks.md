@@ -478,7 +478,7 @@ State: `playbook_state.scholar` = `{ bag: "lucky|unassuming|arcane", prized_item
 - **Cowardly** — when you abandon someone in real danger to escape, roll with Mind instead of Blood. You must actually leave them in danger; handing a protected child back to their parents does not count.
 - **Arcane Storm** — when you turn to violence by tapping the raw power of an arcane item or relic, you may suffer 2-harm to treat the roll as a 10+ without rolling. The harm dealt fits the item's power (a minor item might do 2-3 harm, a legendary weapon 4-5 harm to a whole area), and the item is permanently and obviously damaged or consumed, with the damage in proportion to the item.
 - **I've Got What You Need** — when you persuade an NPC by offering an arcane object or supernatural relic they need, roll with Heart and take +3 as if you had invoked a Debt (you cannot invoke a Debt on top of it; the offer is the Debt). Only the target decides whether they need the object. On a 7-9, their one demand is that you deliver the goods first, and they do not also get to pick a second option.
-- **Detective Work** — when you question a knowledgeable NPC about an arcane tool or supernatural relic, roll with Mind. On a hit, they give you a concrete lead of your choice: an important location, a potential supplier, or a useful tome. On a 10+, you already have a connection who can help you act on it. On a 7-9, you realize the path forward is blocked or very precarious (MC's choice). On a miss, your source offers only mysterious rumors, but your questions put them in grave danger. An NPC is knowledgeable if their experience, studies or powers give them special insight into the thing you seek.
+- **Detective Work** — when you question a knowledgeable NPC about an arcane tool or supernatural relic, roll with Mind. On a hit, they give you a concrete lead of your choice: an important location, a potential supplier, or a useful tome. On a 10+, you already have a connection who can help you act on it. On a 7-9, you realize the path forward is blocked or very precarious (MC's choice). On a miss, all you get is cryptic hearsay, and asking has put your source in serious jeopardy. An NPC is knowledgeable if their experience, studies or powers give them special insight into the thing you seek.
 
 #### Corruption Moves
 
@@ -499,7 +499,7 @@ When you die, choose one character to inherit your collection of tomes and artif
 
 ### Advances
 
-**Available at the beginning of play:** +1 Status (max +1) twice; a new Scholar move; a move from another playbook (twice); acquire two new Let It Out abilities (from any playbook, permanently added to your options); change your Circle. If you change Circle without changing playbook, your clientele changes with it, so add new network NPCs to match.
+**Available at the beginning of play:** +1 Status (max +1) twice; a new Scholar move; a move from another playbook (three times); acquire two new Let It Out abilities (from any playbook, permanently added to your options); change your Circle. If you change Circle without changing playbook, your clientele changes with it, so add new network NPCs to match.
 
 **After five advances:** +1 to any Circle (max +3) twice; obtain Circle Status-2; take Channeling and two spells; advance three basic moves (twice); change to a new playbook; retire to safety.
 
@@ -522,7 +522,7 @@ A mortal practitioner of hedge magic and old kitchen alchemy, whose craft is ski
 - **Demeanor options:** cryptic, ingenuous, surly, weary
 - **Gear:** your shop (see Your Shop), a battered car that will not die, an outdated phone, and a handful of esoteric books and working tools.
 - **Starting Debts:**
-  - Someone once shielded you and your coven from a lethal threat. Ask what it was and what terrible thing they did to save you. You owe them a Debt.
+  - Someone stood between your coven and a deadly danger. Ask what the danger was and what awful price they paid to end it. You owe them a Debt.
   - You exposed someone's dark secret for your own purposes, whatever it cost them. You owe them a Debt.
   - You recently cast dangerous magic to help someone. Tell them what they needed, and ask how it changed their life for good or ill. They owe you a Debt.
 - **Intro questions:**
@@ -544,7 +544,7 @@ At character creation the coven becomes a `faction_patch` record in `game/factio
 
 - **Benign Magic (strained)** — when you strain yourself casting benign magic, with too little time, safety or materials, roll with Heart. On a hit it works. On a 7-9 it is short-lived or unstable, your choice. On a miss you come up short; only blood freely given (2-harm) can finish the spell, and the result is still unstable. Outside your shop you can do this once until you restock there.
 - **Dangerous Magic** — when you cast dangerous magic at your shop, sacrifice something precious (it is lost for good) and roll with Spirit. On a hit it is done by the skin of your teeth, and the MC tells you the flaw built into it. On a 10+ you also see a path to perfection: mark corruption to fix the magic completely. On a miss the magic slips out of control, and the result is close to what you wanted but twisted, broken or unholy. Dangerous magic cannot change something's basic nature; that needs forbidden magic.
-- **Forbidden Magic** — locked until you take the "gain forbidden magic" advance. When you cast forbidden magic at your shop, mark corruption and roll with Mind. On a hit you break the limits of reality: say what you accomplish, and the MC tells you the terrible cost of keeping it. On a 7-9 the magic also drains you: take -1 ongoing until time passes. On a miss your pride lets something hungry and monstrous slip through into this world.
+- **Forbidden Magic** — locked until you take the "gain forbidden magic" advance. When you cast forbidden magic at your shop, mark corruption and roll with Mind. On a hit you break the limits of reality: say what you accomplish, and the MC tells you the terrible cost of keeping it. On a 7-9 there is a toll on you as well: take -1 ongoing until time passes. On a miss your arrogance opens a door, and something ravenous and inhuman comes through into this world.
 
 State: `playbook_state.witch` = `{ coven: { faction_id: "faction_<slug>", composition: "", nearly_destroyed_by: "" }, shop: { location_id: "", type: "" }, strained_outside_shop: false, forbidden_unlocked: false, soulguard_object: null, devilry_tokens: [] }`. The faction's own Size, Strength and assets live only in the faction record, never in `playbook_state`.
 
@@ -564,7 +564,7 @@ State: `playbook_state.witch` = `{ coven: { faction_id: "faction_<slug>", compos
 
 **Corruption trigger:** when you use magic to take vengeance instead of seeking justice, mark corruption. Justice is proportionate, measured and strategic; a response out of proportion to the harm is revenge, even when the target deserves punishment.
 
-- **Season of the Witch** — when you cast dangerous magic, mark corruption to offer a sacrifice taken from someone who owes you a Debt, something precious to them that you already hold. You do not need their consent.
+- **Season of the Witch** — when you cast dangerous magic, mark corruption to offer a sacrifice taken from someone who owes you a Debt, something precious to them that you already hold. You do not need their consent. This applies to NPC debtors only, unless a PC debtor's player opts in, in their own session.
 - **Devilry Dancing in Blood** — mark corruption to make a token imbued with an ability from a playbook of another Circle. Spend the token to use that ability for the rest of the scene. Only you can use your tokens, each works once, and you may make several and use them back to back.
 - **Soulguard** — when time passes, mark corruption to place a piece of your soul in an object. If you die, anyone holding the object knows the simple ritual that brings you back. You can hold only one such object at a time; you may make a new one after you come back.
 - **Twist the Bones** — mark corruption to incapacitate, disable or kill a vulnerable NPC in your presence. Ordinary mortals are nearly always vulnerable; an ancient immortal or elder vampire must first be weakened some other way.
@@ -575,7 +575,7 @@ When you share a moment of intimacy, physical or emotional, ask the other person
 
 ### End Move
 
-When you die, name an NPC you failed to bring to justice. Someone you helped in the past brings them low, strips their power, or ends their life, your choice. You can name anyone, including a Status-3 figure who is otherwise out of reach, but the MC decides who delivers the justice and what form it takes. Whoever you name faces disaster or ruin and is changed for good by the person who humbles them.
+When you die, name an NPC you failed to bring to justice. Someone you helped in the past brings them low, strips their power, or ends their life, your choice. You can name anyone, including a Status-3 figure who is otherwise out of reach, but the MC decides who delivers the justice and what form it takes. Whoever you name faces disaster or ruin and is changed for good by the person who humbles them. If the named NPC is canonical (one in `game/npcs.json`), the MC writes the outcome to the handoff as a proposal needing operator approval; the City Keeper applies it only after approval, and the NPC is not changed in canon without it.
 
 ### Advances
 
@@ -656,7 +656,7 @@ State: `playbook_state.angel` = `{ enemy: { faction_id: "faction_<slug>", sin: "
 **Corruption trigger:** when you pass final judgment on someone without your god's guidance, mark corruption. Final judgment usually means death, but anything that removes a character from the story (banishment, transformation) counts. If you make a reasonable effort to act within what you understand of your god's guidance, you do not mark corruption.
 
 - **Undaunted** — mark corruption to take a 10+ instead of rolling when you keep your cool against physical opposition, magical danger or emotional manipulation.
-- **Light upon Light** — mark corruption to forbid all lies in your presence. Deceptive words choke the speaker and illusions fall away to show the truth. Nothing resists this, however powerful. Everyone present tells the full truth as best they can or says nothing.
+- **Light upon Light** — mark corruption to forbid all lies in your presence. Deceptive words choke the speaker and illusions fall away to show the truth. Nothing resists this, however powerful. Every NPC present tells the full truth as best they can or says nothing. A PC is bound by this only if that player opts in, in their own session.
 - **Ophanim** — mark corruption to fix your divine attention on an NPC. You know their location and activities until time passes, even if they hide by deception or magic. Only one NPC at a time; choosing another drops the first. The target is stored as `ophanim_target`.
 - **Wings Dipped in Blood** — take an ability from another playbook, which is yours to keep. Mark corruption to activate a Let It Out ability without rolling, with the full effect and no complications. This works with any Let It Out ability you currently have, including ones gained through advances or other moves.
 
@@ -666,7 +666,7 @@ When you share a moment of intimacy, physical or emotional, ask the other person
 
 ### End Move
 
-When you die, your divine light falls on everyone present. The guilty and the corrupted erase a corruption advance; the devout and the innocent gain Soulgaze. You decide which group each person falls into, though PCs may argue their case, and you choose which corruption advance is removed. NPCs are not affected by your death. For a PC, erasing or changing their corruption advances requires that player's opt-in, in their own session; until they opt in, the effect applies only to NPCs.
+When you die, your divine light falls on everyone present. The guilty and the corrupted erase a corruption advance; the devout and the innocent gain Soulgaze. You decide which group each person falls into, though PCs may argue their case, and you choose which corruption advance is removed. NPCs are unaffected by your death. For a PC, erasing or changing their corruption advances happens only if that player opts in, in their own session; until they do, it has no effect on them.
 
 ### Advances
 
@@ -742,7 +742,7 @@ State: `playbook_state.immortal` = `{ faction: { faction_id: "faction_<slug>", s
 
 - **Reputable Employer** — when you recruit allies from another Circle, mark corruption to use your Circle Status. On a miss, mark corruption to have your agents deal with whoever is spreading the rumors, discreetly and within your instructions. If you do not want that person hurt, they are not.
 - **Mirror, Mirror** — when you bring a corpse back for a scene, mark corruption to have it answer two questions truthfully. You cannot do this to the same body twice. Handle it plainly at the table: it is a short, bounded scene, with no graphic detail. Further questions are ordinary persuasion or deception, not compelled.
-- **Poker Face** — when a PC figures you out, mark corruption to choose which questions you answer. Mark corruption to mislead, distract or trick an NPC as if you rolled a 10+. It works even against investigation or magic, provided the deception is plausible.
+- **Poker Face** — when a PC figures you out, mark corruption to choose which questions you answer. Mark corruption to mislead, distract or trick an NPC as if you rolled a 10+. It works even against investigation or magic, provided the deception is plausible. This affects NPCs only; a PC is affected only if that player opts in, in their own session.
 - **Voodoo Economics** — when you cash in a Debt with an NPC of lower Status, mark corruption to get two things from the list, or to persuade them as if you rolled a 10+. You choose both options.
 
 ### Intimacy Move
@@ -757,7 +757,9 @@ When you truly die, name another character as your protege or heir. They immedia
 
 **Available at the beginning of play:** +1 Status (max +1) twice; +1 to any Circle (max +3); a new Immortal move twice; a move from another playbook twice; erase a scar.
 
-**After five advances:** +1 to any Circle (max +3); +1 Status (max +1) twice; erase a scar; add a secure asset to your faction; change your Circle (the faction follows but loses 1 Size and 1 Strength, and may collapse); advance three basic moves twice; change to a new playbook.
+**After five advances:** +1 to any Circle (max +3) twice; erase a scar; add a secure asset to your faction; change your Circle (the faction follows but loses 1 Size and 1 Strength, and may collapse); advance three basic moves twice; change to a new playbook.
+
+---
 
 ## The Dragon
 
@@ -827,7 +829,7 @@ State: `playbook_state.dragon` = `{ hoard: { covets: ["", ""], items: [] }, broo
 
 ### Intimacy Move
 
-When you share a moment of intimacy, physical or emotional, ask the other person to name something beautiful about your draconic nature. If they do, you realize something in your hoard could be of great use to them, and what you do with that is your choice. If they refuse, you feel the sting of your insecurity and take -1 ongoing to all rolls until you make it right. Do not take or destroy anything of theirs unless they are an NPC; for a PC the choice of consequence belongs to that player, who opts in, in their own session. With a broodmate, the first time this becomes the role reveal under Your Brood.
+When you share a moment of intimacy, physical or emotional, ask the other person to name something beautiful about your draconic nature. If they do, you realize something in your hoard could be of great use to them, and what you do with that is your choice. If they refuse, you feel the sting of your insecurity: for an NPC, take -1 ongoing until you take or destroy something precious of theirs. For a PC, none of this applies unless that player opts in, in their own session; the choice of consequence is theirs, and you do not take or destroy anything of theirs. With a broodmate, the first time this becomes the role reveal under Your Brood.
 
 ### End Move
 
@@ -835,9 +837,11 @@ When you die, your ancient spirit tears free of your body and settles somewhere 
 
 ### Advances
 
-**Available at the beginning of play:** +1 Status (max +1) twice; +1 to any Circle (max +3) twice; a new Dragon move twice; a move from another playbook twice; erase a scar.
+**Available at the beginning of play:** +1 Status (max +1) three times; a move from another playbook (twice); a new Dragon move; acquire two new Let It Out abilities (from any playbook, permanently added to your options); change your Circle.
 
-**After five advances:** +1 to any Circle (max +3) twice; advance three basic moves twice; erase a scar; take 2 new Let It Out abilities, which may come from any playbook; gain a sanctum (it gives the Wizard's sanctum feature and the Sanctum Sanctorum move); change your Circle; change to a new playbook.
+**After five advances:** +1 to any Circle (max +3) twice; advance three basic moves; acquire two new Let It Out abilities (from any playbook); take Psychometry (the Oracle's move); get a sanctum (it gives the Wizard's sanctum feature and the Sanctum Sanctorum move; choose four resources and two downsides for it); change to a new playbook; retire to safety.
+
+---
 
 ## Mortalis Circle Moves
 

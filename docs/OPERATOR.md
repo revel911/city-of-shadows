@@ -307,7 +307,7 @@ city-of-shadows/
 │   │   ├── rules.md
 │   │   ├── basic-moves.md
 │   │   ├── mc-moves.md            ← MC moves, Instinct Die, Extreme Failures
-│   │   ├── playbooks.md           ← all 12 playbooks
+│   │   ├── playbooks.md           ← all 17 playbooks
 │   │   └── world-of-darkness/     ← 8 WoD extension files (vampire, mage, …)
 │   ├── npc-personality-engine.md
 │   ├── state-schema.md
