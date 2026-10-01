@@ -82,10 +82,6 @@ code, tests, and the current documents above win.
 | [MC reference rework plan](superpowers/plans/2026-05-14-mc-reference-rework.md) | MC Reference & Character Creation Rework Plan | Original conversion, routing, onboarding, and verification tasks |
 | [Player entity plan](superpowers/plans/2026-05-15-player-entity.md) | Player Entity Implementation Plan | Original migration and implementation steps for player-scoped profiles |
 | [Structured-block safety plan](superpowers/plans/2026-05-16-strip-structured-blocks-from-discord.md) | Strip Structured Blocks From Discord Plan | Original sanitizer, recovery, contract, and regression-test steps |
-| [Hub moves in play plan](superpowers/plans/2026-10-01-hub-moves-in-play.md) | Hub Moves In Play Implementation Plan | Parser, router, narrator context, and validation for live hub moves |
-| [Richmond hubs expansion plan](superpowers/plans/2026-10-01-richmond-hubs-expansion.md) | Richmond Hubs Expansion Implementation Plan | New hubs, layers, residents, rumors, and resident Debts from the Expanded City Hubs supplement |
-| [Expansion playbooks plan](superpowers/plans/2026-10-01-us-expansion-playbooks.md) | Urban Shadows Expansion Playbooks Implementation Plan | Scholar, Witch, Angel, Immortal, and Dragon with WoD identities and shared-city house rules |
-| [Richmond city guide plan](superpowers/plans/2026-10-01-richmond-city-guide.md) | Richmond City Guide Implementation Plan | Faction records, Richmond Circle moves, NPC drives, Then/Now/To Come, and the Capitol & City Hall hub |
 
 ## Retrieval and maintenance rules
 
