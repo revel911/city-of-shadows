@@ -2747,13 +2747,13 @@
     },
     {
       "id": "npc_gideon_marsh",
-      "name": "Warden Gideon Marsh",
+      "name": "Superintendent Gideon Marsh",
       "faction": "Power",
       "hub": "The Valley",
       "hub_id": "hub_the_valley",
       "arc_ids": [],
       "status": "active",
-      "role": "Warlock who runs the jail's night wing",
+      "role": "Warlock who runs the overnight shift at the Lamplighter Holding Center",
       "player_interaction": "None yet",
       "personality": {
         "moral": 2,
@@ -2764,21 +2764,21 @@
         "verbosity": 2,
         "humor_frequency": 1,
         "humor_style": "Almost none; a thin smile.",
-        "contrast_note": "Courteous, procedural and apparently fair; hides his \"methods\" behind policy and a kind word.",
+        "contrast_note": "Courteous, procedural and apparently fair; hides his fear of his patron behind policy and a kind word.",
         "flirtatiousness": 1,
         "intimacy_style": "Remote; trust is a favor done without comment.",
         "calibration_note": "Authored starting social profile, calibrated to the role and notes only. These additions establish tendencies, not past events, orientation, attraction to a particular character, or consent. Romantic expression applies only when adulthood and appropriate context are established."
       },
       "last_seen": "",
-      "notes": "Status: Power 2. Runs the Night Wing; his methods are why people dread it. New-character Debt hook: Owes you for keeping his \"methods\" out of an audit.",
+      "notes": "Status: Power 2. Runs the overnight shift at the Lamplighter Holding Center, a fictional contractor-run facility where people wait for a morning hearing. A warlock whose patron expects favors he has been slow to deliver, with a state audit coming that could cost him his contract and his patron's patience at once. What he does stays offscreen; the people held there have lawyers, families and hearings of their own and are never his resources or props. New-character Debt hook: Owes you for catching the paperwork error that would have failed his last inspection.",
       "associated_location_ids": [
         "loc_valley_courts",
-        "loc_night_shift_jail_wing"
+        "loc_lamplighter_holding"
       ],
       "updated_by_session": "operator:us-hubs-expansion",
       "revision": 1,
       "last_updated": "2026-10-01",
-      "drive": "keep his methods out of the audit and the wing's rolls full of docket-driven bodies he can use"
+      "drive": "pass the coming state audit with his contract intact, and pay down what he owes his patron before the patron collects on him"
     },
     {
       "id": "npc_the_ledger",

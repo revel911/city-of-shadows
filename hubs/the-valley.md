@@ -7,9 +7,9 @@
 
 ## Flavor
 
-The Valley is where Richmond sends the people it does not know what to do with, and where those people quietly run their own city inside the city. Along Lamplighter Way (a fictional street) in the Shockoe Valley corridor sit the intake offices, the court annex, the jail and the long concrete shadow of the I-95 viaduct, with the rail lines humming alongside. A spur follows the Richmond Highway (US-1) motel strip south of the river, a corridor of weekly rates and neon, never a neighborhood.
+The Valley is where Richmond sends the people it does not know what to do with, and where those people quietly run their own city inside the city. Along Lamplighter Way (a fictional street) in the Shockoe Valley corridor sit the intake offices, the court annex, an overnight holding center and the long concrete shadow of the I-95 viaduct, with the rail lines humming alongside. A spur follows the Richmond Highway (US-1) motel strip south of the river, a corridor of weekly rates and neon, never a neighborhood.
 
-Night holds the Valley because necessity is its oldest customer: a fixer who needs hands, a feeder who needs consent, an elder who needs a quiet bed. Mortalis does the practical work: the church van, the pills, the meal line. Power sits at the top of the docket and the cell block. Wild drifts in through the cracks, in a dog's eyes and in a laundromat's dryers. Everyone here has a plan to get out, or to get someone else out, and the Valley is mostly the story of those plans.
+Night holds the Valley because necessity is its oldest customer: a fixer who needs hands, a feeder who needs consent, an elder who needs a quiet bed. Mortalis does the practical work: the church van, the pills, the meal line. Power sits at the top of the docket and on the holding center's night shift. Wild drifts in through the cracks, in a dog's eyes and in a laundromat's dryers. Everyone here has a plan to get out, or to get someone else out, and the Valley is mostly the story of those plans.
 
 **Tone:** raw necessity, not glamour. No one is just a victim; everyone has a plan.
 
@@ -58,7 +58,7 @@ When you spend time in the dives, the motel lots, and the meal lines listening f
 | `npc_pepper` | Wild | Pepper, a camp dog with a bound spirit behind her eyes, who keeps the viaduct camp's gate. |
 | `npc_mavis_thorne` | Wild | Mavis Thorne, a fae who runs the strip's all-night laundromat. |
 | `npc_mr_lacey` | Power | Mr. Lacey, the Red Lantern's night clerk, whose register hides anyone he signs in. |
-| `npc_gideon_marsh` | Power | Warden Gideon Marsh, a warlock who runs the jail's night wing. |
+| `npc_gideon_marsh` | Power | Superintendent Gideon Marsh, a warlock who runs the Lamplighter Holding Center's overnight shift. |
 
 A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
 
@@ -72,7 +72,7 @@ Named locations are maintained in [`game/locations.json`](../game/locations.json
 and rendered by the City dashboard. This file owns neighborhood lore, not duplicate
 location records.
 
-The Viaduct Camp, the Valley Courts Annex, the Valley Resource Center, the Night Wing, the Richmond Highway Motel Strip and the Red Lantern Motor Inn belong to this hub. Every named institution here is fictional.
+The Viaduct Camp, the Valley Courts Annex, the Valley Resource Center, the Lamplighter Holding Center, the Richmond Highway Motel Strip and the Red Lantern Motor Inn belong to this hub. Every named institution here is fictional.
 
 ---
 
@@ -87,7 +87,7 @@ The Viaduct Camp, the Valley Courts Annex, the Valley Resource Center, the Night
 ## Adaptation Notes
 
 - Unhoused, jailed and addicted characters are full people with goals and plans. Never use them as set dressing or as "monsters." Show more than one face: the organizer, the worker, the grandmother, the student, the kid with a plan.
-- Real service providers, the real jail and real residential neighborhoods are never named or made supernatural. The Valley Resource Center, the Valley Courts Annex and the Night Wing are fictional stand-ins. Richmond Highway is a corridor, not a neighborhood.
+- Real service providers, the real jail and real residential neighborhoods are never named or made supernatural. The Valley Resource Center, the Valley Courts Annex and the Lamplighter Holding Center are fictional stand-ins; the holding center is a separate overnight facility, never the city jail. Richmond Highway is a corridor, not a neighborhood.
 - Yolanda Price feeds only on people who have clearly said yes, never on clients. Pills are a plan and a trade for Darnell, not a vice label; show the dose card, not the damage.
 - Keep the worst moment offscreen: show the empty bunk, the cut-off phone call, the flyer on the pillar. When someone is lost, someone comes looking and someone grieves.
 - Respect player safety limits, especially around addiction and incarceration. Check in at session close when a scene went somewhere heavy.

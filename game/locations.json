@@ -835,8 +835,8 @@
       "controller_note": "Contested; no single owner",
       "status": "active",
       "description": "A riverside lot below the bluff where the old ironworks meets the memorial grounds, ringed with rusted rail and cast-iron scrap.",
-      "atmosphere": "Cold iron, river damp, the faint ring of a shift bell that nobody rings.",
-      "notes": "Where the labor that built the city and the dead it honors share a fence line. Deals nobody wants overheard get made here.",
+      "atmosphere": "Cold iron, river damp, and the far-off clang of Oregon Hill's phantom shifts carrying down from the overlook.",
+      "notes": "Where the labor that built the city and the dead it honors share a fence line. Deals nobody wants overheard get made here. Borders Oregon Hill's Tredegar Overlook (loc_tredegar_overlook) on the bluff above: the same ironworks seen from the memorial side, the way Hollywood's border is seen from Oregon Hill. The phantom shifts are Oregon Hill's industrial echo; here they are only heard through the fence.",
       "last_updated": "2026-10-01"
     },
     {
@@ -974,18 +974,18 @@
       "last_updated": "2026-10-01"
     },
     {
-      "id": "loc_night_shift_jail_wing",
-      "name": "The Night Wing",
+      "id": "loc_lamplighter_holding",
+      "name": "Lamplighter Holding Center",
       "hub_id": "hub_the_valley",
-      "type": "Jail wing",
+      "type": "Holding center",
       "controller_ids": [
         "npc_gideon_marsh"
       ],
-      "controller_note": "Warden Gideon Marsh runs it; the county's paperwork thinks it is routine",
+      "controller_note": "Superintendent Gideon Marsh runs the overnight shift; a private contractor holds the license",
       "status": "active",
-      "description": "A fictional night wing of a fictional regional jail, reached by a sally port off Lamplighter Way. Lights stay half up, and everyone inside is somebody's brother, mother or coworker waiting on a hearing.",
+      "description": "A fictional, privately contracted overnight holding center on Lamplighter Way, separate from any jail, where people wait between an arrest or a missed court date and a morning hearing at the annex. Lights stay half up, and everyone inside is somebody's brother, mother or coworker.",
       "atmosphere": "Humming, cold and slow; keys, count calls, a tired hush after midnight.",
-      "notes": "Never the real facility. What happens inside stays offscreen; show the visiting line, the commissary deposit, the phone call that cuts off at fifteen minutes. The people inside have lawyers to find, cases to understand and families to reach.",
+      "notes": "Fictional, and separate from the real city jail, which never appears in play. What happens inside stays offscreen; show the visiting line, the property-release window, the phone call that cuts off at fifteen minutes. The people inside have lawyers to find, cases to understand and families to reach; they are never anyone's resources or props.",
       "last_updated": "2026-10-01"
     },
     {

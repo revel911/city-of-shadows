@@ -105,4 +105,8 @@ test('canonical roster has full profiles while preserving distinctive establishe
   assert.match(get('npc_the_collector').voice_note, /does not speak/);
   assert.equal(get('npc_marcus_teen').flirtatiousness, null);
   assert.equal(get('npc_marcus_teen').intimacy_style, null);
+  assert.equal(get('npc_little_andre').flirtatiousness, null);
+  assert.equal(get('npc_little_andre').intimacy_style, null);
+  assert.equal(get('npc_pepper').flirtatiousness, null);
+  assert.equal(get('npc_pepper').intimacy_style, null);
 });

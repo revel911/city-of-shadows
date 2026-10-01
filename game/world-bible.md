@@ -122,7 +122,7 @@ The MC should let this surface slowly. Discrepancies in the Public Events Log. N
 
 - **River & Docks** (Wild-dominant) — The working James: the Marine Terminal, the Commerce Road rail corridor, the Manchester floodwall, Rocketts Landing and Belle Isle. Cargo moves by day and secrets by night, and everything is for sale if you know what you will owe. An older port writes itself over the new one, and on certain tides the burned colonial town of Warwick can be walked.
 
-- **The Valley** (Night-dominant) — The Shockoe Valley intake offices, court annex and jail under the I-95 viaduct, with a spur down the Richmond Highway motel strip. It is where Richmond sends the people it does not know what to do with, and where they run their own city inside it; everyone has a plan to get out, or to get someone else out. Under the viaduct, every clock and phone reads 1958.
+- **The Valley** (Night-dominant) — The Shockoe Valley intake offices, court annex and a fictional overnight holding center under the I-95 viaduct, with a spur down the Richmond Highway motel strip. It is where Richmond sends the people it does not know what to do with, and where they run their own city inside it; everyone has a plan to get out, or to get someone else out. Under the viaduct, every clock and phone reads 1958.
 
 ---
 
@@ -181,7 +181,7 @@ The MC should let this surface slowly. Discrepancies in the Public Events Log. N
 | "The Archivist" | Unknown | Leaves corrected historical records at Overwrite sites | Unknown | Unknown | City-wide |
 | Mireille Fontenot | Night | Toreador; gallery owner; Masquerade enforcer | Social control of Night faction | Night 2 | The Fan, Downtown |
 | Father Benedikt Hruska | Mortalis | St. Peter's priest; neighborhood anchor | Hold the Bottom together | Mortalis 1 | Shockoe Bottom |
-| "The Shepherd" | Night/Wild border | Patrols James River corridor | Keep Belle Isle sealed | Unknown | Downtown, river |
+| "The Shepherd" | Night/Wild border | Patrols James River corridor | Keep Belle Isle sealed | Unknown | Downtown, River & Docks (Belle Isle) |
 | Emmett Daye | Mortalis | Hollywood Cemetery groundskeeper (40 years) | Make sense of what he's seen | Mortalis 0 | Shockoe Bottom (adj.), Oregon Hill (adj.) |
 | Marcus Delacroix | Wild-adjacent | Street artist; mortal who sees the Overwrite | Be believed | Status 0 | The Fan |
 

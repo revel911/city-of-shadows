@@ -23,15 +23,15 @@ Night holds the bluff because the dead are its natural constituency, and because
 - A grave in Hollywood shows a burial date for someone still alive
 - The Virginia War Memorial's Shrine of Memory adds names that are in no record
 - Hollywood has sections its groundskeeper does not remember being built
-- The shift bell at the old Tredegar works rings when no one is there to ring it
+- At Tredegar Edge you can hear Oregon Hill's phantom ironworks shifts through the fence; that echo belongs to Oregon Hill (see `loc_tredegar_overlook`), and down here it is only overheard
 
 ---
 
 ## Hub Moves
 
 ### Remember Their Names
-When you consult Night or Power contacts about the city's buried history, roll with Mind instead of your Status.
-- **10+:** Ask 3 below, and you may trade one unasked question for a favor from a Status-3 NPC (they name the price).
+When you Hit the Streets to consult Night or Power contacts about the city's buried history, roll with Mind instead of their Circle rating (this replaces Hit the Streets' Circle roll).
+- **10+:** Ask up to 3 below. You may give up one unasked question to gain a favor from a Status-3 NPC (they name the price).
 - **7-9:** Ask 1 below.
   - Who was really buried here, and who was erased?
   - Whose name does someone powerful want forgotten?
@@ -39,10 +39,10 @@ When you consult Night or Power contacts about the city's buried history, roll w
 - **Miss:** Your questions wake something that expected to be left alone.
 
 ### For the City
-When you refuse to honor a Debt because the city's need outweighs it, and you say why out loud, roll with Heart.
+When you refuse to honor a Debt because the city's need outweighs it, and you say why out loud, roll with Heart instead of the difference in Status (this replaces the usual Status-difference roll for refusing to honor a Debt).
 - **10+:** Erase the Debt completely by crossing out one advance you have taken (not change playbook or retire). The creditor accepts it, grudgingly.
 - **7-9:** As 10+, but the creditor tells others what you did.
-- **Miss:** Refuse a Debt as usual, and the creditor's whole Circle hears that you hide behind the city.
+- **Miss:** Take the usual miss for refusing to honor a Debt, and the creditor's whole Circle hears that you hide behind the city.
 
 ---
 
@@ -87,5 +87,5 @@ Hollywood Cemetery (`loc_hollywood_cemetery`) belongs to this hub. Its border wi
 
 - Hollywood Cemetery holds presidents and Confederate dead. The supernatural here is about who gets remembered and who gets erased, never about glorifying the Confederacy. Do not turn the Lost Cause into a source of power, a sympathetic cause, or a hero's legend.
 - Keep the legacy Hollywood anomalies already in `game/world-bible.md`, including the grave with an impossible burial date and Emmett Daye's unexplained new sections.
-- Night and Power are most at home here. Remember Their Names rolls with Mind, not Status, so a quiet researcher can out-read a well-connected one.
+- Night and Power are most at home here. Remember Their Names rolls with Mind instead of the contact's Circle rating, so a quiet researcher can out-read a well-connected one.
 - Treat grief and honor seriously. The dead are not set dressing.

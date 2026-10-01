@@ -1223,17 +1223,17 @@
     },
     {
       "data": {
-        "id": "loc_night_shift_jail_wing",
-        "label": "The Night Wing",
+        "id": "loc_lamplighter_holding",
+        "label": "Lamplighter Holding Center",
         "kind": "location",
         "hub_id": "hub_the_valley",
         "status": "active",
-        "subtype": "Jail wing",
-        "details": "A fictional night wing of a fictional regional jail, reached by a sally port off Lamplighter Way. Lights stay half up, and everyone inside is somebody's brother, mother or coworker waiting on a hearing."
+        "subtype": "Holding center",
+        "details": "A fictional, privately contracted overnight holding center on Lamplighter Way, separate from any jail, where people wait between an arrest or a missed court date and a morning hearing at the annex. Lights stay half up, and everyone inside is somebody's brother, mother or coworker."
       },
       "position": {
-        "x": -614,
-        "y": -526
+        "x": -129,
+        "y": -620
       }
     },
     {
@@ -2680,14 +2680,14 @@
     {
       "data": {
         "id": "npc_gideon_marsh",
-        "label": "Warden Gideon Marsh",
+        "label": "Superintendent Gideon Marsh",
         "kind": "npc",
         "hub_id": "hub_the_valley",
         "faction": "Power",
         "status": "active",
-        "subtype": "Warlock who runs the jail's night wing",
+        "subtype": "Warlock who runs the overnight shift at the Lamplighter Holding Center",
         "portrait": "",
-        "details": "Warlock who runs the jail's night wing"
+        "details": "Warlock who runs the overnight shift at the Lamplighter Holding Center"
       },
       "position": {
         "x": 70,
@@ -3855,8 +3855,8 @@
     },
     {
       "data": {
-        "id": "edge_loc_night_shift_jail_wing_hub_the_valley",
-        "source": "loc_night_shift_jail_wing",
+        "id": "edge_loc_lamplighter_holding_hub_the_valley",
+        "source": "loc_lamplighter_holding",
         "target": "hub_the_valley",
         "type": "in_hub",
         "label": "In",
