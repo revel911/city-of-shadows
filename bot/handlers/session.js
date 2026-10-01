@@ -2017,6 +2017,21 @@ export function shouldCommitDraft(session, save, now = Date.now()) {
   return now - (session.draftCommittedAt || 0) >= DRAFT_COMMIT_INTERVAL_MS;
 }
 
+// Known IDs a faction may reference, read inside the save's transaction so
+// NPCs created earlier in the same save count.
+async function factionReferenceIds(tx, characterId) {
+  const [npcDoc, hubs, players] = await Promise.all([
+    tx.readJSON('game/npcs.json'),
+    tx.readJSON('hubs/index.json'),
+    tx.readJSON('players/index.json'),
+  ]);
+  return {
+    npc: new Set((npcDoc?.npcs || []).map(npc => npc.id)),
+    hub: new Set((Array.isArray(hubs) ? hubs : []).map(hub => hub.id)),
+    pc: new Set([...(Array.isArray(players) ? players : []).map(player => player.id), characterId]),
+  };
+}
+
 class SaveRejected extends Error {
   constructor(problems) {
     super(problems.join('; '));
@@ -2103,8 +2118,9 @@ export async function processSaveOnboarding(thread, session, save) {
         catch (e) { factionWarnings.push(`factions: ${e.message}`); }
         if (factionPatches && !Array.isArray(factionPatches)) factionWarnings.push('factions: faction_patch must be a JSON array');
         else if (factionPatches?.length) {
+          const referenceIds = await factionReferenceIds(tx, id);
           await tx.updateJSON('game/factions.json', doc => {
-            const result = mergeCanonicalPatches(doc, factionPatches, { collection: 'factions', idPrefix: 'faction_', sessionId: publicSessionId, stamp });
+            const result = mergeCanonicalPatches(doc, factionPatches, { collection: 'factions', idPrefix: 'faction_', sessionId: publicSessionId, stamp, referenceIds });
             factionWarnings.push(...result.rejected.map(message => `factions: ${message}`));
             return result.rejected.length === factionPatches.length ? null : result.doc;
           });
@@ -2288,7 +2304,10 @@ async function processSessionClose(thread, session, close) {
       }
       await merge('game/npcs.json', npcPatches, { collection: 'npcs', idPrefix: 'npc_', allowNameMatch: true });
       await merge('game/locations.json', locationPatches, { collection: 'locations', idPrefix: 'loc_', allowNameMatch: true });
-      await merge('game/factions.json', factionPatches, { collection: 'factions', idPrefix: 'faction_' });
+      if (factionPatches) {
+        const referenceIds = await factionReferenceIds(tx, id);
+        await merge('game/factions.json', factionPatches, { collection: 'factions', idPrefix: 'faction_', referenceIds });
+      }
       await merge('game/mysteries.json', mysteryPatches, { collection: 'mysteries', idPrefix: 'mystery_', derive: withDerivedMysteryState });
       if (memoryPatches) {
         const validNpcIds = new Set(((await tx.readJSON('game/npcs.json'))?.npcs || []).map(npc => npc.id));

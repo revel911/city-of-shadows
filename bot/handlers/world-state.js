@@ -582,7 +582,8 @@ export function mergeCanonicalPatches(doc, patches, {
   sessionId,
   stamp,
   allowNameMatch = false,
-  publicOnly = false
+  publicOnly = false,
+  referenceIds = null
 }) {
   const next = doc && typeof doc === 'object'
     ? { ...doc }
@@ -625,9 +626,15 @@ export function mergeCanonicalPatches(doc, patches, {
     const existing = index >= 0 ? list[index] : null;
     const currentRevision = Number.isInteger(existing?.revision) ? existing.revision : 0;
     if (collection === 'factions') {
-      // Shape only; NPC/hub/character references are checked by validate-world.
+      // Without referenceIds only the shape is checked; callers that write the
+      // live branch pass known NPC/hub/character IDs so a dangling reference
+      // is skipped here instead of failing validate-world later.
       const anyId = { has: () => true };
-      const problems = factionProblems({ ...existing, ...patch }, { npc: anyId, hub: anyId, pc: anyId });
+      const problems = factionProblems({ ...existing, ...patch }, {
+        npc: referenceIds?.npc || anyId,
+        hub: referenceIds?.hub || anyId,
+        pc: referenceIds?.pc || anyId,
+      });
       if (problems.length) {
         rejected.push(problems.join('; '));
         continue;

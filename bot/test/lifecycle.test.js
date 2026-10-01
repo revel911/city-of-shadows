@@ -291,3 +291,41 @@ test('close faction_patch merges into a missing factions file; a malformed entry
   assert.ok(ledger.touched.includes('faction_patch'));
   assert.ok(ledger.warnings.some(line => /^factions: faction_shapeless\.circle/.test(line)));
 });
+
+const factionProfile = {
+  moral: 4, order: 3, manner: 5, violence: 4, voice_note: 'Welcomes people with few words.',
+  verbosity: 1, humor_frequency: 2, humor_style: 'Gentle understatement.',
+  contrast_note: 'Brief in speech, attentive in action.', calibration_note: 'Initial authored profile.',
+  flirtatiousness: null, intimacy_style: null,
+};
+const crew = (id, extra = {}) => ({ id, name: id, circle: 'Mortalis', size: 1, strength: 2, stance: 'striving', ...extra });
+
+test('close skips a faction with a dangling leader but accepts one led by an NPC created in the same close', async t => {
+  const npcs = [{ id: 'npc_new_boss', name: 'New Boss', personality: factionProfile }];
+  const factions = [crew('faction_ghost_led', { leader_npc_id: 'npc_nobody' }), crew('faction_new_boss', { leader_npc_id: 'npc_new_boss' })];
+  const git = fakeGit(t, { [`players/${character}/state.json`]: state }, { responses: [
+    '**Where we left off**\nOutside the gym, holding the open envelope.',
+    `<close_session><character_id>${character}</character_id><handoff>Outside the gym.</handoff><npc_patch>${JSON.stringify(npcs)}</npc_patch><faction_patch>${JSON.stringify(factions)}</faction_patch><world_impact>{"level":"shared","summary":"A crew formed","affected_ids":["faction_new_boss"]}</world_impact></close_session>`,
+  ] });
+  const thread = makeThread('faction-ref-close-test');
+  await startSession(thread, { id: character, name: 'Morgan', discord_id: '123' });
+  await handleMessage({ channel: thread, author: { id: '123' }, content: 'save & end', id: 'faction-ref-close' });
+  assert.equal(thread.archived, true);
+  assert.deepEqual(JSON.parse(git.files.get('game/factions.json')).factions.map(item => item.id), ['faction_new_boss']);
+  assert.ok(JSON.parse(git.files.get('game/npcs.json')).npcs.some(npc => npc.id === 'npc_new_boss'));
+  const ledger = JSON.parse(git.files.get(`game/session-ledger/${character}-session_001.json`));
+  assert.ok(ledger.warnings.some(line => /^factions: faction_ghost_led leader npc_nobody is not an NPC/.test(line)));
+});
+
+test('onboarding skips a faction with a dangling leader but accepts one led by an NPC from the same save', async t => {
+  const git = fakeGit(t);
+  const errors = [];
+  t.mock.method(console, 'error', (...args) => errors.push(args.map(String).join(' ')));
+  const session = makeSession(), thread = makeThread();
+  const npcs = [{ id: 'npc_new_boss', name: 'New Boss', personality: factionProfile }];
+  const factions = [crew('faction_ghost_led', { leader_npc_id: 'npc_nobody' }), crew('faction_owned', { leader_npc_id: 'npc_new_boss', character_ids: [character] })];
+  assert.equal((await processSaveOnboarding(thread, session, save({ npc_patch: JSON.stringify(npcs), faction_patch: JSON.stringify(factions) }))).success, true);
+  assert.deepEqual(JSON.parse(git.files.get('game/factions.json')).factions.map(item => item.id), ['faction_owned']);
+  assert.ok(git.files.has(`players/${character}/state.json`));
+  assert.ok(errors.some(line => /factions: faction_ghost_led leader npc_nobody is not an NPC/.test(line)));
+});
