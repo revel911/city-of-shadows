@@ -2696,6 +2696,142 @@
     },
     {
       "data": {
+        "id": "npc_the_ledger",
+        "label": "The Ledger",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "An entity that tracks every transaction of consequence in the city; speaks through whatever record is nearest",
+        "portrait": "",
+        "details": "An entity that tracks every transaction of consequence in the city; speaks through whatever record is nearest"
+      },
+      "position": {
+        "x": 1016,
+        "y": -778
+      }
+    },
+    {
+      "data": {
+        "id": "npc_priya_vance",
+        "label": "Priya Vance",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Artifact dealer who sets prices by games of chance",
+        "portrait": "",
+        "details": "Artifact dealer who sets prices by games of chance"
+      },
+      "position": {
+        "x": 1105,
+        "y": 32
+      }
+    },
+    {
+      "data": {
+        "id": "npc_persephone_doyle",
+        "label": "Persephone Doyle",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Demon whose old pact binds the street's fortunes",
+        "portrait": "",
+        "details": "Demon whose old pact binds the street's fortunes"
+      },
+      "position": {
+        "x": 1253,
+        "y": -480
+      }
+    },
+    {
+      "data": {
+        "id": "npc_velvet",
+        "label": "Velvet",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Fae doorman at a members-only club",
+        "portrait": "",
+        "details": "Fae doorman at a members-only club"
+      },
+      "position": {
+        "x": 118,
+        "y": -397
+      }
+    },
+    {
+      "data": {
+        "id": "npc_lucien_fairbanks",
+        "label": "Lucien Fairbanks",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Vampire bartender who sips ambition, not blood",
+        "portrait": "",
+        "details": "Vampire bartender who sips ambition, not blood"
+      },
+      "position": {
+        "x": 600,
+        "y": -888
+      }
+    },
+    {
+      "data": {
+        "id": "npc_lottie_sweeney",
+        "label": "Lottie Sweeney",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Ghost entertainer hired for bank galas",
+        "portrait": "",
+        "details": "Ghost entertainer hired for bank galas"
+      },
+      "position": {
+        "x": 1144,
+        "y": -42
+      }
+    },
+    {
+      "data": {
+        "id": "npc_kidane_haile",
+        "label": "Kidane Haile",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Busker at Kanawha Plaza whose songs predict the markets",
+        "portrait": "",
+        "details": "Busker at Kanawha Plaza whose songs predict the markets"
+      },
+      "position": {
+        "x": 216,
+        "y": -192
+      }
+    },
+    {
+      "data": {
+        "id": "npc_shreya_desai",
+        "label": "Shreya Desai",
+        "kind": "npc",
+        "hub_id": "hub_downtown",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Runs an augmented-reality game across downtown that keeps finding real anomalies",
+        "portrait": "",
+        "details": "Runs an augmented-reality game across downtown that keeps finding real anomalies"
+      },
+      "position": {
+        "x": 397,
+        "y": -788
+      }
+    },
+    {
+      "data": {
         "id": "jacob-boone",
         "label": "Jacob Boone",
         "kind": "pc",
@@ -4532,6 +4668,86 @@
         "id": "edge_npc_gideon_marsh_hub_the_valley",
         "source": "npc_gideon_marsh",
         "target": "hub_the_valley",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_the_ledger_hub_downtown",
+        "source": "npc_the_ledger",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_priya_vance_hub_downtown",
+        "source": "npc_priya_vance",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_persephone_doyle_hub_downtown",
+        "source": "npc_persephone_doyle",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_velvet_hub_downtown",
+        "source": "npc_velvet",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_lucien_fairbanks_hub_downtown",
+        "source": "npc_lucien_fairbanks",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_lottie_sweeney_hub_downtown",
+        "source": "npc_lottie_sweeney",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_kidane_haile_hub_downtown",
+        "source": "npc_kidane_haile",
+        "target": "hub_downtown",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_shreya_desai_hub_downtown",
+        "source": "npc_shreya_desai",
+        "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
         "layer": "structural"

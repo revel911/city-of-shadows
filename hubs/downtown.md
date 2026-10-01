@@ -55,6 +55,45 @@ location records.
 - **7-9:** You get where you're going but choose 1 from above.
 - **Miss:** The tunnels have their own agenda. You encounter something that doesn't want you there.
 
+### Climb the Ladder
+When you beg a favor from a Status-3 member of another Circle on Main Street, roll with Heart. On a hit they treat you as one of their own, resources included, once you bring them what they ask (their choice among: a Debt from a Status-2+ member of your Circle; a secret about one of their enemies; something precious).
+- **10+:** They want one.
+- **7-9:** They want two.
+- **Miss:** They want all three, and you take -1 ongoing with their Circle until you deliver.
+
+### Gala Season
+When you announce an exclusive party on Main Street, roll with Mind when time passes.
+- **10+:** All three below.
+- **7-9:** Choose 1.
+  - A Status-3 NPC arrives bearing gifts.
+  - A Status-2 NPC offers you a Debt for an invitation.
+  - A Status-1 NPC of your choice is shut out of Main Street society for good.
+- **Miss:** The party draws exactly the wrong guests.
+
+---
+
+## Power on Main Street
+
+Main Street is the old "Wall Street of the South," and the Federal Reserve Bank of Richmond still stands nearby as a plain, mundane landmark of the district's money. Here Power runs on ritual contracts: signatures, seals and handshakes that bind more than the paper says. Downtown stays Night-dominant, but Main Street is contested ground where Power is rising, and every Circle has someone working a table, a bar or a doorway on it.
+
+---
+
+## Residents
+
+| ID | Circle | Resident |
+|---|---|---|
+| `npc_the_ledger` | Power | The Ledger, an entity that tracks every transaction of consequence in the city. |
+| `npc_priya_vance` | Power | Priya Vance, artifact dealer who sets prices by games of chance. |
+| `npc_persephone_doyle` | Wild | Persephone Doyle, a demon whose old pact binds the street's fortunes. |
+| `npc_velvet` | Wild | Velvet, fae doorman at a members-only club. |
+| `npc_lucien_fairbanks` | Night | Lucien Fairbanks, vampire bartender who sips ambition, not blood. |
+| `npc_lottie_sweeney` | Night | Lottie Sweeney, ghost entertainer hired for bank galas. |
+| `npc_kidane_haile` | Mortalis | Kidane Haile, busker at Kanawha Plaza whose songs predict the markets. |
+| `npc_shreya_desai` | Mortalis | Shreya Desai, runs an augmented-reality game across downtown that keeps finding real anomalies. |
+
+A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
+
+
 ---
 
 ## Threats & Complications

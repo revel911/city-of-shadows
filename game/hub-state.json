@@ -20,9 +20,14 @@
     {
       "note": "Increased hunter network activity near The Exchange.",
       "id": "hub_downtown",
-      "revision": 13,
-      "last_updated": "2026-09-26",
-      "updated_by_session": "keeper_city_turn_20260926192138",
+      "revision": 14,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "rumors": [
+        "An oracle firm is staging a hostile takeover of a Power house.",
+        "A Mortalis leader who was declared dead is back on Main.",
+        "QR-code billboards reading \"Greed changes lives\" are appearing overnight."
+      ],
       "condition": "Night-shift unease at The Exchange has sharpened: a mortal medium has begun waiting through the late shift and leaving offerings at a second Downtown location, and staff continue to log unlogged traffic no known network claims."
     },
     {
