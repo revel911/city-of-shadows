@@ -146,6 +146,8 @@ What follows depends on which Circle ends up holding the pen. None of these has 
 
 - **The Valley** (Night-dominant) — The Shockoe Valley intake offices, court annex and a fictional overnight holding center under the I-95 viaduct, with a spur down the Richmond Highway motel strip. It is where Richmond sends the people it does not know what to do with, and where they run their own city inside it; everyone has a plan to get out, or to get someone else out. Under the viaduct, every clock and phone reads 1958.
 
+- **Capitol & City Hall** (Mortalis-dominant) — Richmond City Hall and its observation deck, Capitol Square, the Virginia State Capitol, the General Assembly Building and the City Hall parking deck. By day the people's business happens in the open; after dark, deals are struck on the dim levels of the deck, usually through a go-between for a Debt or two. Plenty of mortals here hold no Status and cannot hold Debts, and the powerful ones know exactly who they answer to. Official records change between the morning and afternoon sessions, and only the stenographers notice.
+
 ---
 
 ## Factions (City-Spanning)

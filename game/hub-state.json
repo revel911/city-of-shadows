@@ -89,6 +89,21 @@
         "Darnell Hayes is fixing a bike that came in wearing a 1958 license tag, and its rider has not come back for it.",
         "The Lamplighter Holding Center's state audit was moved up a month, and Gideon Marsh has not slept since."
       ]
+    },
+    {
+      "id": "hub_capitol_city_hall",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "conditions": [],
+      "rumors": [
+        "A stenographer in the council chamber swears the minutes now say her morning's motion passed unanimously, and she remembers it failing.",
+        "The City Hall parking deck's third level keeps a numbered space that no permit lists, and a car sits there every night until sunrise.",
+        "A bill that died in committee last spring appeared on this week's calendar with its original sponsor's name on it, and the sponsor says she never filed it.",
+        "Someone has been leaving fresh flowers at the Capitol's gallery door, and the doorkeeper's pillar is always warm in the morning.",
+        "A records clerk found a deed in the vault with today's date, signed in handwriting from 1912.",
+        "A storefront near Capitol Square is offering free help with city paperwork, and everyone who accepted has since stopped being able to find their own old forms."
+      ]
     }
   ]
 }

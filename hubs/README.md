@@ -18,6 +18,7 @@ threads. Named places themselves are canonical in
 | [memorial-district.md](memorial-district.md) | Memorial District | Night-dominant west bluff of graves, war memorials, and civic martyrdom over the James; city history as currency |
 | [river-docks.md](river-docks.md) | River & Docks | Wild-dominant working James: the Deepwater port, Manchester floodwall, Rocketts, and Belle Isle; a thin place for goods, secrets, and deals |
 | [the-valley.md](the-valley.md) | The Valley | Night-dominant Shockoe Valley service-and-court corridor under the I-95 viaduct, plus the Richmond Highway motel strip; necessity, survival, and everyone's plan to get out |
+| [capitol-city-hall.md](capitol-city-hall.md) | Capitol & City Hall | Mortalis-dominant seat of city and state government; open business by day, parking-garage deals by night; every Circle needs a signature here |
 
 ## Adding a hub
 

@@ -53,5 +53,10 @@
     "id": "hub_the_valley",
     "name": "The Valley",
     "file": "the-valley.md"
+  },
+  {
+    "id": "hub_capitol_city_hall",
+    "name": "Capitol & City Hall",
+    "file": "capitol-city-hall.md"
   }
 ]

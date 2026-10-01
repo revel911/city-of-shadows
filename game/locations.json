@@ -1013,6 +1013,84 @@
       "atmosphere": "Dim, smoky, kind; the most welcome room on the strip.",
       "notes": "Neutral ground in practice. Mr. Lacey keeps the night desk, and the bartender will keep your coat if you promise to come back for it.",
       "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_richmond_city_hall",
+      "name": "Richmond City Hall",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Corporate & Government",
+      "controller_ids": [],
+      "controller_note": "Run by the city's fictional day-shift staff; no supernatural faction holds the building",
+      "status": "active",
+      "description": "A tall, stern government tower on East Broad Street, all lobbies, security desks, council chambers and long corridors of frosted-glass office doors. Open to anyone with a reason and a photo ID.",
+      "atmosphere": "Fluorescent and busy by day; hushed, humming and half-lit after the last meeting adjourns.",
+      "notes": "The people's business happens here in the open. Every clerk, aide and stenographer in this guide is a fictional person; no real official or agency is ever supernatural or corrupt. Records in the clerk's vault sometimes read differently after lunch than they did at the morning session, and only the stenographers seem to notice (the Overwrite).",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_city_hall_observation_deck",
+      "name": "City Hall Observation Deck",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Landmark",
+      "controller_ids": [],
+      "controller_note": "Open to the public in daylight",
+      "status": "active",
+      "description": "A public deck high in City Hall with a wide, windy view of the downtown rooftops, the river bend and the Capitol dome across the way.",
+      "atmosphere": "Bright and breezy by day, with tourists and school groups; strangely private at dusk.",
+      "notes": "A good place for a quiet word where the skyline does the eavesdropping. From up here the city looks like a ledger someone is still balancing.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_capitol_square",
+      "name": "Capitol Square",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Park",
+      "controller_ids": [],
+      "controller_note": "Public ground; the fountain-and-bench crowd belongs to nobody",
+      "status": "active",
+      "description": "The old shaded green around the Virginia State Capitol, with brick paths, statuary, benches and a lunchtime crowd of aides, tourists and pigeons.",
+      "atmosphere": "Lunch-hour chatter and briefcases by day; lamplit paths and long shadows by night.",
+      "notes": "Where staffers take the calls they do not want overheard in a hallway. Powerful people stroll here on the assumption that nobody stops to listen to a bench.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_virginia_state_capitol",
+      "name": "Virginia State Capitol",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Corporate & Government",
+      "controller_ids": [],
+      "controller_note": "The Commonwealth's staff and visitors; no real office-holder appears here",
+      "status": "active",
+      "description": "The columned, pale neoclassical statehouse at the top of the square, with its marble rotunda, hushed galleries and chambers where laws are argued and rewritten.",
+      "atmosphere": "Echoing and ceremonial by day; the dome keeps its own cold quiet at night.",
+      "notes": "Visitors walk the rotunda on any given afternoon. After the doors close, someone is sometimes still keeping the gallery. Never make a real legislator or official supernatural; keep every named person a fictional staffer, advocate or ghost.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_general_assembly_building",
+      "name": "General Assembly Building",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Corporate & Government",
+      "controller_ids": [],
+      "controller_note": "Legislative staff, advocates and lobbyists; fictional faces only",
+      "status": "active",
+      "description": "A busy modern annex of committee rooms, hearing rooms and cramped staff offices where bills are drafted, lobbied and amended during the session.",
+      "atmosphere": "Crowded with folders, lanyards and hallway deals during session; empty and humming otherwise.",
+      "notes": "Where pages carry the paper and lobbyists carry the favors. Pages and interns here are adults; keep minors clear of Debts, deals and danger.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_city_hall_parking_deck",
+      "name": "City Hall Parking Deck",
+      "hub_id": "hub_capitol_city_hall",
+      "type": "Infrastructure",
+      "controller_ids": [],
+      "controller_note": "Nobody; everyone who parks here is passing through",
+      "status": "active",
+      "description": "A gray multi-level concrete deck beside City Hall, with numbered pillars, a pay station, flickering fluorescents and exactly two cameras that never seem to point at the right level.",
+      "atmosphere": "Rush-hour traffic by day; echoing footsteps, dripping pipes and idling engines after dark.",
+      "notes": "After dark the deck is where off-the-books agreements happen, usually on the third level. Brokers choose it because everyone has a reason to be parked there. The older City Hall Annex (loc_city_hall_annex) stays in Downtown.",
+      "last_updated": "2026-10-01"
     }
   ]
 }
