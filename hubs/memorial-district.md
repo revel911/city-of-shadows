@@ -29,20 +29,23 @@ Night holds the bluff because the dead are its natural constituency, and because
 
 ## Hub Moves
 
-### Remember Their Names
-When you Hit the Streets to consult Night or Power contacts about the city's buried history, roll with Mind instead of their Circle rating (this replaces Hit the Streets' Circle roll).
-- **10+:** Ask up to 3 below. You may give up one unasked question to gain a favor from a Status-3 NPC (they name the price).
+### Read the Stones
+When you study the stones, plaques and names at a Memorial District site to learn what really happened there, roll with Mind.
+- **10+:** Ask 2 below, and take +1 forward when you act on an answer.
 - **7-9:** Ask 1 below.
-  - Who was really buried here, and who was erased?
-  - Whose name does someone powerful want forgotten?
-  - What did the city promise the dead, and break?
-- **Miss:** Your questions wake something that expected to be left alone.
+  - Which name or date here has been changed, and since when?
+  - Who still visits this spot, and what do they want kept?
+  - What did the Overwrite take out of this record?
+- **Miss:** The record notices you. A name you read tonight is gone tomorrow, and someone saw you reading it.
 
-### For the City
-When you refuse to honor a Debt because the city's need outweighs it, and you say why out loud, roll with Heart instead of the difference in Status (this replaces the usual Status-difference roll for refusing to honor a Debt).
-- **10+:** Erase the Debt completely by crossing out one advance you have taken (not change playbook or retire). The creditor accepts it, grudgingly.
-- **7-9:** As 10+, but the creditor tells others what you did.
-- **Miss:** Take the usual miss for refusing to honor a Debt, and the creditor's whole Circle hears that you hide behind the city.
+### Speak for the Dead
+When you stand at a grave or the wall and speak aloud for someone the city has forgotten, in front of a witness who matters, roll with Heart.
+- **10+:** Choose 2 below.
+- **7-9:** Choose 1.
+  - Your witness owes you a Debt for what they heard.
+  - The name holds: the Overwrite cannot edit it while you stay in Richmond.
+  - Night on the bluff takes you for a mourner, not a stranger. Take +1 ongoing to Circle moves with Night here until time passes.
+- **Miss:** Someone with a stake in forgetting that name hears you, and comes to ask why you said it.
 
 ---
 
@@ -50,14 +53,14 @@ When you refuse to honor a Debt because the city's need outweighs it, and you sa
 
 | ID | Circle | Resident |
 |---|---|---|
-| `npc_nadira_haddad` | Wild | Nadira Haddad, a jinn who keeps Hollywood's lost-and-found of things left on graves. |
+| `npc_tomasz_wilk` | Wild | Tomasz Wilk, a werewolf who mows Hollywood's steep slopes and keeps the deer, and worse, off the oldest graves. |
 | `npc_kelechi_nwosu` | Wild | Kelechi Nwosu, a tow-truck driver bound by a demon's contract to haul whatever it marks. |
 | `npc_felix_marchbanks` | Power | Felix Marchbanks, an estate appraiser who returns the possessions of the dead to their families. |
-| `npc_the_pallbearer` | Power | The Pallbearer, a spectre bound to the War Memorial's wall of names. |
+| `npc_harriet_ames` | Power | Harriet Ames, a military genealogist and Consilium mage who checks every new name on the wall. |
 | `npc_hester_byrd` | Night | Hester Byrd, vampire elder who claims the cemetery as neutral ground. |
-| `npc_ruthie_calhoun` | Night | Ruthie Calhoun, a ghoul who restores headstones and paints portraits of the dead. |
+| `npc_ruthie_calhoun` | Night | Ruthie Calhoun, a ghoul and night-shift crematory operator who keeps the ashes nobody claims. |
 | `npc_loretta_banfield` | Mortalis | Loretta Banfield, a Gold Star mother who leads the War Memorial's volunteer guides. |
-| `npc_gail_brannock` | Mortalis | Gail Brannock, ex-bodyguard, now on the cemetery night security shift. |
+| `npc_gail_brannock` | Mortalis | Gail Brannock, a retired stonemason whose recut headstone letters change after she cuts them. |
 
 A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
 
@@ -78,8 +81,8 @@ Hollywood Cemetery (`loc_hollywood_cemetery`) belongs to this hub. Its border wi
 ## Open Threads
 
 - **The Living Grave** — Hollywood's impossible burial date, described under Shockoe Bottom's threads and still unresolved. Groundskeeper Emmett Daye is the closest witness. — *heat: smoldering*
-- **The Wall Adds a Name** — Each morning the War Memorial shows a name no record holds. The Pallbearer wants to know who is writing them. — *heat: smoldering*
-- **The Deed Buyer** — Someone is quietly buying old cemetery deeds, and a Night elder is watching who. — *heat: smoldering*
+- **The Wall Adds a Name** — Each morning the War Memorial shows a name no record holds, and the newest matches a man who is still alive. Loretta Banfield and Harriet Ames want to know who is writing them, and why. — *heat: smoldering*
+- **The Recut Letters** — Gail Brannock's fresh headstone lettering now spells other names, and she has the photographs to prove it. Someone is editing the stones from the inside. — *heat: smoldering*
 
 ---
 
@@ -87,5 +90,5 @@ Hollywood Cemetery (`loc_hollywood_cemetery`) belongs to this hub. Its border wi
 
 - Hollywood Cemetery holds presidents and Confederate dead. The supernatural here is about who gets remembered and who gets erased, never about glorifying the Confederacy. Do not turn the Lost Cause into a source of power, a sympathetic cause, or a hero's legend.
 - Keep the legacy Hollywood anomalies already in `game/world-bible.md`, including the grave with an impossible burial date and Emmett Daye's unexplained new sections.
-- Night and Power are most at home here. Remember Their Names rolls with Mind instead of the contact's Circle rating, so a quiet researcher can out-read a well-connected one.
+- Night and Power are most at home here, but Read the Stones rolls with Mind, so a patient reader with no connections can learn what the powerful would rather keep buried.
 - Treat grief and honor seriously. The dead are not set dressing.

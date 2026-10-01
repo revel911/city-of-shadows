@@ -56,20 +56,20 @@ location records.
 - **7-9:** You learn something useful but choose 1 from above.
 - **Miss:** The memories are painful, and sharing them opens old wounds or creates new problems.
 
-### Call the Patrol
-When you phone the Creighton tenant patrol and need them on the block now, roll with Mortalis.
-- **10+:** They turn out in force. Choose 1 complication below.
-- **7-9:** They turn out. Choose 2 complications below.
-  - Somebody on the patrol turns the volume up and makes it bigger than it was.
-  - They came ready for a different kind of trouble than the one in front of them.
-  - Before they step in, they want you to take the first risk yourself.
-- **Miss:** The patrol hangs back at the corner and keeps its eyes on you instead.
+### Porch Lights On
+When you go door to door on the block asking neighbors to stand with you, roll with Mortalis.
+- **10+:** The block comes out. Hold 2.
+- **7-9:** Enough of them come out. Hold 1, and one neighbor wants a favor before they will stand with you.
+  - Spend 1 hold: they stand as witnesses, and their memory of what happened holds even when the Overwrite rewrites the record.
+  - Spend 1 hold: they fill a doorway, a stairwell or a sidewalk, and nobody gets past them for one exchange.
+  - Spend 1 hold: word reaches the tenant council's table within the hour.
+- **Miss:** Doors stay shut, and somebody who should not have heard you knocking did.
 
-### The Lot Has Everything
-When you work the weekend night market in the Nine Mile Road lot for something rare or uncanny, roll with Mind.
-- **10+:** A vendor has something close to it and wants a fair trade, and they have badly underpriced it. Take it cheap.
-- **7-9:** A vendor has something close to it, for a trade of equal value.
-- **Miss:** A local crew notices what you are hunting for and steps in to ask why.
+### Every Year's Leftovers
+When you hunt the Saturday swap meet in the Nine Mile Road lot for something that should not exist anymore (discontinued, demolished, or from a year that is not this one), roll with Mind.
+- **10+:** You find it, and the seller wants only the story of why you need it.
+- **7-9:** You find it, but it comes from the wrong year. The MC says what is off about it, or you can trade away something of your own from that year to get the right one.
+- **Miss:** Somebody at the meet recognizes it as theirs, and wants to know how you knew it existed.
 
 ---
 
@@ -78,12 +78,12 @@ When you work the weekend night market in the Nine Mile Road lot for something r
 | ID | Circle | Resident |
 |---|---|---|
 | `npc_lorenzo_pugh` | Mortalis | Deacon Lorenzo Pugh runs the tenant patrol. |
-| `npc_marisol_echevarria` | Mortalis | Marisol Echevarría, tenant-council secretary, a changeling raised mortal who doesn't fully know it. |
-| `npc_scrapheap` | Wild | Scrapheap, spirit of the Nine Mile Road scrap lot, hoards what people throw away. |
+| `npc_marisol_echevarria` | Mortalis | Marisol Echevarría, a home health aide and the block's interpreter, whose voicemail fills with neighbors calling from other decades. |
+| `npc_chain_net` | Wild | Chain Net, spirit of the old basketball court's chain net, which calls fouls in any year. |
 | `npc_miss_odessa` | Wild | Miss Odessa, a retired cafeteria manager whose rooftop hives hum in whichever year the bees remember. |
-| `npc_bettina_sorrells` | Power | Bettina Sorrells, redevelopment liaison, secretly retained by the Consilium. |
+| `npc_bettina_sorrells` | Power | Bettina Sorrells, relocation records manager and Consilium mage, who reads the move-out files for families the Overwrite misplaced. |
 | `npc_tobias_mensah` | Power | Tobias Mensah, night-bus operator whose route still stops at addresses on no current map. |
-| `npc_little_andre` | Night | Little Andre, a ghost only children and the very old can see. |
+| `npc_little_andre` | Night | Little Andre, a ghost child seen only in reflections, still walking to a school that was torn down. |
 | `npc_midnight_truck` | Night | The Midnight Truck, an urban legend: an ice-cream truck that runs after 2am. |
 
 A new character rooted here may choose one resident who owes them a Debt (see `mc-reference/character-creation.md` Phase 11).
@@ -92,7 +92,7 @@ A new character rooted here may choose one resident who owes them a Debt (see `m
 
 ## Adaptation Notes
 
-The Block layer stresses that the community holds its own ground, and every Circle is nibbling at the edges. No one here is neutral. Residents are people with plans, not victims or props.
+Creighton's residents layer is about neighbors who have kept their ground through every plan the city drew for it. Night, Power and the Wild each want a door in, and the tenant council decides who gets one. No one here is neutral. Residents are people with plans, not victims or props.
 
 ---
 

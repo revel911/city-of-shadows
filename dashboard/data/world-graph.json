@@ -1259,7 +1259,7 @@
         "hub_id": "hub_the_valley",
         "status": "active",
         "subtype": "Motel and bar",
-        "details": "A faded motor inn whose lounge has outlasted three owners. A red paper lantern over the door, a jukebox that still takes quarters, and a payphone in the lot where something fae is said to be trapped."
+        "details": "A faded motor inn whose lounge has outlasted three owners. A red paper lantern over the door, a jukebox that still takes quarters, and a payphone in the lot that rings with calls placed in 1958."
       },
       "position": {
         "x": -209,
@@ -2175,9 +2175,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Tenant-council secretary; a changeling raised mortal who doesn't fully know it",
+        "subtype": "Home health aide and the block's unofficial interpreter, whose voicemail fills with neighbors calling from other decades",
         "portrait": "",
-        "details": "Tenant-council secretary; a changeling raised mortal who doesn't fully know it"
+        "details": "Home health aide and the block's unofficial interpreter, whose voicemail fills with neighbors calling from other decades"
       },
       "position": {
         "x": 197,
@@ -2186,19 +2186,19 @@
     },
     {
       "data": {
-        "id": "npc_scrapheap",
-        "label": "Scrapheap",
+        "id": "npc_chain_net",
+        "label": "Chain Net",
         "kind": "npc",
         "hub_id": "hub_creighton_court",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Spirit of the Nine Mile Road scrap lot; hoards what people throw away",
+        "subtype": "Spirit of the chain-link net on the old Creighton basketball court; remembers every game since the court was poured and calls fouls in any year",
         "portrait": "",
-        "details": "Spirit of the Nine Mile Road scrap lot; hoards what people throw away"
+        "details": "Spirit of the chain-link net on the old Creighton basketball court; remembers every game since the court was poured and calls fouls in any year"
       },
       "position": {
-        "x": -9,
-        "y": 469
+        "x": 333,
+        "y": 101
       }
     },
     {
@@ -2226,9 +2226,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Power",
         "status": "active",
-        "subtype": "Redevelopment contractor's community liaison, secretly retained by the Consilium",
+        "subtype": "Relocation records manager at the redevelopment field office; a Consilium mage who reads the move-out files for families the Overwrite has misplaced",
         "portrait": "",
-        "details": "Redevelopment contractor's community liaison, secretly retained by the Consilium"
+        "details": "Relocation records manager at the redevelopment field office; a Consilium mage who reads the move-out files for families the Overwrite has misplaced"
       },
       "position": {
         "x": 423,
@@ -2260,9 +2260,9 @@
         "hub_id": "hub_creighton_court",
         "faction": "Night",
         "status": "active",
-        "subtype": "A ghost only children and the very old can see",
+        "subtype": "A ghost child seen only in reflections: bus windows, puddles, a television that is switched off",
         "portrait": "",
-        "details": "A ghost only children and the very old can see"
+        "details": "A ghost child seen only in reflections: bus windows, puddles, a television that is switched off"
       },
       "position": {
         "x": 1112,
@@ -2288,19 +2288,19 @@
     },
     {
       "data": {
-        "id": "npc_nadira_haddad",
-        "label": "Nadira Haddad",
+        "id": "npc_tomasz_wilk",
+        "label": "Tomasz Wilk",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Jinn who keeps Hollywood's lost-and-found of things left on graves",
+        "subtype": "Werewolf who mows Hollywood's steep slopes on a groundskeeping contract and keeps the deer, and worse, off the oldest graves",
         "portrait": "",
-        "details": "Jinn who keeps Hollywood's lost-and-found of things left on graves"
+        "details": "Werewolf who mows Hollywood's steep slopes on a groundskeeping contract and keeps the deer, and worse, off the oldest graves"
       },
       "position": {
-        "x": -1252,
-        "y": -155
+        "x": -287,
+        "y": 337
       }
     },
     {
@@ -2339,19 +2339,19 @@
     },
     {
       "data": {
-        "id": "npc_the_pallbearer",
-        "label": "The Pallbearer",
+        "id": "npc_harriet_ames",
+        "label": "Harriet Ames",
         "kind": "npc",
         "hub_id": "hub_memorial_district",
         "faction": "Power",
         "status": "active",
-        "subtype": "A spectre bound to the War Memorial's wall of names",
+        "subtype": "Military genealogist and quiet Consilium mage who checks every new name on the War Memorial wall against every record she can reach",
         "portrait": "",
-        "details": "A spectre bound to the War Memorial's wall of names"
+        "details": "Military genealogist and quiet Consilium mage who checks every new name on the War Memorial wall against every record she can reach"
       },
       "position": {
-        "x": -314,
-        "y": 5
+        "x": -763,
+        "y": -419
       }
     },
     {
@@ -2379,9 +2379,9 @@
         "hub_id": "hub_memorial_district",
         "faction": "Night",
         "status": "active",
-        "subtype": "Ghoul who restores headstones and paints portraits of the dead",
+        "subtype": "Ghoul and night-shift crematory operator who keeps the ashes nobody claims, and the names that go with them",
         "portrait": "",
-        "details": "Ghoul who restores headstones and paints portraits of the dead"
+        "details": "Ghoul and night-shift crematory operator who keeps the ashes nobody claims, and the names that go with them"
       },
       "position": {
         "x": -210,
@@ -2396,9 +2396,9 @@
         "hub_id": "hub_memorial_district",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Gold Star mother who leads the volunteer guides at the War Memorial, and the only living person the Pallbearer speaks to",
+        "subtype": "Gold Star mother who leads the volunteer guides at the War Memorial, and the first to see each morning's new name",
         "portrait": "",
-        "details": "Gold Star mother who leads the volunteer guides at the War Memorial, and the only living person the Pallbearer speaks to"
+        "details": "Gold Star mother who leads the volunteer guides at the War Memorial, and the first to see each morning's new name"
       },
       "position": {
         "x": -422,
@@ -2413,9 +2413,9 @@
         "hub_id": "hub_memorial_district",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Ex-bodyguard, now on the cemetery night security shift",
+        "subtype": "Retired stonemason who recuts weathered headstone lettering for free, and whose letters have started to change after she cuts them",
         "portrait": "",
-        "details": "Ex-bodyguard, now on the cemetery night security shift"
+        "details": "Retired stonemason who recuts weathered headstone lettering for free, and whose letters have started to change after she cuts them"
       },
       "position": {
         "x": -724,
@@ -2481,9 +2481,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Salvage diver, the only one who came back up from the Warwick wreck",
+        "subtype": "Fae-touched flood surveyor who redraws the floodplain map every night, because the river keeps moving the line between the terminal and Warwick",
         "portrait": "",
-        "details": "Salvage diver, the only one who came back up from the Warwick wreck"
+        "details": "Fae-touched flood surveyor who redraws the floodplain map every night, because the river keeps moving the line between the terminal and Warwick"
       },
       "position": {
         "x": -1041,
@@ -2509,19 +2509,19 @@
     },
     {
       "data": {
-        "id": "npc_lionel_petty",
-        "label": "Inspector Lionel Petty",
+        "id": "npc_theodora_lusk",
+        "label": "Theodora Lusk",
         "kind": "npc",
         "hub_id": "hub_river_docks",
         "faction": "Power",
         "status": "active",
-        "subtype": "Ghost customs inspector still clearing manifests from 1940",
+        "subtype": "Night harbor dispatcher at the Marine Terminal; a hedge mage who schedules berths by a family almanac that still counts the tides of 1781",
         "portrait": "",
-        "details": "Ghost customs inspector still clearing manifests from 1940"
+        "details": "Night harbor dispatcher at the Marine Terminal; a hedge mage who schedules berths by a family almanac that still counts the tides of 1781"
       },
       "position": {
-        "x": -188,
-        "y": -333
+        "x": -1117,
+        "y": -17
       }
     },
     {
@@ -2549,9 +2549,9 @@
         "hub_id": "hub_river_docks",
         "faction": "Night",
         "status": "active",
-        "subtype": "Ghost of burned Warwick who rings when the river spirit is threatened",
+        "subtype": "Ghost town crier of burned Warwick who rings the drowned town's hours on the tides when it surfaces",
         "portrait": "",
-        "details": "Ghost of burned Warwick who rings when the river spirit is threatened"
+        "details": "Ghost town crier of burned Warwick who rings the drowned town's hours on the tides when it surfaces"
       },
       "position": {
         "x": -1088,
@@ -2560,19 +2560,19 @@
     },
     {
       "data": {
-        "id": "npc_yolanda_price",
-        "label": "Yolanda Price",
+        "id": "npc_esperanza_quintero",
+        "label": "Esperanza Quintero",
         "kind": "npc",
         "hub_id": "hub_the_valley",
         "faction": "Night",
         "status": "active",
-        "subtype": "Vampire caseworker at the intake center who feeds only with consent",
+        "subtype": "Vampire court interpreter who works the annex's late sessions and feeds only from willing adults of her own household",
         "portrait": "",
-        "details": "Vampire caseworker at the intake center who feeds only with consent"
+        "details": "Vampire court interpreter who works the annex's late sessions and feeds only from willing adults of her own household"
       },
       "position": {
-        "x": -575,
-        "y": -83
+        "x": -17,
+        "y": -972
       }
     },
     {
@@ -2600,9 +2600,9 @@
         "hub_id": "hub_the_valley",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Retired hunter who sells arcane pills off a motel-lot bench to pay for his mother's care",
+        "subtype": "Retired transit mechanic who runs a free bike-repair stand on the motel lots, and lately fixes bikes that come in from 1958",
         "portrait": "",
-        "details": "Retired hunter who sells arcane pills off a motel-lot bench to pay for his mother's care"
+        "details": "Retired transit mechanic who runs a free bike-repair stand on the motel lots, and lately fixes bikes that come in from 1958"
       },
       "position": {
         "x": -554,
@@ -2634,9 +2634,9 @@
         "hub_id": "hub_the_valley",
         "faction": "Wild",
         "status": "active",
-        "subtype": "Camp dog with a bound spirit looking out from behind her eyes; keeps the viaduct camp's gate",
+        "subtype": "Old greyhound with a bound spirit behind her eyes who walks lost newcomers to whoever in the Valley is looking for them",
         "portrait": "",
-        "details": "Camp dog with a bound spirit looking out from behind her eyes; keeps the viaduct camp's gate"
+        "details": "Old greyhound with a bound spirit behind her eyes who walks lost newcomers to whoever in the Valley is looking for them"
       },
       "position": {
         "x": -694,
@@ -2696,36 +2696,36 @@
     },
     {
       "data": {
-        "id": "npc_the_ledger",
-        "label": "The Ledger",
+        "id": "npc_augustine_pell",
+        "label": "Augustine Pell",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Power",
         "status": "active",
-        "subtype": "An entity that tracks every transaction of consequence in the city; speaks through whatever record is nearest",
+        "subtype": "Main Street notary public whose embossing seal is older than the Commonwealth; papers he seals resist the Overwrite's edits",
         "portrait": "",
-        "details": "An entity that tracks every transaction of consequence in the city; speaks through whatever record is nearest"
+        "details": "Main Street notary public whose embossing seal is older than the Commonwealth; papers he seals resist the Overwrite's edits"
       },
       "position": {
-        "x": 1016,
-        "y": -778
+        "x": 650,
+        "y": -892
       }
     },
     {
       "data": {
-        "id": "npc_priya_vance",
-        "label": "Priya Vance",
+        "id": "npc_margaux_tillery",
+        "label": "Margaux Tillery",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Power",
         "status": "active",
-        "subtype": "Artifact dealer who sets prices by games of chance",
+        "subtype": "Executive assistant to three Main Street boards; a hedge mage whose shared calendar decides which version of a meeting the city remembers",
         "portrait": "",
-        "details": "Artifact dealer who sets prices by games of chance"
+        "details": "Executive assistant to three Main Street boards; a hedge mage whose shared calendar decides which version of a meeting the city remembers"
       },
       "position": {
-        "x": 1105,
-        "y": 32
+        "x": 631,
+        "y": 238
       }
     },
     {
@@ -2764,19 +2764,19 @@
     },
     {
       "data": {
-        "id": "npc_lucien_fairbanks",
-        "label": "Lucien Fairbanks",
+        "id": "npc_sabine_deverell",
+        "label": "Sabine Deverell",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Night",
         "status": "active",
-        "subtype": "Vampire bartender who sips ambition, not blood",
+        "subtype": "Vampire who owns the after-hours document-shredding company that serves the Main Street towers, and reads what the towers throw away",
         "portrait": "",
-        "details": "Vampire bartender who sips ambition, not blood"
+        "details": "Vampire who owns the after-hours document-shredding company that serves the Main Street towers, and reads what the towers throw away"
       },
       "position": {
-        "x": 600,
-        "y": -888
+        "x": 146,
+        "y": -130
       }
     },
     {
@@ -2798,19 +2798,19 @@
     },
     {
       "data": {
-        "id": "npc_kidane_haile",
-        "label": "Kidane Haile",
+        "id": "npc_ruben_castellanos",
+        "label": "Ruben Castellanos",
         "kind": "npc",
         "hub_id": "hub_downtown",
         "faction": "Mortalis",
         "status": "active",
-        "subtype": "Busker at Kanawha Plaza whose songs predict the markets",
+        "subtype": "Bike courier who runs papers between Main Street law firms and has noticed some deliveries arrive before they were sent",
         "portrait": "",
-        "details": "Busker at Kanawha Plaza whose songs predict the markets"
+        "details": "Bike courier who runs papers between Main Street law firms and has noticed some deliveries arrive before they were sent"
       },
       "position": {
-        "x": 216,
-        "y": -192
+        "x": 279,
+        "y": -22
       }
     },
     {
@@ -4375,8 +4375,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_scrapheap_hub_creighton_court",
-        "source": "npc_scrapheap",
+        "id": "edge_npc_chain_net_hub_creighton_court",
+        "source": "npc_chain_net",
         "target": "hub_creighton_court",
         "type": "based_in",
         "label": "Based in",
@@ -4435,8 +4435,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_nadira_haddad_hub_memorial_district",
-        "source": "npc_nadira_haddad",
+        "id": "edge_npc_tomasz_wilk_hub_memorial_district",
+        "source": "npc_tomasz_wilk",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4465,8 +4465,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_the_pallbearer_hub_memorial_district",
-        "source": "npc_the_pallbearer",
+        "id": "edge_npc_harriet_ames_hub_memorial_district",
+        "source": "npc_harriet_ames",
         "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
@@ -4565,8 +4565,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_lionel_petty_hub_river_docks",
-        "source": "npc_lionel_petty",
+        "id": "edge_npc_theodora_lusk_hub_river_docks",
+        "source": "npc_theodora_lusk",
         "target": "hub_river_docks",
         "type": "based_in",
         "label": "Based in",
@@ -4595,8 +4595,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_yolanda_price_hub_the_valley",
-        "source": "npc_yolanda_price",
+        "id": "edge_npc_esperanza_quintero_hub_the_valley",
+        "source": "npc_esperanza_quintero",
         "target": "hub_the_valley",
         "type": "based_in",
         "label": "Based in",
@@ -4675,8 +4675,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_the_ledger_hub_downtown",
-        "source": "npc_the_ledger",
+        "id": "edge_npc_augustine_pell_hub_downtown",
+        "source": "npc_augustine_pell",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4685,8 +4685,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_priya_vance_hub_downtown",
-        "source": "npc_priya_vance",
+        "id": "edge_npc_margaux_tillery_hub_downtown",
+        "source": "npc_margaux_tillery",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4715,8 +4715,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_lucien_fairbanks_hub_downtown",
-        "source": "npc_lucien_fairbanks",
+        "id": "edge_npc_sabine_deverell_hub_downtown",
+        "source": "npc_sabine_deverell",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",
@@ -4735,8 +4735,8 @@
     },
     {
       "data": {
-        "id": "edge_npc_kidane_haile_hub_downtown",
-        "source": "npc_kidane_haile",
+        "id": "edge_npc_ruben_castellanos_hub_downtown",
+        "source": "npc_ruben_castellanos",
         "target": "hub_downtown",
         "type": "based_in",
         "label": "Based in",

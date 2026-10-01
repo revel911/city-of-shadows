@@ -86,7 +86,7 @@
       "atmosphere": "Heavy, beautiful, wrong",
       "notes": "New sections Emmett does not remember. One grave has a recent date for a living person. MC guardrail: Hollywood holds presidents and Confederate dead. The supernatural here is about who is remembered and who is erased; never glorify the Confederacy or the Lost Cause, and never make it a source of power, a sympathetic cause or a hero's legend.",
       "last_updated": "2026-10-01",
-      "revision": 1,
+      "revision": 2,
       "updated_by_session": "operator:us-hubs-expansion"
     },
     {
@@ -804,9 +804,9 @@
       "hub_id": "hub_memorial_district",
       "type": "Memorial",
       "controller_ids": [
-        "npc_the_pallbearer"
+        "npc_loretta_banfield"
       ],
-      "controller_note": "The Pallbearer (bound to the wall)",
+      "controller_note": "Loretta Banfield's volunteer guides keep watch; no one owns the wall",
       "status": "active",
       "description": "A long wall of names on Gambles Hill above the river, with a shrine at its foot where visitors leave flowers and unit patches.",
       "atmosphere": "Hushed, windy, watched by something that reads over your shoulder.",
@@ -862,7 +862,7 @@
       "status": "active",
       "description": "The old port across the water on the north bank: the Intermediate Terminal, restored warehouses and a long river walk where the city first took ships.",
       "atmosphere": "Pretty, wind-blown, a little too quiet after the restaurants close.",
-      "notes": "Where the river's old trade is still remembered. An ex-Power leader has been seen meeting Night enforcers here.",
+      "notes": "Where the river's old trade is still remembered. After the restaurants close, Night-money envelopes change hands on the river walk.",
       "last_updated": "2026-10-01"
     },
     {
@@ -901,7 +901,7 @@
       "status": "active",
       "description": "The south landing of the Mayo Bridge, where the road meets the Manchester shore under the railway trestles and the floodwall.",
       "atmosphere": "Echoing, windy, a crossing place with a river that wants a word.",
-      "notes": "Street preachers, fishermen and runners cross here. A preacher on the span promises the river will \"reform\" the city.",
+      "notes": "Fishermen, runners and commuters cross here. Anglers leave the season's first fish on the rocks below for the Lady of the Falls; this spring someone broke that promise, and she is asking who.",
       "last_updated": "2026-10-01"
     },
     {
@@ -914,7 +914,7 @@
       "status": "active",
       "description": "A corridor of rail sidings, cold storage and blank warehouses behind the terminal, locked by day and loud by night.",
       "atmosphere": "Chain-link, sodium light and the clank of couplings.",
-      "notes": "Reuse the same warehouse and crew from visit to visit. Rumor places a fight club for things that are not human beneath one of the yards.",
+      "notes": "Reuse the same warehouse and crew from visit to visit. Odalys Ferreira's rented bay is here, and so is the back office where the night crews' cash envelopes are counted.",
       "last_updated": "2026-10-01"
     },
     {
@@ -938,11 +938,11 @@
       "hub_id": "hub_the_valley",
       "type": "Encampment",
       "controller_ids": [],
-      "controller_note": "Self-governed by the people who live there; Pepper keeps the gate",
+      "controller_note": "Self-governed by the people who live there; Pepper walks newcomers in",
       "status": "active",
       "description": "Tents, pallet porches and a shared kitchen tarp tucked under the I-95 viaduct, run by house rules the residents wrote themselves: quiet hours, a tool library, a rotating night watch, and a rule that nobody gets moved along without a vote.",
       "atmosphere": "Orderly and lived-in; a radio, a charging strip, someone's tomato buckets, and the roar of the road overhead.",
-      "notes": "Home to people with jobs, appeals pending and plans for spring. Treat it as a neighborhood with rules, never as a hazard to be survived. A mural on the pillar weeps ash when Night business is done nearby, and the viaduct's shadow keeps 1958: phones and clocks read that hour under it. MC guardrail: keep the worst moment offscreen and show the aftermath instead; when someone here is lost, someone comes looking and someone grieves.",
+      "notes": "Home to people with jobs, appeals pending and plans for spring. Treat it as a neighborhood with rules, never as a hazard to be survived. The viaduct's shadow keeps 1958: phones and clocks read that hour under it, and the camp's sign-in sheet sometimes fills with handwriting from that year. MC guardrail: keep the worst moment offscreen and show the aftermath instead; when someone here is lost, someone comes looking and someone grieves.",
       "last_updated": "2026-10-01"
     },
     {
@@ -955,7 +955,7 @@
       "status": "active",
       "description": "A fictional courthouse annex: a security line, a clerk's counter, hard benches and a hallway where the day's docket decides whether a family keeps a car or a job.",
       "atmosphere": "Fluorescent, hushed, smelling of floor wax and old coffee.",
-      "notes": "Court dates are the pulse of the Valley. People arrive hours early in their one good outfit. Night and Power both watch the docket; the ordinary people in line are just trying to get through it.",
+      "notes": "Court dates are the pulse of the Valley. People arrive hours early in their one good outfit. Night and Power both watch the docket; the ordinary people in line are just trying to get through it. Esperanza Quintero interprets at the late sessions, where the docket has started listing names from 1958.",
       "last_updated": "2026-10-01"
     },
     {
@@ -963,14 +963,12 @@
       "name": "Valley Resource Center",
       "hub_id": "hub_the_valley",
       "type": "Intake office",
-      "controller_ids": [
-        "npc_yolanda_price"
-      ],
-      "controller_note": "A fictional nonprofit intake office; Yolanda Price runs the evening desk",
+      "controller_ids": [],
+      "controller_note": "A fictional nonprofit intake office run by its own staff; Rev. Alma Pierce's van stops out front",
       "status": "active",
       "description": "A fictional intake office on Lamplighter Way offering ID help, mail, showers, a computer bank and a caseworker line that moves on its own time. It stands in for the real service providers of the area, none of which appear in play.",
       "atmosphere": "Warm and overworked; a ticket machine, a coffee urn and a bulletin board thick with job flyers.",
-      "notes": "Waiting rooms here fill with people who have a plan and are one form short of it. The evening desk is staffed by a vampire who feeds only on volunteers who have said yes, never on clients.",
+      "notes": "Waiting rooms here fill with people who have a plan and are one form short of it. The bulletin board by the door is the Valley's real newspaper, and some mornings it carries notices from years that are not this one.",
       "last_updated": "2026-10-01"
     },
     {
@@ -1011,7 +1009,7 @@
       ],
       "controller_note": "Mr. Lacey holds the end stool; the owner holds the lease",
       "status": "active",
-      "description": "A faded motor inn whose lounge has outlasted three owners. A red paper lantern over the door, a jukebox that still takes quarters, and a payphone in the lot where something fae is said to be trapped.",
+      "description": "A faded motor inn whose lounge has outlasted three owners. A red paper lantern over the door, a jukebox that still takes quarters, and a payphone in the lot that rings with calls placed in 1958.",
       "atmosphere": "Dim, smoky, kind; the most welcome room on the strip.",
       "notes": "Neutral ground in practice. Mr. Lacey keeps the night desk, and the bartender will keep your coat if you promise to come back for it.",
       "last_updated": "2026-10-01"

@@ -9,7 +9,7 @@
 
 The Valley is where Richmond sends the people it does not know what to do with, and where those people quietly run their own city inside the city. Along Lamplighter Way (a fictional street) in the Shockoe Valley corridor sit the intake offices, the court annex, an overnight holding center and the long concrete shadow of the I-95 viaduct, with the rail lines humming alongside. A spur follows the Richmond Highway (US-1) motel strip south of the river, a corridor of weekly rates and neon, never a neighborhood.
 
-Night holds the Valley because necessity is its oldest customer: a fixer who needs hands, a feeder who needs consent, an elder who needs a quiet bed. Mortalis does the practical work: the church van, the pills, the meal line. Power sits at the top of the docket and on the holding center's night shift. Wild drifts in through the cracks, in a dog's eyes and in a laundromat's dryers. Everyone here has a plan to get out, or to get someone else out, and the Valley is mostly the story of those plans.
+Night holds the Valley because necessity is its oldest customer: a fixer who needs hands, a feeder who needs consent, an elder who needs a quiet bed. Mortalis does the practical work: the church van, the pills, the meal line. Power sits at the top of the docket and on the holding center's night shift. Wild drifts in through the cracks, in an old greyhound's eyes and in a laundromat's dryers. Everyone here has a plan to get out, or to get someone else out, and the Valley is mostly the story of those plans.
 
 **Tone:** raw necessity, not glamour. No one is just a victim; everyone has a plan.
 
@@ -21,9 +21,9 @@ Night holds the Valley because necessity is its oldest customer: a fixer who nee
 
 **Active Anomalies:**
 - Under the viaduct, every clock and phone agrees it is 1958
-- A mural on a viaduct pillar weeps ash when Night business is done nearby
-- The last payphone on the strip rings with a voice that does not belong to this century
-- Soup lines serve a ghost cook's dish that tastes like a memory nobody lived
+- The camp's sign-in sheet sometimes fills overnight with handwriting from 1958
+- The last payphone on the strip rings with calls placed in 1958
+- The annex's late docket lists defendants whose cases were heard, or never heard, in 1958
 
 **MC anchor rule:** reuse the same camp, desk, motel room and crew. People here get moved around enough already; recurring faces and places are the point.
 
@@ -31,19 +31,20 @@ Night holds the Valley because necessity is its oldest customer: a fixer who nee
 
 ## Hub Moves
 
-### Something Warm
-When you offer real material comfort (food, a dry place, a ride, a phone charge) to an NPC in trouble, roll with Heart.
-- **10+:** Both below.
-- **7-9:** Choose 1.
-  - They tell you how the neighborhood really works. Take a 10+ the next time you hit the streets using what they told you.
-  - They trust you with a secret. Take +1 ongoing to Circle moves until time passes.
-- **Miss:** The MC tells you what they desperately need, and it is more than you brought.
+### Hold Their Place
+When you hold someone's place for them (in the meal line, the annex queue, a waitlist, a bunk) so they can be somewhere else, roll with Heart.
+- **10+:** They make it back in time and owe you. Ask the MC one question about what the Valley is hiding; the answer comes from them, and it is true.
+- **7-9:** They make it back in time, but choose 1: you lose your own place, or someone in line marks you as an easy touch.
+- **Miss:** They do not come back for their place. Someone comes looking for them, and finds you holding it.
 
-### Word From the Line
-When you spend time in the dives, the motel lots, and the meal lines listening for gossip, roll with Mind.
-- **10+:** You hear of a chance to help a friend or hurt an enemy.
-- **7-9:** As 10+, but acting on it tangles you with another NPC, faction, or friend.
-- **Miss:** You hear a juicy secret, and someone saw you hear it.
+### What Changed Overnight
+When you go over the Valley's notices (the Resource Center bulletin board, the flyers taped to the viaduct pillars, the motel office windows) for what changed overnight, roll with Mind.
+- **10+:** Ask 2 below.
+- **7-9:** Ask 1.
+  - Who is new here, and who has gone missing?
+  - Which notice was posted from a year that is not this one?
+  - Who is quietly paying for something on the strip?
+- **Miss:** One of the notices is about you.
 
 ---
 
@@ -51,11 +52,11 @@ When you spend time in the dives, the motel lots, and the meal lines listening f
 
 | ID | Circle | Resident |
 |---|---|---|
-| `npc_yolanda_price` | Night | Yolanda Price, a vampire caseworker at the intake center who feeds only with consent. |
+| `npc_esperanza_quintero` | Night | Esperanza Quintero, a vampire court interpreter at the annex's late sessions who feeds only from willing adults of her own household. |
 | `npc_tally_monroe` | Night | "Tally" Monroe, a ghoul who drives people home free after late release from the courts annex. |
-| `npc_darnell_hayes` | Mortalis | Darnell Hayes, a retired hunter who sells arcane pills to pay for his mother's care. |
+| `npc_darnell_hayes` | Mortalis | Darnell Hayes, a retired transit mechanic whose free bike stand keeps getting bikes from 1958. |
 | `npc_alma_pierce` | Mortalis | Rev. Alma Pierce, who runs the mutual-aid church van. |
-| `npc_pepper` | Wild | Pepper, a camp dog with a bound spirit behind her eyes, who keeps the viaduct camp's gate. |
+| `npc_pepper` | Wild | Pepper, an old greyhound with a bound spirit behind her eyes, who walks lost newcomers to whoever is looking for them. |
 | `npc_mavis_thorne` | Wild | Mavis Thorne, a fae who runs the strip's all-night laundromat. |
 | `npc_mr_lacey` | Power | Mr. Lacey, the Red Lantern's night clerk, whose register hides anyone he signs in. |
 | `npc_gideon_marsh` | Power | Superintendent Gideon Marsh, a warlock who runs the Lamplighter Holding Center's overnight shift. |
@@ -78,9 +79,9 @@ The Viaduct Camp, the Valley Courts Annex, the Valley Resource Center, the Lampl
 
 ## Open Threads
 
-- **The Glowing Pills** — A batch of pills cut with something that glows is circulating. Darnell Hayes wants to know who cut it before someone is hurt. — *heat: smoldering*
-- **A Bed for the Right Dream** — Power people are offering a bed to anyone who has had a particular dream, and Alma Pierce wants to know what it costs. — *heat: smoldering*
-- **The Clinic's Ledger** — A free clinic is trading Debts for supplies; Mavis Thorne has noticed and is pinning a sock to her corkboard for every Debt. — *heat: smoldering*
+- **The 1958 Docket** — The annex's late docket keeps listing defendants from 1958. Esperanza Quintero is afraid one will be called in a language she speaks. — *heat: smoldering*
+- **Who Is Buying the Strip** — Someone is quietly buying motel lots along Richmond Highway, and the buyer has never signed Mr. Lacey's register. — *heat: smoldering*
+- **The Riders Who Did Not Come Back** — Bikes with 1958 tags keep turning up at Darnell Hayes's stand, and Pepper keeps leading newcomers to it. Nobody has come back for a bike yet. — *heat: smoldering*
 
 ---
 
@@ -88,6 +89,6 @@ The Viaduct Camp, the Valley Courts Annex, the Valley Resource Center, the Lampl
 
 - Unhoused, jailed and addicted characters are full people with goals and plans. Never use them as set dressing or as "monsters." Show more than one face: the organizer, the worker, the grandmother, the student, the kid with a plan.
 - Real service providers, the real jail and real residential neighborhoods are never named or made supernatural. The Valley Resource Center, the Valley Courts Annex and the Lamplighter Holding Center are fictional stand-ins; the holding center is a separate overnight facility, never the city jail. Richmond Highway is a corridor, not a neighborhood.
-- Yolanda Price feeds only on people who have clearly said yes, never on clients. Pills are a plan and a trade for Darnell, not a vice label; show the dose card, not the damage.
+- Esperanza Quintero feeds only on adults of her household who have clearly said yes, never on anyone in a courtroom. Darnell Hayes is a mechanic with a plan, not a cautionary tale.
 - Keep the worst moment offscreen: show the empty bunk, the cut-off phone call, the flyer on the pillar. When someone is lost, someone comes looking and someone grieves.
 - Respect player safety limits, especially around addiction and incarceration. Check in at session close when a scene went somewhere heavy.
