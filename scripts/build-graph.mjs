@@ -1,6 +1,6 @@
 import { hashNumber, readJSON, writeJSON } from './world-utils.mjs';
 
-const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, mysteryDoc, debtDoc, hubStateDoc] = await Promise.all([
+const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, mysteryDoc, debtDoc, hubStateDoc, factionDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
@@ -10,8 +10,14 @@ const [hubs, npcDoc, locationDoc, players, manualDoc, derivedDoc, arcDoc, myster
   readJSON('game/arcs.json'),
   readJSON('game/mysteries.json'),
   readJSON('game/debts.json'),
-  readJSON('game/hub-state.json')
+  readJSON('game/hub-state.json'),
+  // A missing factions file is an empty faction list, not a build failure.
+  readJSON('game/factions.json').catch(error => {
+    if (error.code === 'ENOENT') return { factions: [] };
+    throw error;
+  })
 ]);
+const factions = Array.isArray(factionDoc?.factions) ? factionDoc.factions : [];
 
 const hubPositions = new Map();
 const radius = 780;
@@ -55,6 +61,18 @@ for (const npc of npcDoc.npcs || []) nodes.push({
   },
   position: positionNear(npc.hub_id, npc.id, 390, 80)
 });
+
+for (const faction of factions) {
+  const hubId = faction.hub_ids?.[0] || '';
+  nodes.push({
+    data: {
+      id: faction.id, label: faction.name, kind: 'faction', hub_id: hubId,
+      status: 'active', subtype: faction.circle || '',
+      details: faction.public_summary || ''
+    },
+    position: positionNear(hubId, faction.id, 470, 100)
+  });
+}
 
 players.forEach((pc, index) => nodes.push({
   data: { id: pc.id, label: pc.name, kind: 'pc', hub_id: '', status: 'active', details: 'Player character' },
@@ -100,6 +118,15 @@ for (const npc of npcDoc.npcs || []) {
   });
 }
 
+for (const faction of factions) {
+  for (const npcId of new Set([faction.leader_npc_id, ...(faction.member_npc_ids || [])].filter(Boolean))) edges.push({
+    data: {
+      id: `edge_${npcId}_${faction.id}`, source: npcId, target: faction.id, type: 'member',
+      label: npcId === faction.leader_npc_id ? 'Leads' : 'Member of', layer: 'structural'
+    }
+  });
+}
+
 const authored = [...(manualDoc.relationships || []), ...(derivedDoc.relationships || [])];
 for (const rel of authored.filter(rel => rel.visibility === 'public')) edges.push({
   data: { id: rel.id, source: rel.source, target: rel.target, type: rel.type, label: rel.label, direction: rel.direction || 'outbound', layer: manualDoc.relationships?.some(x => x.id === rel.id) ? 'manual' : 'derived' }
@@ -125,7 +152,7 @@ for (const debt of (debtDoc.debts || []).filter(item => item.visibility === 'pub
 });
 
 await writeJSON('dashboard/data/world-graph.json', {
-  as_of: [npcDoc.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, mysteryDoc.last_updated, debtDoc.last_updated, hubStateDoc.last_updated].filter(Boolean).sort().at(-1),
+  as_of: [npcDoc.last_updated, factionDoc?.last_updated, locationDoc.last_updated, manualDoc.last_updated, derivedDoc.last_updated, arcDoc.last_updated, mysteryDoc.last_updated, debtDoc.last_updated, hubStateDoc.last_updated].filter(Boolean).sort().at(-1),
   derived_through: derivedDoc.derived_through || null,
   nodes,
   edges

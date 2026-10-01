@@ -149,3 +149,10 @@ test('strips orphan </save_player> closer with no matching opener', () => {
   assert.equal(cleaned, 'narrative continues\nmore narrative');
   assert.equal(leakDetected, true);
 });
+
+test('strips bare <faction_patch> with array body floating in prose', () => {
+  const input = 'before\n<faction_patch>[{ "id": "faction_x", "name": "X" }]</faction_patch>\nafter';
+  const { cleaned, leakDetected } = sanitizePlayerFacingText(input);
+  assert.equal(cleaned, 'before\n\nafter');
+  assert.equal(leakDetected, true);
+});

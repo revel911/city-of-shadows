@@ -311,3 +311,30 @@ test('NPC drive is part of the canonical NPC record the MC sees', () => {
   const context = formatCanonicalWorldContext({ npcs: [{ id: 'npc_a', name: 'A', drive: 'get her brother out before his hearing' }] });
   assert.match(context, /"drive":"get her brother out before his hearing"/);
 });
+
+test('world context lists factions compactly', () => {
+  const context = formatCanonicalWorldContext({ factions: [{ id: 'faction_x', name: 'X', circle: 'Night', size: 2, strength: 3, stance: 'maintaining', assets: ['tunnels'] }] });
+  assert.match(context, /FACTIONS:/);
+  assert.match(context, /"id":"faction_x"/);
+});
+
+test('selectRelevantWorld keeps linked and Status-3-led factions and defaults to empty', () => {
+  const base = { hubs: [], npcs: [], locations: [], relationships: [], arcs: [], debts: [] };
+  assert.deepEqual(selectRelevantWorld(base, { characterId: 'c' }).factions, []);
+  const faction = (id, extra = {}) => ({ id, name: id, circle: 'Night', size: 2, strength: 2, stance: 'maintaining', ...extra });
+  const selected = selectRelevantWorld({
+    ...base,
+    npcs: [
+      { id: 'npc_near', name: 'Near' },
+      { id: 'npc_boss', name: 'Boss', notes: 'Status: Night 3. Runs the docks.' },
+      { id: 'npc_minor', name: 'Minor', notes: 'Status: Night 2.' },
+    ],
+    factions: [
+      faction('faction_by_member', { member_npc_ids: ['npc_near'] }),
+      faction('faction_by_pc', { character_ids: ['c'] }),
+      faction('faction_status3', { leader_npc_id: 'npc_boss' }),
+      faction('faction_unrelated', { leader_npc_id: 'npc_minor' }),
+    ],
+  }, { characterId: 'c', handoff: 'Met npc_near at the docks.' });
+  assert.deepEqual(selected.factions.map(item => item.id), ['faction_by_member', 'faction_by_pc', 'faction_status3']);
+});

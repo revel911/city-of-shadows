@@ -330,7 +330,7 @@ export function responseSafetyProblems(response, {
     || /\b(?:locked:\s*player|attention intent control|CLOSE-only|NO push)\b/i.test(text)) {
     problems.push('internal planning marker');
   }
-  if (oocMode && /<(?:roll_request|checkpoint|save_player|save_onboarding|close_session|state_patch|npc_patch|location_patch|relationship_patch|debt_patch|arc_patch|mystery_patch|interaction_ops)\b/i.test(text)) {
+  if (oocMode && /<(?:roll_request|checkpoint|save_player|save_onboarding|close_session|state_patch|npc_patch|faction_patch|location_patch|relationship_patch|debt_patch|arc_patch|mystery_patch|interaction_ops)\b/i.test(text)) {
     problems.push('out-of-character response attempts to advance or persist state');
   }
   const visible = visibleResponseText(text);
@@ -1389,7 +1389,7 @@ function buildImpactRetryPrompt(problems) {
     `[SYSTEM] Your trailing <close_session> block has world-impact problems: ${problems.join('; ')}.`,
     'Re-emit the closing narrative and complete trailing <close_session> block now.',
     'Include <world_impact> containing JSON with level (none, personal, or shared), summary, affected_ids, and optional fiction_time.',
-    'If level is shared, include at least one matching events_append, npc_patch, npc_memory_patch, location_patch, relationship_patch, debt_patch, arc_patch, mystery_patch, hub_patch, or interaction_ops field.',
+    'If level is shared, include at least one matching events_append, npc_patch, faction_patch, npc_memory_patch, location_patch, relationship_patch, debt_patch, arc_patch, mystery_patch, hub_patch, or interaction_ops field.',
     'Do not continue the scene.',
   ].join('\n');
 }
@@ -1470,7 +1470,7 @@ function grabTag(body, tag) {
 // ending a session by quoting the schema or echoing the tag mid-narrative.
 const CLOSE_BLOCK_RE = /<close_session>([\s\S]*?)<\/close_session>\s*$/;
 
-function parseCloseBlock(text) {
+export function parseCloseBlock(text) {
   const m = text.match(CLOSE_BLOCK_RE);
   if (!m) return null;
   const body = m[1];
@@ -1480,6 +1480,7 @@ function parseCloseBlock(text) {
     state_patch:   grabTag(body, 'state_patch'),
     events_append: grabTag(body, 'events_append'),
     npc_patch:     grabTag(body, 'npc_patch'),
+    faction_patch: grabTag(body, 'faction_patch'),
     location_patch: grabTag(body, 'location_patch'),
     relationship_patch: grabTag(body, 'relationship_patch'),
     debt_patch:    grabTag(body, 'debt_patch'),
@@ -1574,7 +1575,7 @@ export function validateWorldImpact(close) {
   if (!impact.summary) return ['world_impact.summary is required'];
   if (impact.level === 'shared') {
     const touches = [
-      close.events_append, close.npc_patch, close.location_patch,
+      close.events_append, close.npc_patch, close.faction_patch, close.location_patch,
       close.relationship_patch, close.debt_patch, close.arc_patch,
       close.mystery_patch, close.npc_memory_patch, close.hub_patch, close.interaction_ops, close.interactions_patch,
     ];
@@ -1597,6 +1598,7 @@ export function parseSaveOnboardingBlock(text) {
     state_patch:   grabTag(body, 'state_patch'),
     events_append: grabTag(body, 'events_append'),
     npc_patch:     grabTag(body, 'npc_patch'),
+    faction_patch: grabTag(body, 'faction_patch'),
     location_patch: grabTag(body, 'location_patch'),
     relationship_patch: grabTag(body, 'relationship_patch'),
     debt_patch:    grabTag(body, 'debt_patch'),
@@ -1617,6 +1619,7 @@ function stripSaveOnboardingBlock(text) {
 const STRUCTURED_BARE_TAGS = [
   'state_patch',
   'npc_patch',
+  'faction_patch',
   'location_patch',
   'relationship_patch',
   'debt_patch',
@@ -2091,6 +2094,23 @@ export async function processSaveOnboarding(thread, session, save) {
           return result.doc;
         });
       }
+      // Factions are additive city context, not part of the character: a bad
+      // faction entry is logged and skipped instead of blocking the draft.
+      if (save.faction_patch) {
+        const factionWarnings = [];
+        let factionPatches = null;
+        try { factionPatches = JSON.parse(save.faction_patch); }
+        catch (e) { factionWarnings.push(`factions: ${e.message}`); }
+        if (factionPatches && !Array.isArray(factionPatches)) factionWarnings.push('factions: faction_patch must be a JSON array');
+        else if (factionPatches?.length) {
+          await tx.updateJSON('game/factions.json', doc => {
+            const result = mergeCanonicalPatches(doc, factionPatches, { collection: 'factions', idPrefix: 'faction_', sessionId: publicSessionId, stamp });
+            factionWarnings.push(...result.rejected.map(message => `factions: ${message}`));
+            return result.rejected.length === factionPatches.length ? null : result.doc;
+          });
+        }
+        if (factionWarnings.length) console.error('[creation] faction_patch warnings', factionWarnings);
+      }
       const debts = save.debt_patch ? JSON.parse(save.debt_patch) : [];
       if (debts.length) {
         await tx.updateJSON('game/debts.json', doc => {
@@ -2201,6 +2221,7 @@ async function processSessionClose(thread, session, close) {
     catch (e) { parseWarnings.push(`${label}: ${e.message}`); return null; }
   };
   const npcPatches = parsePatch('npc_patch');
+  const factionPatches = parsePatch('faction_patch', 'factions');
   const locationPatches = parsePatch('location_patch');
   const mysteryPatches = parsePatch('mystery_patch');
   const memoryPatches = parsePatch('npc_memory_patch');
@@ -2211,7 +2232,7 @@ async function processSessionClose(thread, session, close) {
   const emittedInteractions = interactionOps ? null : parsePatch('interactions_patch');
 
   const sharedTouchKeys = [
-    'events_append', 'npc_patch', 'location_patch', 'relationship_patch',
+    'events_append', 'npc_patch', 'faction_patch', 'location_patch', 'relationship_patch',
     'debt_patch', 'arc_patch', 'mystery_patch', 'npc_memory_patch', 'hub_patch', 'interaction_ops', 'interactions_patch',
   ];
   const hasSharedTouches = worldImpact.level === 'shared' || sharedTouchKeys.some(key => Boolean(close[key]));
@@ -2267,6 +2288,7 @@ async function processSessionClose(thread, session, close) {
       }
       await merge('game/npcs.json', npcPatches, { collection: 'npcs', idPrefix: 'npc_', allowNameMatch: true });
       await merge('game/locations.json', locationPatches, { collection: 'locations', idPrefix: 'loc_', allowNameMatch: true });
+      await merge('game/factions.json', factionPatches, { collection: 'factions', idPrefix: 'faction_' });
       await merge('game/mysteries.json', mysteryPatches, { collection: 'mysteries', idPrefix: 'mystery_', derive: withDerivedMysteryState });
       if (memoryPatches) {
         const validNpcIds = new Set(((await tx.readJSON('game/npcs.json'))?.npcs || []).map(npc => npc.id));

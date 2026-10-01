@@ -1,6 +1,7 @@
 import { personalityProblems, personalityWithDefaults, socialBehavior } from './npc-personality.js';
 import { readJSON } from './github.js';
 import { loadHubMoves } from './hub-moves.js';
+import { compactFaction, factionProblems } from './factions.js';
 import {
   deriveKnowledgeRecords,
   formatCharacterKnowledge,
@@ -200,6 +201,7 @@ function formatHubMoves(hubMoves, detailedHubIds) {
 
 export function formatCanonicalWorldContext({
   hubs = [],
+  factions = [],
   npcs = [],
   locations = [],
   relationships = [],
@@ -223,6 +225,9 @@ export function formatCanonicalWorldContext({
     '',
     'HUBS:',
     JSON.stringify(hubs.map(({ id, name }) => ({ id, name }))),
+    '',
+    'FACTIONS:',
+    JSON.stringify(factions.map(compactFaction)),
     '',
     'NPCS:',
     JSON.stringify(npcs.map(compactNpc)),
@@ -275,8 +280,9 @@ export function formatCanonicalWorldContext({
 }
 
 async function loadWorldDocuments() {
-  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, memoryDoc, debtDoc, hubStateDoc, hubMoves] = await Promise.all([
+  const [hubs, factionDoc, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, memoryDoc, debtDoc, hubStateDoc, hubMoves] = await Promise.all([
     readJSON('hubs/index.json'),
+    readJSON('game/factions.json'),
     readJSON('game/npcs.json'),
     readJSON('game/locations.json'),
     readJSON('game/relationships.manual.json'),
@@ -290,6 +296,7 @@ async function loadWorldDocuments() {
   ]);
   return {
     hubs: hubs || [],
+    factions: Array.isArray(factionDoc?.factions) ? factionDoc.factions : [],
     npcs: npcDoc?.npcs || [],
     locations: locationDoc?.locations || [],
     relationships: [
@@ -342,6 +349,21 @@ export function findMentionedNpcs(text, npcs = [], excludeIds = []) {
       .some(alias => tokenCounts.get(alias) === 1 && new RegExp(`\\b${alias}\\b`, 'i').test(source));
     return idMatch || fullNameMatch || uniqueAliasMatch;
   }).slice(0, 3);
+}
+
+// A faction is "Status-3-led" when its leader NPC's notes open with the
+// world-bible convention "Status: <Circle> N" and N is 3 or more.
+const LEADER_STATUS_RE = /^\s*Status:\s*(?:Mortalis|Night|Power|Wild)\s+(\d)\b/i;
+
+function selectRelevantFactions(world, { characterId, hubIds, npcIds }) {
+  const leaderStatus = new Map((world.npcs || []).map(npc => [npc.id, Number(String(npc.notes || '').match(LEADER_STATUS_RE)?.[1] ?? -1)]));
+  return (world.factions || []).filter(faction =>
+    faction?.hub_ids?.some(id => hubIds.has(id))
+    || (faction?.leader_npc_id && npcIds.has(faction.leader_npc_id))
+    || faction?.member_npc_ids?.some(id => npcIds.has(id))
+    || faction?.character_ids?.includes(characterId)
+    || (leaderStatus.get(faction?.leader_npc_id) ?? -1) >= 3
+  );
 }
 
 export function selectRelevantWorld(world, { characterId, state = {}, handoff = '' } = {}) {
@@ -398,6 +420,7 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
   const debts = world.debts.filter(debt =>
     debt.creditor_id === characterId || debt.debtor_id === characterId
   );
+  const factions = selectRelevantFactions(world, { characterId, hubIds: new Set(hubs.map(hub => hub.id)), npcIds: new Set(npcs.map(npc => npc.id)) });
   const knowledge = deriveKnowledgeRecords({ mysteries }, { characterId });
   const directory = {
     npcs: world.npcs.map(({ id, name }) => ({ id, name })),
@@ -405,7 +428,7 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
     arcs: world.arcs.map(({ id, title, status }) => ({ id, title, status })),
     mysteries: (world.mysteries || []).map(({ id, title, status }) => ({ id, title, status })),
   };
-  return { hubs, npcs, locations, relationships, arcs, mysteries, knowledge, characterId, npcCharacterMemories, debts, hubState, hubMoves: world.hubMoves || [], directory };
+  return { hubs, factions, npcs, locations, relationships, arcs, mysteries, knowledge, characterId, npcCharacterMemories, debts, hubState, hubMoves: world.hubMoves || [], directory };
 }
 
 export async function buildRelevantWorldContext(options) {
@@ -561,10 +584,13 @@ export function mergeCanonicalPatches(doc, patches, {
   allowNameMatch = false,
   publicOnly = false
 }) {
-  const next = doc && typeof doc === 'object' ? { ...doc } : {};
+  const next = doc && typeof doc === 'object'
+    ? { ...doc }
+    : collection === 'factions' ? { schema_version: 1 } : {};
   const list = Array.isArray(next[collection]) ? [...next[collection]] : [];
   const rejected = [];
   const conflicts = [];
+  if (collection === 'factions' && patches != null && !Array.isArray(patches)) rejected.push('faction_patch must be a JSON array');
   const safeSetFields = new Set([
     'arc_ids', 'associated_location_ids', 'controller_ids', 'hub_ids',
     'npc_ids', 'character_ids', 'promises', 'grievances', 'boundaries',
@@ -598,6 +624,15 @@ export function mergeCanonicalPatches(doc, patches, {
     }
     const existing = index >= 0 ? list[index] : null;
     const currentRevision = Number.isInteger(existing?.revision) ? existing.revision : 0;
+    if (collection === 'factions') {
+      // Shape only; NPC/hub/character references are checked by validate-world.
+      const anyId = { has: () => true };
+      const problems = factionProblems({ ...existing, ...patch }, { npc: anyId, hub: anyId, pc: anyId });
+      if (problems.length) {
+        rejected.push(problems.join('; '));
+        continue;
+      }
+    }
     if (collection === 'npcs' && (!existing || Object.hasOwn(patch, 'personality'))) {
       if (existing && expectedRevision === null) {
         rejected.push(`${patch.id} personality changes require expected_revision`);

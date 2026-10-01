@@ -154,6 +154,7 @@ section and use `TBD` for unfinished values.
 - **`<sheet>`** — required. Full sheet content. If save is triggered early (case 2 or 3), include every section but use "TBD" for fields the player hasn't filled in yet.
 - **`<state_patch>`** — strongly encouraged. Include `character_name` plus whatever mechanical state is set (stats, harm: 0, xp: 0, etc.). If stats aren't picked yet, omit and emit them via a later `<close_session>` `<state_patch>`.
 - **`<npc_patch>`** — required if any NPCs were introduced during onboarding (Phase 9 Debts & Anchors, in particular). Complete personality-engine profile, including all social fields and authored adult flirtation/intimacy traits (null only when inapplicable or deliberately unresolved).
+- **`<faction_patch>`** — optional. Include only when onboarding establishes a faction (for example, one the character owns). Same rules as in `<close_session>` below; `public_summary` never holds MC-only secrets.
 - **`<location_patch>`** — include only when onboarding establishes a new named place not already present in the canonical world index.
 - **`<relationship_patch>`** — required JSON array. Include public Anchors, family, mentorship, employment, and location ties established during onboarding. Never include secret ties. Use `[]` only when an early save has not established any public ties yet.
 - **`<debt_patch>`** — authoritative public Debt amounts. Every entry uses a stable `debt_*` ID plus creditor, debtor, amount, status, and `visibility: "public"`.
@@ -213,6 +214,12 @@ Everything inside the block is parsed by the bot, validated against the current 
   { "id": "npc_ada_thorne", "player_interaction": "owes Alex a favor" }
 ]
 </npc_patch>
+
+<faction_patch>
+[
+  { "id": "faction_example_crew", "expected_revision": 2, "changes": { "stance": "striving", "assets": ["a fleet of tow trucks", "a friendly dispatcher"] } }
+]
+</faction_patch>
 
 <npc_memory_patch>
 [
@@ -299,6 +306,7 @@ A one-line summary suitable for the #world-events channel. Omit if nothing city-
 - **`<state_patch>`** — partial JSON for fiction-driven changes. Do not emit bot-owned `last_session` or `active_arc_ids`; the close reconciler writes those. Use `effects` and namespaced `playbook_state` for mechanical carryover.
 - **`<events_append>`** — text appended to the end of `events-log.md`. Use markdown. Include a date/session header.
 - **`<npc_patch>`** — array. Each entry must have a canonical `npc_*` ID. The bot also resolves an exact canonical name match so a mistaken new ID cannot duplicate an existing NPC. Include only changed fields for an existing NPC. New NPCs require the complete personality schema from the NPC Personality Engine; incomplete profiles are rejected. Existing personality edits require `expected_revision` and `changes.personality`; omitted traits are preserved. Record the evidence or reason in `calibration_note`.
+- **`<faction_patch>`** — optional array, same envelope as `npc_patch` (`id`, `expected_revision`, `changes`). Each entry needs a canonical `faction_*` ID. A new faction needs `name`, `circle` (Mortalis, Night, Power, or Wild), `size` and `strength` (1–4), and `stance` (`striving` or `maintaining`); optional fields are `assets`, `hub_ids`, `leader_npc_id`, `member_npc_ids`, `character_ids`, and `public_summary`. Reference people by NPC ID only; never copy NPC facts into a faction. `character_ids` lists only a character who owns the faction. For an existing faction, copy its `revision` into `expected_revision` and include only changed fields. `public_summary` is public: never write MC-only secrets, hidden agendas, or undiscovered truths there. Entries with a bad ID or shape are skipped with a warning; the rest of the save still lands. Allowed in `<close_session>` and `<save_onboarding>`.
 - **`<npc_memory_patch>`** — array of material relationship-memory changes between an NPC and the active character. New records require `npc_id`, `character_id`, `relationship_state`, `disposition` (-5 hostile to +5 devoted), `trust`, `fear`, and `respect` (each 0–5), `last_interaction`, and string arrays for `promises`, `grievances`, `boundaries`, `key_moments`, and `npc_believes_about_character`. The bot creates the deterministic `memory_*` pair ID. Existing records use that ID with `expected_revision` and `changes`. Additive history lists merge during simultaneous play; stale contradictory scores become continuity conflicts. This is not the formal Debt ledger and never implies romantic consent.
 - **`<location_patch>`** — array of partial location records keyed by canonical `loc_*` IDs. Use this when a named place is introduced or its controller, status, atmosphere, or notes change. A location belongs to exactly one canonical `hub_id`.
 - **`<relationship_patch>`** — array of incremental, city-visible relationships keyed by `rel_*` IDs. Each record needs `source`, `target`, `type`, `label`, and `visibility: "public"`. Never serialize secret/MC-only facts here because the repository and dashboard are public.

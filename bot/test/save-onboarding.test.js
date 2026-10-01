@@ -129,3 +129,8 @@ test('missingSaveOnboardingFields: rejects malformed or non-array world patches'
     ['relationship_patch (JSON array)', 'debt_patch (JSON array)']
   );
 });
+
+test('parses a faction_patch inside the save block', () => {
+  const save = parseSaveOnboardingBlock(SAMPLE.replace('<relationship_patch>', '<faction_patch>\n[ { "id": "faction_test", "name": "Test" } ]\n</faction_patch>\n<relationship_patch>'));
+  assert.match(save.faction_patch, /faction_test/);
+});

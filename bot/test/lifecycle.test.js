@@ -254,3 +254,40 @@ test('malformed persistence fields are rejected before any writes', async t => {
   assert.ok(persistencePayloadProblems({ debt_patch: '{}' }).length);
   assert.deepEqual(persistencePayloadProblems({ state_patch: '{}', debt_patch: '[]' }), []);
 });
+
+test('onboarding faction_patch writes game/factions.json; a bad faction is a warning and the character still saves', async t => {
+  const git = fakeGit(t);
+  const errors = [];
+  t.mock.method(console, 'error', (...args) => errors.push(args.map(String).join(' ')));
+  const session = makeSession(), thread = makeThread();
+  const factions = [
+    { id: 'faction_test', name: 'Test Crew', circle: 'Night', size: 2, strength: 2, stance: 'maintaining' },
+    { id: 'bad', name: 'Bad' },
+  ];
+  assert.equal((await processSaveOnboarding(thread, session, save({ faction_patch: JSON.stringify(factions) }))).success, true);
+  const doc = JSON.parse(git.files.get('game/factions.json'));
+  assert.equal(doc.schema_version, 1);
+  assert.deepEqual(doc.factions.map(item => item.id), ['faction_test']);
+  assert.ok(git.files.has(`players/${character}/state.json`));
+  assert.ok(errors.some(line => /factions: bad must start with faction_/.test(line)));
+});
+
+test('close faction_patch merges into a missing factions file; a malformed entry is a warning and the close still lands', async t => {
+  const factions = [
+    { id: 'faction_docks', name: 'Dock Crew', circle: 'Mortalis', size: 1, strength: 2, stance: 'striving' },
+    { id: 'faction_shapeless', name: 'No Circle' },
+  ];
+  const git = fakeGit(t, { [`players/${character}/state.json`]: state }, { responses: [
+    '**Where we left off**\nOutside the gym, holding the open envelope.',
+    `<close_session><character_id>${character}</character_id><handoff>Outside the gym.</handoff><faction_patch>${JSON.stringify(factions)}</faction_patch><world_impact>{"level":"shared","summary":"A crew formed","affected_ids":["faction_docks"]}</world_impact></close_session>`,
+  ] });
+  const thread = makeThread('faction-close-test');
+  await startSession(thread, { id: character, name: 'Morgan', discord_id: '123' });
+  await handleMessage({ channel: thread, author: { id: '123' }, content: 'save & end', id: 'faction-close' });
+  assert.equal(thread.archived, true);
+  const doc = JSON.parse(git.files.get('game/factions.json'));
+  assert.deepEqual(doc.factions.map(item => item.id), ['faction_docks']);
+  const ledger = JSON.parse(git.files.get(`game/session-ledger/${character}-session_001.json`));
+  assert.ok(ledger.touched.includes('faction_patch'));
+  assert.ok(ledger.warnings.some(line => /^factions: faction_shapeless\.circle/.test(line)));
+});
