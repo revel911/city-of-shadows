@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  compactHubState,
   findMentionedNpcs,
   formatCanonicalWorldContext,
   formatNpcHydrationContext,
@@ -286,4 +287,22 @@ test('world context with empty detailedHubIds (new-character opening) shows only
   assert.match(context, /hub_a: A Move \[Heart\]/);
   assert.match(context, /hub_b: B Move \[Wild\]/);
   assert.doesNotMatch(context, /OUTCOME/);
+});
+
+test('hub state written with legacy singular fields reaches the MC', () => {
+  const compact = compactHubState({
+    id: 'hub_university', revision: 7,
+    condition: 'Consilium fracture widening.',
+    state: 'Ley line running off-tempo.',
+    note: 'Watch Monroe Park.',
+  });
+  assert.deepEqual(compact.conditions, ['Consilium fracture widening.']);
+  assert.match(compact.notes, /Ley line running off-tempo\./);
+  assert.match(compact.notes, /Watch Monroe Park\./);
+});
+
+test('canonical plural hub-state fields win and are not duplicated', () => {
+  const compact = compactHubState({ id: 'h', revision: 1, conditions: ['A'], condition: 'A', notes: 'N' });
+  assert.deepEqual(compact.conditions, ['A']);
+  assert.equal(compact.notes, 'N');
 });

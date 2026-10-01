@@ -163,15 +163,20 @@ function compactMystery(mystery) {
   };
 }
 
-function compactHubState(hub) {
+export function compactHubState(hub) {
+  const legacyCondition = typeof hub.condition === 'string' && hub.condition.trim() ? [hub.condition.trim()] : [];
+  const legacyNotes = [hub.state, hub.note]
+    .filter(value => typeof value === 'string' && value.trim())
+    .map(value => value.trim())
+    .join(' ');
   return {
     id: hub.id,
     revision: Number.isInteger(hub.revision) ? hub.revision : 0,
-    conditions: hub.conditions || [],
+    conditions: Array.isArray(hub.conditions) && hub.conditions.length ? hub.conditions : legacyCondition,
     rumors: hub.rumors || [],
     control: hub.control || '',
     pressure: Number.isInteger(hub.pressure) ? hub.pressure : 0,
-    notes: hub.notes || '',
+    notes: typeof hub.notes === 'string' && hub.notes.trim() ? hub.notes : legacyNotes,
     last_updated: hub.last_updated || '',
   };
 }
