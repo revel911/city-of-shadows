@@ -676,6 +676,89 @@ When you die, your divine light falls on everyone present. The guilty and the co
 
 ---
 
+## The Immortal
+
+Death has stopped being a deadline for you. You have outlived cities and causes, you hold real standing in Power politics, and you are lonelier each decade as everyone around you fades. The question is whether you can still treat the short lives near you as people rather than pieces on your board.
+
+**ID:** the-immortal
+
+> **WoD:** Suggested: an immortal of the Chronicles of Darkness *Immortals* tradition (source chosen below), or Mage: The Awakening under Phase 5's off-natural rule (Channeling prerequisite). The faction is a recognized peer of the Consilium, never part of it and never above it. Any other extension, or none, is open.
+
+### Starting Profile
+
+- **Circle:** Power
+- **Stats:** Blood -2, Heart 0, Mind 1, Spirit 2 (add 1 to one stat, max +3)
+- **Circle ratings:** Mortalis -1, Night -1, Power 2, Wild 1 (add 1 to one)
+- **Circle Status:** Mortalis 0, Night 0, Power 3, Wild 1
+- **Demeanor options:** conniving, detached, reserved, smug
+- **Gear:** a penthouse, a luxury car, a smartphone, and one elegant weapon: a silenced 9mm (2-harm near concealable), a sword cane (2-harm close concealable), a dagger (2-harm hand concealable), or a katana (3-harm close messy).
+- **Starting Debts:**
+  - You have quietly guarded someone's family line for decades. They owe you two Debts.
+  - You stepped in for someone who had offended a powerful member of your Circle and saved their life. They owe you a Debt.
+  - Someone has learned what could truly kill you and has sworn to keep silent. You owe them a Debt.
+- **Intro questions:**
+  - When did you first learn you could not stay dead?
+  - Where were you before you settled in the city, decades ago?
+  - Which mortal on your payroll have you grown too fond of?
+  - Which supernatural ally do you fear is working against you in secret?
+- **Let It Out options:** perform a ritual of another Circle, whose members must treat you as one of their own for a scene; recall where a useful tome or minor artifact sits in your collection; handle a mundane problem with uncanny skill from a past life; hear the echoes of those who recently died nearby.
+
+### Special Mechanic — Your Faction
+
+You have been in the city long enough to found a faction of your own, and you lead it. Choose its structure (Size/Strength): a small cult of retainers devoted to your longevity (1/4); a council of immortals guarding shared interests (2/3); a college or library that preserves knowledge and artifacts (3/2); or a loose confederacy of wizards, oracles and recruits behind a political cause (4/1). Choose two recent political developments it brought about: destroying a dangerous rival faction from another Circle; securing passage into or out of the city for a Status-3 member of your Circle; brokering lasting peace between two warring factions of different Circles; tricking a rival in your own Circle into a costly blunder; getting hold of a relic or tome vital to your purpose; stopping a threat to your whole Circle. Also choose its greatest internal threat: an ambitious protege, a jealous lieutenant, a recent recruit set on reform, or a mad oracle whose prophecy leads people astray. Size 1-2 means you know everyone by name; Size 3-4 means you cannot.
+
+Your faction is always striving. It holds assets equal to its Strength, chosen with the MC. You decide its moves in the faction turn.
+
+**The clean way in.** The city is shared, so your faction joins its politics without sitting on top of it. These rules are binding:
+
+1. The faction is new. It may not be, absorb or replace any faction or NPC already in the city's records.
+2. At creation, state its relationship to the Richmond Consilium (`faction_richmond_consilium`): ally, rival, or uneasy truce. The MC records that as a `relationship_patch` against an existing Consilium NPC. It is a standing relationship, not membership. The Silver Ladder (`faction_silver_ladder_richmond`), the Canal Court (`faction_canal_court`) and every other existing faction stay exactly as canon has them.
+3. Power Status 3 makes you a peer of the existing Status-3 Power NPCs. You are not their superior, and none of them answers to you.
+4. Smooth Operator and your faction's moves may boost or target NPC factions and arcs only, never another PC directly.
+5. The internal threat is an NPC the MC creates with `npc_patch` (protege, lieutenant, recruit or mad oracle). It stays an NPC.
+
+**Immortalis.** Choose where your immortality came from: your birth, a ritual (yours or another's), a curse, a bound artifact, or an agreement sworn to gods. Then choose the single condition that could truly kill you: a particular weapon or danger; a particular attacker; a particular thing present or invoked; a choice you make about something; or a death after your immortality has faded, due to something. The condition is an open secret between you, the MC and the other players, though most characters do not know it, so everyone can build it into the fiction. When your harm track fills and the condition is not met, you die and More Lives to Live applies. When it is met, you die for good and your End Move fires. A source drawn from the Chronicles of Darkness *Immortals* tradition is welcome here.
+
+At creation the faction becomes one new `faction_patch` record in `game/factions.json`: `character_ids` is this character only, its Size/Strength as chosen, `stance: striving`, with assets equal to its Strength. Its leader is you; the internal threat is created in the same save with `npc_patch`. At the first session close the MC emits an `arc_patch` (`type: personal`) naming the faction.
+
+State: `playbook_state.immortal` = `{ faction: { faction_id: "faction_<slug>", structure: "", internal_threat_npc_id: "", consilium_stance: "ally|rival|truce" }, source: "", true_death: "", shards: [] }`. The faction's Size, Strength and assets live only in the faction record. `shards` lists those you have imbued through intimacy.
+
+### Moves
+
+#### You Get This One
+
+- **More Lives to Live** — when your harm track fills, you die, and when you choose to return, roll with Spirit. On a hit, you come back whenever you choose, from immediately to weeks later when enemies think you gone. On a 10+, choose 1; on a 7-9, choose 2: someone protects your interests while you are gone, and their aid costs you a Debt; you return disoriented and exposed, taking -1 ongoing until you get serious rest; you glimpse a dark future on the other side, and mark corruption; you return changed, and say how death marks your body. On a miss, the MC picks 2 and decides when and where you rejoin the living. A true death, as defined by your Immortalis condition, skips this roll.
+
+#### Choose Two More
+
+- **Duelist** — when you turn to violence with an elegant weapon, roll with Spirit instead of Blood. On a miss, you are disarmed, outgunned or overwhelmed (MC's choice). Swords, canes and katanas qualify; guns generally do not, and the MC rules on the edge cases.
+- **Love Long Lost** — you once loved a mortal, long and well. Describe the cherished token you carry from them (it lets you avoid the taint of corruption once, as a cherished token does), and take a move from any Mortalis playbook for what they taught you. Define that relationship with the MC: when, and why it ended.
+- **Oldtimer** — add +1 to the rating of a Circle other than your own and name an NPC from it with whom you share a long history. They will not betray you or work against you as long as you do the same for them. When you hit the streets to visit that friend, add this option to the list: something from your past has come back to haunt you both.
+- **Smooth Operator** — when you devote the faction turn to bolstering an NPC faction's actions, forgoing all your city moves, that faction takes +1 ongoing until time passes. Once per faction turn while bolstering, you may turn a miss into a weak hit (7-9) by cashing in a Debt with a Status-3 NPC. It targets NPC factions and arcs only, never a PC.
+
+#### Corruption Moves
+
+**Corruption trigger:** when you use someone as an unwitting or unwilling pawn in your schemes, mark corruption. This usually means allies you push into danger without their consent, but it also covers enemies you manipulate into serving you.
+
+- **Reputable Employer** — when you recruit allies from another Circle, mark corruption to use your Circle Status. On a miss, mark corruption to have your agents deal with whoever is spreading the rumors, discreetly and within your instructions. If you do not want that person hurt, they are not.
+- **Mirror, Mirror** — when you bring a corpse back for a scene, mark corruption to have it answer two questions truthfully. You cannot do this to the same body twice. Handle it plainly at the table: it is a short, bounded scene, with no graphic detail. Further questions are ordinary persuasion or deception, not compelled.
+- **Poker Face** — when a PC figures you out, mark corruption to choose which questions you answer. Mark corruption to mislead, distract or trick an NPC as if you rolled a 10+. It works even against investigation or magic, provided the deception is plausible.
+- **Voodoo Economics** — when you cash in a Debt with an NPC of lower Status, mark corruption to get two things from the list, or to persuade them as if you rolled a 10+. You choose both options.
+
+### Intimacy Move
+
+When you share a moment of intimacy, physical or emotional, you give the other person a shard of your immortality. Within a year of their death, you can mark a scar to bring them back to life. There is no limit on how many you imbue, but each rescue costs a scar, and you must imbue them again to offer it a second time. For an NPC, the MC applies this in the fiction. When the other person is a PC, the shard is offered only; it takes effect only if that player opts in, in their own session. Until then it applies to NPCs only.
+
+### End Move
+
+When you truly die, name another character as your protege or heir. They immediately gain +1 Status in your Circle, ignoring the usual limits, which can lift a Status-2 character to Status 3. Your schemes end with you, and your legacy continues in the heir. The heir may be an NPC. A PC can be named only with that player's opt-in, in their own session; without it, the heir is an NPC. If this would make someone head of a new faction or change the city's rules, the MC writes it to the handoff as a proposal for operator approval first.
+
+### Advances
+
+**Available at the beginning of play:** +1 Status (max +1) twice; +1 to any Circle (max +3); a new Immortal move twice; a move from another playbook twice; erase a scar.
+
+**After five advances:** +1 to any Circle (max +3); +1 Status (max +1) twice; erase a scar; add a secure asset to your faction; change your Circle (the faction follows but loses 1 Size and 1 Strength, and may collapse); advance three basic moves twice; change to a new playbook.
+
 ## Mortalis Circle Moves
 
 These moves are available to any playbook within the Mortalis Circle, in addition to their own playbook moves.
