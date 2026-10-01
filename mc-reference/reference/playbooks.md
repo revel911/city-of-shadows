@@ -585,6 +585,97 @@ When you die, name an NPC you failed to bring to justice. Someone you helped in 
 
 ---
 
+## The Angel
+
+A soldier sent to Earth by your choir to stop the Enemy, a faction that broke a rule of the natural order and is now stronger for it. You can pass for mortal, you answer to a god who has stopped answering, and you carry a flaming sword you are afraid to use. The fear is justified: the quick way through the Enemy is to become exactly what you came to oppose.
+
+**ID:** the-angel
+
+> **WoD:** Suggested: an angel of the God-Machine sent as an Agent (Demon: The Descent cosmology), not a fallen one. The Unchained of `demon.md` are this Angel's mirror and temptation. Taking `demon.md` makes a fallen or falling angel, and that is open too. Any other extension, or none, is open.
+
+### Starting Profile
+
+- **Circle:** Wild
+- **Stats:** Blood 1, Heart 2, Mind -2, Spirit 0 (add 1 to one stat, max +3)
+- **Circle ratings:** Mortalis -1, Night -1, Power -1, Wild -1 (add 1 to one)
+- **Circle Status:** Mortalis 0, Night 0, Power 0, Wild 1
+- **Demeanor options:** curious, gentle, haughty, stoic
+- **Gear:** a symbol of your god (jewelry, a tattoo, or something else), and one stolen weapon of your choice: a 9mm Beretta (2-harm close loud concealable), a pump-action shotgun (3-harm close/near loud reload messy), or a ritual knife (2-harm hand messy).
+- **Starting Debts:**
+  - When you first reached the city, someone gave you food, shelter and comfort. Ask why they were so kind. You owe them two Debts.
+  - Someone put you in touch with others who oppose your Enemy here. You owe them a Debt.
+  - Someone is sliding toward darkness and you are set on saving them. They owe you a Debt.
+- **Intro questions:**
+  - Why did your choir choose you to lead the fight against the Enemy?
+  - Who in the city do you suspect knows more than they say?
+  - What do you hate most about your near-mortal form?
+  - What unexpected pleasures have you found in being human?
+- **Let It Out options:** summon a terrifying angelic weapon (4-harm close fire mythic messy); kill a vulnerable NPC within reach before anyone can react; wrap yourself in divine light (armor-2) for the scene; heal a mundane illness or minor injury (1-harm) through a religious rite.
+
+### Special Mechanic — Your Wings, Your Enemy
+
+**Your Wings.** You pass as mortal while your wings are hidden. Cover them with a long coat or a large blanket and they are, for practical purposes, gone: mortal instruments cannot detect them, and most supernatural creatures will not grasp the scope of your power. They are more likely to take you for something else, such as a fae. Choose as many as apply: Material (feathers, fire, gold, light, shadow, smoke), Form (ancient, decaying, mighty, ornate, simple, worn), Aura (alluring, familiar, intimidating, melancholy, terrifying). These describe how your choir looks to others; they do not limit what your wings do.
+
+When you openly display your wings to an NPC, in recognition of your angelic nature and purpose, the effect is immediate and depends on that NPC. The MC decides which categories apply, and more than one (or none) can:
+
+- **The faithful** (those who truly honor your god) give you shelter, company, trust, a Debt, or any mundane thing you need, freely or grudgingly according to their nature.
+- **The guilty** fall before you, begging forgiveness or making excuses for their failings.
+- **The innocent** flourish in the light, strengthened by it. Give them a Debt and mark corruption, as you remember who your god loves most.
+- **The corrupted** reject you with violence, condemnation and disgust; they have already chosen the dark.
+
+Display affects NPCs only. It has no mechanical effect on another PC, though openly showing your wings is likely a moment of intimacy.
+
+**Your Enemy.** You came to settle a matter of divine importance: a powerful faction has broken the natural order and gained great power at an awful cost to reality. Pick the Circle and the cause.
+
+- A Mortalis faction at war with your god, murdering and devouring angels.
+- A Night faction that has enslaved the dead and corrupted them into service.
+- A Power faction that has stolen an element of your god's realm to fuel its own magic.
+- A Wild faction that has freed an ancient sovereign and is helping them in a mad bid for dominion.
+
+Also choose who is most to blame, and the MC treats what you say as true: a megalomaniac leader who drove the faction to the impossible; a remorseful outsider who shared secrets they now regret; a brilliant youth who did not understand the boundaries being crossed; or a scheming manipulator who hid the true cost from the rank and file. Work out concrete details with the MC (which element was stolen, which sovereign was raised) so you are both describing the same faction. Killing the one responsible rarely ends the problem; another often steps up. Remorseful outsiders and youths may end up on your side. Beating the Enemy usually means changing the faction and removing its ability to break reality again, and sometimes means destroying it, which takes a lot of help from PCs and NPCs.
+
+At character creation the Enemy becomes a `faction_patch` record in `game/factions.json`: `character_ids` is this character only, Size 3, Strength 3, in the chosen Circle, `stance: striving`, with two assets tied to its ill-gotten gains. The responsible party is created in the same save with `npc_patch`. At the first session close the MC emits an `arc_patch` (`type: threat`) naming the faction. If the Enemy is truly defeated (the MC's call), you retire to safety immediately and your end move fires.
+
+State: `playbook_state.angel` = `{ enemy: { faction_id: "faction_<slug>", sin: "", culprit_npc_id: "" }, ophanim_target: null, wings: { material: "", form: "", aura: "" } }`. The faction's own Size, Strength and assets live only in the faction record, never in `playbook_state`.
+
+### Moves
+
+#### You Get This One
+
+- **Counsel and Guidance** — when time passes, or at the start of the game, roll with Heart. On a hit, sacred signs point to a chance to advance your purpose; pick 1: an asset or ally of your Enemy that your actions can make vulnerable; an enemy of your Enemy who wants vengeance or justice; a gathering of your Enemy's people that can be disrupted or destroyed. On a 10+, also ask the MC a follow-up question; they must answer fully and honestly. On a miss, your dreams show that the Enemy has developed a new capacity (a strong asset, a fearsome ally, or an internal alliance) that may turn the tide against you.
+
+#### Choose Two More
+
+- **Soulgaze** — when you have time to sit in quiet contemplation with another person, roll with Heart instead of Mind to figure them out. Add these questions to the list, and take +1 ongoing when you act on an answer: Who can demand you act as your best self? What would you sacrifice yourself to protect? What do you fear you might become? On a miss, ask 1, but someone, possibly your subject, takes advantage of your focus. A quiet cafe works; a busy bus depot does not.
+- **Romans 12:19** — when you spare an important NPC (your call) instead of killing them, tell them why and roll with Heart. You need a real, concrete advantage; you must have them at your mercy and choose to give them another chance. On a hit, you move them: say what you want them to do, and they do their best to honor it, keeping the rest of their life ordinary. On a 10+, you have shown them the light and the way, and they rearrange their life around the purpose you gave them. On a miss, your words fall on deaf ears and your mercy lets them escape; you cannot pursue.
+- **Like One Of Them** — take +1 Heart (max +3).
+- **The Light of the Lord** — advance persuade an NPC for all characters in your presence, yourself included. You do not control what another PC asks for, nor what an NPC counts as seeing it through on a 12+.
+
+#### Corruption Moves
+
+**Corruption trigger:** when you pass final judgment on someone without your god's guidance, mark corruption. Final judgment usually means death, but anything that removes a character from the story (banishment, transformation) counts. If you make a reasonable effort to act within what you understand of your god's guidance, you do not mark corruption.
+
+- **Undaunted** — mark corruption to take a 10+ instead of rolling when you keep your cool against physical opposition, magical danger or emotional manipulation.
+- **Light upon Light** — mark corruption to forbid all lies in your presence. Deceptive words choke the speaker and illusions fall away to show the truth. Nothing resists this, however powerful. Everyone present tells the full truth as best they can or says nothing.
+- **Ophanim** — mark corruption to fix your divine attention on an NPC. You know their location and activities until time passes, even if they hide by deception or magic. Only one NPC at a time; choosing another drops the first. The target is stored as `ophanim_target`.
+- **Wings Dipped in Blood** — take an ability from another playbook, which is yours to keep. Mark corruption to activate a Let It Out ability without rolling, with the full effect and no complications. This works with any Let It Out ability you currently have, including ones gained through advances or other moves.
+
+### Intimacy Move
+
+When you share a moment of intimacy, physical or emotional, ask the other person whether they accept your angelic light into their soul. If they say yes, you may mark three corruption to erase one corruption advance from their playbook; if their corruption track is empty and you erase one more box, fill four boxes instead and remove a corruption advance of your choice. If they decline, they must mark a corruption. If they say yes, they are accepted as having said yes, but whether you erase anything is your choice. For an NPC, the MC applies the result in the fiction. When the other person is a PC, that player must opt in, in their own session, before any of this touches their sheet; until they do, it applies to NPCs only. A removed corruption advance also removes its benefit (a move or stat bonus), and the player must earn it again.
+
+### End Move
+
+When you die, your divine light falls on everyone present. The guilty and the corrupted erase a corruption advance; the devout and the innocent gain Soulgaze. You decide which group each person falls into, though PCs may argue their case, and you choose which corruption advance is removed. NPCs are not affected by your death. For a PC, erasing or changing their corruption advances requires that player's opt-in, in their own session; until they opt in, the effect applies only to NPCs.
+
+### Advances
+
+**Available at the beginning of play:** +1 Status (max +1) three times; a new Angel move; a move from another playbook (three times); you may take Wild Status-2 right away, which opens city moves (Core Book, page 96) during the faction turn; you may start your own faction soon after to contend with the Enemy more directly.
+
+**After five advances:** +1 to any Circle (max +3) three times; erase a scar; take 2 new Let It Out abilities; advance three basic moves; change to a new playbook (you likely abandon the mission, and your choir may send a replacement); change your Circle. You cannot retire to safety without changing playbooks or defeating your Enemy.
+
+---
+
 ## Mortalis Circle Moves
 
 These moves are available to any playbook within the Mortalis Circle, in addition to their own playbook moves.
