@@ -82,6 +82,14 @@ Treat a missing entity revision as revision 0. Always include every output key:
 - All output is public. Omit secrets and private player information.
 - If uncertain, add a warning and make no change.
 
+### Personal playbook factions
+Arcs created from a playbook (Angel's Enemy, Dragon's Ordo Draconis, an Immortal's faction, a Witch's coven)
+carry `character_ids` with only their owning character. The Keeper may advance them like any arc, but
+must never add another character's ID to them, target another player's character through them, or
+apply an end-move proposal (destroyed location, city-wide effect) without operator approval.
+A faction record with a `character_ids` owner may be advanced only toward that character; the Keeper never edits
+faction records in this version.
+
 ## Concrete pressure and earned outcomes
 
 Treat `pressure_stage` as scene guidance: investigation, intervention,

@@ -47,7 +47,7 @@ prefix. This index is loaded first so authority is clear before detailed rules.
 |---|---|---|---|
 | [character-creation.md](character-creation.md) | City of Shadows — Character Creation Wizard | Ordered onboarding phases, questions, captured choices, extension selection, first scene, and save requirements | New-character sessions only |
 | [character-sheet-template.md](character-sheet-template.md) | Canonical Character Sheet Template | Required character-sheet headings, order, placeholders, and field layout | New-character sessions only |
-| [reference/playbooks.md](reference/playbooks.md) | Playbooks | All Urban Shadows playbooks, starting mechanics, moves, gear, intimacy/end moves, corruption, and advancement | Full file for creation; active playbook section only for returning characters |
+| [reference/playbooks.md](reference/playbooks.md) | Playbooks | All 17 Urban Shadows playbooks, including the five expansion playbooks (Angel, Dragon, Immortal, Scholar, Witch) with starting profiles, intimacy moves and end moves; starting mechanics, moves, gear, corruption, and advancement | Full file for creation; active playbook section only for returning characters |
 
 ## World of Darkness extensions
 

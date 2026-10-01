@@ -98,6 +98,18 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Debts Come Due** — Someone from your past makes a move, forcing you to owe them or suffer consequences.
 - **No Easy Out** — You try to walk away, but the supernatural drags you back in violently.
 
+#### The Scholar
+
+- **Provenance Catches Up** — Someone you swindled recognizes the item in your hands.
+- **Cursed Inventory** — An object in your bag acts on its own at the worst moment.
+- **Network Burned** — A contact sells your location to settle their own Debt.
+
+#### The Witch
+
+- **Spell Rebounds** — Your magic lands on you or someone you love.
+- **Coven Exposed** — Your working leaves a trail back to the shop.
+- **Vengeance Takes the Wheel** — You strike past justice; mark corruption.
+
 ### Night — Hunger
 
 #### The Vamp
@@ -138,6 +150,12 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Blind Loyalty** — You obey an order without question, even if it's clearly wrong.
 - **Marked for Judgment** — Your enemies take notice, and someone makes a move against you.
 
+#### The Immortal
+
+- **A Past Life Calls** — Someone from a previous life recognizes you, now.
+- **The Faction Moves Without You** — Your lieutenant acts in your name, badly.
+- **The Condition Brushes Close** — Something touching your true-death condition comes into the scene.
+
 ### Wild — Chaos
 
 #### The Fae
@@ -157,3 +175,15 @@ Every roll in Urban Shadows is 2d6, but one of those dice is the Instinct Die (a
 - **Demonic Compulsion** — Your patron forces you to act in their interest, regardless of personal goals.
 - **Infernal Aura** — Your true nature is revealed, terrifying mortals and alerting supernatural foes.
 - **Unholy Craving** — You must indulge in an extreme vice immediately (violence, suffering, indulgence, etc.).
+
+#### The Angel
+
+- **Divine Silence** — Your god's absence leaves you frozen at the critical moment.
+- **Wings Seen** — Your nature is revealed to the worst possible witness.
+- **The Enemy Learns** — Your move shows the Enemy where you stand.
+
+#### The Dragon
+
+- **The Hunger for More** — You seize something not yours, and its owner sees it.
+- **The Ordo Smells Fire** — You leave a sign the Ordo Draconis can follow.
+- **Old Self Surfaces** — Ancient arrogance insults the one person you needed.

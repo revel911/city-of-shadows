@@ -186,6 +186,15 @@ Transcribe verbatim from the Gear / Resources section of the sheet. Each entry i
 `playbook_state` is a namespaced object for durable playbook resources such as a
 Veteran's workshop, a Wolf's territory, a Vamp's Web, or a Wizard's Ward. Do not
 add a new top-level state field for each playbook.
+Shapes for the expansion playbooks (copied from `reference/playbooks.md`; no new top-level fields or numeric tracks):
+
+- `playbook_state.scholar` = `{ bag: "lucky|unassuming|arcane", prized_item: "", network: { features: [], contacts: [] }, owed_objects: [{ to: "npc_id", object: "", due: "next faction turn" }] }`
+- `playbook_state.witch` = `{ coven: { faction_id: "faction_<slug>", composition: "", nearly_destroyed_by: "" }, shop: { location_id: "", type: "" }, strained_outside_shop: false, forbidden_unlocked: false, soulguard_object: null, devilry_tokens: [] }`
+- `playbook_state.angel` = `{ enemy: { faction_id: "faction_<slug>", sin: "", culprit_npc_id: "" }, ophanim_target: null, wings: { material: "", form: "", aura: "" } }`
+- `playbook_state.immortal` = `{ faction: { faction_id: "faction_<slug>", structure: "", internal_threat_npc_id: "", consilium_stance: "ally|rival|truce" }, source: "", true_death: "", shards: [] }`
+- `playbook_state.dragon` = `{ hoard: { covets: ["", ""], items: [] }, brood: [{ npc_id: "", role: null, revealed: false }], ordo: { faction_id: "faction_<slug>", gathering: "", strengths: [] } }`
+
+A faction's own Size, Strength and assets live only in its faction record, never in `playbook_state`.
 
 If a character move changes the stat used by a basic move, record it under
 `playbook_state.move_modifiers`, keyed by the canonical move name. Example:
