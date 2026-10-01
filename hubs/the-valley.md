@@ -11,7 +11,7 @@ The Valley is where Richmond sends the people it does not know what to do with, 
 
 Night holds the Valley because necessity is its oldest customer: a fixer who needs hands, a feeder who needs consent, an elder who needs a quiet bed. Mortalis does the practical work: the church van, the pills, the meal line. Power sits at the top of the docket and on the holding center's night shift. Wild drifts in through the cracks, in an old greyhound's eyes and in a laundromat's dryers. Everyone here has a plan to get out, or to get someone else out, and the Valley is mostly the story of those plans.
 
-**Tone:** raw necessity, not glamour. No one is just a victim; everyone has a plan.
+**Tone:** raw necessity, not glamour. Everyone here is working an angle, including the people being worked.
 
 ---
 
