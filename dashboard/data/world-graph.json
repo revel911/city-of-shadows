@@ -1372,6 +1372,111 @@
     },
     {
       "data": {
+        "id": "loc_libby_hill_park",
+        "label": "Libby Hill Park",
+        "kind": "location",
+        "hub_id": "hub_church_hill",
+        "status": "active",
+        "subtype": "Park",
+        "details": "A hilltop park at the eastern end of the ridge, looking down the bend of the James toward the old port at Rocketts."
+      },
+      "position": {
+        "x": 337,
+        "y": 677
+      }
+    },
+    {
+      "data": {
+        "id": "loc_st_johns_church",
+        "label": "St. John's Church",
+        "kind": "location",
+        "hub_id": "hub_church_hill",
+        "status": "active",
+        "subtype": "Historic church",
+        "details": "A white wooden church in a walled graveyard at the crest of the hill, older than the nation and still holding services."
+      },
+      "position": {
+        "x": 251,
+        "y": 635
+      }
+    },
+    {
+      "data": {
+        "id": "loc_chimborazo_park",
+        "label": "Chimborazo Park",
+        "kind": "location",
+        "hub_id": "hub_church_hill",
+        "status": "active",
+        "subtype": "Park",
+        "details": "A broad, windy park on the bluff where a huge wartime hospital once stood, now lawns, old trees and a small medical museum."
+      },
+      "position": {
+        "x": 142,
+        "y": 1016
+      }
+    },
+    {
+      "data": {
+        "id": "loc_the_ridgeback",
+        "label": "The Ridgeback",
+        "kind": "location",
+        "hub_id": "hub_church_hill",
+        "status": "active",
+        "subtype": "Bar",
+        "details": "A narrow corner bar a few blocks off the top of the hill: brick walls, a pool table, a back room the regulars never mention."
+      },
+      "position": {
+        "x": -304,
+        "y": 879
+      }
+    },
+    {
+      "data": {
+        "id": "loc_byrd_theatre",
+        "label": "The Byrd Theatre",
+        "kind": "location",
+        "hub_id": "hub_carytown",
+        "status": "active",
+        "subtype": "Movie palace",
+        "details": "A 1928 movie palace on Cary Street with a chandelier, painted ceilings and a theatre organ that still rises out of the floor on Saturday nights."
+      },
+      "position": {
+        "x": -109,
+        "y": 478
+      }
+    },
+    {
+      "data": {
+        "id": "loc_cary_street_physical_therapy",
+        "label": "Cary Street Physical Therapy",
+        "kind": "location",
+        "hub_id": "hub_carytown",
+        "status": "active",
+        "subtype": "Clinic",
+        "details": "A storefront physical-therapy clinic between a bakery and a vintage shop, with a busy front desk and a waiting room full of regulars."
+      },
+      "position": {
+        "x": -553,
+        "y": 442
+      }
+    },
+    {
+      "data": {
+        "id": "loc_second_reel_coffee",
+        "label": "Second Reel Coffee",
+        "kind": "location",
+        "hub_id": "hub_carytown",
+        "status": "active",
+        "subtype": "Cafe",
+        "details": "A crowded cafe across from the Byrd with mismatched chairs, a chalkboard of film trivia and windows onto the whole street."
+      },
+      "position": {
+        "x": -529,
+        "y": 959
+      }
+    },
+    {
+      "data": {
         "id": "npc_det_okafor",
         "label": "Det. Sgt. Paulette Okafor",
         "kind": "npc",
@@ -4343,6 +4448,76 @@
         "id": "edge_loc_city_hall_parking_deck_hub_capitol_city_hall",
         "source": "loc_city_hall_parking_deck",
         "target": "hub_capitol_city_hall",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_libby_hill_park_hub_church_hill",
+        "source": "loc_libby_hill_park",
+        "target": "hub_church_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_st_johns_church_hub_church_hill",
+        "source": "loc_st_johns_church",
+        "target": "hub_church_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_chimborazo_park_hub_church_hill",
+        "source": "loc_chimborazo_park",
+        "target": "hub_church_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_the_ridgeback_hub_church_hill",
+        "source": "loc_the_ridgeback",
+        "target": "hub_church_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_byrd_theatre_hub_carytown",
+        "source": "loc_byrd_theatre",
+        "target": "hub_carytown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_cary_street_physical_therapy_hub_carytown",
+        "source": "loc_cary_street_physical_therapy",
+        "target": "hub_carytown",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_second_reel_coffee_hub_carytown",
+        "source": "loc_second_reel_coffee",
+        "target": "hub_carytown",
         "type": "in_hub",
         "label": "In",
         "layer": "structural"

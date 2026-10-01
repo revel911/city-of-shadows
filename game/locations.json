@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-09-26",
+  "last_updated": "2026-10-01",
   "locations": [
     {
       "id": "loc_the_buried_street",
@@ -1090,6 +1090,101 @@
       "description": "A gray multi-level concrete deck beside City Hall, with numbered pillars, a pay station, flickering fluorescents and exactly two cameras that never seem to point at the right level.",
       "atmosphere": "Rush-hour traffic by day; echoing footsteps, dripping pipes and idling engines after dark.",
       "notes": "After dark the deck is where off-the-books agreements happen, usually on the third level. Brokers choose it because everyone has a reason to be parked there. The older City Hall Annex (loc_city_hall_annex) stays in Downtown.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_libby_hill_park",
+      "name": "Libby Hill Park",
+      "hub_id": "hub_church_hill",
+      "type": "Park",
+      "controller_ids": [
+        "npc_dara_shin"
+      ],
+      "controller_note": "Dara Shin's pack treats the overlook as the edge of its ground",
+      "status": "active",
+      "description": "A hilltop park at the eastern end of the ridge, looking down the bend of the James toward the old port at Rocketts.",
+      "atmosphere": "Wind off the river, gas-lamp glow, someone always watching the stairs.",
+      "notes": "The view that gave Richmond its name. Pack members meet here at dusk; outsiders who linger after dark get noticed. Overwrite: on some nights the river below bends the way it did a century ago.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_st_johns_church",
+      "name": "St. John's Church",
+      "hub_id": "hub_church_hill",
+      "type": "Historic church",
+      "controller_ids": [],
+      "controller_note": "An active congregation; no Circle claims it",
+      "status": "active",
+      "description": "A white wooden church in a walled graveyard at the crest of the hill, older than the nation and still holding services.",
+      "atmosphere": "Quiet brick paths, old headstones, tourists by day and stillness by night.",
+      "notes": "MC guardrail: this is a real, active church and burial ground. Its people, graves and services are never desecrated or made villainous. The supernatural here is memory: the graveyard is one of the places where the ridge listens.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_chimborazo_park",
+      "name": "Chimborazo Park",
+      "hub_id": "hub_church_hill",
+      "type": "Park",
+      "controller_ids": [],
+      "controller_note": "Open ground; the pack runs it at night",
+      "status": "active",
+      "description": "A broad, windy park on the bluff where a huge wartime hospital once stood, now lawns, old trees and a small medical museum.",
+      "atmosphere": "Wide open, exposed, a long view in every direction.",
+      "notes": "The pack uses the open lawns to run. MC guardrail: thousands were treated and died here during the Civil War; treat that history with gravity, not as a monster factory and never as Lost Cause nostalgia. Echoes here are of the sick and the people who cared for them.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_the_ridgeback",
+      "name": "The Ridgeback",
+      "hub_id": "hub_church_hill",
+      "type": "Bar",
+      "controller_ids": [
+        "npc_dara_shin"
+      ],
+      "controller_note": "Neutral by Dara Shin's word, which holds as long as she says it does",
+      "status": "active",
+      "description": "A narrow corner bar a few blocks off the top of the hill: brick walls, a pool table, a back room the regulars never mention.",
+      "atmosphere": "Low talk, sharp eyes, everyone clocks the door.",
+      "notes": "Fictional. Where the pack's business gets done and where outsiders come to ask for passage. Breaking the peace inside is the fastest way to lose Dara's goodwill.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_byrd_theatre",
+      "name": "The Byrd Theatre",
+      "hub_id": "hub_carytown",
+      "type": "Movie palace",
+      "controller_ids": [],
+      "controller_note": "Run by its own staff and devotees; no Circle claims it",
+      "status": "active",
+      "description": "A 1928 movie palace on Cary Street with a chandelier, painted ceilings and a theatre organ that still rises out of the floor on Saturday nights.",
+      "atmosphere": "Velvet, popcorn, an organ swell, a crowd that comes back every week.",
+      "notes": "Real and beloved; its staff and patrons are never villains. Its crowds are the best cover in Carytown. Overwrite: now and then the marquee lists a film that was never made, and the regulars swear they have seen it.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_cary_street_physical_therapy",
+      "name": "Cary Street Physical Therapy",
+      "hub_id": "hub_carytown",
+      "type": "Clinic",
+      "controller_ids": [],
+      "controller_note": "A small private practice; no Circle connection",
+      "status": "active",
+      "description": "A storefront physical-therapy clinic between a bakery and a vintage shop, with a busy front desk and a waiting room full of regulars.",
+      "atmosphere": "Fluorescent calm, appointment chimes, people who know each other by first name.",
+      "notes": "Fictional. The most ordinary place in the city, which is why anything strange that reaches it does real damage. Keep it mundane unless something follows someone in.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_second_reel_coffee",
+      "name": "Second Reel Coffee",
+      "hub_id": "hub_carytown",
+      "type": "Cafe",
+      "controller_ids": [],
+      "controller_note": "Owned by a mortal couple who know nothing",
+      "status": "active",
+      "description": "A crowded cafe across from the Byrd with mismatched chairs, a chalkboard of film trivia and windows onto the whole street.",
+      "atmosphere": "Espresso hiss, laptop glow, a perfect view of who comes and goes.",
+      "notes": "Fictional. Where people meet in plain sight, and where a barista with a good memory notices who keeps showing up.",
       "last_updated": "2026-10-01"
     }
   ]

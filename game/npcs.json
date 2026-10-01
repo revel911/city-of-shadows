@@ -1535,10 +1535,13 @@
       },
       "last_seen": "session_000",
       "notes": "Irraka auspice. Patient, territorial, reads people like exits. Vouched for Jacob with Night Circle.",
-      "associated_location_ids": [],
-      "updated_by_session": "operator:personality-expansion",
-      "revision": 1,
-      "last_updated": "2026-09-14"
+      "associated_location_ids": [
+        "loc_libby_hill_park",
+        "loc_the_ridgeback"
+      ],
+      "updated_by_session": "operator:us-hubs-expansion",
+      "revision": 2,
+      "last_updated": "2026-10-01"
     },
     {
       "id": "npc_ray_cutler",
@@ -1601,10 +1604,12 @@
       },
       "last_seen": "session_000",
       "notes": "Anchor. Has a son, Marcus, age 7. Does not know about the supernatural world.",
-      "associated_location_ids": [],
-      "updated_by_session": "operator:personality-expansion",
-      "revision": 1,
-      "last_updated": "2026-09-14"
+      "associated_location_ids": [
+        "loc_cary_street_physical_therapy"
+      ],
+      "updated_by_session": "operator:us-hubs-expansion",
+      "revision": 2,
+      "last_updated": "2026-10-01"
     },
     {
       "id": "npc_tommy_greer",

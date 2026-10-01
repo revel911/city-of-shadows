@@ -1,7 +1,7 @@
 # Hub: Carytown
 
 **Dominant Circle:** Mortalis
-**Last updated:** 2026-08-21
+**Last updated:** 2026-10-01
 
 ---
 
@@ -16,22 +16,21 @@ and the ordinary routines that supernatural lives strain to preserve.
 
 ## Hub Moves
 
-<!-- Owner: add two moves here. Start each with a level-3 heading (three # signs, a space, then
-the move name), followed by one of these two shapes so the bot can roll them:
+### Just Another Saturday
+**Trigger:** When you use Carytown's ordinary crowd to hide, shake a tail, or meet someone without being noticed.
+**Roll:** Mortalis
+- **10+:** You vanish into the bustle, and you spot who was looking for you.
+- **7-9:** You vanish, but a regular (a barista, an usher at the Byrd, a clinic receptionist) will remember your face.
+- **Miss:** Someone ordinary sees something they shouldn't. The MC introduces a mortal witness, and now their normal life is at risk.
 
-  Shape A:
-    **Trigger:** When you … in Carytown.
-    **Roll:** Heart            (Blood | Heart | Mind | Spirit | Mortalis | Night | Power | Wild)
-    - **10+:** …
-    - **7-9:** …
-    - **Miss:** …
+### Keep It Normal
+**Trigger:** When you spin a cover story to keep the supernatural out of someone's everyday life.
+**Roll:** Mind
+- **10+:** The story holds, and buys real time before anyone asks again.
+- **7-9:** The story holds for now, but choose 1: it's a lie you'll have to keep feeding | someone else has to back it up, and you owe them a Debt | it costs you something with the person you're protecting.
+- **Miss:** It cracks. They know you're lying. They just don't know about what yet.
 
-  Shape B:
-    When you …, roll with Night.
-    - **10+:** …
-    - **7-9:** …
-    - **Miss:** …
--->
+---
 
 ## Locations
 
