@@ -1,3 +1,5 @@
+import { readFile } from 'node:fs/promises';
+import { extractHubMoves } from '../bot/handlers/hub-moves.js';
 import { personalityProblems } from '../bot/handlers/npc-personality.js';
 import { readJSON } from './world-utils.mjs';
 import { npcCharacterMemoryId } from '../bot/handlers/world-state.js';
@@ -50,6 +52,17 @@ for (const hub of hubState.hubs || []) {
   if (!Number.isInteger(hub.revision) || hub.revision < 0) errors.push(`${hub.id}.revision must be a non-negative integer`);
   if (hub.conditions != null && !Array.isArray(hub.conditions)) errors.push(`${hub.id}.conditions must be an array`);
   if (hub.rumors != null && !Array.isArray(hub.rumors)) errors.push(`${hub.id}.rumors must be an array`);
+}
+
+for (const hub of hubs) {
+  const markdown = await readFile(new URL(`../hubs/${hub.file}`, import.meta.url), 'utf8').catch(() => null);
+  if (markdown == null) { errors.push(`${hub.id} file hubs/${hub.file} is missing`); continue; }
+  for (const move of extractHubMoves(markdown, hub.id)) {
+    if (!move.trigger) errors.push(`${hub.id} hub move "${move.name}" has no trigger`);
+    if (!move.modifier_type && !/\broll(?:\s+with)?\s+\+?Status\b/i.test(move.text)) {
+      errors.push(`${hub.id} hub move "${move.name}" has no readable roll`);
+    }
+  }
 }
 
 for (const conflict of conflictDoc.conflicts || []) {

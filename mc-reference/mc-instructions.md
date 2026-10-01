@@ -277,6 +277,12 @@ roll_protocol:
     - resolving a roll before the bot injects the authoritative result
 ```
 
+### Hub moves
+Each hub's `## Hub Moves` apply only while the scene is physically in that hub. A hub move
+with a roll is resolved by the dice engine like any other move; narrate its listed outcomes.
+Hub moves that say "when time passes" or "roll with Status" are never rolled live: resolve
+them at the time-passes beat, or use the Status rules in the move text.
+
 ---
 
 ## Document Model
