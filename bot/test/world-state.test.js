@@ -273,3 +273,17 @@ test('selectRelevantWorld carries hubMoves through and defaults to empty', () =>
   const moves = [{ hub_id: 'h', name: 'M', text: 't' }];
   assert.deepEqual(selectRelevantWorld({ ...base, hubMoves: moves }, { characterId: 'c' }).hubMoves, moves);
 });
+
+test('world context with empty detailedHubIds (new-character opening) shows only hub-move index lines', () => {
+  const context = formatCanonicalWorldContext({
+    hubs: [{ id: 'hub_a', name: 'A' }, { id: 'hub_b', name: 'B' }],
+    hubMoves: [
+      { hub_id: 'hub_a', name: 'A Move', modifier_key: 'Heart', circle: null, text: '- **10+:** A OUTCOME' },
+      { hub_id: 'hub_b', name: 'B Move', modifier_key: null, circle: 'Wild', text: '- **10+:** B OUTCOME' },
+    ],
+    detailedHubIds: [],
+  });
+  assert.match(context, /hub_a: A Move \[Heart\]/);
+  assert.match(context, /hub_b: B Move \[Wild\]/);
+  assert.doesNotMatch(context, /OUTCOME/);
+});

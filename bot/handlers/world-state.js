@@ -180,8 +180,7 @@ function formatHubMoves(hubMoves, detailedHubIds) {
   if (!hubMoves.length) return ['(none)'];
   const detailed = hubMoves
     .filter(move => detailedHubIds.has(move.hub_id))
-    .map(move => `### ${move.name} (${move.hub_id})
-${move.text}`);
+    .map(move => `### ${move.name} (${move.hub_id})\n${move.text}`);
   const others = new Map();
   for (const move of hubMoves.filter(move => !detailedHubIds.has(move.hub_id))) {
     const label = `${move.name} [${move.modifier_key || move.circle || 'special'}]`;
@@ -208,6 +207,7 @@ export function formatCanonicalWorldContext({
   characterId = '',
   directory = null,
   includeBehaviorCards = true,
+  detailedHubIds = hubs.map(hub => hub.id),
 }) {
   return [
     '--- CANONICAL WORLD INDEX ---',
@@ -250,7 +250,7 @@ export function formatCanonicalWorldContext({
     JSON.stringify(hubState.map(compactHubState)),
     '',
     'HUB MOVES (apply only while the scene is inside that hub; outcomes below are binding):',
-    ...formatHubMoves(hubMoves, new Set(hubs.map(hub => hub.id))),
+    ...formatHubMoves(hubMoves, new Set(detailedHubIds)),
     '',
     formatCharacterKnowledge(knowledge, characterId),
     '',
@@ -305,6 +305,7 @@ export async function buildCanonicalWorldContext() {
     ...world,
     npcCharacterMemories: [],
     includeBehaviorCards: false,
+    detailedHubIds: [],
   });
 }
 
