@@ -15,6 +15,7 @@ threads. Named places themselves are canonical in
 | [oregon-hill.md](oregon-hill.md) | Oregon Hill | Mortalis working-class neighborhood, industrial history, community continuity, student/artist change, and gentrification |
 | [church-hill.md](church-hill.md) | Church Hill | Night-dominant ridge of old brick, territorial memory, Dara Shin’s pack, locations, and open threads |
 | [carytown.md](carytown.md) | Carytown | Mortalis commercial/residential district focused on public routines, familiar vulnerability, locations, and open threads |
+| [memorial-district.md](memorial-district.md) | Memorial District | Night-dominant west bluff of graves, war memorials, and civic martyrdom over the James; city history as currency |
 
 ## Adding a hub
 

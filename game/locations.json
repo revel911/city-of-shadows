@@ -75,7 +75,7 @@
     {
       "id": "loc_hollywood_cemetery",
       "name": "Hollywood Cemetery",
-      "hub_id": "hub_shockoe_bottom",
+      "hub_id": "hub_memorial_district",
       "type": "Historic cemetery",
       "controller_ids": [
         "npc_emmett_daye"
@@ -85,7 +85,9 @@
       "description": "Maze-like; overlooks the James; presidents and Confederate generals",
       "atmosphere": "Heavy, beautiful, wrong",
       "notes": "New sections Emmett does not remember. One grave has a recent date for a living person.",
-      "last_updated": "2026-08-21"
+      "last_updated": "2026-10-01",
+      "revision": 1,
+      "updated_by_session": "operator:us-hubs-expansion"
     },
     {
       "id": "loc_maison_rouge",
@@ -795,6 +797,47 @@
       "last_updated": "2026-09-14",
       "revision": 1,
       "updated_by_session": "operator:continuity-repair"
+    },
+    {
+      "id": "loc_virginia_war_memorial",
+      "name": "Virginia War Memorial",
+      "hub_id": "hub_memorial_district",
+      "type": "Memorial",
+      "controller_ids": [
+        "npc_the_pallbearer"
+      ],
+      "controller_note": "The Pallbearer (bound to the wall)",
+      "status": "active",
+      "description": "A long wall of names on Gambles Hill above the river, with a shrine at its foot where visitors leave flowers and unit patches.",
+      "atmosphere": "Hushed, windy, watched by something that reads over your shoulder.",
+      "notes": "The Shrine of Memory adds names that are not in any record. The newest names are the ones people are most afraid of recognizing.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_gambles_hill",
+      "name": "Gambles Hill",
+      "hub_id": "hub_memorial_district",
+      "type": "Bluff / state offices and old mansions",
+      "controller_ids": [],
+      "controller_note": "Contested; no single owner",
+      "status": "active",
+      "description": "A bluff of state offices, quiet law firms and old mansions where Power brokers meet \"by accident\" over the river view.",
+      "atmosphere": "Polished, careful, every conversation a little too well timed.",
+      "notes": "Nobody schedules meetings here; they just happen to be standing at the same overlook. A Night elder wants it declared neutral ground.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_tredegar_edge",
+      "name": "Tredegar Edge",
+      "hub_id": "hub_memorial_district",
+      "type": "Riverside lot / industrial ruin",
+      "controller_ids": [],
+      "controller_note": "Contested; no single owner",
+      "status": "active",
+      "description": "A riverside lot below the bluff where the old ironworks meets the memorial grounds, ringed with rusted rail and cast-iron scrap.",
+      "atmosphere": "Cold iron, river damp, the faint ring of a shift bell that nobody rings.",
+      "notes": "Where the labor that built the city and the dead it honors share a fence line. Deals nobody wants overheard get made here.",
+      "last_updated": "2026-10-01"
     }
   ]
 }

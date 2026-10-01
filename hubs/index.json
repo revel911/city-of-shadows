@@ -38,5 +38,10 @@
     "id": "hub_carytown",
     "name": "Carytown",
     "file": "carytown.md"
+  },
+  {
+    "id": "hub_memorial_district",
+    "name": "Memorial District",
+    "file": "memorial-district.md"
   }
 ]

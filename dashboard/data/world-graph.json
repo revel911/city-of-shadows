@@ -26,8 +26,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": 552,
-        "y": -552
+        "x": 501,
+        "y": -598
       }
     },
     {
@@ -40,8 +40,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": 780,
-        "y": 0
+        "x": 768,
+        "y": -135
       }
     },
     {
@@ -54,8 +54,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": 552,
-        "y": 552
+        "x": 675,
+        "y": 390
       }
     },
     {
@@ -68,8 +68,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": 0,
-        "y": 780
+        "x": 267,
+        "y": 733
       }
     },
     {
@@ -82,8 +82,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": -552,
-        "y": 552
+        "x": -267,
+        "y": 733
       }
     },
     {
@@ -96,8 +96,8 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": -780,
-        "y": 0
+        "x": -675,
+        "y": 390
       }
     },
     {
@@ -110,8 +110,22 @@
         "details": "Neighborhood hub"
       },
       "position": {
-        "x": -552,
-        "y": -552
+        "x": -768,
+        "y": -135
+      }
+    },
+    {
+      "data": {
+        "id": "hub_memorial_district",
+        "label": "Memorial District",
+        "kind": "hub",
+        "hub_id": "hub_memorial_district",
+        "status": "active",
+        "details": "Neighborhood hub"
+      },
+      "position": {
+        "x": -501,
+        "y": -598
       }
     },
     {
@@ -194,14 +208,14 @@
         "id": "loc_hollywood_cemetery",
         "label": "Hollywood Cemetery",
         "kind": "location",
-        "hub_id": "hub_shockoe_bottom",
+        "hub_id": "hub_memorial_district",
         "status": "active",
         "subtype": "Historic cemetery",
         "details": "Maze-like; overlooks the James; presidents and Confederate generals"
       },
       "position": {
-        "x": -240,
-        "y": -1011
+        "x": -741,
+        "y": -829
       }
     },
     {
@@ -215,8 +229,8 @@
         "details": "Mireille's gallery and salon. Converted Victorian mansion. Hosts evening salons where art, politics, and supernatural business intertwine. The basement wine cellar has been... expanded."
       },
       "position": {
-        "x": 305,
-        "y": -421
+        "x": 254,
+        "y": -467
       }
     },
     {
@@ -230,8 +244,8 @@
         "details": "Asha's vintage shop on Ellwood. Specializes in \"authentic\" pieces from different eras. The changing room is a Hedge Door (currently unsafe — opening onto unfamiliar ground for three weeks)."
       },
       "position": {
-        "x": 815,
-        "y": -429
+        "x": 764,
+        "y": -475
       }
     },
     {
@@ -245,8 +259,8 @@
         "details": "Major cultural institution. Vera Solis works in the conservation department. Has wings that sometimes appear on floor plans but don't exist in the building."
       },
       "position": {
-        "x": 572,
-        "y": -261
+        "x": 521,
+        "y": -307
       }
     },
     {
@@ -260,8 +274,8 @@
         "details": "Independent contemporary art space. Marcus sometimes shows his Overwrite documentation here, though the pieces tend to \"evolve\" after installation."
       },
       "position": {
-        "x": 740,
-        "y": -769
+        "x": 689,
+        "y": -815
       }
     },
     {
@@ -275,8 +289,8 @@
         "details": "Former Confederate statues created wounds in reality when they were erected, wounds that widened when they were removed. The Hedge grows thin here."
       },
       "position": {
-        "x": 793,
-        "y": -769
+        "x": 742,
+        "y": -815
       }
     },
     {
@@ -290,8 +304,8 @@
         "details": "Stands in stark contrast to the Confederate legacy. Seems to anchor reality more firmly, but something watches from behind the tennis racket's strings."
       },
       "position": {
-        "x": 676,
-        "y": -858
+        "x": 625,
+        "y": -904
       }
     },
     {
@@ -305,8 +319,8 @@
         "details": "Where removed monuments stood. Reality is thin here. Late at night, shapes that might be statues cast shadows."
       },
       "position": {
-        "x": 593,
-        "y": -321
+        "x": 542,
+        "y": -367
       }
     },
     {
@@ -320,8 +334,8 @@
         "details": "Rows of Victorian houses. Many converted to apartments for VCU students. Some houses have more rooms inside than their exterior should allow."
       },
       "position": {
-        "x": 721,
-        "y": -364
+        "x": 670,
+        "y": -410
       }
     },
     {
@@ -335,8 +349,8 @@
         "details": "Exclusive neighborhood. Old Richmond money. Where Power faction members live when they want to be close to Wild energy."
       },
       "position": {
-        "x": 742,
-        "y": -348
+        "x": 691,
+        "y": -394
       }
     },
     {
@@ -350,8 +364,8 @@
         "details": "Modern office complex. Several law firms have offices here. The building has sub-basements that connect to the old canal system."
       },
       "position": {
-        "x": 561,
-        "y": -171
+        "x": 549,
+        "y": -306
       }
     },
     {
@@ -365,8 +379,8 @@
         "details": "Night faction has cultivated several court staff as assets. Some cases are decided before they're filed."
       },
       "position": {
-        "x": 1029,
-        "y": 96
+        "x": 1017,
+        "y": -39
       }
     },
     {
@@ -380,8 +394,8 @@
         "details": "Where the real municipal business happens, away from the ceremonial main building."
       },
       "position": {
-        "x": 589,
-        "y": 139
+        "x": 577,
+        "y": 4
       }
     },
     {
@@ -395,8 +409,8 @@
         "details": "Mixed-use towers. Corporate law, financial services, and discrete meeting spaces. Several Night faction fronts operate from here."
       },
       "position": {
-        "x": 495,
-        "y": -50
+        "x": 483,
+        "y": -185
       }
     },
     {
@@ -410,8 +424,8 @@
         "details": "Tourist boardwalk with restaurants and shops. The public face conceals the true nature of what lies beneath."
       },
       "position": {
-        "x": 1061,
-        "y": -131
+        "x": 1049,
+        "y": -266
       }
     },
     {
@@ -425,8 +439,8 @@
         "details": "Partially restored, partially flooded. Access points to deeper tunnel systems. Tourist tours end before the interesting parts."
       },
       "position": {
-        "x": 1046,
-        "y": -37
+        "x": 1034,
+        "y": -172
       }
     },
     {
@@ -440,8 +454,8 @@
         "details": "Network of tunnels beneath downtown. Originally shipping channels, now a vampire court. Heavily defended since the 'breach.' Additional sections have been sealed off and patrols increased. Serrano has ordered even more sections sealed after discovering fresh signs of intrusion near a previously secured access point."
       },
       "position": {
-        "x": 672,
-        "y": 333
+        "x": 660,
+        "y": 198
       }
     },
     {
@@ -455,8 +469,8 @@
         "details": "Deeper sections that can be rapidly flooded to prevent intrusion. Serrano's last line of defense."
       },
       "position": {
-        "x": 1025,
-        "y": 0
+        "x": 1013,
+        "y": -135
       }
     },
     {
@@ -470,8 +484,8 @@
         "details": "Upscale restaurant and bar. Night faction's neutral ground for business meetings. Mortals welcome but carefully watched. The General has recently increased his presence here, making it a focal point of faction tensions. Staff have been observed deferring more openly to The General's preferences, and some regular patrons have begun taking their business elsewhere. Night-shift staff have also begun logging deliveries and messages that no known network claims, and the discrepancy is quietly noted in the venue's own records. A medium has been seen lingering near the bar, asking after a ghost more persistently, and her questions have not gone unnoticed by staff or by parties who track the monster-poaching market. She has now begun waiting through the late shift, and staff describe her presence as a standing unease; her vigil has settled into the venue's nightly rhythm, with staff quietly tracking when she arrives and leaves."
       },
       "position": {
-        "x": 1059,
-        "y": -130
+        "x": 1047,
+        "y": -265
       }
     },
     {
@@ -485,8 +499,8 @@
         "details": "Private club in the penthouse of a financial building. Members-only. The real membership list is very different from the official one."
       },
       "position": {
-        "x": 987,
-        "y": 207
+        "x": 975,
+        "y": 72
       }
     },
     {
@@ -500,8 +514,8 @@
         "details": "Philosophy department headquarters. Dr. Olave's office occupies the entire top floor, which has more space inside than the building's exterior suggests. The closed faculty meetings held here have grown more exclusive, and junior faculty and Consilium members have begun to notice who is no longer invited. A second, smaller meeting has begun convening on the same floor with a hand-picked subset of the Consilium, and the exclusion list has widened again. Overwrite-related files have begun being moved to the top floor, out of the reach of excluded members."
       },
       "position": {
-        "x": 675,
-        "y": 805
+        "x": 798,
+        "y": 643
       }
     },
     {
@@ -515,8 +529,8 @@
         "details": "Massive research library. Special Collections contains books that shouldn't exist. The basement levels extend deeper than official plans show."
       },
       "position": {
-        "x": 774,
-        "y": 467
+        "x": 897,
+        "y": 305
       }
     },
     {
@@ -530,8 +544,8 @@
         "details": "Mathematics building. Prof. Tanaka's office overlooks Monroe Park. She has whiteboards covered in equations that describe impossible geometries. *Olave's closed faculty meetings are held here.* A new whiteboard has been set up near Tanaka's desk covered in notes referencing the Maren Voss fragment, now cross-referenced against archival records pulled from Special Collections."
       },
       "position": {
-        "x": 339,
-        "y": 780
+        "x": 462,
+        "y": 618
       }
     },
     {
@@ -545,8 +559,8 @@
         "details": "Art history department has a private collection of Richmond artwork that shows different scenes depending on when you look at them."
       },
       "position": {
-        "x": 619,
-        "y": 866
+        "x": 742,
+        "y": 704
       }
     },
     {
@@ -560,8 +574,8 @@
         "details": "VCU Health's primary facility. Power faction uses medical access for research into life, death, and consciousness."
       },
       "position": {
-        "x": 714,
-        "y": 292
+        "x": 837,
+        "y": 130
       }
     },
     {
@@ -575,8 +589,8 @@
         "details": "Where Power faction members train new mages in the intersection of magic and medicine."
       },
       "position": {
-        "x": 274,
-        "y": 606
+        "x": 397,
+        "y": 444
       }
     },
     {
@@ -590,8 +604,8 @@
         "details": "Cutting-edge facilities that sometimes produce impossible results. The ethics review board has learned not to ask too many questions about certain projects."
       },
       "position": {
-        "x": 805,
-        "y": 764
+        "x": 928,
+        "y": 602
       }
     },
     {
@@ -605,8 +619,8 @@
         "details": "Hidden facility built into the structure of multiple university buildings. Accessible through a network of maintenance tunnels and forgotten sub-basements. Contains the true Consilium library and ritual spaces."
       },
       "position": {
-        "x": 775,
-        "y": 608
+        "x": 898,
+        "y": 446
       }
     },
     {
@@ -620,8 +634,8 @@
         "details": "Central campus green space. The ley line beneath the park has run measurably off-tempo three times in six weeks. Power faction monitors this closely."
       },
       "position": {
-        "x": 874,
-        "y": 591
+        "x": 997,
+        "y": 429
       }
     },
     {
@@ -635,8 +649,8 @@
         "details": "Student center and gathering space. The Power faction monitors student population for potential Awakening candidates."
       },
       "position": {
-        "x": 865,
-        "y": 438
+        "x": 988,
+        "y": 276
       }
     },
     {
@@ -650,8 +664,8 @@
         "details": "New mixed-income units where displaced families have returned. Some units overlook spaces where the old buildings still exist in parallel time."
       },
       "position": {
-        "x": -47,
-        "y": 1115
+        "x": 220,
+        "y": 1068
       }
     },
     {
@@ -665,8 +679,8 @@
         "details": "Remaining original buildings scheduled for demolition. Families live knowing their homes have expiration dates. Some buildings appear empty but show signs of ongoing habitation."
       },
       "position": {
-        "x": -292,
-        "y": 638
+        "x": -25,
+        "y": 591
       }
     },
     {
@@ -680,8 +694,8 @@
         "details": "Scattered sites where displaced families wait for new units. RRHA vouchers sometimes lead to addresses that don't exist on current maps."
       },
       "position": {
-        "x": -222,
-        "y": 657
+        "x": 45,
+        "y": 610
       }
     },
     {
@@ -695,8 +709,8 @@
         "details": "Provides services, food pantry, and meeting space. Sister Catherine's domain. Sometimes serves families who died years ago but still need help. Pantry intake continues logging names and vouchers that don't match current RRHA records; the second, unshared ledger behind the counter has grown, and Sister Catherine's cross-check against older parish records has surfaced at least one name that appears in the parish archive but matches no living resident roll."
       },
       "position": {
-        "x": 241,
-        "y": 556
+        "x": 508,
+        "y": 509
       }
     },
     {
@@ -710,8 +724,8 @@
         "details": "Historic African-American cemetery that borders the community. Graves sometimes show fresh flowers on plots that have been empty for decades."
       },
       "position": {
-        "x": 29,
-        "y": 449
+        "x": 296,
+        "y": 402
       }
     },
     {
@@ -725,8 +739,8 @@
         "details": "Neighborhood markets that serve as informal community hubs. Owners know everyone's business and notice when temporal anomalies affect their customers."
       },
       "position": {
-        "x": -234,
-        "y": 1022
+        "x": 33,
+        "y": 975
       }
     },
     {
@@ -740,8 +754,8 @@
         "details": "Former high school being developed as mixed-income housing. Construction workers find classrooms with lessons still on the boards."
       },
       "position": {
-        "x": 270,
-        "y": 906
+        "x": 537,
+        "y": 859
       }
     },
     {
@@ -755,8 +769,8 @@
         "details": "Children play on equipment that doesn't appear in any development plans, but has been there \"forever\" according to residents."
       },
       "position": {
-        "x": 300,
-        "y": 677
+        "x": 567,
+        "y": 630
       }
     },
     {
@@ -770,8 +784,8 @@
         "details": "Where the community connects to the wider city. Graffiti sometimes appears in styles from decades past, depicting events that haven't happened yet."
       },
       "position": {
-        "x": 138,
-        "y": 510
+        "x": 405,
+        "y": 463
       }
     },
     {
@@ -785,8 +799,8 @@
         "details": "19th-century worker cottages on narrow lots. Some houses show room additions from multiple time periods existing simultaneously."
       },
       "position": {
-        "x": -292,
-        "y": 561
+        "x": -7,
+        "y": 742
       }
     },
     {
@@ -800,8 +814,8 @@
         "details": "Rental properties near VCU campus. Landlords sometimes collect rent for apartments that existed in previous configurations of the buildings."
       },
       "position": {
-        "x": -749,
-        "y": 362
+        "x": -464,
+        "y": 543
       }
     },
     {
@@ -815,8 +829,8 @@
         "details": "Long-term residents in houses passed down through generations. These families anchor the community's memory and cultural continuity."
       },
       "position": {
-        "x": -227,
-        "y": 697
+        "x": 58,
+        "y": 878
       }
     },
     {
@@ -830,8 +844,8 @@
         "details": "Built with Grace Arents funding in 1894. Services sometimes include parishioners from different eras of the neighborhood's history."
       },
       "position": {
-        "x": -352,
-        "y": 352
+        "x": -67,
+        "y": 533
       }
     },
     {
@@ -845,8 +859,8 @@
         "details": "Provides social services and meeting space. Programs occasionally serve participants who died years ago but continue attending."
       },
       "position": {
-        "x": -909,
-        "y": 590
+        "x": -624,
+        "y": 771
       }
     },
     {
@@ -860,8 +874,8 @@
         "details": "Small neighborhood library. Books sometimes include local histories that describe events before they happen."
       },
       "position": {
-        "x": -415,
-        "y": 859
+        "x": -130,
+        "y": 1040
       }
     },
     {
@@ -875,8 +889,8 @@
         "details": "Scenic views of the James River where residents gather. Sometimes shows industrial landscape from the valley's manufacturing heyday."
       },
       "position": {
-        "x": -455,
-        "y": 214
+        "x": -170,
+        "y": 395
       }
     },
     {
@@ -890,8 +904,8 @@
         "details": "Informal spaces where local artists work and display. Exhibitions sometimes include work by artists who haven't moved to the neighborhood yet."
       },
       "position": {
-        "x": -563,
-        "y": 860
+        "x": -278,
+        "y": 1041
       }
     },
     {
@@ -905,8 +919,8 @@
         "details": "Many residents work from converted garages and basements. Musicians hear echoes of industrial rhythms in their compositions."
       },
       "position": {
-        "x": -244,
-        "y": 367
+        "x": 41,
+        "y": 548
       }
     },
     {
@@ -920,8 +934,8 @@
         "details": "The neighborhood's western edge where residents walk among Civil War graves and famous burials. New graves occasionally appear for living residents."
       },
       "position": {
-        "x": -295,
-        "y": 661
+        "x": -10,
+        "y": 842
       }
     },
     {
@@ -935,8 +949,8 @@
         "details": "Views of the old iron works site below. Workers sometimes appear at the historical park, continuing shifts that ended 150 years ago."
       },
       "position": {
-        "x": -661,
-        "y": 758
+        "x": -376,
+        "y": 939
       }
     },
     {
@@ -950,8 +964,8 @@
         "details": "Where the Downtown Expressway carved through the neighborhood in the 1970s. The road sometimes shows different routes or doesn't exist at all."
       },
       "position": {
-        "x": -319,
-        "y": 494
+        "x": -34,
+        "y": 675
       }
     },
     {
@@ -965,8 +979,8 @@
         "details": "A corner bar in Oregon Hill. Corner booth against the wall, no window, furthest from the door. TV behind the bar."
       },
       "position": {
-        "x": -791,
-        "y": 577
+        "x": -506,
+        "y": 758
       }
     },
     {
@@ -980,8 +994,53 @@
         "details": "The burned-down remains of Cutler's Gym on Decatur Street; an affected anchor for Jacob Boone and Cristoff LePierre."
       },
       "position": {
-        "x": -497,
-        "y": 810
+        "x": -212,
+        "y": 991
+      }
+    },
+    {
+      "data": {
+        "id": "loc_virginia_war_memorial",
+        "label": "Virginia War Memorial",
+        "kind": "location",
+        "hub_id": "hub_memorial_district",
+        "status": "active",
+        "subtype": "Memorial",
+        "details": "A long wall of names on Gambles Hill above the river, with a shrine at its foot where visitors leave flowers and unit patches."
+      },
+      "position": {
+        "x": -327,
+        "y": -866
+      }
+    },
+    {
+      "data": {
+        "id": "loc_gambles_hill",
+        "label": "Gambles Hill",
+        "kind": "location",
+        "hub_id": "hub_memorial_district",
+        "status": "active",
+        "subtype": "Bluff / state offices and old mansions",
+        "details": "A bluff of state offices, quiet law firms and old mansions where Power brokers meet \"by accident\" over the river view."
+      },
+      "position": {
+        "x": -599,
+        "y": -277
+      }
+    },
+    {
+      "data": {
+        "id": "loc_tredegar_edge",
+        "label": "Tredegar Edge",
+        "kind": "location",
+        "hub_id": "hub_memorial_district",
+        "status": "active",
+        "subtype": "Riverside lot / industrial ruin",
+        "details": "A riverside lot below the bluff where the old ironworks meets the memorial grounds, ringed with rusted rail and cast-iron scrap."
+      },
+      "position": {
+        "x": -293,
+        "y": -718
       }
     },
     {
@@ -1133,8 +1192,8 @@
         "details": "Toreador vampire; Maison Rouge gallery/salon owner expanding supernatural influence through art"
       },
       "position": {
-        "x": 533,
-        "y": -8
+        "x": 482,
+        "y": -54
       }
     },
     {
@@ -1150,8 +1209,8 @@
         "details": "Fairest Changeling; owns Threshold vintage shop; Hedge Door now unsafe"
       },
       "position": {
-        "x": 312,
-        "y": -119
+        "x": 261,
+        "y": -165
       }
     },
     {
@@ -1167,8 +1226,8 @@
         "details": "Wizened Fae; VMFA restoration expert; restores paintings 'too well'"
       },
       "position": {
-        "x": 960,
-        "y": -210
+        "x": 909,
+        "y": -256
       }
     },
     {
@@ -1184,8 +1243,8 @@
         "details": "Mortal street artist; documents the Overwrite in the visual record"
       },
       "position": {
-        "x": 604,
-        "y": -1042
+        "x": 553,
+        "y": -1088
       }
     },
     {
@@ -1201,8 +1260,8 @@
         "details": "Mortal collector being groomed by Mireille for Blood Bond; doesn't know it yet"
       },
       "position": {
-        "x": 315,
-        "y": -1017
+        "x": 264,
+        "y": -1063
       }
     },
     {
@@ -1218,8 +1277,8 @@
         "details": "Ventrue lawyer; Serrano's surface liaison; handles supernatural legal issues"
       },
       "position": {
-        "x": 1256,
-        "y": 136
+        "x": 1244,
+        "y": 1
       }
     },
     {
@@ -1235,8 +1294,8 @@
         "details": "Federal judge; unaware Night asset managed through careful case selection"
       },
       "position": {
-        "x": 612,
-        "y": 488
+        "x": 600,
+        "y": 353
       }
     },
     {
@@ -1269,8 +1328,8 @@
         "details": "Canal Walk tour guide and night security; knows the tunnels have residents but pretends otherwise; has begun noticing unlogged messages and unusual deliveries passing through Downtown's night-shift routines that don't match any known network, and has started quietly cross-checking the Canal Walk's own night logs against what he actually saw on shift."
       },
       "position": {
-        "x": 1138,
-        "y": 370
+        "x": 1126,
+        "y": 235
       }
     },
     {
@@ -1286,8 +1345,8 @@
         "details": "VCU Philosophy Chair and Consilium Hierarch; controls the Overwrite investigation; his closed faculty meetings in Harris Hall have widened their exclusion list again, deepening the Consilium's internal fracture over who is permitted to know what, and he has begun holding a second, smaller meeting with a hand-picked subset of the Consilium. He has now begun quietly reassigning oversight of certain Overwrite-related files away from excluded members, consolidating control of the investigation."
       },
       "position": {
-        "x": 86,
-        "y": 354
+        "x": 209,
+        "y": 192
       }
     },
     {
@@ -1303,8 +1362,8 @@
         "details": "Silver Ladder senior; engineered her own Awakening; placed Nadia with an Acanthus practitioner; holds 1 Debt to that practitioner; quietly protective of the fact that her Awakening was engineered, and has begun discreetly checking whether any University archival record touches on it. Her inquiries have now reached restricted Special Collections material, and she has been observed requesting access under a research pretext. She has since requested a second, more narrowly targeted set of restricted records and been seen leaving Cabell Library with copied material she did not log."
       },
       "position": {
-        "x": 291,
-        "y": 1044
+        "x": 414,
+        "y": 882
       }
     },
     {
@@ -1320,8 +1379,8 @@
         "details": "VCU Mathematics faculty; excluded from Olave's meetings; sees mathematical patterns that don't add up; has confirmed a mathematical pattern in the Maren Voss field notes fragment indicating a third participant in the ritual, and has begun quietly cross-referencing University archival records to identify them."
       },
       "position": {
-        "x": 598,
-        "y": 1079
+        "x": 721,
+        "y": 917
       }
     },
     {
@@ -1337,8 +1396,8 @@
         "details": "Young Consilium archivist with more clearance than experience"
       },
       "position": {
-        "x": 379,
-        "y": 1053
+        "x": 502,
+        "y": 891
       }
     },
     {
@@ -1354,8 +1413,8 @@
         "details": "VCU Art History professor; studies Overwrite anomalies in Richmond artwork"
       },
       "position": {
-        "x": 833,
-        "y": 85
+        "x": 956,
+        "y": -77
       }
     },
     {
@@ -1371,8 +1430,8 @@
         "details": "30-year community organizer; leads resident council; can see through Overwrite effects"
       },
       "position": {
-        "x": -264,
-        "y": 1187
+        "x": 3,
+        "y": 1140
       }
     },
     {
@@ -1388,8 +1447,8 @@
         "details": "Young father and maintenance worker; quiet, notices temporal anomalies; knows how not to be seen"
       },
       "position": {
-        "x": 42,
-        "y": 295
+        "x": 309,
+        "y": 248
       }
     },
     {
@@ -1405,8 +1464,8 @@
         "details": "Catholic outreach coordinator; runs food pantry; witnesses impossible things and serves people anyway. Pantry intake at the East End Family Resource Center continues logging names and vouchers that don't match current RRHA records; she keeps a second, unshared ledger for them and has begun quietly cross-checking the anomalous entries against older parish records rather than turning anyone away. Her cross-check has now surfaced a name that appears in an older parish record but matches no living resident roll, and she has begun setting aside the corresponding vouchers separately."
       },
       "position": {
-        "x": -91,
-        "y": 313
+        "x": 176,
+        "y": 266
       }
     },
     {
@@ -1422,8 +1481,8 @@
         "details": "Street artist and community historian; creates murals showing past/present simultaneously"
       },
       "position": {
-        "x": -484,
-        "y": 1119
+        "x": -217,
+        "y": 1072
       }
     },
     {
@@ -1439,8 +1498,8 @@
         "details": "RRHA social worker; Richmond native; grew up in the East End; conflicted about redevelopment"
       },
       "position": {
-        "x": -472,
-        "y": 662
+        "x": -205,
+        "y": 615
       }
     },
     {
@@ -1456,8 +1515,8 @@
         "details": "Third-generation resident; retired steelworker; grandfather worked Tredegar; sees through industrial echoes"
       },
       "position": {
-        "x": -1025,
-        "y": 577
+        "x": -740,
+        "y": 758
       }
     },
     {
@@ -1473,8 +1532,8 @@
         "details": "Artist and community organizer; runs gallery/venue; moved here 15 years ago, earned respect through advocacy"
       },
       "position": {
-        "x": -85,
-        "y": 704
+        "x": 200,
+        "y": 885
       }
     },
     {
@@ -1490,8 +1549,8 @@
         "details": "Bartender at Poe Museum; local historian; collects oral histories; notices Overwrite-related job references"
       },
       "position": {
-        "x": -235,
-        "y": 115
+        "x": 50,
+        "y": 296
       }
     },
     {
@@ -1507,8 +1566,8 @@
         "details": "VCU art student and neighborhood liaison; organizes student volunteer projects"
       },
       "position": {
-        "x": -474,
-        "y": 1107
+        "x": -189,
+        "y": 1288
       }
     },
     {
@@ -1524,8 +1583,8 @@
         "details": "Retired city worker; de facto neighborhood watch; knows every family for blocks, suspicious of anomalies"
       },
       "position": {
-        "x": -724,
-        "y": 105
+        "x": -439,
+        "y": 286
       }
     },
     {
@@ -1558,8 +1617,8 @@
         "details": "Ward of an Acanthus practitioner, placed by Councilor Voss; raw telekinetic and pyrokinetic talent; Asha has taken interest in her Scar"
       },
       "position": {
-        "x": 786,
-        "y": 1011
+        "x": 909,
+        "y": 849
       }
     },
     {
@@ -1626,8 +1685,8 @@
         "details": "Parish superior at St. Angust Parish; genuinely devout; suspicious of his junior priest"
       },
       "position": {
-        "x": 990,
-        "y": 495
+        "x": 978,
+        "y": 360
       }
     },
     {
@@ -1660,8 +1719,8 @@
         "details": "16-year-old congregation member at St. Angust Parish; trusts his priest completely; danger magnet"
       },
       "position": {
-        "x": 298,
-        "y": 129
+        "x": 286,
+        "y": -6
       }
     },
     {
@@ -1694,8 +1753,8 @@
         "details": "Unnamed vampire faction leader; a hunter holds dirt on them; coup manipulation is ongoing. Recently made a public show of control at The Exchange and has begun tightening his grip on Downtown night venues, now including quiet pressure on night-shift staff to account for unlogged traffic moving through his venues."
       },
       "position": {
-        "x": 279,
-        "y": 192
+        "x": 267,
+        "y": 57
       }
     },
     {
@@ -1711,8 +1770,8 @@
         "details": "Mortal medium who can see a nameless ghost clearly; leaves offerings; waiting for something the ghost doesn't know he has. Has begun quietly asking after the ghost's story among Downtown night contacts, drawing the attention of parties who track the monster-poaching market. Her questions have now been noted by those parties as they quietly confirm the standing mark's rumored presence in Downtown, bringing the medium and the mistaken identity closer together without contact. She has begun lingering near The Exchange's bar and other Downtown night venues, asking after the ghost more openly, and her persistence has begun to make night-shift staff uneasy. She has now taken to waiting through the late shift at The Exchange, quietly noting who comes and goes, and has begun leaving her offerings at a second Downtown location as well; her vigil has become a standing fixture of the venue's late hours."
       },
       "position": {
-        "x": 626,
-        "y": 575
+        "x": 614,
+        "y": 440
       }
     },
     {
@@ -1745,8 +1804,8 @@
         "details": "VCU Folklore & Mythology faculty; Maren Voss's supervisor; recovered Voss's field research from the warehouse"
       },
       "position": {
-        "x": 107,
-        "y": 285
+        "x": 230,
+        "y": 123
       }
     },
     {
@@ -1762,8 +1821,8 @@
         "details": "Former Night Stalker field operative; dark operative gone off-grid; carries partial information about the compromised order"
       },
       "position": {
-        "x": 715,
-        "y": -533
+        "x": 703,
+        "y": -668
       }
     },
     {
@@ -1779,8 +1838,8 @@
         "details": "Forsaken Storm Lords / Irraka. Found Jacob after his First Change. Has been in Richmond twelve years, holds Church Hill territory. Trained Jacob and holds 1 Debt on him."
       },
       "position": {
-        "x": -762,
-        "y": 505
+        "x": -657,
+        "y": 895
       }
     },
     {
@@ -1796,8 +1855,8 @@
         "details": "Jacob's boxing trainer. His gym on Decatur Street burned down; he survived after a cleanup crew rescued him. 63, bad knee. Doesn't know what Jacob is but knows something changed. Covers for him. An anchor."
       },
       "position": {
-        "x": -505,
-        "y": 17
+        "x": -220,
+        "y": 198
       }
     },
     {
@@ -1813,8 +1872,8 @@
         "details": "Jacob's younger sister. Works front desk at a physical therapy clinic in Carytown. Has a seven-year-old son named Marcus. Thinks boxing left Jacob strange."
       },
       "position": {
-        "x": -258,
-        "y": -928
+        "x": -474,
+        "y": -511
       }
     },
     {
@@ -1830,8 +1889,8 @@
         "details": "Childhood friend of Jacob's. Lives two blocks over in Oregon Hill. Small-time fixer, does favors for people he shouldn't. Saw something near the canal three months ago he can't explain. Owes Jacob a long-standing Debt."
       },
       "position": {
-        "x": -827,
-        "y": 55
+        "x": -542,
+        "y": 236
       }
     },
     {
@@ -1847,8 +1906,8 @@
         "details": "Runs The Nail bar on Idlewood Avenue. Former military. Knows more about Richmond's supernatural ecosystem than he lets on. Charges information by the drink. Jacob holds 1 Debt on him."
       },
       "position": {
-        "x": -392,
-        "y": 1109
+        "x": -107,
+        "y": 1290
       }
     },
     {
@@ -1864,8 +1923,8 @@
         "details": "Man in his fifties claiming to work for the owners of the burned black sedan; confronted Cristoff about the two dead couriers and demanded prior contact before Cristoff pursues the courier's sender."
       },
       "position": {
-        "x": -1087,
-        "y": 757
+        "x": -802,
+        "y": 938
       }
     },
     {
@@ -1881,8 +1940,8 @@
         "details": "Runs the Creighton tenant patrol; a deacon who organizes the night shifts and keeps the roster in his head"
       },
       "position": {
-        "x": -564,
-        "y": 670
+        "x": -297,
+        "y": 623
       }
     },
     {
@@ -1898,8 +1957,8 @@
         "details": "Tenant-council secretary; a changeling raised mortal who doesn't fully know it"
       },
       "position": {
-        "x": -392,
-        "y": 329
+        "x": -125,
+        "y": 282
       }
     },
     {
@@ -1915,8 +1974,8 @@
         "details": "Spirit of the Nine Mile Road scrap lot; hoards what people throw away"
       },
       "position": {
-        "x": -598,
-        "y": 738
+        "x": -331,
+        "y": 691
       }
     },
     {
@@ -1932,8 +1991,8 @@
         "details": "Demon who trades porch gossip for small favors"
       },
       "position": {
-        "x": 105,
-        "y": 238
+        "x": 372,
+        "y": 191
       }
     },
     {
@@ -1949,8 +2008,8 @@
         "details": "Redevelopment contractor's community liaison, quietly on a Consilium retainer"
       },
       "position": {
-        "x": 102,
-        "y": 301
+        "x": 369,
+        "y": 254
       }
     },
     {
@@ -1966,8 +2025,8 @@
         "details": "Fix-it man whose boiler repairs are also wards"
       },
       "position": {
-        "x": 178,
-        "y": 290
+        "x": 445,
+        "y": 243
       }
     },
     {
@@ -1983,8 +2042,8 @@
         "details": "A ghost only children and the very old can see"
       },
       "position": {
-        "x": 523,
-        "y": 650
+        "x": 790,
+        "y": 603
       }
     },
     {
@@ -2000,8 +2059,144 @@
         "details": "An urban legend: an ice-cream truck that runs after 2am"
       },
       "position": {
-        "x": 280,
-        "y": 1286
+        "x": 547,
+        "y": 1239
+      }
+    },
+    {
+      "data": {
+        "id": "npc_samira_aziz",
+        "label": "Samira Aziz",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Jinn who keeps Hollywood's lost-and-found of things left on graves",
+        "portrait": "",
+        "details": "Jinn who keeps Hollywood's lost-and-found of things left on graves"
+      },
+      "position": {
+        "x": -353,
+        "y": -45
+      }
+    },
+    {
+      "data": {
+        "id": "npc_knuckles_okoro",
+        "label": "\"Knuckles\" Okoro",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Wild",
+        "status": "active",
+        "subtype": "Muscle for a demon-backed crew on the Belvidere corridor",
+        "portrait": "",
+        "details": "Muscle for a demon-backed crew on the Belvidere corridor"
+      },
+      "position": {
+        "x": -64,
+        "y": -231
+      }
+    },
+    {
+      "data": {
+        "id": "npc_abernathy_vale",
+        "label": "Abernathy Vale",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "Antiquarian whose Belvidere curio shop sells memorial relics",
+        "portrait": "",
+        "details": "Antiquarian whose Belvidere curio shop sells memorial relics"
+      },
+      "position": {
+        "x": -150,
+        "y": -234
+      }
+    },
+    {
+      "data": {
+        "id": "npc_the_pallbearer",
+        "label": "The Pallbearer",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Power",
+        "status": "active",
+        "subtype": "A spectre bound to the War Memorial's wall of names",
+        "portrait": "",
+        "details": "A spectre bound to the War Memorial's wall of names"
+      },
+      "position": {
+        "x": -43,
+        "y": -704
+      }
+    },
+    {
+      "data": {
+        "id": "npc_hester_byrd",
+        "label": "Hester Byrd",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Vampire elder who claims the cemetery as neutral ground",
+        "portrait": "",
+        "details": "Vampire elder who claims the cemetery as neutral ground"
+      },
+      "position": {
+        "x": -115,
+        "y": -970
+      }
+    },
+    {
+      "data": {
+        "id": "npc_ruthie_calhoun",
+        "label": "Ruthie Calhoun",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Night",
+        "status": "active",
+        "subtype": "Ghoul who restores headstones and paints portraits of the dead",
+        "portrait": "",
+        "details": "Ghoul who restores headstones and paints portraits of the dead"
+      },
+      "position": {
+        "x": 61,
+        "y": -569
+      }
+    },
+    {
+      "data": {
+        "id": "npc_amos_freeman",
+        "label": "Amos Freeman",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "A man who came back from a death the city marked as a martyrdom",
+        "portrait": "",
+        "details": "A man who came back from a death the city marked as a martyrdom"
+      },
+      "position": {
+        "x": -289,
+        "y": -163
+      }
+    },
+    {
+      "data": {
+        "id": "npc_gail_brannock",
+        "label": "Gail Brannock",
+        "kind": "npc",
+        "hub_id": "hub_memorial_district",
+        "faction": "Mortalis",
+        "status": "active",
+        "subtype": "Ex-bodyguard, now on the cemetery night security shift",
+        "portrait": "",
+        "details": "Ex-bodyguard, now on the cemetery night security shift"
+      },
+      "position": {
+        "x": -453,
+        "y": -1147
       }
     },
     {
@@ -2114,8 +2309,8 @@
         "next_pressure": "Approach Petra about the expired demand and the marked envelope."
       },
       "position": {
-        "x": -197,
-        "y": 684
+        "x": -74,
+        "y": 522
       }
     },
     {
@@ -2132,8 +2327,8 @@
         "next_pressure": "Approach an excluded faculty member or investigate the reassignment of Overwrite files."
       },
       "position": {
-        "x": 1317,
-        "y": 403
+        "x": 1440,
+        "y": 241
       }
     },
     {
@@ -2150,8 +2345,8 @@
         "next_pressure": "Pursue the failed password, the sealed research case, or an established hunter contact."
       },
       "position": {
-        "x": 61,
-        "y": 101
+        "x": 49,
+        "y": -34
       }
     },
     {
@@ -2186,8 +2381,8 @@
         "next_pressure": "Respond to the original contact or compare the unlogged messages with night-shift staff."
       },
       "position": {
-        "x": 780,
-        "y": -765
+        "x": 768,
+        "y": -900
       }
     },
     {
@@ -2204,8 +2399,8 @@
         "next_pressure": "Investigate the mark through an established Downtown contact or check the medium’s account."
       },
       "position": {
-        "x": 794,
-        "y": 783
+        "x": 782,
+        "y": 648
       }
     },
     {
@@ -2222,8 +2417,8 @@
         "next_pressure": "Choose whether to negotiate with the General, test the leverage, or withdraw from the standoff."
       },
       "position": {
-        "x": 1474,
-        "y": -12
+        "x": 1462,
+        "y": -147
       }
     },
     {
@@ -2240,8 +2435,8 @@
         "next_pressure": "Seek Serrano’s terms for access or compare the security guard’s observations with the known breach."
       },
       "position": {
-        "x": -27,
-        "y": 0
+        "x": -39,
+        "y": -135
       }
     },
     {
@@ -2276,8 +2471,8 @@
         "next_pressure": "Ask Sister Catherine for permission to compare an anomalous voucher, its parish record, and the current resident roll."
       },
       "position": {
-        "x": -712,
-        "y": 805
+        "x": -445,
+        "y": 758
       }
     },
     {
@@ -2294,8 +2489,8 @@
         "next_pressure": "Meet the medium during her established vigil at The Exchange, observe from a distance, or investigate the anchor through Downtown records."
       },
       "position": {
-        "x": 1533,
-        "y": 39
+        "x": 1521,
+        "y": -96
       }
     },
     {
@@ -2311,8 +2506,8 @@
         "total_clues": 3
       },
       "position": {
-        "x": -843,
-        "y": 780
+        "x": -576,
+        "y": 733
       }
     }
   ],
@@ -2369,9 +2564,9 @@
     },
     {
       "data": {
-        "id": "edge_loc_hollywood_cemetery_hub_shockoe_bottom",
+        "id": "edge_loc_hollywood_cemetery_hub_memorial_district",
         "source": "loc_hollywood_cemetery",
-        "target": "hub_shockoe_bottom",
+        "target": "hub_memorial_district",
         "type": "in_hub",
         "label": "In",
         "layer": "structural"
@@ -2892,6 +3087,36 @@
         "id": "edge_loc_cutlers_gym_hub_oregon_hill",
         "source": "loc_cutlers_gym",
         "target": "hub_oregon_hill",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_virginia_war_memorial_hub_memorial_district",
+        "source": "loc_virginia_war_memorial",
+        "target": "hub_memorial_district",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_gambles_hill_hub_memorial_district",
+        "source": "loc_gambles_hill",
+        "target": "hub_memorial_district",
+        "type": "in_hub",
+        "label": "In",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_loc_tredegar_edge_hub_memorial_district",
+        "source": "loc_tredegar_edge",
+        "target": "hub_memorial_district",
         "type": "in_hub",
         "label": "In",
         "layer": "structural"
@@ -3442,6 +3667,86 @@
         "id": "edge_npc_midnight_truck_hub_creighton_court",
         "source": "npc_midnight_truck",
         "target": "hub_creighton_court",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_samira_aziz_hub_memorial_district",
+        "source": "npc_samira_aziz",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_knuckles_okoro_hub_memorial_district",
+        "source": "npc_knuckles_okoro",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_abernathy_vale_hub_memorial_district",
+        "source": "npc_abernathy_vale",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_the_pallbearer_hub_memorial_district",
+        "source": "npc_the_pallbearer",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_hester_byrd_hub_memorial_district",
+        "source": "npc_hester_byrd",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ruthie_calhoun_hub_memorial_district",
+        "source": "npc_ruthie_calhoun",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_amos_freeman_hub_memorial_district",
+        "source": "npc_amos_freeman",
+        "target": "hub_memorial_district",
+        "type": "based_in",
+        "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_gail_brannock_hub_memorial_district",
+        "source": "npc_gail_brannock",
+        "target": "hub_memorial_district",
         "type": "based_in",
         "label": "Based in",
         "layer": "structural"

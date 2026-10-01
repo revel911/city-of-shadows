@@ -39,6 +39,21 @@
         "The Midnight Truck has started stopping at a house it never stopped at before.",
         "A psychic on the tenant council blames a Night crew for the missing kids' dreams."
       ]
+    },
+    {
+      "id": "hub_memorial_district",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "conditions": [],
+      "rumors": [
+        "A grave in Hollywood shows a burial date for someone still alive.",
+        "The War Memorial's wall has a new name every morning.",
+        "Someone is buying the old cemetery deeds.",
+        "A Night elder wants Gambles Hill declared neutral ground.",
+        "A martyr's family says he came home.",
+        "A Power broker pays well for forgotten names."
+      ]
     }
   ]
 }
