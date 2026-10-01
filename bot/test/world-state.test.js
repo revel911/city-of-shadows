@@ -306,3 +306,8 @@ test('canonical plural hub-state fields win and are not duplicated', () => {
   assert.deepEqual(compact.conditions, ['A']);
   assert.equal(compact.notes, 'N');
 });
+
+test('NPC drive is part of the canonical NPC record the MC sees', () => {
+  const context = formatCanonicalWorldContext({ npcs: [{ id: 'npc_a', name: 'A', drive: 'get her brother out before his hearing' }] });
+  assert.match(context, /"drive":"get her brother out before his hearing"/);
+});

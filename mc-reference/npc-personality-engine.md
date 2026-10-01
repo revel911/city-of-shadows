@@ -154,7 +154,7 @@ Named NPC facts never live in this reference document. Before portraying an NPC,
 read that NPC's canonical record from the session's `CANONICAL WORLD INDEX`.
 The record's name, pronouns, role, status, locations, scores, and `voice_note`
 override recollection and examples. Never create a second NPC when a canonical ID
-or name already matches.
+or name already matches. `drive` is the NPC's active plan; let it move them between scenes.
 
 ## Adding New NPCs
 

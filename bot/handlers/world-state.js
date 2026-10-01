@@ -20,6 +20,7 @@ function compactNpc(npc) {
     current_location_id: npc.current_location_id || '',
     arc_ids: npc.arc_ids || [],
     role: npc.role || '',
+    drive: npc.drive || '',
     player_interaction: npc.player_interaction || '',
     personality: npc.personality || {},
     last_seen: npc.last_seen || '',
