@@ -58,18 +58,25 @@ export function resetHubMovesCache() {
 }
 
 // Hub Markdown changes by commit, not mid-session, so one read per process
-// (or per resetSystemCache) is enough. Always resolves to an array.
+// (or per resetSystemCache) is enough once a load fully succeeds. Always resolves to an array.
 export async function loadHubMoves({ read = readFile, readIndex = readJSON } = {}) {
   if (_hubMovesCache) return _hubMovesCache;
   const loaded = await readIndex('hubs/index.json');
-  const index = Array.isArray(loaded) ? loaded : [];
+  const indexOk = Array.isArray(loaded);
+  const index = indexOk ? loaded : [];
+  let complete = indexOk;
   const files = await Promise.all(index.map(async hub => {
     try {
       return [hub, await read(`hubs/${hub.file}`)];
-    } catch {
+    } catch (e) {
+      // A throw is a transient failure (5xx, rate limit); a missing file is null.
+      complete = false;
+      console.warn(`[hub-moves] skipped ${hub.id}: ${e.message}`);
       return [hub, null];
     }
   }));
-  _hubMovesCache = files.flatMap(([hub, markdown]) => (markdown ? extractHubMoves(markdown, hub.id) : []));
-  return _hubMovesCache;
+  const moves = files.flatMap(([hub, markdown]) => (markdown ? extractHubMoves(markdown, hub.id) : []));
+  // Only cache a fully successful load so the next turn retries after a blip.
+  if (complete) _hubMovesCache = moves;
+  return moves;
 }

@@ -85,3 +85,45 @@ test('loader always resolves to an array, even for a missing or malformed index'
   assert.deepEqual(await loadHubMoves({ read: async () => null, readIndex: async () => ({}) }), []);
   resetHubMovesCache();
 });
+
+test('a transient read failure is not cached; the next call retries', async () => {
+  resetHubMovesCache();
+  let reads = 0;
+  let failB = true;
+  const readIndex = async () => [{ id: 'hub_a', file: 'a.md' }, { id: 'hub_b', file: 'b.md' }];
+  const read = async path => {
+    reads += 1;
+    if (path === 'hubs/b.md' && failB) throw new Error('GitHub 503');
+    return `## Hub Moves\n### ${path === 'hubs/a.md' ? 'Alpha' : 'Beta'}\nWhen you knock, roll with Heart.\n`;
+  };
+  const warn = console.warn;
+  const warnings = [];
+  console.warn = msg => warnings.push(msg);
+  try {
+    const first = await loadHubMoves({ read, readIndex });
+    assert.deepEqual(first.map(m => m.name), ['Alpha']);
+    assert.equal(warnings.length, 1);
+    assert.match(warnings[0], /hub_b.*GitHub 503/);
+    failB = false;
+    const second = await loadHubMoves({ read, readIndex });
+    assert.deepEqual(second.map(m => m.name), ['Alpha', 'Beta']);
+    const readsAfterSecond = reads;
+    const third = await loadHubMoves({ read, readIndex });
+    assert.equal(third, second);
+    assert.equal(reads, readsAfterSecond);
+  } finally {
+    console.warn = warn;
+    resetHubMovesCache();
+  }
+});
+
+test('a missing index is not cached', async () => {
+  resetHubMovesCache();
+  assert.deepEqual(await loadHubMoves({ read: async () => null, readIndex: async () => null }), []);
+  const moves = await loadHubMoves({
+    read: async () => '## Hub Moves\n### Alpha\nWhen you knock, roll with Heart.\n',
+    readIndex: async () => [{ id: 'hub_a', file: 'a.md' }],
+  });
+  assert.equal(moves.length, 1);
+  resetHubMovesCache();
+});
