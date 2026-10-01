@@ -3072,6 +3072,171 @@
     },
     {
       "data": {
+        "id": "faction_richmond_consilium",
+        "label": "Richmond Consilium",
+        "kind": "faction",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Power",
+        "details": "The city's Awakened mages, organized as a loose Consilium with Dr. Sebastian Olave as its unofficial Hierarch. They hide behind university and hospital cover, and they want a formal claim over investigating the Overwrite before anyone else makes one. The faction is fracturing: junior members feel shut out of the recent closed meetings."
+      },
+      "position": {
+        "x": 1420,
+        "y": 160
+      }
+    },
+    {
+      "data": {
+        "id": "faction_silver_ladder_richmond",
+        "label": "Silver Ladder (Richmond)",
+        "kind": "faction",
+        "hub_id": "hub_university",
+        "status": "active",
+        "subtype": "Power",
+        "details": "The Richmond reach of the Silver Ladder, the order that believes the Awakened should guide the sleeping world. It works through council seats and procedure, favors order and hierarchy, and holds its position rather than risking it. Its senior figure is Councilor Ingrid Voss."
+      },
+      "position": {
+        "x": 1286,
+        "y": -440
+      }
+    },
+    {
+      "data": {
+        "id": "faction_canal_court",
+        "label": "Canal Court",
+        "kind": "faction",
+        "hub_id": "hub_downtown",
+        "status": "active",
+        "subtype": "Night",
+        "details": "The Kindred who keep the old canal tunnels and quietly own a good share of Downtown through legitimate business fronts. They want stable feeding grounds, which gentrification in the Bottom has disrupted. Aldric Serrano, their patriarch, wants to be left alone. Serrano and Mireille Fontenot have not spoken in six months, and the strain shows as territory tension."
+      },
+      "position": {
+        "x": 86,
+        "y": -593
+      }
+    },
+    {
+      "data": {
+        "id": "faction_hedge_keepers",
+        "label": "Hedge Keepers",
+        "kind": "faction",
+        "hub_id": "hub_the_fan",
+        "status": "active",
+        "subtype": "Wild",
+        "details": "The Fan's changelings and their friends, who tend the Doors to the Hedge that open near monuments and venues. The Doors are shifting: some that used to lead somewhere safe now open somewhere wrong, and the Keepers are scrambling to learn why."
+      },
+      "position": {
+        "x": -25,
+        "y": -230
+      }
+    },
+    {
+      "data": {
+        "id": "faction_the_revisionists",
+        "label": "The Revisionists",
+        "kind": "faction",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Mortalis",
+        "details": "A small, loose Mortalis circle inside city planning and the local historical societies: three core members and a dozen contacts. They know about the Overwrite and believe it must be managed rather than stopped, cataloguing discrepancies instead of correcting them. A recent easement delays development at the Old Market Site for eighteen months, with no reason given."
+      },
+      "position": {
+        "x": -392,
+        "y": -279
+      }
+    },
+    {
+      "data": {
+        "id": "faction_the_morrow_network",
+        "label": "The Morrow Network",
+        "kind": "faction",
+        "hub_id": "hub_shockoe_bottom",
+        "status": "active",
+        "subtype": "Mortalis",
+        "details": "A family business with supernatural reach, anchored by Celestine Morrow with Declan as the bagman. Neutral between Night and Mortalis after three generations of doing business with both; pragmatic, and survives by being useful to everyone."
+      },
+      "position": {
+        "x": 91,
+        "y": -1352
+      }
+    },
+    {
+      "data": {
+        "id": "faction_east_end_tenants",
+        "label": "East End Tenants",
+        "kind": "faction",
+        "hub_id": "hub_creighton_court",
+        "status": "active",
+        "subtype": "Mortalis",
+        "details": "The Creighton Court tenant council and its night patrol: a thirty-year organizing network that keeps the community running when official systems fail. Right now it is fighting to stop the Renaissance redevelopment phases from displacing the court."
+      },
+      "position": {
+        "x": 0,
+        "y": 331
+      }
+    },
+    {
+      "data": {
+        "id": "faction_memorial_keepers",
+        "label": "Memorial Keepers",
+        "kind": "faction",
+        "hub_id": "hub_memorial_district",
+        "status": "active",
+        "subtype": "Night",
+        "details": "An uneasy alliance of the bluff's caretakers of the dead: a Kindred elder who claims the cemetery as neutral ground, the crematory's keeper of unclaimed names, volunteer memorial guides and a stonemason who recuts old lettering. They agree that names must be kept right and disagree on whose version of the past counts, so the alliance is steady but touchy while names on the wall and in the graves keep changing."
+      },
+      "position": {
+        "x": -90,
+        "y": 626
+      }
+    },
+    {
+      "data": {
+        "id": "faction_river_crews",
+        "label": "River Crews",
+        "kind": "faction",
+        "hub_id": "hub_river_docks",
+        "status": "active",
+        "subtype": "Wild",
+        "details": "The working river's own web: terminal and rail crews under their shop steward, the tug captain who runs unofficial rescue, a customs broker, a harbor dispatcher and the Night bookkeeper who pays the crews. They move cargo by day and quieter goods by night, answer to the tide, and trade favors for a price. Recurring friction comes over who stamps the paperwork."
+      },
+      "position": {
+        "x": -102,
+        "y": 36
+      }
+    },
+    {
+      "data": {
+        "id": "faction_valley_mutual_aid",
+        "label": "Valley Mutual Aid",
+        "kind": "faction",
+        "hub_id": "hub_the_valley",
+        "status": "active",
+        "subtype": "Mortalis",
+        "details": "The Valley's own safety net: a church van, a meal line, a free ride service for late releases, a bike stand on the motel lots and a court interpreter who helps off the clock. Everyone in it has an angle, and the group works to keep people from being moved around any more than they already are. It strains against the annex and holding center, which would prefer people stay unseen."
+      },
+      "position": {
+        "x": -1288,
+        "y": -179
+      }
+    },
+    {
+      "data": {
+        "id": "faction_city_hall_clerks",
+        "label": "The City Hall Clerks",
+        "kind": "faction",
+        "hub_id": "hub_capitol_city_hall",
+        "status": "active",
+        "subtype": "Mortalis",
+        "details": "The permanent staff of Richmond's government: aides, stenographers and records clerks, who do the work in the open and clock in every day. Informal, practical and gossip-wired, they know where every file lives and who owes whom. They want the machinery to keep running, even as the records change between sessions and only the stenographers notice."
+      },
+      "position": {
+        "x": -477,
+        "y": -57
+      }
+    },
+    {
+      "data": {
         "id": "jacob-boone",
         "label": "Jacob Boone",
         "kind": "pc",
@@ -5130,6 +5295,306 @@
         "target": "hub_capitol_city_hall",
         "type": "based_in",
         "label": "Based in",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dr_olave_faction_richmond_consilium",
+        "source": "npc_dr_olave",
+        "target": "faction_richmond_consilium",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_harriet_ames_faction_richmond_consilium",
+        "source": "npc_harriet_ames",
+        "target": "faction_richmond_consilium",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ingrid_voss_faction_silver_ladder_richmond",
+        "source": "npc_ingrid_voss",
+        "target": "faction_silver_ladder_richmond",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ngozi_adair_faction_silver_ladder_richmond",
+        "source": "npc_ngozi_adair",
+        "target": "faction_silver_ladder_richmond",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_aldric_serrano_faction_canal_court",
+        "source": "npc_aldric_serrano",
+        "target": "faction_canal_court",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_asha_tremblay_faction_hedge_keepers",
+        "source": "npc_asha_tremblay",
+        "target": "faction_hedge_keepers",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marcus_delacroix_faction_hedge_keepers",
+        "source": "npc_marcus_delacroix",
+        "target": "faction_hedge_keepers",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_celestine_morrow_faction_the_morrow_network",
+        "source": "npc_celestine_morrow",
+        "target": "faction_the_morrow_network",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_declan_morrow_faction_the_morrow_network",
+        "source": "npc_declan_morrow",
+        "target": "faction_the_morrow_network",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_mama_dee_washington_faction_east_end_tenants",
+        "source": "npc_mama_dee_washington",
+        "target": "faction_east_end_tenants",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_lorenzo_pugh_faction_east_end_tenants",
+        "source": "npc_lorenzo_pugh",
+        "target": "faction_east_end_tenants",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_sister_catherine_burke_faction_east_end_tenants",
+        "source": "npc_sister_catherine_burke",
+        "target": "faction_east_end_tenants",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_marisol_echevarria_faction_east_end_tenants",
+        "source": "npc_marisol_echevarria",
+        "target": "faction_east_end_tenants",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_hester_byrd_faction_memorial_keepers",
+        "source": "npc_hester_byrd",
+        "target": "faction_memorial_keepers",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ruthie_calhoun_faction_memorial_keepers",
+        "source": "npc_ruthie_calhoun",
+        "target": "faction_memorial_keepers",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_loretta_banfield_faction_memorial_keepers",
+        "source": "npc_loretta_banfield",
+        "target": "faction_memorial_keepers",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_gail_brannock_faction_memorial_keepers",
+        "source": "npc_gail_brannock",
+        "target": "faction_memorial_keepers",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_cole_ridley_faction_river_crews",
+        "source": "npc_cole_ridley",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_dee_ashby_faction_river_crews",
+        "source": "npc_dee_ashby",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_odalys_ferreira_faction_river_crews",
+        "source": "npc_odalys_ferreira",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_theodora_lusk_faction_river_crews",
+        "source": "npc_theodora_lusk",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_benedict_shaw_faction_river_crews",
+        "source": "npc_benedict_shaw",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_hollis_grey_faction_river_crews",
+        "source": "npc_hollis_grey",
+        "target": "faction_river_crews",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_alma_pierce_faction_valley_mutual_aid",
+        "source": "npc_alma_pierce",
+        "target": "faction_valley_mutual_aid",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_darnell_hayes_faction_valley_mutual_aid",
+        "source": "npc_darnell_hayes",
+        "target": "faction_valley_mutual_aid",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_tally_monroe_faction_valley_mutual_aid",
+        "source": "npc_tally_monroe",
+        "target": "faction_valley_mutual_aid",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_esperanza_quintero_faction_valley_mutual_aid",
+        "source": "npc_esperanza_quintero",
+        "target": "faction_valley_mutual_aid",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_corinne_batiste_faction_city_hall_clerks",
+        "source": "npc_corinne_batiste",
+        "target": "faction_city_hall_clerks",
+        "type": "member",
+        "label": "Leads",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_mags_oduya_faction_city_hall_clerks",
+        "source": "npc_mags_oduya",
+        "target": "faction_city_hall_clerks",
+        "type": "member",
+        "label": "Member of",
+        "layer": "structural"
+      }
+    },
+    {
+      "data": {
+        "id": "edge_npc_ambrose_calder_faction_city_hall_clerks",
+        "source": "npc_ambrose_calder",
+        "target": "faction_city_hall_clerks",
+        "type": "member",
+        "label": "Member of",
         "layer": "structural"
       }
     },

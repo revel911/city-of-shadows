@@ -1,5 +1,291 @@
 {
   "schema_version": 1,
   "last_updated": "2026-10-01",
-  "factions": []
+  "factions": [
+    {
+      "id": "faction_richmond_consilium",
+      "name": "Richmond Consilium",
+      "circle": "Power",
+      "size": 3,
+      "strength": 3,
+      "assets": [
+        "Closed faculty meetings at VCU",
+        "University research and medical-center access",
+        "Academic cover for Awakened scholarship"
+      ],
+      "stance": "striving",
+      "hub_ids": [
+        "hub_university",
+        "hub_downtown"
+      ],
+      "leader_npc_id": "npc_dr_olave",
+      "member_npc_ids": [
+        "npc_harriet_ames"
+      ],
+      "character_ids": [],
+      "public_summary": "The city's Awakened mages, organized as a loose Consilium with Dr. Sebastian Olave as its unofficial Hierarch. They hide behind university and hospital cover, and they want a formal claim over investigating the Overwrite before anyone else makes one. The faction is fracturing: junior members feel shut out of the recent closed meetings.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_silver_ladder_richmond",
+      "name": "Silver Ladder (Richmond)",
+      "circle": "Power",
+      "size": 2,
+      "strength": 3,
+      "assets": [
+        "Seat on city council",
+        "Procedure and political leverage",
+        "Order tradition of mentorship"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_university",
+        "hub_downtown"
+      ],
+      "leader_npc_id": "npc_ingrid_voss",
+      "member_npc_ids": [
+        "npc_ngozi_adair"
+      ],
+      "character_ids": [],
+      "public_summary": "The Richmond reach of the Silver Ladder, the order that believes the Awakened should guide the sleeping world. It works through council seats and procedure, favors order and hierarchy, and holds its position rather than risking it. Its senior figure is Councilor Ingrid Voss.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_canal_court",
+      "name": "Canal Court",
+      "circle": "Night",
+      "size": 3,
+      "strength": 3,
+      "assets": [
+        "Sealed canal-tunnel levels",
+        "Downtown real estate fronts",
+        "Discreet transport and meeting spaces"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_downtown",
+        "hub_shockoe_bottom"
+      ],
+      "leader_npc_id": "npc_aldric_serrano",
+      "member_npc_ids": [],
+      "character_ids": [],
+      "public_summary": "The Kindred who keep the old canal tunnels and quietly own a good share of Downtown through legitimate business fronts. They want stable feeding grounds, which gentrification in the Bottom has disrupted. Aldric Serrano, their patriarch, wants to be left alone. Serrano and Mireille Fontenot have not spoken in six months, and the strain shows as territory tension.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_hedge_keepers",
+      "name": "Hedge Keepers",
+      "circle": "Wild",
+      "size": 2,
+      "strength": 2,
+      "assets": [
+        "Hidden Doors to the Hedge",
+        "Threshold vintage shop",
+        "Artists and creative mortals as watchers"
+      ],
+      "stance": "striving",
+      "hub_ids": [
+        "hub_the_fan"
+      ],
+      "leader_npc_id": "npc_asha_tremblay",
+      "member_npc_ids": [
+        "npc_marcus_delacroix"
+      ],
+      "character_ids": [],
+      "public_summary": "The Fan's changelings and their friends, who tend the Doors to the Hedge that open near monuments and venues. The Doors are shifting: some that used to lead somewhere safe now open somewhere wrong, and the Keepers are scrambling to learn why.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_the_revisionists",
+      "name": "The Revisionists",
+      "circle": "Mortalis",
+      "size": 1,
+      "strength": 3,
+      "assets": [
+        "Seats in the city planning office",
+        "Historical-society archives",
+        "A development easement at the Old Market Site"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_shockoe_bottom"
+      ],
+      "leader_npc_id": "",
+      "member_npc_ids": [],
+      "character_ids": [],
+      "public_summary": "A small, loose Mortalis circle inside city planning and the local historical societies: three core members and a dozen contacts. They know about the Overwrite and believe it must be managed rather than stopped, cataloguing discrepancies instead of correcting them. A recent easement delays development at the Old Market Site for eighteen months, with no reason given.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_the_morrow_network",
+      "name": "The Morrow Network",
+      "circle": "Mortalis",
+      "size": 1,
+      "strength": 2,
+      "assets": [
+        "Three generations of favors owed",
+        "Family business fronts",
+        "Knowledge of where the Bottom's bodies are buried"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_shockoe_bottom"
+      ],
+      "leader_npc_id": "npc_celestine_morrow",
+      "member_npc_ids": [
+        "npc_declan_morrow"
+      ],
+      "character_ids": [],
+      "public_summary": "A family business with supernatural reach, anchored by Celestine Morrow with Declan as the bagman. Neutral between Night and Mortalis after three generations of doing business with both; pragmatic, and survives by being useful to everyone.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_east_end_tenants",
+      "name": "East End Tenants",
+      "circle": "Mortalis",
+      "size": 3,
+      "strength": 2,
+      "assets": [
+        "Resident council and organizing network",
+        "Nightly tenant patrol",
+        "Church-basement supplies and a food pantry"
+      ],
+      "stance": "striving",
+      "hub_ids": [
+        "hub_creighton_court"
+      ],
+      "leader_npc_id": "npc_mama_dee_washington",
+      "member_npc_ids": [
+        "npc_lorenzo_pugh",
+        "npc_sister_catherine_burke",
+        "npc_marisol_echevarria"
+      ],
+      "character_ids": [],
+      "public_summary": "The Creighton Court tenant council and its night patrol: a thirty-year organizing network that keeps the community running when official systems fail. Right now it is fighting to stop the Renaissance redevelopment phases from displacing the court.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_memorial_keepers",
+      "name": "Memorial Keepers",
+      "circle": "Night",
+      "size": 2,
+      "strength": 2,
+      "assets": [
+        "Hollywood Cemetery as claimed neutral ground",
+        "Volunteer guides at the War Memorial",
+        "Crematory records and a stonemason's eye"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_memorial_district"
+      ],
+      "leader_npc_id": "npc_hester_byrd",
+      "member_npc_ids": [
+        "npc_ruthie_calhoun",
+        "npc_loretta_banfield",
+        "npc_gail_brannock"
+      ],
+      "character_ids": [],
+      "public_summary": "An uneasy alliance of the bluff's caretakers of the dead: a Kindred elder who claims the cemetery as neutral ground, the crematory's keeper of unclaimed names, volunteer memorial guides and a stonemason who recuts old lettering. They agree that names must be kept right and disagree on whose version of the past counts, so the alliance is steady but touchy while names on the wall and in the graves keep changing.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_river_crews",
+      "name": "River Crews",
+      "circle": "Wild",
+      "size": 2,
+      "strength": 2,
+      "assets": [
+        "Terminal union hall and shop stewards",
+        "Tugs and the river rescue network",
+        "Dockside Night money and stamped paperwork"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_river_docks"
+      ],
+      "leader_npc_id": "npc_cole_ridley",
+      "member_npc_ids": [
+        "npc_dee_ashby",
+        "npc_odalys_ferreira",
+        "npc_theodora_lusk",
+        "npc_benedict_shaw",
+        "npc_hollis_grey"
+      ],
+      "character_ids": [],
+      "public_summary": "The working river's own web: terminal and rail crews under their shop steward, the tug captain who runs unofficial rescue, a customs broker, a harbor dispatcher and the Night bookkeeper who pays the crews. They move cargo by day and quieter goods by night, answer to the tide, and trade favors for a price. Recurring friction comes over who stamps the paperwork.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_valley_mutual_aid",
+      "name": "Valley Mutual Aid",
+      "circle": "Mortalis",
+      "size": 2,
+      "strength": 2,
+      "assets": [
+        "Church mutual-aid van",
+        "Free late-release rides from the courts annex",
+        "Bike-repair stand and meal line"
+      ],
+      "stance": "striving",
+      "hub_ids": [
+        "hub_the_valley"
+      ],
+      "leader_npc_id": "npc_alma_pierce",
+      "member_npc_ids": [
+        "npc_darnell_hayes",
+        "npc_tally_monroe",
+        "npc_esperanza_quintero"
+      ],
+      "character_ids": [],
+      "public_summary": "The Valley's own safety net: a church van, a meal line, a free ride service for late releases, a bike stand on the motel lots and a court interpreter who helps off the clock. Everyone in it has an angle, and the group works to keep people from being moved around any more than they already are. It strains against the annex and holding center, which would prefer people stay unseen.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    },
+    {
+      "id": "faction_city_hall_clerks",
+      "name": "The City Hall Clerks",
+      "circle": "Mortalis",
+      "size": 3,
+      "strength": 2,
+      "assets": [
+        "Council aides' network and memos",
+        "Chamber transcripts and the clerk's vault",
+        "Procedure knowledge"
+      ],
+      "stance": "maintaining",
+      "hub_ids": [
+        "hub_capitol_city_hall"
+      ],
+      "leader_npc_id": "npc_corinne_batiste",
+      "member_npc_ids": [
+        "npc_mags_oduya",
+        "npc_ambrose_calder"
+      ],
+      "character_ids": [],
+      "public_summary": "The permanent staff of Richmond's government: aides, stenographers and records clerks, who do the work in the open and clock in every day. Informal, practical and gossip-wired, they know where every file lives and who owes whom. They want the machinery to keep running, even as the records change between sessions and only the stenographers notice.",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-city-guide"
+    }
+  ]
 }
