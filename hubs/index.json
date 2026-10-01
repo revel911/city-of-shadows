@@ -43,5 +43,10 @@
     "id": "hub_memorial_district",
     "name": "Memorial District",
     "file": "memorial-district.md"
+  },
+  {
+    "id": "hub_river_docks",
+    "name": "River & Docks",
+    "file": "river-docks.md"
   }
 ]

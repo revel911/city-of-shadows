@@ -16,6 +16,7 @@ threads. Named places themselves are canonical in
 | [church-hill.md](church-hill.md) | Church Hill | Night-dominant ridge of old brick, territorial memory, Dara Shin’s pack, locations, and open threads |
 | [carytown.md](carytown.md) | Carytown | Mortalis commercial/residential district focused on public routines, familiar vulnerability, locations, and open threads |
 | [memorial-district.md](memorial-district.md) | Memorial District | Night-dominant west bluff of graves, war memorials, and civic martyrdom over the James; city history as currency |
+| [river-docks.md](river-docks.md) | River & Docks | Wild-dominant working James: the Deepwater port, Manchester floodwall, Rocketts, and Belle Isle; a thin place for goods, secrets, and deals |
 
 ## Adding a hub
 

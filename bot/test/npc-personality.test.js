@@ -92,7 +92,7 @@ test('canonical roster has full profiles while preserving distinctive establishe
   const { npcs } = JSON.parse(await readFile(new URL('../../game/npcs.json', import.meta.url), 'utf8'));
   for (const npc of npcs) {
     assert.deepEqual(personalityProblems(npc.personality), [], npc.id);
-    if (!['npc_marcus_teen', 'npc_the_collector', 'npc_scrapheap', 'npc_little_andre', 'npc_midnight_truck', 'npc_the_pallbearer'].includes(npc.id)) {
+    if (!['npc_marcus_teen', 'npc_the_collector', 'npc_scrapheap', 'npc_little_andre', 'npc_midnight_truck', 'npc_the_pallbearer', 'npc_lady_of_the_falls', 'npc_warwick_bellman'].includes(npc.id)) {
       assert.ok(Number.isInteger(npc.personality.flirtatiousness), npc.id);
       assert.equal(typeof npc.personality.intimacy_style, 'string', npc.id);
     }

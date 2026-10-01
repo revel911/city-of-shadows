@@ -54,6 +54,21 @@
         "A martyr's family says he came home.",
         "A Power broker pays well for forgotten names."
       ]
+    },
+    {
+      "id": "hub_river_docks",
+      "revision": 0,
+      "last_updated": "2026-10-01",
+      "updated_by_session": "operator:us-hubs-expansion",
+      "conditions": [],
+      "rumors": [
+        "There's a fight club for things that aren't human under the Commerce Road yards.",
+        "The crew that salvaged a wreck at Warwick hasn't come back up.",
+        "Boat fires on the south bank are being blamed on the Wild.",
+        "A reporter is asking dock crews about Night money.",
+        "An ex-Power leader was seen meeting Night enforcers at Rocketts.",
+        "A street preacher on the Mayo Bridge promises the river will 'reform' the city."
+      ]
     }
   ]
 }

@@ -838,6 +838,99 @@
       "atmosphere": "Cold iron, river damp, the faint ring of a shift bell that nobody rings.",
       "notes": "Where the labor that built the city and the dead it honors share a fence line. Deals nobody wants overheard get made here.",
       "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_richmond_marine_terminal",
+      "name": "Richmond Marine Terminal",
+      "hub_id": "hub_river_docks",
+      "type": "Container port",
+      "controller_ids": [],
+      "controller_note": "Contested; the harbor master keeps the schedule, nobody keeps the peace",
+      "status": "active",
+      "description": "The deepwater port on Deepwater Terminal Road: cranes, stacked containers and the barge berths where river freight comes ashore.",
+      "atmosphere": "Floodlit, humming, smelling of diesel and river mud.",
+      "notes": "Reuse the same berth, barge and crew; the terminal runs on routine, and so do its smugglers. Off the books, everything here arrives on a tide. Under the pilings the old streets of Warwick lie waiting.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_rocketts_landing",
+      "name": "Rocketts Landing",
+      "hub_id": "hub_river_docks",
+      "type": "Old port / riverfront",
+      "controller_ids": [],
+      "controller_note": "Contested; no single owner",
+      "status": "active",
+      "description": "The old port across the water on the north bank: the Intermediate Terminal, restored warehouses and a long river walk where the city first took ships.",
+      "atmosphere": "Pretty, wind-blown, a little too quiet after the restaurants close.",
+      "notes": "Where the river's old trade is still remembered. An ex-Power leader has been seen meeting Night enforcers here.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_belle_isle",
+      "name": "Belle Isle",
+      "hub_id": "hub_river_docks",
+      "type": "Island park",
+      "controller_ids": [],
+      "controller_note": "The Shepherd patrols the river corridor here; no one controls the island",
+      "status": "active",
+      "description": "A rocky island in the middle of the James, a Civil War prison site now crossed by footbridges, climbers and fishing lines.",
+      "atmosphere": "Open and sunny by day; after dark, lights appear where no buildings stand.",
+      "notes": "Anyone who stays more than an hour after dark loses between fifteen minutes and three hours. The Shepherd is said to patrol the river corridor to keep the spirit world sealed here; he appears in play only as a presence, not a contact.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_manchester_floodwall",
+      "name": "Manchester Floodwall",
+      "hub_id": "hub_river_docks",
+      "type": "Floodwall / docks",
+      "controller_ids": [],
+      "controller_note": "Contested; dock crews hold the water side",
+      "status": "active",
+      "description": "The concrete floodwall and old docks of Manchester on the south bank, where the Slave Trail begins its walk up to the city.",
+      "atmosphere": "Gray, tidal, heavy with history; wind carries the sound of the water against the stone.",
+      "notes": "The start of the Slave Trail here is history to be honored with the same seriousness as Shockoe Bottom, never a set-piece for fright. Dock crews watch the wall for outsiders and for floods.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_mayo_bridge_south",
+      "name": "Mayo Bridge (south end)",
+      "hub_id": "hub_river_docks",
+      "type": "Bridge approach",
+      "controller_ids": [],
+      "controller_note": "Contested; no single owner",
+      "status": "active",
+      "description": "The south landing of the Mayo Bridge, where the road meets the Manchester shore under the railway trestles and the floodwall.",
+      "atmosphere": "Echoing, windy, a crossing place with a river that wants a word.",
+      "notes": "Street preachers, fishermen and runners cross here. A preacher on the span promises the river will \"reform\" the city.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_commerce_road_yards",
+      "name": "Commerce Road Yards",
+      "hub_id": "hub_river_docks",
+      "type": "Rail yards / warehouses",
+      "controller_ids": [],
+      "controller_note": "Contested; crews and brokers each hold a corner",
+      "status": "active",
+      "description": "A corridor of rail sidings, cold storage and blank warehouses behind the terminal, locked by day and loud by night.",
+      "atmosphere": "Chain-link, sodium light and the clank of couplings.",
+      "notes": "Reuse the same warehouse and crew from visit to visit. Rumor places a fight club for things that are not human beneath one of the yards.",
+      "last_updated": "2026-10-01"
+    },
+    {
+      "id": "loc_warwick_beneath",
+      "name": "Warwick Beneath",
+      "hub_id": "hub_river_docks",
+      "type": "Drowned colonial street layer",
+      "controller_ids": [
+        "npc_warwick_bellman"
+      ],
+      "controller_note": "The Warwick Bellman rings it awake",
+      "status": "active",
+      "description": "The burned colonial port town of Warwick, torched in 1781, lying under the terminal. On certain tides its streets, wharves and chimneys can be walked.",
+      "atmosphere": "Waterlogged, candlelit, ringing with a bell that has no tower.",
+      "notes": "The Overwrite here writes an older port over the new one. It is only reachable on the tide, and the way out is not always the way in.",
+      "last_updated": "2026-10-01"
     }
   ]
 }
