@@ -759,6 +759,86 @@ When you truly die, name another character as your protege or heir. They immedia
 
 **After five advances:** +1 to any Circle (max +3); +1 Status (max +1) twice; erase a scar; add a secure asset to your faction; change your Circle (the faction follows but loses 1 Size and 1 Strength, and may collapse); advance three basic moves twice; change to a new playbook.
 
+## The Dragon
+
+You carry the memory of a mighty draconic ruler who was cast down, and you were reborn into a human body to try again. Your appetites are old and large, your kin are scattered through this era, and the people who ended your last reign have handed their purpose down to heirs who are looking for you.
+
+**ID:** the-dragon
+
+> **WoD:** The **Ordo Draconis** is Richmond's heretical splinter of the vampire Ordo Dracul: Kindred who hunt reborn dragons to drink their mythic blood. It is therefore a **Night** faction (Size 2, Strength 3), not the book's Power faction; the world bible says WoD wins. It has its own agenda and sits among Richmond's Kindred politics, such as the Canal Court (`faction_canal_court`); it does not replace or absorb any existing faction. Suggested extension: none, or Vampire for a dragon reborn into a Kindred body. Any other extension, or none, is open.
+
+### Starting Profile
+
+- **Circle:** Wild
+- **Stats:** Blood 0, Heart -2, Mind 1, Spirit 2 (add 1 to one stat, max +3)
+- **Circle ratings:** Mortalis -1, Night -1, Power 1, Wild 2 (add 1 to one)
+- **Circle Status:** Mortalis 0, Night 0, Power 0, Wild 2
+- **Demeanor options:** antiquated, brooding, callous, seductive
+- **Gear:** a large penthouse apartment, a luxury car, a smartphone, a mark or token of your lineage, and one heirloom of a past life: a ritual dagger (2-harm hand messy), a ceremonial sword (3-harm close messy), enchanted clothing or armor (+1 armor), or a notable arcane tome or device.
+- **Starting Debts:**
+  - Someone stole something from you for the Ordo Draconis. Ask whether they knew who they worked for. Either way, they owe you a Debt.
+  - Someone is watching over a broodmate you have been afraid to approach. Tell them what you fear; you owe them a Debt.
+  - You double-crossed someone in the middle of a hard deal, and they do not know your real reasons. You owe them a Debt.
+- **Intro questions:**
+  - How long have you lived in the city?
+  - How did you first find out what you are?
+  - How do your draconic memories show up?
+  - Who do you suspect knows more about your lineage than they admit?
+- **Let It Out options:** exhale mythic dragonfire (3-harm close area mythic fire); take on a strong aspect of your ancient form (wings, claws and so on); sense the location of someone you share a sympathetic link with; convince a vulnerable NPC of your rightful claim to authority.
+
+### Special Mechanic — Your Brood, Your Hoard, The Ordo Draconis
+
+**Your Brood.** Four others born in this era were dragons like you. When you first meet someone important, you or the MC may declare they are one of your brood. Broodmates are NPCs, unless a PC's player opts in, in their own session, to being declared one; until then the declaration applies to NPCs only. Harming a broodmate, even by accident, makes you mark corruption, and killing one also gives you a corruption advance.
+
+The first time you share intimacy with a broodmate, your intimacy move is replaced by a reveal: the MC tells you who they were to you in a forgotten age, and you say how they came to fill that role and unlock the matching advance. Six roles exist, but only four broodmates exist in each era: a beloved sibling (advance three basic moves); a trusted confidante (a move from another playbook); a fierce rival (a corruption move from another playbook); a commanding sire (+1 to any stat, max +3); a mysterious lover (heal all harm and erase a scar); an unrepentant betrayer (-2 ongoing against them). The broodmate learns the same thing and decides what to do with it; people are not bound by old roles.
+
+- **Gaze Deeply** — when you gaze into a broodmate's eyes (you need a moment of calm and they must not be avoiding your gaze), roll with Spirit. On a hit, you learn their immediate thoughts and lingering wants, and may ask them any two questions, which they must answer truthfully. On a 7-9, they ask two of you as well, and you must answer truthfully or mark corruption. On a miss, the link is overwhelming and obvious: you learn little and draw your enemies' attention.
+- **Seek a Broodmate** — you may perform a ritual known to all dragons who have found their lineage; the MC states what it needs. Seeking by name reveals their location; seeking an unfound broodmate reveals the nearest one. Mark corruption during the ritual to hide your own identity and location from the target.
+
+**Your Hoard.** You keep a hoard of heirlooms from your lineage that comforts and empowers you. Sleeping among it for more than four hours heals all harm (not scars) and may bring dreams of new treasures or broodmates. Choose the two kinds you covet most: rare books, fine jewelry, forbidden art, ancient devices, lost weapons, or bones, skin and scales. Those kinds are most likely to trigger More Precious Than Gold, and they tell the MC what to put in the game. Decide with the MC where the hoard lives and what condition it is in.
+
+**The Ordo Draconis.** The Ordo is the order that hunts you and your brood. In Richmond it is a Night faction, Size 2, Strength 3, a heretical splinter of the Ordo Dracul: Kindred who want reborn dragons for their blood, hunting from within Kindred politics. Choose where it gathers (a mundane congregation, a university, a trade association, a political party, a scientific league, a persecuted sect, or a community of transients) and three strengths: ubiquitous and connected; focused and unerring; armed and supplied; immortal or unending; wielding sorceries and rituals; or holding artifacts of your lineage. The Ordo is a real, active threat. It will take faction turns to isolate you, attack what you hold, and block your search for your brood.
+
+At creation the Ordo becomes one new `faction_patch` record in `game/factions.json`: `character_ids` is this character only, Size 2, Strength 3, Circle Night, `stance: striving`, with assets tied to the three strengths. Its leader is created in the same save with `npc_patch`. At the first session close the MC emits an `arc_patch` (`type: threat`) naming the faction, with `character_ids` set to this dragon only.
+
+State: `playbook_state.dragon` = `{ hoard: { covets: ["", ""], items: [] }, brood: [{ npc_id: "", role: null, revealed: false }], ordo: { faction_id: "faction_<slug>", gathering: "", strengths: [] } }`. The Ordo's Size, Strength and assets live only in the faction record.
+
+### Moves
+
+#### You Get These Two
+
+- **Ancient Appetites** — when you first hear of an object fit for your hoard (your call; say you are using the move), roll with Spirit. On a hit, instinct and dreams show a way to acquire it. On a 10+, pick 1; on a 7-9, pick 2: its location is a secret held by an enemy of your lineage; it is guarded by forces stronger than you can overcome alone; it sits somewhere dangerous to you and your allies; it is plainly a trap set to draw you out. Options you do not pick are not a problem. On a miss, the MC picks three.
+- **More Precious Than Gold** — when you add an item of significant merit (MC's call) to your hoard, choose one: word of your greatness spreads, and you make an extra city move when time passes next; secret truths surface, and you ask the MC any question and get an honest answer; you erase a scar; draconic essence pulses in your veins, giving +1 ongoing to let it out until time passes (the MC may let it carry to the next faction turn). Items of a kind you covet are more likely to qualify.
+
+#### Choose One More
+
+- **Trust In Me** — when you have time completely alone with an NPC to persuade them to help with a problem, roll with Spirit. On a miss, they still do what you asked, but they are fully aware of your hypnotic influence once the task is done. You need not restrain them, but no one else may be present. You may still cash in a Debt on them for +3, and on a 7-9 they may still counter-offer or demand payment. This is plain persuasion of an NPC; keep the scene brief and avoid explicit detail.
+- **Am I Not Merciful?** — when you recruit allies from other Circles by promising to live up to your lineage, roll with Spirit instead of your Status in their Circle. When time passes, you may offer another Debt to keep them in your employ until time passes again, without spending a city move (once, not twice running).
+- **On Wings Eternal** — take +1 Spirit (max +3).
+
+#### Corruption Moves
+
+**Corruption trigger:** when you endanger others to chase the truth of your past or an object for your hoard, mark corruption. Abandoning someone in need, selling someone's private information to their enemies, or knowingly leading them into unseen danger all count.
+
+- **None Dare Resist** — when time passes, mark corruption to have dreams show how to make a rival faction's asset (your choice) vulnerable; the MC tells you how, and you still have to seize it. When you lay claim to such an asset after seizing it, mark corruption to take a 10+ instead of rolling.
+- **Fire Born** — mark corruption to become immune to environmental hazards such as fire or electricity, and gain armor+1, for the scene. Your clothes and what you carry are covered.
+- **To the King, His Due** — when you successfully cash in a Debt, mark corruption to choose a second option from the list (never the same option twice). You must decide before you pick your first option, and mark the corruption before you take either prize. When the Debt is held against a PC, the usual Debt rules apply and that player resolves their side in their own session.
+- **As Great as the Old Tales Say** — mark corruption to blast your way into a secure location, utterly ruining the barrier that kept you out; you may injure or kill defenders who openly opposed you. A canonical location, one named in `game/locations.json`, is never destroyed by this move on its own: the MC writes it to the handoff as a proposal needing operator approval, and the barrier is wrecked in the scene but the place itself persists until the City Keeper applies an approved change.
+
+### Intimacy Move
+
+When you share a moment of intimacy, physical or emotional, ask the other person to name something beautiful about your draconic nature. If they do, you realize something in your hoard could be of great use to them, and what you do with that is your choice. If they refuse, you feel the sting of your insecurity and take -1 ongoing to all rolls until you make it right. Do not take or destroy anything of theirs unless they are an NPC; for a PC the choice of consequence belongs to that player, who opts in, in their own session. With a broodmate, the first time this becomes the role reveal under Your Brood.
+
+### End Move
+
+When you die, your ancient spirit tears free of your body and settles somewhere else in the world. Name what is shattered by the force of that death and rebirth: a person, a place, or a thing. Most locations are wrecked beyond repair, and most NPCs die instantly. This is written to the handoff as a proposal; the City Keeper applies it only after operator approval, and a canonical location or named NPC is never changed without it. If you name a PC, that player can mark a scar to avoid the harm, but otherwise they die. Naming a PC requires that player's opt-in, in their own session; without it, only NPCs and places may be named.
+
+### Advances
+
+**Available at the beginning of play:** +1 Status (max +1) twice; +1 to any Circle (max +3) twice; a new Dragon move twice; a move from another playbook twice; erase a scar.
+
+**After five advances:** +1 to any Circle (max +3) twice; advance three basic moves twice; erase a scar; take 2 new Let It Out abilities, which may come from any playbook; gain a sanctum (it gives the Wizard's sanctum feature and the Sanctum Sanctorum move); change your Circle; change to a new playbook.
+
 ## Mortalis Circle Moves
 
 These moves are available to any playbook within the Mortalis Circle, in addition to their own playbook moves.
