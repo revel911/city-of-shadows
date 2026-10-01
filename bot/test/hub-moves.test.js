@@ -23,7 +23,7 @@ const shockoeStyle = [
   '- **10+:** Someone knows.',
   '', '### An Event For All Seasons',
   'When you announce an exclusive party, roll with Mind when time passes.',
-  '', '### Long Live the Martyrs',
+  '', '### Ask the Old Ledger',
   'When you consult contacts about city history, roll with Status.',
   '', '## Locations',
 ].join('\n');
@@ -51,7 +51,7 @@ test('parses inline "roll with" hub moves, including Circle rolls', () => {
 test('moves the engine cannot resolve live are kept for narration but not rollable', () => {
   const moves = extractHubMoves(shockoeStyle, 'hub_x');
   const party = moves.find(m => m.name === 'An Event For All Seasons');
-  const martyrs = moves.find(m => m.name === 'Long Live the Martyrs');
+  const martyrs = moves.find(m => m.name === 'Ask the Old Ledger');
   assert.equal(party.rollable, false);   // deferred roll: "when time passes"
   assert.equal(martyrs.rollable, false); // Status is not a stat or Circle rating
   assert.match(martyrs.text, /roll with Status/);
