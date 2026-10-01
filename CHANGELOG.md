@@ -1,5 +1,29 @@
 # Changelog
 
+## 2026-10-01 - New hubs, factions, and five new playbooks
+
+- Hub moves are live in play. The roll router offers a hub's moves only when the
+  scene is placed in that hub (by name or one of its landmarks), the dice engine
+  uses each move's own stat or Circle, and the narrator sees its outcomes.
+- Church Hill and Carytown gained hub moves and landmarks (Libby Hill, St. John's,
+  Chimborazo, the Byrd Theatre, and more).
+- Four new hubs: Memorial District (Hollywood Cemetery and the War Memorial),
+  River & Docks (the Deepwater port, Manchester, Rocketts, Belle Isle), The Valley,
+  and Capitol & City Hall. Creighton Court and Downtown gained new layers.
+- Every new hub has residents with drives. A new character may pick one resident
+  who owes them a Debt; existing characters are unchanged.
+- Factions are now canonical records with Size, Strength, Assets, and stance.
+  Sessions can create them, and references to missing NPCs or hubs are rejected
+  so live play can never break publishing.
+- Richmond-specific Circle moves for the MC, NPC drives in MC context, and the
+  Overwrite told as Then / Now / To Come in every opening.
+- Five new playbooks at character creation: the Scholar, Witch, Angel, Immortal,
+  and Dragon. Any playbook may take any World of Darkness extension, or none.
+  Effects on another player's character need that player's opt-in; destroying
+  canonical places or NPCs needs operator approval.
+- Hub conditions recorded by the City Keeper now reach the MC.
+- New MC guidance for handling Richmond's real history and dangerous content.
+
 ## 2026-09-29 - Enter the city and follow its consequences
 
 - Added a Discord entry path, three-step introduction, and sample exchange.

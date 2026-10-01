@@ -71,7 +71,7 @@ where you were, including any roll that was waiting.
 |---------|--------------|
 | `/events [n]` | Shows the N most recent entries from the public events log. Default 3, max 10. |
 | `/npc <name>` | Looks up an NPC by id, name, or substring. |
-| `/hub <name>` | Shows a neighborhood hub, including Shockoe Bottom, The Fan, Downtown, University, Creighton Court, Oregon Hill, Church Hill, and Carytown. |
+| `/hub <name>` | Shows a neighborhood hub, including Shockoe Bottom, The Fan, Downtown, University, Creighton Court, Oregon Hill, Church Hill, Carytown, Memorial District, River & Docks, The Valley, and Capitol & City Hall. |
 | `/arcs [status]` | Lists arcs filtered by status (default `active`; also `escalating`, `resolved`, `all`). |
 
 ---

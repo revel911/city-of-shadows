@@ -34,7 +34,7 @@ You run ONE player at a time, in a private Discord thread. The city is shared ac
 - `mc-reference/reference/rules.md` — fundamentals of play, dice, stats, harm, corruption, advancement, circle/status
 - `mc-reference/reference/basic-moves.md` — all basic moves
 - `mc-reference/reference/mc-moves.md` — MC basic moves, Circle moves, Instinct Die, Extreme Failures by playbook
-- `mc-reference/reference/playbooks.md` — all 12 playbooks with full move text and special mechanics
+- `mc-reference/reference/playbooks.md` — all 17 playbooks (12 core plus the Scholar, Witch, Angel, Immortal and Dragon) with full move text and special mechanics
 - `mc-reference/reference/world-of-darkness/` — 8 WoD extension files (changeling, demon, hunter, mage, orpheus, slasher, vampire, werewolf), each with clans/kiths/sects/disciplines, altered moves, and extension-specific advancement
 - `mc-reference/character-creation.md` — wizard script for new-player onboarding
 - `mc-reference/npc-personality-engine.md` — NPC voice and personality scoring system
