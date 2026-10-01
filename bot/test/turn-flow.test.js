@@ -186,3 +186,24 @@ test('creation drafts commit at stage changes and stay local between them', () =
   assert.equal(shouldCommitDraft(session, { next_step: 'Choose one more move.' }, 1000 + 10 * 60 * 1000), true);
   assert.equal(shouldCommitDraft({ player: { id: '__new__' } }, { next_step: 'x' }, 0), true);
 });
+
+test('a narrator roll request for a router-chosen hub move uses the hub move stat even without modifier fields', async t => {
+  const world = fakeWorld(t, {
+    [`players/${character}/state.json`]: state,
+    'hubs/index.json': [{ id: 'hub_creighton_court', name: 'Creighton Court', file: 'creighton-court.md' }],
+    'hubs/creighton-court.md': '# Creighton Court\n\n## Hub Moves\n\n### Community Network\n**Trigger:** When you need help navigating bureaucracy.\n**Roll:** Heart\n',
+    'game/locations.json': { locations: [{ id: 'loc_center', name: 'East End Family Resource Center', hub_id: 'hub_creighton_court' }] },
+  }, {
+    narrator: [
+      opening,
+      'Ms. Dorothy hears you out at the Resource Center.\n<roll_request>{"move":"Community Network"}</roll_request>',
+    ],
+    router: ['{"decision":"roll","move":"Community Network","circle":"Night","reason":"asks the tenants council for help"}'],
+  });
+  const thread = makeThread('hub-move-roll');
+  await startSession(thread, { id: character, name: 'Morgan', discord_id: '1' });
+  await handleMessage({ channel: thread, author: { id: '1' }, content: 'At the Resource Center I ask Ms. Dorothy to help me through the housing office paperwork.', id: 'a' });
+  assert.equal(world.calls.router, 1);
+  assert.ok(thread.sent.some(value => /Roll for \*\*Community Network\*\* \(Heart \+0\)/.test(value?.content || '')),
+    texts(thread).join('\n---\n'));
+});

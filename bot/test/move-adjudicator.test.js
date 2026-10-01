@@ -199,3 +199,48 @@ test('existing callers without hubMoves behave exactly as before', () => {
   const before = parseMoveAdjudication('{"decision":"roll","move":"Community Network","reason":"r"}');
   assert.equal(before, null);
 });
+
+const placedHubMoves = [
+  {
+    ...hubMoves[0],
+    hub_name: 'Creighton Court',
+    location_names: ['East End Family Resource Center', 'Court Basketball', 'Loc 3', 'Loc 4', 'Loc 5', 'Loc 6', 'Loc 7'],
+  },
+  { ...hubMoves[1], hub_name: 'Shockoe Bottom', location_names: [] },
+];
+
+test('router hub-move listing names the hub and its locations, capped, with a placement rule', () => {
+  const prompt = buildMoveAdjudicationPrompt({ playerText: 'x', hubMoves: placedHubMoves });
+  assert.match(prompt, /- Community Network \[Heart\] \(Creighton Court — East End Family Resource Center, Court Basketball, Loc 3, Loc 4, Loc 5, Loc 6\): When you need help/);
+  assert.doesNotMatch(prompt, /Loc 7/);
+  assert.match(prompt, /- Come Out of the Woodwork \[Mortalis\] \(Shockoe Bottom\): /);
+  assert.match(prompt, /Choose a hub move only when the immediate prior fiction or the player message places the current scene inside that hub/);
+  assert.match(prompt, /never clarify just to establish location/i);
+});
+
+test('router prompt is byte-identical when there are no rollable hub moves', () => {
+  const sheet = '## MOVES\n- **Community Network** — when you rally neighbors, roll with Spirit\n';
+  const args = { playerText: 'I knock.', lastAssistant: 'The door.', sheet };
+  const base = buildMoveAdjudicationPrompt(args);
+  assert.equal(buildMoveAdjudicationPrompt({ ...args, hubMoves: [] }), base);
+  assert.equal(buildMoveAdjudicationPrompt({ ...args, hubMoves: [hubMoves[2]] }), base);
+  assert.doesNotMatch(base, /hub move/i);
+});
+
+test('a hub-move expectation carries hub_id; sheet and basic expectations do not', () => {
+  const hub = parseMoveAdjudication('{"decision":"roll","move":"Community Network","reason":"r"}', { hubMoves });
+  assert.equal(hub.expectation.hub_id, 'hub_creighton_court');
+  const sheet = '## MOVES\n- **Community Network** — when you rally neighbors, roll with Spirit\n';
+  const sheetMove = parseMoveAdjudication('{"decision":"roll","move":"Community Network","reason":"r"}', { sheet, hubMoves });
+  assert.equal('hub_id' in sheetMove.expectation, false);
+  const basic = parseMoveAdjudication('{"decision":"roll","move":"Keep Your Cool","reason":"r"}', { hubMoves });
+  assert.equal('hub_id' in basic.expectation, false);
+});
+
+test('a hub Circle move keeps its own Circle over a different router circle', () => {
+  const result = parseMoveAdjudication('{"decision":"roll","move":"Come Out of the Woodwork","circle":"Night","reason":"r"}', { hubMoves });
+  assert.equal(result.expectation.circle, 'Mortalis');
+  const sheet = '## MOVES\n- **Old Friends** — when you call on old friends, roll with their Mortalis\n';
+  const sheetMove = parseMoveAdjudication('{"decision":"roll","move":"Old Friends","circle":"Night","reason":"r"}', { sheet, hubMoves });
+  assert.equal(sheetMove.expectation.circle, 'Night', 'sheet Circle moves keep the router circle exactly as before');
+});

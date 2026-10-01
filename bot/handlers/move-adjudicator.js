@@ -129,6 +129,9 @@ export function extractRollableCharacterMoves(sheet = '') {
   return candidates;
 }
 
+// Enough named places to recognize the hub without bloating the router prompt.
+const HUB_LOCATIONS_LISTED = 6;
+
 export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sheet = '', hubMoves = [] } = {}) {
   const basic = Object.entries(BASIC_MOVE_SEMANTICS).map(([move, semantics]) => {
     const source = BASIC_MOVE_MODIFIERS[move];
@@ -147,14 +150,21 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
     : '(none found)';
   const sheetNames = new Set(characterMoves.map(move => normalizedMove(move.name)));
   const hubRollable = hubMoves.filter(move => move.rollable && !sheetNames.has(normalizedMove(move.name)));
+  const hubPlace = move => {
+    const places = (move.location_names || []).slice(0, HUB_LOCATIONS_LISTED);
+    return `${move.hub_name || move.hub_id}${places.length ? ` — ${places.join(', ')}` : ''}`;
+  };
   const hubLines = hubRollable.length
     ? [
         '',
         'HUB MOVES (only when the current scene is inside that hub; character moves take precedence)',
         hubRollable.map(move =>
-          `- ${move.name} [${move.modifier_key || move.circle}] (${move.hub_id}): ${move.trigger}`
+          `- ${move.name} [${move.modifier_key || move.circle}] (${hubPlace(move)}): ${move.trigger}`
         ).join('\n'),
       ]
+    : [];
+  const hubRules = hubRollable.length
+    ? ['- Choose a hub move only when the immediate prior fiction or the player message places the current scene inside that hub, by the hub name or one of its listed locations. If the location is unclear, do not choose a hub move: use a basic move or none, and never clarify just to establish location.']
     : [];
   return [
     'Decide the first Urban Shadows move triggered on this turn before a narrator writes any outcome.',
@@ -179,6 +189,7 @@ export function buildMoveAdjudicationPrompt({ playerText, lastAssistant = '', sh
     '- Circle guide: Mortalis is ordinary humanity and mortal institutions; Night is embodied predators, the dead, and hunger-driven supernatural communities; Power is wizards, oracles, immortals, and organized occult authority; Wild is fae, demons, otherworldly beings, and chaotic magic.',
     '- Always set circle to Mortalis, Night, Power, or Wild for a Circle roll.',
     '- Refuse to Honor a Debt also requires the creditor numeric Circle Status (0-3) as creditor_status. If the fiction does not provide it, clarify instead of guessing.',
+    ...hubRules,
     '',
     'BASIC MOVES',
     basic,
@@ -255,14 +266,19 @@ export function parseMoveAdjudication(text, { sheet = '', hubMoves = [] } = {}) 
 
   const requestedMove = normalizedMove(raw.move);
   const basicKey = Object.keys(BASIC_MOVE_MODIFIERS).find(move => move === requestedMove);
-  const custom = extractRollableCharacterMoves(sheet)
-    .find(move => normalizedMove(move.name) === requestedMove)
+  const sheetMove = extractRollableCharacterMoves(sheet)
+    .find(move => normalizedMove(move.name) === requestedMove);
+  const custom = sheetMove
     || hubMoves.find(move => move.rollable && normalizedMove(move.name) === requestedMove);
   if (!basicKey && !custom) return null;
+  // A hub move has a fixed modifier, so the router's circle never overrides it.
+  const hubMove = !basicKey && !sheetMove ? custom : null;
 
   const source = basicKey ? BASIC_MOVE_MODIFIERS[basicKey] : custom;
   const modifierType = source.type || source.modifier_type;
-  const circle = canonicalName(raw.circle, CIRCLE_NAMES) || custom?.circle || null;
+  const circle = hubMove
+    ? hubMove.circle || null
+    : canonicalName(raw.circle, CIRCLE_NAMES) || custom?.circle || null;
   if (modifierType === 'circle' && !circle) return null;
   const creditorStatus = Number.isInteger(raw.creditor_status) && raw.creditor_status >= 0 && raw.creditor_status <= 3
     ? raw.creditor_status
@@ -281,6 +297,7 @@ export function parseMoveAdjudication(text, { sheet = '', hubMoves = [] } = {}) 
         raw.reason || custom?.trigger || BASIC_MOVE_SEMANTICS[basicKey]?.trigger || ''
       ).trim().slice(0, 240),
       confidence: 'adjudicated',
+      ...(hubMove ? { hub_id: hubMove.hub_id } : {}),
     },
   };
 }

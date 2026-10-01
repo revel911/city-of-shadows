@@ -477,3 +477,23 @@ test('Debt patches enforce public distinct parties and settle at zero', () => {
   assert.equal(result.doc.debts[0].visibility, 'public');
   assert.equal(result.rejected.length, 2);
 });
+
+test('a hub-move roll request with no modifier fields takes the hub move stat from the expectation', () => {
+  const expectation = { move: 'Community Network', modifier_type: 'stat', modifier_key: 'Heart', circle: null, hub_id: 'hub_creighton_court' };
+  const request = parseRollRequest('<roll_request>{"move":"Community Network"}</roll_request>', { expectation });
+  const record = createRollRecord({ request, state, instinct: 3, other: 4, sessionId: 't', characterId: 'jacob-boone' });
+  assert.equal(record.modifier_key, 'Heart');
+  assert.equal(record.modifier, 1);
+  const circleExpectation = { move: 'Come Out of the Woodwork', modifier_type: 'circle', modifier_key: null, circle: 'Mortalis', hub_id: 'hub_shockoe_bottom' };
+  const circle = parseRollRequest('<roll_request>{"move":"come out of the woodwork","modifier_type":"stat","modifier_key":"Blood","circle":"Night"}</roll_request>', { expectation: circleExpectation });
+  assert.equal(circle.modifier_type, 'circle');
+  assert.equal(circle.circle, 'Mortalis');
+});
+
+test('expectations without hub_id never rewrite the narrator roll request', () => {
+  const expectation = { move: 'Old Friends', modifier_type: 'stat', modifier_key: 'Heart', circle: null };
+  const text = '<roll_request>{"move":"Old Friends","modifier_type":"stat","modifier_key":"Blood"}</roll_request>';
+  assert.deepEqual(parseRollRequest(text, { expectation }), parseRollRequest(text));
+  const hubOther = { move: 'Community Network', modifier_type: 'stat', modifier_key: 'Heart', hub_id: 'hub_x' };
+  assert.deepEqual(parseRollRequest(text, { expectation: hubOther }), parseRollRequest(text));
+});

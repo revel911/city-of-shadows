@@ -127,3 +127,59 @@ test('a missing index is not cached', async () => {
   assert.equal(moves.length, 1);
   resetHubMovesCache();
 });
+
+test('loader attaches the hub display name and its named locations', async () => {
+  resetHubMovesCache();
+  const readIndex = async () => [{ id: 'hub_a', name: 'Alpha Court', file: 'a.md' }];
+  const read = async () => '## Hub Moves\n### Alpha\nWhen you knock, roll with Heart.\n';
+  const readLocations = async () => ({
+    locations: [
+      { id: 'loc_1', name: 'The Pantry', hub_id: 'hub_a' },
+      { id: 'loc_2', name: 'Elsewhere Bar', hub_id: 'hub_b' },
+      { id: 'loc_3', name: 'Rec Center', hub_id: 'hub_a' },
+    ],
+  });
+  const [move] = await loadHubMoves({ read, readIndex, readLocations });
+  assert.equal(move.hub_name, 'Alpha Court');
+  assert.deepEqual(move.location_names, ['The Pantry', 'Rec Center']);
+  resetHubMovesCache();
+});
+
+test('a location load failure keeps moves loading, with empty location names, and is retried', async () => {
+  resetHubMovesCache();
+  const readIndex = async () => [{ id: 'hub_a', name: 'Alpha Court', file: 'a.md' }];
+  const read = async () => '## Hub Moves\n### Alpha\nWhen you knock, roll with Heart.\n';
+  let locationCalls = 0;
+  let fail = true;
+  const readLocations = async () => {
+    locationCalls += 1;
+    if (fail) throw new Error('GitHub 503');
+    return { locations: [{ name: 'The Pantry', hub_id: 'hub_a' }] };
+  };
+  const warn = console.warn;
+  console.warn = () => {};
+  try {
+    const [move] = await loadHubMoves({ read, readIndex, readLocations });
+    assert.equal(move.name, 'Alpha');
+    assert.equal(move.hub_name, 'Alpha Court');
+    assert.deepEqual(move.location_names, []);
+    fail = false;
+    const [retried] = await loadHubMoves({ read, readIndex, readLocations });
+    assert.deepEqual(retried.location_names, ['The Pantry']);
+    assert.equal(locationCalls, 2);
+    // A missing (null) locations file is a clean result and is cached.
+    resetHubMovesCache();
+    const first = await loadHubMoves({ read, readIndex, readLocations: async () => null });
+    assert.deepEqual(first[0].location_names, []);
+    assert.equal(await loadHubMoves({ read, readIndex, readLocations: async () => { throw new Error('no'); } }), first);
+  } finally {
+    console.warn = warn;
+    resetHubMovesCache();
+  }
+});
+
+test('extractHubMoves stays pure: no hub name or locations attached', () => {
+  const [move] = extractHubMoves('## Hub Moves\n### Alpha\nWhen you knock, roll with Heart.\n', 'hub_a');
+  assert.equal('hub_name' in move, false);
+  assert.equal('location_names' in move, false);
+});

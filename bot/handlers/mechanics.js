@@ -271,7 +271,24 @@ function integer(value, fallback = 0) {
   return Number.isInteger(value) ? value : fallback;
 }
 
-export function parseRollRequest(text) {
+// A router-chosen hub move has a fixed modifier the narrator may not repeat,
+// so its expectation supplies the modifier. Other expectations change nothing.
+function withHubMoveModifier(request, expectation) {
+  if (!request || !expectation?.hub_id) return request;
+  if (normalizedMove(request.move) !== normalizedMove(expectation.move)) return request;
+  return {
+    ...request,
+    modifier_type: expectation.modifier_type,
+    modifier_key: expectation.modifier_key || null,
+    circle: expectation.circle || null,
+  };
+}
+
+export function parseRollRequest(text, { expectation = null } = {}) {
+  return withHubMoveModifier(parseRollRequestText(text), expectation);
+}
+
+function parseRollRequestText(text) {
   if (typeof text !== 'string') return null;
   const match = text.match(/<roll_request>([\s\S]*?)<\/roll_request>/);
   if (!match) return null;

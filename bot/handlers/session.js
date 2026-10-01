@@ -737,7 +737,7 @@ export async function handleMessage(message) {
     }
     if (response === null) return;
     session.messages.push({ role: 'assistant', content: response });
-    await postMCResponse(message.channel, response, session);
+    await postMCResponse(message.channel, response, session, { mechanicsExpectation });
   });
 }
 
@@ -1084,8 +1084,8 @@ export async function handleRollInteraction(interaction) {
 const NEW_CHAR_CLOSE_MAX_RETRIES = 2;
 export const SAVE_ONBOARDING_MAX_RETRIES = 2;
 
-async function postMCResponse(thread, response, session) {
-  const rollRequest = parseRollRequest(response);
+async function postMCResponse(thread, response, session, { mechanicsExpectation = null } = {}) {
+  const rollRequest = parseRollRequest(response, { expectation: mechanicsExpectation });
   if (rollRequest) {
     session.pendingRoll = rollRequest;
     session.pendingManualRoll = null;
