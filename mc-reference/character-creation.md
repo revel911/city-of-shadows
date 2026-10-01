@@ -115,18 +115,27 @@ Which fits the concept?"
 - *Circle* — the four supernatural factions of the city: Mortalis (humans who know), Night (vampires, ghosts), Power (mages, witches), Wild (shifters, fae, spirits). Every playbook is rooted in one Circle by default.
 
 **Internal option directory: recommend two or three matches to the concept; show the full list only on request:**
+- The Angel (Wild) — a God-Machine angel on earth to destroy a corrupt Enemy faction
 - The Aware (Mortalis) — mortal who can see the supernatural world
+- The Dragon (Wild) — a reborn dragon hunting its hoard and brood, hunted in turn by the Ordo Draconis
 - The Fae (Wild) — faerie being navigating the mortal world
 - The Hunter (Mortalis) — mortal dedicated to policing the supernatural
+- The Immortal (Power) — a deathless schemer who leads a small faction of their own
 - The Imp (Wild) — demonic creature working the angles
 - The Oracle (Power) — seer with visions of what lies ahead
+- The Scholar (Mortalis) — a mortal relic broker who is always one step ahead of their sins
 - The Spectre (Night) — ghost bound to the mortal world
 - The Sword (Power) — sworn servant of a Power faction (academy, abbey, or council)
 - The Tainted (Wild) — mortal touched by demonic corruption
 - The Vamp (Night) — vampire navigating blood politics
 - The Veteran (Mortalis) — hardened mortal who has seen it all
+- The Witch (Mortalis) — a hedge witch with a shop, a coven, and a temptation toward vengeance
 - The Wizard (Power) — arcane practitioner of the magical arts
 - The Wolf (Night) — werewolf balancing beast and humanity
+
+Your playbook and any World of Darkness extension are separate choices, and you can mix and match them freely.
+
+**Safety check:** Before confirming the Angel, Dragon, Witch or Immortal, check the player's hard and soft limits against that playbook's material: executions and final judgment (Angel), compulsion and destruction (Dragon), vengeance magic and killing curses (Witch), corpses and manipulation (Immortal). Offer to drop or soften any move that crosses a limit.
 
 After the player picks, summarize the playbook's special mechanic in your own words.
 
@@ -164,6 +173,10 @@ Natural pairings:
 
 Natural pairing describes mechanical compatibility, not what the MC should recommend. Recommend from the player's stated concept first, then explain any off-natural cost.
 
+**Mix and match: say this to every player, every time.** "Natural pairings are just suggestions. You can be whoever you want: any playbook with any extension, or no extension at all. An off-natural pick costs one move pick for the prerequisite move; it is never off-limits."
+
+Expansion playbooks (Angel, Dragon, Immortal, Scholar, Witch) have no natural pairing. Each section's `> **WoD:**` line gives a suggested identity. Offer it when it fits the concept, alongside the open mix-and-match line. Never present it as the only option.
+
 Never recommend **Slasher** merely because the playbook is Mortalis or the
 background uses the word hunter. Slasher is about a character becoming a
 murderer or serial-killer legend, so offer it only when the concept points
@@ -193,6 +206,8 @@ If the player picks an extension off-natural (e.g., a Veteran wanting Mage: The 
 
 **Say:** Read the playbook's starting stat array from `reference/playbooks.md`. "Pick one of these arrays — they all give you the same total spread but different focus."
 
+If the playbook has a `### Starting Profile`, offer its stat line (add 1 to one stat), plus its Circle ratings and Status, instead of the generic arrays.
+
 **Capture:** stats block.
 
 **Validation:** No stat below -2 or above +3 at character creation.
@@ -217,6 +232,7 @@ Apply rules:
   - *Natural pairing with induction*: the player gives up their beginning archetype Move (the one normally auto-marked) in exchange for the extension's sub-type slot and its starting ability (first Discipline / Rote / Gift / Manifestation Form / Contract / etc.). They do **not** spend a move pick on the prerequisite — induction handles it.
   - *Natural pairing without induction*: the player keeps their beginning archetype Move and gets no extension sub-type. Treat the extension as flavor only.
   - *Off-natural pairing*: one of the player's move picks **must** be the prerequisite move (taken cross-archetype from the natural playbook).
+- Any move that says roll X instead of Y in some situation is written on the sheet as its own MOVES bullet, `- **Name** — when <situation>, roll with <X>`. Never record a situational swap in `playbook_state.move_modifiers`.
 - Sub-type moves (Clan Disciplines, Awakening rotes, Auspice gifts, Kith abilities) come from the relevant `reference/world-of-darkness/<extension>.md` file. Whether a sub-type move costs a pick or is granted free by extension induction follows that file's rules — enforce what the file says.
 
 **Capture:** Moves list with source noted (playbook / cross-archetype / extension / sub-type).
@@ -249,6 +265,8 @@ Apply rules:
 - 1–2 NPCs the character owes a Debt to
 - 1–2 NPCs who owe the character
 - 2–3 Anchors (people / objects / places)
+
+Expansion playbooks that come with a faction (Angel's Enemy, Dragon's Ordo Draconis, Witch's coven, the Immortal's own faction) create it as one `faction_patch` record with `character_ids` = this character only, the playbook's Size/Strength/Assets, `stance: striving`, and its leader created in the same save via `npc_patch`. Store only its `faction_id` in `playbook_state`. At the first session close, emit an `arc_patch` (`type: personal` or `threat`) that names the faction.
 
 **Capture:** Debts list (both directions), Anchors list. **Every new NPC introduced here must go into the close-block `<npc_patch>` with a complete personality-engine profile: core scores, voice_note, verbosity, humor frequency/style, contextual contrast, calibration note, and authored adult flirtation/intimacy traits (null when inapplicable)** (see `npc-personality-engine.md`).
 

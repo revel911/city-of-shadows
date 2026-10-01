@@ -151,3 +151,28 @@ test('Richmond Circle moves exist for all four Circles and are MC moves, not rol
   }
   assert.doesNotMatch(section, /roll with/i);
 });
+
+test('creation offers the expansion playbooks with Circles and the sheet-move convention', async () => {
+  const creation = await readFile(new URL('../../mc-reference/character-creation.md', import.meta.url), 'utf8');
+  for (const line of ['The Angel (Wild)', 'The Dragon (Wild)', 'The Immortal (Power)', 'The Scholar (Mortalis)', 'The Witch (Mortalis)']) {
+    assert.ok(creation.includes(line), `menu lacks ${line}`);
+  }
+  assert.match(creation, /Starting Profile/);
+  assert.match(creation, /roll X instead of Y[\s\S]{0,200}own MOVES bullet/i);
+  assert.doesNotMatch(creation, /The Vessel/);
+  // Owner rule: mix and match is called out to players in both Phase 4 and Phase 5.
+  const phase4 = creation.slice(creation.indexOf('## Phase 4'), creation.indexOf('## Phase 5'));
+  const phase5 = creation.slice(creation.indexOf('## Phase 5'), creation.indexOf('## Phase 6'));
+  assert.match(phase4, /mix and match/i);
+  assert.match(phase5, /any playbook with any extension, or no extension at all/i);
+  assert.doesNotMatch(creation, /Recommend only those/);
+});
+
+test('every expansion playbook WoD line leaves all extensions open', async () => {
+  const playbooks = await readFile(new URL('../../mc-reference/reference/playbooks.md', import.meta.url), 'utf8');
+  for (const name of ['Scholar', 'Witch', 'Angel', 'Immortal', 'Dragon']) {
+    const section = playbooks.slice(playbooks.indexOf(`## The ${name}`));
+    const wod = section.match(/^> \*\*WoD:\*\*.*$/m)?.[0] || '';
+    assert.match(wod, /Any other extension, or none, is open\./, `The ${name} WoD line`);
+  }
+});
