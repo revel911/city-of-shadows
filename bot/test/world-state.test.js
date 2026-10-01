@@ -1,6 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import {
+  buildCanonicalWorldContext,
   compactHubState,
   findMentionedNpcs,
   formatCanonicalWorldContext,
@@ -337,4 +338,44 @@ test('selectRelevantWorld keeps linked and Status-3-led factions and defaults to
     ],
   }, { characterId: 'c', handoff: 'Met npc_near at the docks.' });
   assert.deepEqual(selected.factions.map(item => item.id), ['faction_by_member', 'faction_by_pc', 'faction_status3']);
+});
+
+test('an owned faction reaches relevant context only for the character who owns it', () => {
+  const base = { hubs: [{ id: 'hub_docks', name: 'Docks' }], npcs: [{ id: 'npc_boss', name: 'Boss', notes: 'Status: Night 3.' }], locations: [], relationships: [], arcs: [], debts: [] };
+  const faction = (id, extra = {}) => ({ id, name: id, circle: 'Night', size: 2, strength: 2, stance: 'maintaining', ...extra });
+  const world = {
+    ...base,
+    factions: [
+      faction('faction_public', { hub_ids: ['hub_docks'] }),
+      faction('faction_owned', { hub_ids: ['hub_docks'], leader_npc_id: 'npc_boss', member_npc_ids: ['npc_boss'], character_ids: ['owner'] }),
+    ],
+  };
+  const forOwner = selectRelevantWorld(world, { characterId: 'owner', state: { current_hub: 'hub_docks' }, handoff: 'At hub_docks with npc_boss.' });
+  const forOther = selectRelevantWorld(world, { characterId: 'other', state: { current_hub: 'hub_docks' }, handoff: 'At hub_docks with npc_boss.' });
+  assert.ok(forOwner.factions.some(item => item.id === 'faction_owned'));
+  assert.ok(forOther.factions.some(item => item.id === 'faction_public'));
+  assert.ok(!forOther.factions.some(item => item.id === 'faction_owned'));
+});
+
+test('canonical (new-character) world context leaves out owned factions', async t => {
+  const files = {
+    'game/factions.json': { schema_version: 1, factions: [
+      { id: 'faction_public', name: 'Public', circle: 'Night', size: 2, strength: 2, stance: 'maintaining', character_ids: [] },
+      { id: 'faction_owned', name: 'Owned', circle: 'Night', size: 2, strength: 2, stance: 'maintaining', character_ids: ['owner'] },
+    ] },
+  };
+  for (const [key, value] of Object.entries({ GITHUB_TOKEN: 'test', GITHUB_OWNER: 'test', GITHUB_REPO: 'test' })) {
+    const before = process.env[key]; process.env[key] = value;
+    t.after(() => { if (before === undefined) delete process.env[key]; else process.env[key] = before; });
+  }
+  const originalFetch = globalThis.fetch;
+  globalThis.fetch = async input => {
+    const path = decodeURIComponent(new URL(String(input?.url || input)).pathname.split('/contents/')[1] || '');
+    if (!(path in files)) return new Response('', { status: 404 });
+    return new Response(JSON.stringify({ content: Buffer.from(JSON.stringify(files[path])).toString('base64'), sha: 'test' }), { status: 200 });
+  };
+  t.after(() => { globalThis.fetch = originalFetch; });
+  const context = await buildCanonicalWorldContext();
+  assert.match(context, /"id":"faction_public"/);
+  assert.doesNotMatch(context, /faction_owned/);
 });

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { lifecycleIntent, lifecyclePrompt, creationProgress, persistencePayloadProblems } from '../handlers/lifecycle.js';
 import { isNarrativeFollowThrough, isOutOfCharacterMessage, buildSceneDirectorContext } from '../handlers/scene-director.js';
 import { processSaveOnboarding, sessionControls, startSession, handleMessage, hasLiveSession, resetWorldRevisionCache } from '../handlers/session.js';
-import { resetSystemCache, buildOpeningContext } from '../handlers/mc.js';
+import { resetSystemCache, buildOpeningContext, extractWorldBibleSection } from '../handlers/mc.js';
 import { execute as play } from '../commands/play.js';
 import { CANONICAL_SHEET_SECTIONS } from '../handlers/character-sheet.js';
 
@@ -328,4 +328,72 @@ test('onboarding skips a faction with a dangling leader but accepts one led by a
   assert.deepEqual(JSON.parse(git.files.get('game/factions.json')).factions.map(item => item.id), ['faction_owned']);
   assert.ok(git.files.has(`players/${character}/state.json`));
   assert.ok(errors.some(line => /factions: faction_ghost_led leader npc_nobody is not an NPC/.test(line)));
+});
+
+const OVERWRITE_BIBLE = [
+  '# CITY OF SHADOW — World Bible',
+  '',
+  '## City at a Glance',
+  'Rivers and hills.',
+  '',
+  '---',
+  '',
+  '## The Setting Hook: The Overwrite',
+  '',
+  'Richmond rewrites itself.',
+  '',
+  '### Then',
+  'Old drafts.',
+  '',
+  '### Now',
+  'Small symptoms.',
+  '',
+  '### To Come',
+  'Whoever holds the pen.',
+  '',
+  '---',
+  '',
+  '## The Hubs',
+  'Hub directory.',
+].join('\n');
+
+test('extractWorldBibleSection returns one ## section with its ### subsections and nothing after', () => {
+  const section = extractWorldBibleSection(OVERWRITE_BIBLE, 'The Setting Hook: The Overwrite');
+  assert.equal(section, [
+    '## The Setting Hook: The Overwrite',
+    '',
+    'Richmond rewrites itself.',
+    '',
+    '### Then',
+    'Old drafts.',
+    '',
+    '### Now',
+    'Small symptoms.',
+    '',
+    '### To Come',
+    'Whoever holds the pen.',
+  ].join('\n'));
+  assert.equal(extractWorldBibleSection(OVERWRITE_BIBLE.replace(/\n/g, '\r\n'), 'The Setting Hook: The Overwrite'), section.replace(/\n/g, '\r\n'));
+  assert.equal(extractWorldBibleSection(OVERWRITE_BIBLE, 'Missing Heading'), '');
+  assert.equal(extractWorldBibleSection(null, 'The Setting Hook: The Overwrite'), '');
+});
+
+test('new-character opening appends the full Overwrite section after the bible excerpt', async t => {
+  fakeGit(t, { 'game/world-bible.md': OVERWRITE_BIBLE });
+  const opening = await buildOpeningContext({ id: '__new__', name: 'Player' });
+  assert.match(opening, /--- WORLD BIBLE \(excerpt\) ---/);
+  assert.match(opening, /--- THE OVERWRITE \(central conflict\) ---\n## The Setting Hook: The Overwrite[\s\S]*### To Come\nWhoever holds the pen\./);
+  assert.ok(opening.indexOf('--- THE OVERWRITE (central conflict) ---') > opening.indexOf('--- WORLD BIBLE (excerpt) ---'));
+});
+
+test('returning opening carries the Overwrite section when the bible has it, and omits it otherwise', async t => {
+  const git = fakeGit(t, { [`players/${character}/state.json`]: state, 'game/world-bible.md': OVERWRITE_BIBLE });
+  const opening = await buildOpeningContext({ id: character, name: 'Morgan' });
+  assert.match(opening, /Returning player: Morgan/);
+  assert.match(opening, /--- THE OVERWRITE \(central conflict\) ---\n## The Setting Hook: The Overwrite[\s\S]*### Now\nSmall symptoms\./);
+  assert.doesNotMatch(opening, /Hub directory\./);
+  git.files.delete('game/world-bible.md');
+  const without = await buildOpeningContext({ id: character, name: 'Morgan' });
+  assert.match(without, /Returning player: Morgan/);
+  assert.doesNotMatch(without, /THE OVERWRITE \(central conflict\)/);
 });

@@ -316,6 +316,7 @@ export async function buildCanonicalWorldContext() {
   const world = await loadWorldDocuments();
   return formatCanonicalWorldContext({
     ...world,
+    factions: world.factions.filter(faction => !isOwnedFaction(faction)),
     npcCharacterMemories: [],
     includeBehaviorCards: false,
     detailedHubIds: [],
@@ -355,15 +356,21 @@ export function findMentionedNpcs(text, npcs = [], excludeIds = []) {
 // world-bible convention "Status: <Circle> N" and N is 3 or more.
 const LEADER_STATUS_RE = /^\s*Status:\s*(?:Mortalis|Night|Power|Wild)\s+(\d)\b/i;
 
+// A faction with character_ids is owned by a player character (an expansion
+// playbook). It is private to its owner: other characters' contexts and the
+// shared new-character context never see it.
+function isOwnedFaction(faction) {
+  return Array.isArray(faction?.character_ids) && faction.character_ids.length > 0;
+}
+
 function selectRelevantFactions(world, { characterId, hubIds, npcIds }) {
   const leaderStatus = new Map((world.npcs || []).map(npc => [npc.id, Number(String(npc.notes || '').match(LEADER_STATUS_RE)?.[1] ?? -1)]));
-  return (world.factions || []).filter(faction =>
-    faction?.hub_ids?.some(id => hubIds.has(id))
-    || (faction?.leader_npc_id && npcIds.has(faction.leader_npc_id))
-    || faction?.member_npc_ids?.some(id => npcIds.has(id))
-    || faction?.character_ids?.includes(characterId)
-    || (leaderStatus.get(faction?.leader_npc_id) ?? -1) >= 3
-  );
+  return (world.factions || []).filter(faction => isOwnedFaction(faction)
+    ? faction.character_ids.includes(characterId)
+    : (faction?.hub_ids?.some(id => hubIds.has(id))
+      || (faction?.leader_npc_id && npcIds.has(faction.leader_npc_id))
+      || faction?.member_npc_ids?.some(id => npcIds.has(id))
+      || (leaderStatus.get(faction?.leader_npc_id) ?? -1) >= 3));
 }
 
 export function selectRelevantWorld(world, { characterId, state = {}, handoff = '' } = {}) {

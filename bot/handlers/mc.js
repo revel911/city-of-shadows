@@ -257,6 +257,29 @@ async function buildProfileContext(player, preloaded) {
   ].join('\n');
 }
 
+export const OVERWRITE_HEADING = 'The Setting Hook: The Overwrite';
+const OVERWRITE_LABEL = '--- THE OVERWRITE (central conflict) ---';
+
+// Returns one "## <heading>" section of a markdown document, including its
+// "###" subsections, up to (not including) the next "## " heading. Trailing
+// blank lines and "---" rules are dropped. Returns '' when the heading is absent.
+export function extractWorldBibleSection(text, heading) {
+  if (!text || !heading) return '';
+  const eol = String(text).includes('\r\n') ? '\r\n' : '\n';
+  const lines = String(text).split(/\r?\n/);
+  const start = lines.findIndex(line => line.trim() === `## ${heading}`);
+  if (start === -1) return '';
+  let end = lines.findIndex((line, index) => index > start && /^## /.test(line));
+  if (end === -1) end = lines.length;
+  while (end > start + 1 && /^\s*(?:-{3,})?\s*$/.test(lines[end - 1])) end -= 1;
+  return lines.slice(start, end).join(eol);
+}
+
+function overwriteSectionBlock(worldBible) {
+  const section = extractWorldBibleSection(worldBible, OVERWRITE_HEADING);
+  return section ? ['', OVERWRITE_LABEL, section] : [];
+}
+
 export async function buildOpeningContext(player, bundle = null) {
   const isNew = player.id === '__new__';
   bundle ||= await loadCharacterBundle(player);
@@ -283,6 +306,7 @@ export async function buildOpeningContext(player, bundle = null) {
       '',
       '--- WORLD BIBLE (excerpt) ---',
       (worldBible || '').slice(0, 4000) || '(none)',
+      ...overwriteSectionBlock(worldBible),
       '',
       worldContext,
       '',
@@ -291,11 +315,14 @@ export async function buildOpeningContext(player, bundle = null) {
   }
 
   const { handoff, sheet, state, checkpoint, events, interactions, continuity, creation } = bundle;
-  const worldContext = await buildRelevantWorldContext({
-    characterId: player.id,
-    state: state || {},
-    handoff: handoff || '',
-  });
+  const [worldContext, worldBible] = await Promise.all([
+    buildRelevantWorldContext({
+      characterId: player.id,
+      state: state || {},
+      handoff: handoff || '',
+    }),
+    readFile('game/world-bible.md').catch(() => null),
+  ]);
   const interactionEcho = selectInteractionEcho(interactions, player.id);
 
   if (creation?.status === 'draft' || player.creation_status === 'draft') {
@@ -347,6 +374,7 @@ export async function buildOpeningContext(player, bundle = null) {
     interactionEcho
       ? `${JSON.stringify(interactionEcho, null, 2)}\nSurface this once, naturally, when it fits the opening scene.`
       : '(none)',
+    ...overwriteSectionBlock(worldBible),
     '',
     worldContext,
     '',
