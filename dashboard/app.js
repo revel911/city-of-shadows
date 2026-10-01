@@ -452,12 +452,10 @@ async function renderSummary() {
       <p>The city breathes. The city bleeds. The city remembers.</p>
       <div class="ornament" aria-hidden="true"></div>
       <p class="hero-explainer">Play one character in a shared supernatural Richmond. Your choices leave marks on the city, even when other players are offline.</p>
-      <a class="play-button" href="https://discord.gg/f8VCHxVAqj" target="_blank" rel="noopener noreferrer">Start playing on Discord &rarr;</a>
-      <p class="play-caption">A Discord account is all you need. Play at your own pace.</p>
     </header>
     <section class="card start-guide" aria-labelledby="start-guide-title">
       <h2 id="start-guide-title">Your first night in Richmond</h2>
-      <ol class="start-steps"><li><strong>Join Discord</strong><span>Enter the shared city.</span></li><li><strong>Run <code>/play</code></strong><span>Choose + New character. Creation takes about 15 minutes; you can save partway through.</span></li><li><strong>Make your first choice</strong><span>The MC guides you in a private thread. No rules experience needed.</span></li></ol>
+      <ol class="start-steps"><li><strong>Join the private Discord</strong><span>Invite only; ask the host.</span></li><li><strong>Run <code>/play</code></strong><span>Choose + New character. Creation takes about 15 minutes; you can save partway through.</span></li><li><strong>Make your first choice</strong><span>The MC guides you in a private thread. No rules experience needed.</span></li></ol>
       <details class="play-example"><summary>What does playing look like?</summary><p><strong>You:</strong> I ask the night clerk why my name is already in the visitor book.</p><p><strong>MC:</strong> She turns it toward you. The signature is yours. Tomorrow's date is beside it. "You asked me not to let you upstairs." The lift opens behind her. What do you do?</p><p class="empty-note">Illustrative exchange. Your story follows your choices. Use OOC for questions, Quick recap to catch up, and Save &amp; end when you're done.</p></details>
     </section>
     <div class="world-vitals" aria-label="World at a glance">

@@ -457,9 +457,6 @@ button { border-radius: 0; }
 
 /* Entry path and readable, directly linked chronicle records. */
 .hero-explainer { max-width: 42rem; margin: 1rem 0; }
-.play-button { display: inline-flex; align-items: center; min-height: 48px; padding: .8rem 1.3rem; background: var(--blood); border: 1px solid var(--blood-light); color: var(--parchment); font-weight: 500; }
-.play-button:hover { background: var(--blood-bright); }
-.summary-hero .play-caption { font-size: .85rem; margin-top: .7rem; }
 .start-guide { margin: 0 0 1.5rem; }
 .start-steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; padding-left: 1.4rem; }
 .start-steps strong, .start-steps span { display: block; }
@@ -482,4 +479,4 @@ button { border-radius: 0; }
 .connection-list a { display: block; color: var(--gold-light); margin-top: .3rem; }
 .pressure-stage { color: var(--gold-light); margin: 1rem 0; }
 body[data-route='entity'] .page-header h1 { font-size: clamp(2rem, 5vw, 4rem); overflow-wrap: anywhere; }
-@media (max-width: 639px) { .start-steps { grid-template-columns: 1fr; gap: 1rem; } .play-button { width: 100%; justify-content: center; } }
+@media (max-width: 639px) { .start-steps { grid-template-columns: 1fr; gap: 1rem; } }
