@@ -1,5 +1,6 @@
 import { personalityProblems, personalityWithDefaults, socialBehavior } from './npc-personality.js';
 import { readJSON } from './github.js';
+import { loadHubMoves } from './hub-moves.js';
 import {
   deriveKnowledgeRecords,
   formatCharacterKnowledge,
@@ -175,6 +176,23 @@ function compactHubState(hub) {
   };
 }
 
+function formatHubMoves(hubMoves, detailedHubIds) {
+  if (!hubMoves.length) return ['(none)'];
+  const detailed = hubMoves
+    .filter(move => detailedHubIds.has(move.hub_id))
+    .map(move => `### ${move.name} (${move.hub_id})
+${move.text}`);
+  const others = new Map();
+  for (const move of hubMoves.filter(move => !detailedHubIds.has(move.hub_id))) {
+    const label = `${move.name} [${move.modifier_key || move.circle || 'special'}]`;
+    others.set(move.hub_id, [...(others.get(move.hub_id) || []), label]);
+  }
+  return [
+    ...detailed,
+    ...[...others].map(([hubId, labels]) => `${hubId}: ${labels.join(', ')}`),
+  ];
+}
+
 export function formatCanonicalWorldContext({
   hubs = [],
   npcs = [],
@@ -185,6 +203,7 @@ export function formatCanonicalWorldContext({
   npcCharacterMemories = [],
   debts = [],
   hubState = [],
+  hubMoves = [],
   knowledge = [],
   characterId = '',
   directory = null,
@@ -230,6 +249,9 @@ export function formatCanonicalWorldContext({
     'MUTABLE HUB CONDITIONS:',
     JSON.stringify(hubState.map(compactHubState)),
     '',
+    'HUB MOVES (apply only while the scene is inside that hub; outcomes below are binding):',
+    ...formatHubMoves(hubMoves, new Set(hubs.map(hub => hub.id))),
+    '',
     formatCharacterKnowledge(knowledge, characterId),
     '',
     formatScenePressureContext({
@@ -247,7 +269,7 @@ export function formatCanonicalWorldContext({
 }
 
 async function loadWorldDocuments() {
-  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, memoryDoc, debtDoc, hubStateDoc] = await Promise.all([
+  const [hubs, npcDoc, locationDoc, manualDoc, derivedDoc, arcDoc, mysteryDoc, memoryDoc, debtDoc, hubStateDoc, hubMoves] = await Promise.all([
     readJSON('hubs/index.json'),
     readJSON('game/npcs.json'),
     readJSON('game/locations.json'),
@@ -258,6 +280,7 @@ async function loadWorldDocuments() {
     readJSON('game/npc-character-memory.json'),
     readJSON('game/debts.json'),
     readJSON('game/hub-state.json'),
+    loadHubMoves().catch(() => []),
   ]);
   return {
     hubs: hubs || [],
@@ -272,6 +295,7 @@ async function loadWorldDocuments() {
     npcCharacterMemories: memoryDoc?.memories || [],
     debts: debtDoc?.debts || [],
     hubState: hubStateDoc?.hubs || [],
+    hubMoves: hubMoves || [],
   };
 }
 
@@ -374,7 +398,7 @@ export function selectRelevantWorld(world, { characterId, state = {}, handoff = 
     arcs: world.arcs.map(({ id, title, status }) => ({ id, title, status })),
     mysteries: (world.mysteries || []).map(({ id, title, status }) => ({ id, title, status })),
   };
-  return { hubs, npcs, locations, relationships, arcs, mysteries, knowledge, characterId, npcCharacterMemories, debts, hubState, directory };
+  return { hubs, npcs, locations, relationships, arcs, mysteries, knowledge, characterId, npcCharacterMemories, debts, hubState, hubMoves: world.hubMoves || [], directory };
 }
 
 export async function buildRelevantWorldContext(options) {

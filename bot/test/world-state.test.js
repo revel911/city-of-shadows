@@ -252,3 +252,24 @@ test('relevance routing keeps only this character’s memory for an already rele
   }, { characterId: 'jacob', handoff: 'Last seen with npc_dara.' });
   assert.deepEqual(selected.npcCharacterMemories.map(item => item.id), ['memory_dara__jacob']);
 });
+
+test('world context gives full hub-move text for relevant hubs and an index for the rest', () => {
+  const context = formatCanonicalWorldContext({
+    hubs: [{ id: 'hub_near', name: 'Near' }],
+    hubMoves: [
+      { hub_id: 'hub_near', name: 'Near Move', modifier_key: 'Heart', circle: null, text: '- **10+:** NEAR OUTCOME' },
+      { hub_id: 'hub_far', name: 'Far Move', modifier_key: null, circle: 'Wild', text: '- **10+:** FAR OUTCOME' },
+    ],
+  });
+  assert.match(context, /HUB MOVES/);
+  assert.match(context, /NEAR OUTCOME/);
+  assert.match(context, /hub_far: Far Move \[Wild\]/);
+  assert.doesNotMatch(context, /FAR OUTCOME/);
+});
+
+test('selectRelevantWorld carries hubMoves through and defaults to empty', () => {
+  const base = { hubs: [], npcs: [], locations: [], relationships: [], arcs: [], debts: [] };
+  assert.deepEqual(selectRelevantWorld(base, { characterId: 'c' }).hubMoves, []);
+  const moves = [{ hub_id: 'h', name: 'M', text: 't' }];
+  assert.deepEqual(selectRelevantWorld({ ...base, hubMoves: moves }, { characterId: 'c' }).hubMoves, moves);
+});
