@@ -102,7 +102,11 @@ The MC should let this surface slowly. Discrepancies in the Public Events Log. N
 
 ### Then
 
-Richmond has rewritten itself before, and each time the rewrite was done by people with the power to do it. The fire of 1811 and the Evacuation Fire of 1865 burned the old city down to the ground it would be rebuilt on. War, defeat and Reconstruction changed who owned the streets, who was named in the record, and which stories got a monument. Urban renewal and highway building were the same act with a plan attached. The Downtown Expressway and the interstate were cut through Jackson Ward, one of the most prosperous Black business and cultural districts in the country, taking homes, shops, churches and a community that was never put back together. That was real harm done to real families, and the city still lives with it. These are the precedents the Overwrite builds on: a city that has always decided what to keep, what to bury, and who gets to remember.
+Richmond has rewritten itself before, and each time the rewrite was done by people with the power to do it. The deepest layer lies under Shockoe Bottom. For decades before the Civil War the Bottom was the largest slave market in the Upper South, second in the nation only to New Orleans: auction houses, traders' offices and holding jails such as Lumpkin's, where enslaved people were held before being sold away from their families. Later building covered almost all of it. The burial ground where enslaved Richmonders were laid to rest spent decades as a parking lot, and the jail's site vanished under another lot beside the interstate until archaeologists dug it out. That buried ground is the earliest draft of the city, the one the Overwrite keeps returning to.
+
+Fire marks the next layers. The Richmond Theatre fire of 1811 killed seventy-two people, and the church built over the site still stands as their memorial. In April 1865, retreating Confederate forces set fire to warehouses and bridges, and the Evacuation Fire burned out the city's commercial district. Union troops marched in the next morning, and freedom came with them. Through Reconstruction, Black Richmonders voted, held office, and built churches, schools and businesses of their own, and the public record named them. Jim Crow took most of that back: Virginia's 1902 constitution stripped the vote from most Black citizens, segregation was written into law, and the city rewrote its own memory in bronze. Between 1890 and 1929 it raised Confederate statues along Monument Avenue, recasting a war fought to keep people enslaved as a noble cause. Those statues came down between 2020 and 2022, and the Fan still carries the scars.
+
+Urban renewal and highway building repeated the act with a plan attached. In the 1950s the Richmond-Petersburg Turnpike, later part of I-95, was cut through Jackson Ward, one of the most prosperous Black business and cultural districts in the country, taking homes, shops, churches and a community that was never put back together. That was real harm done to real families, and the city still lives with it. These are the precedents the Overwrite builds on: a city that has always decided what to keep, what to bury, and who gets to remember.
 
 ### Now
 
@@ -110,7 +114,8 @@ Today the symptoms are small, public and easy to deny. One line each:
 
 - Across the city (`arc-012`): street signs shift, buildings appear and vanish, legal and academic records contradict themselves, and old industrial work-shifts replay on Oregon Hill.
 - Creighton Court (`arc-013`): demolished buildings still cast shadows, and the pantry intake keeps logging names that match no current housing record.
-- Downtown (`arc-011`, `arc-014`): sealed canal tunnels have been sealed further, and a nameless ghost is lost in a city where identities and records slide.
+- Downtown (`arc-011`): sections of the sealed canal tunnels have been closed off even further, and no one with keys will say why.
+- Downtown, quietly: a medium keeps a late vigil at one of the night venues, asking after someone whose name no record holds.
 - Downtown at night: a contract reads differently from the week before, and staff keep logging after-hours traffic that no known network claims.
 - The University: the ley line under Monroe Park is running off its usual tempo, and the people who track it are watching who is still invited to which meetings.
 
@@ -146,7 +151,7 @@ What follows depends on which Circle ends up holding the pen. None of these has 
 
 - **The Valley** (Night-dominant) — The Shockoe Valley intake offices, court annex and a fictional overnight holding center under the I-95 viaduct, with a spur down the Richmond Highway motel strip. It is where Richmond sends the people it does not know what to do with, and where they run their own city inside it; everyone has a plan to get out, or to get someone else out. Under the viaduct, every clock and phone reads 1958.
 
-- **Capitol & City Hall** (Mortalis-dominant) — Richmond City Hall and its observation deck, Capitol Square, the Virginia State Capitol, the General Assembly Building and the City Hall parking deck. By day the people's business happens in the open; after dark, deals are struck on the dim levels of the deck, usually through a go-between for a Debt or two. Plenty of mortals here hold no Status and cannot hold Debts, and the powerful ones know exactly who they answer to. Official records change between the morning and afternoon sessions, and only the stenographers notice.
+- **Capitol & City Hall** (Mortalis-dominant) — Richmond City Hall and its observation deck, Capitol Square, the Virginia State Capitol, the General Assembly Building and the City Hall parking deck. By day the public's business runs on numbered tickets, testimony and three-minute limits; after dark, fictional brokers sell introductions on the deck's third level, and no introduction comes free. Most people in these buildings have never heard of the Circles, and the MC should leave them that way. Official records change between the morning and afternoon sessions, and only the people who keep the originals notice.
 
 ---
 
