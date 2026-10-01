@@ -1,10 +1,11 @@
 import { readFile } from 'node:fs/promises';
 import { extractHubMoves } from '../bot/handlers/hub-moves.js';
+import { factionProblems } from '../bot/handlers/factions.js';
 import { personalityProblems } from '../bot/handlers/npc-personality.js';
 import { readJSON } from './world-utils.mjs';
 import { npcCharacterMemoryId } from '../bot/handlers/world-state.js';
 
-const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, memoryDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState] = await Promise.all([
+const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, memoryDoc, players, manualDoc, derivedDoc, debtDoc, interactionDoc, worldMeta, hubState, conflictDoc, keeperState, factionDoc] = await Promise.all([
   readJSON('hubs/index.json'),
   readJSON('game/npcs.json'),
   readJSON('game/locations.json'),
@@ -19,7 +20,8 @@ const [hubs, npcDoc, locationDoc, arcDoc, mysteryDoc, memoryDoc, players, manual
   readJSON('game/world-meta.json'),
   readJSON('game/hub-state.json'),
   readJSON('game/conflicts.json'),
-  readJSON('game/keeper-state.json')
+  readJSON('game/keeper-state.json'),
+  readJSON('game/factions.json')
 ]);
 
 const errors = [];
@@ -30,9 +32,10 @@ const ids = {
   loc: new Set((locationDoc.locations || []).map(x => x.id)),
   arc: new Set((arcDoc.arcs || []).map(x => x.id)),
   mystery: new Set((mysteryDoc.mysteries || []).map(x => x.id)),
-  pc: new Set(players.map(x => x.id))
+  pc: new Set(players.map(x => x.id)),
+  faction: new Set((factionDoc.factions || []).map(x => x.id))
 };
-const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.mystery, ...ids.pc]);
+const entityIds = new Set([...ids.hub, ...ids.npc, ...ids.loc, ...ids.arc, ...ids.mystery, ...ids.pc, ...ids.faction]);
 const conflictEntityIds = new Set([
   ...entityIds,
   ...(memoryDoc.memories || []).map(item => item.id),
@@ -88,6 +91,8 @@ duplicateValues(arcDoc.arcs || [], 'id', 'arc');
 duplicateValues(mysteryDoc.mysteries || [], 'id', 'mystery');
 duplicateValues(memoryDoc.memories || [], 'id', 'NPC-character memory');
 duplicateValues(players, 'id', 'PC');
+duplicateValues(factionDoc.factions || [], 'id', 'faction');
+for (const faction of factionDoc.factions || []) errors.push(...factionProblems(faction, ids));
 
 for (const npc of npcDoc.npcs || []) {
   if (npc.hub_id && !ids.hub.has(npc.hub_id)) errors.push(`${npc.id} references missing hub ${npc.hub_id}`);

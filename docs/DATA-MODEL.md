@@ -20,6 +20,7 @@ There must be one authoritative definition for each fact. In particular:
 - NPC identity, status, personality, and voice live in `game/npcs.json`.
 - How one NPC specifically remembers and treats one player character lives in
   `game/npc-character-memory.json`; it never replaces the universal NPC record.
+- Faction identity, Size, Strength, Assets, and stance live in `game/factions.json`; members are referenced by NPC ID, never duplicated.
 - Named places live in `game/locations.json`.
 - Neighborhood lore lives in `hubs/*.md`; the indexed hub identity lives in
   `hubs/index.json`.
@@ -49,6 +50,7 @@ Reference documents may describe schemas, but must not duplicate named NPC facts
 | Debt | `debt_<slug>` | `debt_jacob_priest` |
 | Mystery | `mystery_<slug>` | `mystery_missing_courier` |
 | NPC–character memory | `memory_<npc-slug>__<character-slug>` | `memory_celestine_morrow__jacob_boone` |
+| Faction | `faction_<slug>` | `faction_richmond_consilium` |
 | Player character | kebab-case | `jacob-boone` |
 
 IDs are permanent. Rename display names without changing IDs. A close-block patch
@@ -60,6 +62,7 @@ must reuse the canonical ID shown in the opening world index.
 |---|---|---|
 | `game/npcs.json` | Bot/MC | Partial records merged by canonical ID; exact-name fallback prevents duplicates |
 | `game/npc-character-memory.json` | Bot/MC; Keeper reconcile-only | One revisioned relationship-memory record per NPC/character pair |
+| `game/factions.json` | Bot/MC | Revisioned faction records; leader and members referenced by NPC ID |
 | `game/locations.json` | Bot/MC | Partial records merged by canonical ID |
 | `game/relationships.manual.json` | Human operator | Hand-curated; never changed by the MC |
 | `game/relationships.derived.json` | Bot/MC or rebuild job | Incremental public discoveries |

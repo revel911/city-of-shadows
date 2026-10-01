@@ -8,6 +8,7 @@ patch rules, and public-data boundaries.
 |---|---|---|
 | [npcs.json](npcs.json) | Canonical NPCs | Named NPC identity, aliases, voice, personality axes, status, roles, faction and location ties |
 | [npc-character-memory.json](npc-character-memory.json) | NPC–character memory | Pair-specific trust, fear, respect, attitudes, promises, grievances, boundaries, beliefs, and callbacks |
+| [factions.json](factions.json) | Factions | Circle, Size, Strength, Assets, stance, hubs, and leader and member NPC IDs |
 | [locations.json](locations.json) | Canonical locations | Named place identity, hub membership, type, atmosphere, controllers, and status |
 | [relationships.manual.json](relationships.manual.json) | Manual relationships | Human-curated public relationships between canonical entities |
 | [relationships.derived.json](relationships.derived.json) | Derived relationships | Public entity relationships established through play and reconciled at close |
