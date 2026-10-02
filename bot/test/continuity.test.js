@@ -1,6 +1,8 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
-import {continuityAction, handleContinuityAction, appendContinuityCorrection, formatContinuityContext} from '../handlers/continuity.js';
+import {continuityAction, handleContinuityAction, appendContinuityCorrection, formatContinuityContext, parseContinuityFixes, stripContinuityFixes} from '../handlers/continuity.js';
+import {readFileSync} from 'node:fs';
+import {sanitizePlayerFacingText} from '../handlers/session.js';
 import {isOutOfCharacterMessage, isCharacterRecapRequest, buildSceneDirectorContext} from '../handlers/scene-director.js';
 
 const recovery = "Let's reboot and add this in ... die not get saved. Ray's gym was burned down, some box with a demons heart inside: a clean up crew came, saved Ray but grabbed the box. I was able to get the envelope";
@@ -70,4 +72,30 @@ test('repair mode forces table talk even for a declarative question or preferenc
   const context=buildSceneDirectorContext({playerText:'My safety limits changed.',forceOoc:true});
   assert.match(context,/OUT-OF-CHARACTER PAUSE/);
   assert.doesNotMatch(context,/Current mode:/);
+});
+
+const fixReply = `(MC check: I put the hooded thing back on the dock without cause. You are right that it left.) Corrected: the dock is empty; you still hold the key.
+<continuity_fix>The hooded thing on the Rocketts dock left after asking for the key; it did not return.</continuity_fix>`;
+
+test('MC continuity fixes are parsed, bounded, and stripped from the visible reply', () => {
+  assert.deepEqual(parseContinuityFixes(fixReply), ['The hooded thing on the Rocketts dock left after asking for the key; it did not return.']);
+  assert.doesNotMatch(stripContinuityFixes(fixReply), /continuity_fix|did not return/);
+  assert.match(stripContinuityFixes(fixReply), /^\(MC check:/);
+  assert.deepEqual(parseContinuityFixes('<continuity_fix>  </continuity_fix>'), []);
+  assert.equal(parseContinuityFixes(`<continuity_fix>${'x'.repeat(2500)}</continuity_fix>`)[0].length, 2000);
+  assert.equal(sanitizePlayerFacingText('Fine.\n<continuity_fix>half').cleaned.trim(), 'Fine.');
+});
+
+test('OOC pause admits unsupported past details instead of defending them', () => {
+  const context=buildSceneDirectorContext({playerText:'OOC: who was that thing on the dock?'});
+  assert.match(context,/MC check:/);
+  assert.match(context,/cannot point to where/i);
+  assert.match(context,/never invent a justification/i);
+  assert.match(context,/player'?s account/i);
+});
+
+test('MC instructions carry the continuity check rule', () => {
+  const doc=readFileSync(new URL('../../mc-reference/mc-instructions.md',import.meta.url),'utf8');
+  assert.match(doc,/## Continuity Check/);
+  for (const rule of [/MC check:/,/<continuity_fix>/,/<scene_entities>/,/Entities in play/]) assert.match(doc,rule);
 });

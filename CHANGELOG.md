@@ -1,5 +1,17 @@
 # Changelog
 
+## 2026-10-02 - The MC admits continuity slips
+
+- When a player questions something from earlier play and the MC cannot point to
+  where it happened, the MC now says so with an "(MC check: ...)" note instead
+  of defending the wrong version. The player's account wins unless the saved
+  records say otherwise, and play resumes from the corrected version.
+- Confirmed fixes are saved with the character's continuity corrections, so they
+  carry into later sessions.
+- The bot keeps a list of every entity in the session, named or unnamed, with
+  where it is, what it wants, and whether it left. The MC sees the list every
+  turn, so someone who walked away cannot reappear without a reason.
+
 ## 2026-10-01 - Reply length follows the NPCs in the scene
 
 - Narration is leaner. Each scene's length ceiling comes from the chattiest NPC

@@ -4,7 +4,8 @@ import { ActionRowBuilder, ButtonBuilder, ButtonStyle, ModalBuilder, TextInputBu
 import { lifecycleIntent, lifecyclePrompt, creationProgress, creationTurnContext, persistencePayloadProblems } from './lifecycle.js';
 import { loadSessionSnapshot, removeSessionSnapshot, saveSessionSnapshot } from './runtime-store.js';
 import { profilePath } from './profile.js';
-import { appendContinuityCorrection, handleContinuityAction } from './continuity.js';
+import { appendContinuityCorrection, handleContinuityAction, parseContinuityFixes, stripContinuityFixes } from './continuity.js';
+import { formatSceneEntitiesContext, mergeSceneEntities, parseSceneEntities, stripSceneEntities } from './scene-entities.js';
 import { adjudicateMove, generate, buildOpeningContext, loadCharacterBundle, selectInteractionEcho } from './mc.js';
 import { buildClarificationAdjudicationText } from './move-adjudicator.js';
 import { loadHubMoves } from './hub-moves.js';
@@ -183,6 +184,7 @@ export async function startSession(thread, player) {
     pendingRoll: savedCheckpoint?.pending_roll || null,
     pendingManualRoll: savedCheckpoint?.pending_manual_roll || null,
     pendingMechanicsClarification: savedCheckpoint?.pending_mechanics_clarification || null,
+    sceneEntities: savedCheckpoint?.active && Array.isArray(savedCheckpoint.scene_entities) ? savedCheckpoint.scene_entities : [],
     mechanicsGateTriggers: 0,
     mechanicsAdjudications: 0,
     turnsWithoutRoll: 0,
@@ -705,6 +707,7 @@ export async function handleMessage(message) {
     const turnContent = (expectation, drought) => [
       npcHydration,
       session.rulesProfile?.isNew && !oocMode ? creationTurnContext(session) : '',
+      session.rulesProfile?.isNew ? '' : formatSceneEntitiesContext(session.sceneEntities),
       sceneDirection,
       mechanicsActive ? buildMoveAuditContext(drought) : '',
       buildMechanicsGateContext(expectation, session.mechanicsDepth),
@@ -1161,6 +1164,12 @@ async function postMCResponse(thread, response, session, { mechanicsExpectation 
   const checkpoint = parseCheckpointBlock(response);
   if (checkpoint) response = stripCheckpointBlock(response);
 
+  // Entity ledger and confirmed continuity repairs (see Continuity Check).
+  const entityUpdates = parseSceneEntities(response);
+  if (entityUpdates) session.sceneEntities = mergeSceneEntities(session.sceneEntities, entityUpdates);
+  const continuityFixes = parseContinuityFixes(response);
+  response = stripContinuityFixes(stripSceneEntities(response));
+
   // 0. <save_player> — persists the *player* profile (Discord user) at the end
   //    of player-onboarding. Runs BEFORE save_onboarding because a brand-new
   //    user sometimes emits both in the same response (or back-to-back), and
@@ -1401,6 +1410,10 @@ async function postMCResponse(thread, response, session, { mechanicsExpectation 
   if (draftNote) await thread.send(draftNote);
   if (rollRequest && session.pendingRoll === rollRequest) await sendRollPrompt(thread, session);
 
+  if (continuityFixes.length && session.player.id !== '__new__') {
+    await saveContinuityFixes(thread, session, continuityFixes);
+  }
+
   // Checkpoints are recovery context, so they are written after the reply is
   // visible. A close supersedes them with its own inactive checkpoint.
   if (checkpoint && !close && session.player.id !== '__new__') {
@@ -1588,12 +1601,30 @@ function checkpointDocument(session, checkpoint, active = true, characterId = se
     world_revision: session.worldRevision || 0,
     updated_at: new Date().toISOString(),
     ...checkpoint,
+    scene_entities: session.sceneEntities || [],
     thread_id: session.threadId,
     pending_roll: session.pendingRoll || null,
     pending_manual_roll: session.pendingManualRoll || null,
     pending_mechanics_clarification: session.pendingMechanicsClarification || null,
     rolls: session.rolls || [],
   }, null, 2) + '\n';
+}
+
+async function saveContinuityFixes(thread, session, fixes) {
+  const recordedAt = new Date().toISOString();
+  const corrections = fixes.map((text, index) => ({ id: `mc-${Date.now()}-${index}`, text, recordedAt }));
+  try {
+    await updateJSON(
+      `players/${session.player.id}/continuity.json`,
+      doc => corrections.reduce(appendContinuityCorrection, doc),
+      `[continuity] MC correction for ${session.player.name}`
+    );
+    session.continuityCorrections = corrections.reduce(appendContinuityCorrection, session.continuityCorrections);
+    await thread.send('— *Continuity fix saved. It will carry into future sessions.* —');
+  } catch (error) {
+    console.error(`[continuity] ${session.threadId}: ${error.message}`);
+    await thread.send('— *I could not save that continuity fix. Use /correct to record it.* —');
+  }
 }
 
 async function writeCheckpoint(session, checkpoint, active = true) {
@@ -1764,7 +1795,9 @@ export function sanitizePlayerFacingText(text) {
   // Internal callers always pass a string, but the export is reachable from
   // tests and future callers; guard so a null/undefined argument can't throw.
   if (typeof text !== 'string') return { cleaned: '', leakDetected: false };
-  let working = text;
+  // Hidden MC bookkeeping (entity ledger, continuity fixes) is parsed in
+  // postMCResponse; never let it reach players, even when truncated.
+  let working = stripContinuityFixes(stripSceneEntities(text));
   let leakDetected = false;
 
   // Step 1: unterminated <save_onboarding> — opener with no matching closer;

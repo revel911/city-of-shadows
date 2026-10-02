@@ -26,6 +26,20 @@ export function continuityAction(text, { active = false, priorText = '' } = {}) 
   return { type: 'save', text: facts };
 }
 
+// The MC records a confirmed continuity repair in a hidden block; the bot saves
+// it beside player corrections so the drift does not resurface next session.
+const FIX_RE = /<continuity_fix>([\s\S]*?)<\/continuity_fix>/g;
+const UNTERMINATED_FIX_RE = /<continuity_fix>(?![\s\S]*<\/continuity_fix>)[\s\S]*$/;
+
+export function parseContinuityFixes(text) {
+  if (typeof text !== 'string') return [];
+  return [...text.matchAll(FIX_RE)].map(([, body]) => body.trim().slice(0, 2000)).filter(Boolean);
+}
+
+export function stripContinuityFixes(text) {
+  return typeof text === 'string' ? text.replace(FIX_RE, '').replace(UNTERMINATED_FIX_RE, '').trim() : text;
+}
+
 export function appendContinuityCorrection(doc, { id, text, recordedAt }) {
   const corrections = Array.isArray(doc?.corrections) ? [...doc.corrections] : [];
   if (!corrections.some(item => item.id === id)) corrections.push({ id, text, recorded_at: recordedAt });

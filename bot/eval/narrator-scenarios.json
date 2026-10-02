@@ -318,5 +318,50 @@
       "/roll",
       "before modifiers"
     ]
+  },
+  {
+    "id": "continuity_check_admits_returned_entity",
+    "scene_entities": [
+      {
+        "key": "dock_entity",
+        "label": "hooded thing on the dock",
+        "where": "Rocketts Landing dock",
+        "wants": "the brass key",
+        "status": "left"
+      }
+    ],
+    "messages": [
+      {
+        "role": "user",
+        "content": "[PLAYER MESSAGE]\nJacob keeps his hand on the brass key and watches the hooded thing."
+      },
+      {
+        "role": "assistant",
+        "content": "It asks for the key one more time. When you don't answer, it turns and walks off the dock into the rain."
+      },
+      {
+        "role": "user",
+        "content": "[PLAYER MESSAGE]\nJacob heads back toward the truck."
+      },
+      {
+        "role": "assistant",
+        "content": "Halfway to the truck you glance back. The hooded thing is on the dock again, watching you. What do you do?"
+      },
+      {
+        "role": "user",
+        "content": "OOC: wait, who is that thing? Didn't it already leave?"
+      }
+    ],
+    "must_include": [],
+    "must_match": [
+      "\\(MC check:"
+    ],
+    "must_not_include": [
+      "<roll_request>",
+      "<close_session>",
+      "it came back because",
+      "it never left",
+      "it returned because"
+    ]
   }
 ]

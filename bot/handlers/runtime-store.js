@@ -21,7 +21,7 @@ const PERSISTED_FIELDS = [
   'mechanicsGateTriggers', 'mechanicsAdjudications', 'turnsWithoutRoll',
   'profileReady', 'mechanicsDepth', 'mechanicsSheet', 'rulesProfile', 'openingEchoId',
   'worldRevision', 'playstyleBaseline', 'playstyleSignals', 'lastPlayerText',
-  'continuityRepair', 'continuityCorrections', 'closeAttempt', 'state', 'pendingDraft',
+  'continuityRepair', 'continuityCorrections', 'sceneEntities', 'closeAttempt', 'state', 'pendingDraft',
   'draftCommittedAt', 'draftStage',
   '_saveRetries', '_saveLeakRetries', '_closeRetries', '_impactRetries', '_lastTurnSaveLeak', '_onboardingSaved',
 ];

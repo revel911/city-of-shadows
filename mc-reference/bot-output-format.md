@@ -8,6 +8,8 @@ The bot is a Discord client that posts your messages directly to the player. Any
 - `<close_session>` — emitted at session end to persist the handoff and final state, and to archive the thread.
 - `<roll_request>` — emitted on a move-triggering turn; the bot posts the roll prompt and buttons and resolves canonical dice and modifiers.
 - `<checkpoint>` — emitted during play for restart recovery; compact JSON, stripped before posting.
+- `<scene_entities>` — emitted whenever an entity appears, leaves, or changes; updates the session entity list (see Continuity Check in `mc-instructions.md`).
+- `<continuity_fix>` — emitted once a continuity correction is confirmed; the bot saves it to the character's continuity corrections.
 
 ## Normal Turn
 
@@ -61,7 +63,8 @@ exchanges, or when the player asks to pause without closing, append:
 
 Use canonical IDs when known. Keep this public-safe: no transcript, Discord ID,
 player safety profile, secret MC note, or hidden relationship. A checkpoint does
-not change the shared world and does not close the session.
+not change the shared world and does not close the session. The bot adds the
+session entity list to every checkpoint it saves.
 
 **No code, no JSON, no schemas in player-facing turns.** Everything you write outside the `<close_session>` block is posted verbatim to the player's Discord thread. Never paste an NPC's `personality` block, an `npc_patch` entry, a `state_patch` fragment, or any other structured data into a normal turn — those belong **only** inside the close block. When introducing an NPC to the player (especially during onboarding Phase 9), describe them in prose: name, faction, where they're found, how they come across. The mechanical scoring (core axes, warmth, verbosity, humor, optional flirtation/intimacy, and voice_note) is yours alone — apply it silently in voice and behavior, and write it out only when you emit the `<npc_patch>` at close. The same applies to character sheets, state, debts, anchors: describe in prose during play; serialize only inside a save or close block.
 

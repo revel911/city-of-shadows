@@ -37,7 +37,7 @@ function fakeWorld(t, initial = {}, { narrator = [], router = [] } = {}) {
   const files = new Map(Object.entries(initial).map(([key, value]) => [key, typeof value === 'string' ? value : JSON.stringify(value)]));
   const reads = [];
   const git = { commits: 0, pendingTree: null };
-  const calls = { narrator: 0, router: 0 };
+  const calls = { narrator: 0, router: 0, narratorBodies: [] };
   for (const [key, value] of Object.entries({ GITHUB_TOKEN: 'test', GITHUB_OWNER: 'test', GITHUB_REPO: 'test', DEEPSEEK_API_KEY: 'test' })) {
     const before = process.env[key]; process.env[key] = value;
     t.after(() => { if (before === undefined) delete process.env[key]; else process.env[key] = before; });
@@ -51,6 +51,7 @@ function fakeWorld(t, initial = {}, { narrator = [], router = [] } = {}) {
       const isRouter = /strict rules router/.test(body.messages[0]?.content || '');
       const queue = isRouter ? router : narrator;
       calls[isRouter ? 'router' : 'narrator'] += 1;
+      if (!isRouter) calls.narratorBodies.push(body);
       const content = queue.shift();
       if (content === undefined) throw new Error(`Unexpected ${isRouter ? 'router' : 'narrator'} call`);
       return json({ choices: [{ message: { role: 'assistant', content }, finish_reason: 'stop' }], usage: {} });
@@ -206,4 +207,36 @@ test('a narrator roll request for a router-chosen hub move uses the hub move sta
   assert.equal(world.calls.router, 1);
   assert.ok(thread.sent.some(value => /Roll for \*\*Community Network\*\* \(Heart \+0\)/.test(value?.content || '')),
     texts(thread).join('\n---\n'));
+});
+
+test('the MC tracks a departed entity, admits a continuity slip, and saves the fix', async t => {
+  const world = fakeWorld(t, { [`players/${character}/state.json`]: state }, {
+    narrator: [
+      opening,
+      'The hooded thing asks for the brass key, then walks off the dock into the rain.\n<scene_entities>[{"key":"dock_entity","label":"hooded thing on the dock","where":"loading dock","wants":"the brass key","status":"left"}]</scene_entities>\n<checkpoint>{"summary":"The hooded thing left the dock."}</checkpoint>',
+      '(MC check: you are right, it left and I put it back without cause.) The dock is empty; you still hold the key.\n<continuity_fix>The hooded thing left the dock after asking for the key and has not returned.</continuity_fix>',
+    ],
+    router: ['{"decision":"none","reason":"observation"}'],
+  });
+  const thread = makeThread('continuity-flow');
+  await startSession(thread, { id: character, name: 'Morgan', discord_id: '1' });
+  await handleMessage({ channel: thread, author: { id: '1' }, content: 'I keep my hand on the key and watch it.', id: 'a' });
+  await handleMessage({ channel: thread, author: { id: '1' }, content: "OOC: wait, didn't that thing already leave?", id: 'b' });
+
+  const visible = texts(thread).join('\n');
+  assert.doesNotMatch(visible, /scene_entities|continuity_fix|has not returned/);
+  assert.match(visible, /\(MC check: you are right/);
+  assert.match(visible, /Continuity fix saved/);
+
+  const lastPrompt = JSON.stringify(world.calls.narratorBodies.at(-1).messages);
+  assert.match(lastPrompt, /ENTITIES THIS SESSION/);
+  assert.match(lastPrompt, /hooded thing on the dock — loading dock — wants: the brass key — left/);
+
+  const saved = JSON.parse(world.files.get(`players/${character}/continuity.json`));
+  assert.equal(saved.corrections.length, 1);
+  assert.match(saved.corrections[0].text, /has not returned/);
+
+  for (let i = 0; i < 50 && !world.files.has(`players/${character}/checkpoint.json`); i += 1) await new Promise(r => setTimeout(r, 10));
+  const checkpoint = JSON.parse(world.files.get(`players/${character}/checkpoint.json`));
+  assert.equal(checkpoint.scene_entities[0].status, 'left');
 });

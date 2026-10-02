@@ -13,11 +13,14 @@ if (arg('--bundle')) {
   const creation = (await Promise.all(['character-creation.md', 'character-sheet-template.md', 'reference/playbooks.md'].map(path => read(`mc-reference/${path}`)))).join('\n\n---\n\n');
   const scenarios = JSON.parse(await read('bot/eval/narrator-scenarios.json'));
   const { buildSceneDirectorContext } = await import('../handlers/scene-director.js');
+  const { formatSceneEntitiesContext } = await import('../handlers/scene-entities.js');
   for (const scenario of scenarios) {
     const messages = scenario.messages || [{ role: 'user', content: scenario.prompt }];
     const last = messages.at(-1);
     // Historical mechanics classification fixtures have their own routing contract.
     if (scenario.id.startsWith('envelope_')) last.content = buildSceneDirectorContext({ playerText: last.content }) + '\n\n' + last.content;
+    // Continuity fixtures get the turn exactly as the bot frames it: entity list, director, player text.
+    if (scenario.scene_entities) last.content = [formatSceneEntitiesContext(scenario.scene_entities), buildSceneDirectorContext({ playerText: last.content }), `[PLAYER MESSAGE]\n${last.content}`].join('\n\n');
     scenario.messages = messages;
   }
   bundle = { core, creation, scenarios };
