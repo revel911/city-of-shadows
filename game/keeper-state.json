@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "90757ae7ed36930d161113993d3cca12b87c02c3",
-  "last_successful_run": "2026-10-03T17:43:38.058Z",
-  "last_city_turn": "2026-10-02",
+  "last_processed_commit": "7a8a31867d679812e9b07288aa7a3268e6a2d63f",
+  "last_successful_run": "2026-10-03T20:04:19.085Z",
+  "last_city_turn": "2026-10-03",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_reconcile_20260903163520",
-      "phase": "reconcile",
-      "completed_at": "2026-09-03T16:35:20.969Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no changes required. All entities are consistent with established evidence.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260903192123",
       "phase": "city-turn",
@@ -1098,6 +1087,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied. No established changes to apply. City-turn candidate is null, so no world advance.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20261003200419",
+      "phase": "city-turn",
+      "completed_at": "2026-10-03T20:04:19.085Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "No eligible pressure: the city awaits an established response.",
       "dry_run": false
     }
   ],
