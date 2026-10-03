@@ -1,26 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "4edde4093dcb8682a91c54256311a55ac5cd7dc3",
-  "last_successful_run": "2026-10-02T19:25:10.483Z",
+  "last_processed_commit": "acd95f6504ba5c3e39c4a52e6d3126eae0bb234e",
+  "last_successful_run": "2026-10-03T10:36:44.753Z",
   "last_city_turn": "2026-10-02",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260902192205",
-      "phase": "city-turn",
-      "completed_at": "2026-09-02T19:22:05.969Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_the_general",
-        "loc_the_exchange",
-        "arc-010",
-        "hub_downtown"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn advance for arc-010 (The General's Coup). The General, volatile and under coup pressure, makes a public show of force in Downtown by consolidating control over a key Night venue, The Exchange. This escalates the coup tension and draws attention from other factions.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260903103318",
       "phase": "publish",
@@ -1103,6 +1087,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261003103644",
+      "phase": "publish",
+      "completed_at": "2026-10-03T10:36:44.753Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
