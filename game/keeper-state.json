@@ -1,27 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "7a8a31867d679812e9b07288aa7a3268e6a2d63f",
-  "last_successful_run": "2026-10-03T20:04:19.085Z",
+  "last_processed_commit": "ae418f57750e00c2c0893f7de6c8ac0a15e93bc8",
+  "last_successful_run": "2026-10-04T12:04:06.029Z",
   "last_city_turn": "2026-10-03",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260903192123",
-      "phase": "city-turn",
-      "completed_at": "2026-09-03T19:21:23.043Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_the_general",
-        "npc_henrik_vael",
-        "loc_the_exchange",
-        "arc-010",
-        "hub_downtown"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "The General's consolidation at The Exchange continues to escalate faction tensions in Downtown.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260904103928",
       "phase": "publish",
@@ -1098,6 +1081,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261004120406",
+      "phase": "publish",
+      "completed_at": "2026-10-04T12:04:06.029Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
