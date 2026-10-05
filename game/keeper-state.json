@@ -1,27 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "1ba4abde71146c4f698196076012db8af148661a",
-  "last_successful_run": "2026-10-04T20:14:17.198Z",
+  "last_processed_commit": "1b4f2a6595fb75f422c5a114d05bd7222807b209",
+  "last_successful_run": "2026-10-05T10:37:58.137Z",
   "last_city_turn": "2026-10-04",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260904191919",
-      "phase": "city-turn",
-      "completed_at": "2026-09-04T19:19:19.277Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_aldric_serrano",
-        "npc_riley_hoffman",
-        "loc_serranos_domain",
-        "arc-011",
-        "hub_downtown"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn: The Breach in Serrano's Domain escalates as Aldric Serrano seals more tunnels and increases patrols, causing public unease in Downtown.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260905103050",
       "phase": "publish",
@@ -1092,6 +1075,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261005103758",
+      "phase": "publish",
+      "completed_at": "2026-10-05T10:37:58.137Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
