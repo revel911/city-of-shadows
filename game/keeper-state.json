@@ -1,24 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "90c5d53c099c036b0738ad8a9039540f0c5f6bbc",
-  "last_successful_run": "2026-10-07T19:26:24.155Z",
+  "last_processed_commit": "e991bd4825ce932c8ed112b6d4132ecbf8c6b646",
+  "last_successful_run": "2026-10-08T10:37:10.522Z",
   "last_city_turn": "2026-10-07",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260907192120",
-      "phase": "city-turn",
-      "completed_at": "2026-09-07T19:21:20.658Z",
-      "changed": true,
-      "touched_ids": [
-        "arc-003",
-        "hub_shockoe_bottom"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn advanced arc-003 (Maren Voss's Ritual Circle) with a public event in Shockoe Bottom.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260908103250",
       "phase": "publish",
@@ -1081,6 +1067,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261008103710",
+      "phase": "publish",
+      "completed_at": "2026-10-08T10:37:10.522Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
