@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "3ffecf69eb1ef9bbf46b836da6623d5a510edce2",
-  "last_successful_run": "2026-10-09T10:37:03.624Z",
+  "last_processed_commit": "95223095d406167d1f482c4e4232ba7c3cbf0c4b",
+  "last_successful_run": "2026-10-09T16:38:44.429Z",
   "last_city_turn": "2026-10-08",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260909103313",
-      "phase": "publish",
-      "completed_at": "2026-09-09T10:33:13.309Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260909163559",
       "phase": "reconcile",
@@ -1075,6 +1064,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261009163844",
+      "phase": "reconcile",
+      "completed_at": "2026-10-09T16:38:44.429Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence was supplied, so no entity changes are warranted. The projection's derived state (NPC roles, hub conditions, arc summaries, mystery clue status) already reflects the published event log. No pending conflicts exist. City-turn candidate is null, so no world advance is emitted.",
       "dry_run": false
     }
   ],
