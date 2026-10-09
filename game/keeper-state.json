@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "95223095d406167d1f482c4e4232ba7c3cbf0c4b",
-  "last_successful_run": "2026-10-09T16:38:44.429Z",
-  "last_city_turn": "2026-10-08",
+  "last_processed_commit": "35903bf8aff2a596796610ee98356068513ec091",
+  "last_successful_run": "2026-10-09T19:25:16.399Z",
+  "last_city_turn": "2026-10-09",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_reconcile_20260909163559",
-      "phase": "reconcile",
-      "completed_at": "2026-09-09T16:35:59.952Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no new session evidence to process. Existing world state is consistent with the public events log and hub/NPC revisions. No patches required.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260909192143",
       "phase": "city-turn",
@@ -1075,6 +1064,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence was supplied, so no entity changes are warranted. The projection's derived state (NPC roles, hub conditions, arc summaries, mystery clue status) already reflects the published event log. No pending conflicts exist. City-turn candidate is null, so no world advance is emitted.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20261009192516",
+      "phase": "city-turn",
+      "completed_at": "2026-10-09T19:25:16.399Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "No eligible pressure: the city awaits an established response.",
       "dry_run": false
     }
   ],
