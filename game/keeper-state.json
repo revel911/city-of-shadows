@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "9539a3a30a36885e55b41e7397d3ff3cba425f19",
-  "last_successful_run": "2026-10-10T10:34:44.823Z",
+  "last_processed_commit": "63ac959e1e2a314ca7a9329b69694a5073996f5c",
+  "last_successful_run": "2026-10-10T16:37:45.167Z",
   "last_city_turn": "2026-10-09",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260910103259",
-      "phase": "publish",
-      "completed_at": "2026-09-10T10:32:59.023Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260910163343",
       "phase": "reconcile",
@@ -1070,6 +1059,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261010163745",
+      "phase": "reconcile",
+      "completed_at": "2026-10-10T16:37:45.167Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no session evidence supplied, so no entity changes are warranted. The projection's public events and entity revisions are already consistent with the recorded state. No city-turn candidate, so no world advance.",
       "dry_run": false
     }
   ],
