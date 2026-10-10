@@ -1,26 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "35903bf8aff2a596796610ee98356068513ec091",
-  "last_successful_run": "2026-10-09T19:25:16.399Z",
+  "last_processed_commit": "9539a3a30a36885e55b41e7397d3ff3cba425f19",
+  "last_successful_run": "2026-10-10T10:34:44.823Z",
   "last_city_turn": "2026-10-09",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260909192143",
-      "phase": "city-turn",
-      "completed_at": "2026-09-09T19:21:43.183Z",
-      "changed": true,
-      "touched_ids": [
-        "npc_prof_tanaka",
-        "loc_harris_hall",
-        "arc-003",
-        "hub_university"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn phase executed. Arc-003 advanced via the University hub and Prof. Tanaka.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260910103259",
       "phase": "publish",
@@ -1075,6 +1059,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261010103444",
+      "phase": "publish",
+      "completed_at": "2026-10-10T10:34:44.823Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
