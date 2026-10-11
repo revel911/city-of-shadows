@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f25282b0c65a1f0f2df62bde3c54fff8d3d67e7b",
-  "last_successful_run": "2026-10-11T16:37:58.710Z",
-  "last_city_turn": "2026-10-10",
+  "last_processed_commit": "90d0ee0d7db2fca840114b243b0c35c2e07ebb37",
+  "last_successful_run": "2026-10-11T19:24:00.895Z",
+  "last_city_turn": "2026-10-11",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_reconcile_20260911163510",
-      "phase": "reconcile",
-      "completed_at": "2026-09-11T16:35:10.262Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no new session evidence was supplied, so no entity, relationship, memory, debt, mystery, or conflict changes are warranted. All public events are already reflected in existing entity revisions and arc summaries. No world advance is performed in this phase.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260911192202",
       "phase": "city-turn",
@@ -1065,6 +1054,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied (session_evidence empty, no interactions, no conflicts). All public events in recent_events are already reflected in the projection's entity revisions and descriptions. No established facts require repair, and no pending conflicts exist to resolve. No world advance is made.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20261011192400",
+      "phase": "city-turn",
+      "completed_at": "2026-10-11T19:24:00.895Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "No eligible pressure: the city awaits an established response.",
       "dry_run": false
     }
   ],
