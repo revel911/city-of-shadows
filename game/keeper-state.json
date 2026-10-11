@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "6c1be754ea794bf36e43b3de1f90d1f043ef5b82",
-  "last_successful_run": "2026-10-11T10:35:31.731Z",
+  "last_processed_commit": "f25282b0c65a1f0f2df62bde3c54fff8d3d67e7b",
+  "last_successful_run": "2026-10-11T16:37:58.710Z",
   "last_city_turn": "2026-10-10",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260911103237",
-      "phase": "publish",
-      "completed_at": "2026-09-11T10:32:37.318Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260911163510",
       "phase": "reconcile",
@@ -1065,6 +1054,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261011163758",
+      "phase": "reconcile",
+      "completed_at": "2026-10-11T16:37:58.710Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence supplied (session_evidence empty, no interactions, no conflicts). All public events in recent_events are already reflected in the projection's entity revisions and descriptions. No established facts require repair, and no pending conflicts exist to resolve. No world advance is made.",
       "dry_run": false
     }
   ],
