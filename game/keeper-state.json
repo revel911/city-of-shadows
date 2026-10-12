@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "d2091dec916a8cb878b565cb5f1d068c5ce76d73",
-  "last_successful_run": "2026-10-12T10:41:22.968Z",
+  "last_processed_commit": "58f2c907f724260cae8ed0bb05ccb34346f7cbe5",
+  "last_successful_run": "2026-10-12T16:38:42.401Z",
   "last_city_turn": "2026-10-11",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260912103048",
-      "phase": "publish",
-      "completed_at": "2026-09-12T10:30:48.214Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260912163235",
       "phase": "reconcile",
@@ -1059,6 +1048,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261012163842",
+      "phase": "reconcile",
+      "completed_at": "2026-10-12T16:38:42.401Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence supplied. No established changes to apply. No city-turn candidate, so no world advance.",
       "dry_run": false
     }
   ],
