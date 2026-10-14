@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "2e5f7edace9b3b8a9db40b1236dae08326bd83dd",
-  "last_successful_run": "2026-10-14T10:35:24.211Z",
+  "last_processed_commit": "7b20f4075cb48d9914c6ebbdf286f64e3cd9d88e",
+  "last_successful_run": "2026-10-14T16:38:29.587Z",
   "last_city_turn": "2026-10-13",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260914103344",
-      "phase": "publish",
-      "completed_at": "2026-09-14T10:33:44.330Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260914163535",
       "phase": "reconcile",
@@ -1047,6 +1036,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261014163829",
+      "phase": "reconcile",
+      "completed_at": "2026-10-14T16:38:29.587Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconcile phase: no new session evidence supplied. All public events, hub conditions, NPC states, arc clocks, and mystery clue statuses already match the projection. No changes required.",
       "dry_run": false
     }
   ],
