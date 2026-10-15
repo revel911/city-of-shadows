@@ -1,23 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "f2aa815fc2ef218faaad6a01abbfea320a4683bc",
-  "last_successful_run": "2026-10-15T16:38:39.153Z",
-  "last_city_turn": "2026-10-14",
+  "last_processed_commit": "68dd1c6f689456a7a460758be00c6616b5b8f8ed",
+  "last_successful_run": "2026-10-15T19:22:45.699Z",
+  "last_city_turn": "2026-10-15",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_city_turn_20260915192259",
-      "phase": "city-turn",
-      "completed_at": "2026-09-15T19:22:59.530Z",
-      "changed": true,
-      "touched_ids": [
-        "arc-008"
-      ],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "City-turn advance on arc-008 (The Unknown Text Sender). The unknown sender's reach extends through institutional routines: a second unlogged contact surfaces via Downtown and Shockoe Bottom channels, deepening the sense that the sender is watching established operations. No NPCs moved, no hub conditions materially altered beyond a minor Downtown note, no player characters touched.",
-      "dry_run": false
-    },
     {
       "id": "keeper_publish_20260916103334",
       "phase": "publish",
@@ -1047,6 +1034,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Reconcile phase: no new session evidence supplied. No established changes to apply. City-turn candidate is null, so no world advance.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_city_turn_20261015192245",
+      "phase": "city-turn",
+      "completed_at": "2026-10-15T19:22:45.699Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "No eligible pressure: the city awaits an established response.",
       "dry_run": false
     }
   ],
