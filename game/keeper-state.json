@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "68dd1c6f689456a7a460758be00c6616b5b8f8ed",
-  "last_successful_run": "2026-10-15T19:22:45.699Z",
+  "last_processed_commit": "a40e2657e1b57b97cb44d80c869e122f0fcbd53d",
+  "last_successful_run": "2026-10-16T10:35:14.689Z",
   "last_city_turn": "2026-10-15",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_publish_20260916103334",
-      "phase": "publish",
-      "completed_at": "2026-09-16T10:33:34.264Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Deterministic publish and validation pass.",
-      "dry_run": false
-    },
     {
       "id": "keeper_reconcile_20260916163529",
       "phase": "reconcile",
@@ -1045,6 +1034,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "No eligible pressure: the city awaits an established response.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_publish_20261016103514",
+      "phase": "publish",
+      "completed_at": "2026-10-16T10:35:14.689Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Deterministic publish and validation pass.",
       "dry_run": false
     }
   ],
