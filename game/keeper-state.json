@@ -1,21 +1,10 @@
 {
   "schema_version": 1,
-  "last_processed_commit": "49d4fc3cbad849ba28f7b42a802a2a364727b368",
-  "last_successful_run": "2026-10-17T10:31:52.778Z",
+  "last_processed_commit": "639fdaacba2b7d22ec3d41ce92e7b16b5856ee7c",
+  "last_successful_run": "2026-10-17T16:35:00.952Z",
   "last_city_turn": "2026-10-16",
   "arc_cooldowns": {},
   "runs": [
-    {
-      "id": "keeper_reconcile_20260917163555",
-      "phase": "reconcile",
-      "completed_at": "2026-09-17T16:35:55.587Z",
-      "changed": false,
-      "touched_ids": [],
-      "rejected": [],
-      "conflicts_created": 0,
-      "summary": "Reconcile phase: no session evidence supplied, so no entity, memory, relationship, debt, arc, mystery, or hub changes are warranted. All existing public records already reflect the established events. No conflicts pending.",
-      "dry_run": false
-    },
     {
       "id": "keeper_city_turn_20260917192243",
       "phase": "city-turn",
@@ -1041,6 +1030,17 @@
       "rejected": [],
       "conflicts_created": 0,
       "summary": "Deterministic publish and validation pass.",
+      "dry_run": false
+    },
+    {
+      "id": "keeper_reconcile_20261017163500",
+      "phase": "reconcile",
+      "completed_at": "2026-10-17T16:35:00.952Z",
+      "changed": false,
+      "touched_ids": [],
+      "rejected": [],
+      "conflicts_created": 0,
+      "summary": "Reconciliation phase: no new session evidence supplied. No changes derived.",
       "dry_run": false
     }
   ],
